@@ -1,10 +1,7 @@
 //
 //  JoinVC.swift
 //  MyMemory
-//
-//  Created by 꼼꼼한재은님 on 2020/07/04.
-//  Copyright © 2020 꼼꼼한재은님. All rights reserved.
-//
+
 
 import UIKit
 import Alamofire

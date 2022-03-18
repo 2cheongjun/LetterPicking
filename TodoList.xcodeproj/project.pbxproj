@@ -20,7 +20,9 @@
 		D051F37027CE2ADC00ABBB4E /* TodoDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D051F36E27CE2ADC00ABBB4E /* TodoDetailViewController.xib */; };
 		D0E16BC527D6F38C008F970E /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0E16BC427D6F38C008F970E /* Utils.swift */; };
 		D0E16BC727D6FBCB008F970E /* JoinVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0E16BC627D6FBCB008F970E /* JoinVC.swift */; };
-		D0E16BC927DB4DCD008F970E /* firstViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0E16BC827DB4DCD008F970E /* firstViewController.swift */; };
+		D0E16BCB27DF4E2B008F970E /* LoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0E16BCA27DF4E2B008F970E /* LoginVC.swift */; };
+		D0E16BCD27DF6406008F970E /* UserInfoManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0E16BCC27DF6406008F970E /* UserInfoManager.swift */; };
+		D0E16BF227E0DAC4008F970E /* LoginInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0E16BF127E0DAC3008F970E /* LoginInfo.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -41,7 +43,9 @@
 		D051F36E27CE2ADC00ABBB4E /* TodoDetailViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TodoDetailViewController.xib; sourceTree = "<group>"; };
 		D0E16BC427D6F38C008F970E /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		D0E16BC627D6FBCB008F970E /* JoinVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoinVC.swift; sourceTree = "<group>"; };
-		D0E16BC827DB4DCD008F970E /* firstViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = firstViewController.swift; sourceTree = "<group>"; };
+		D0E16BCA27DF4E2B008F970E /* LoginVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginVC.swift; sourceTree = "<group>"; };
+		D0E16BCC27DF6406008F970E /* UserInfoManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoManager.swift; sourceTree = "<group>"; };
+		D0E16BF127E0DAC3008F970E /* LoginInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginInfo.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -103,7 +107,9 @@
 				D051F36B27CDE9F800ABBB4E /* TodoCell.swift */,
 				D051F35A27CDE2AF00ABBB4E /* Main.storyboard */,
 				D0E16BC627D6FBCB008F970E /* JoinVC.swift */,
-				D0E16BC827DB4DCD008F970E /* firstViewController.swift */,
+				D0E16BCA27DF4E2B008F970E /* LoginVC.swift */,
+				D0E16BF127E0DAC3008F970E /* LoginInfo.swift */,
+				D0E16BCC27DF6406008F970E /* UserInfoManager.swift */,
 				D051F36027CDE2B100ABBB4E /* Assets.xcassets */,
 				D051F36227CDE2B100ABBB4E /* LaunchScreen.storyboard */,
 				D051F36527CDE2B100ABBB4E /* Info.plist */,
@@ -230,13 +236,15 @@
 			files = (
 				D0E16BC727D6FBCB008F970E /* JoinVC.swift in Sources */,
 				D051F35927CDE2AF00ABBB4E /* ViewController.swift in Sources */,
+				D0E16BCD27DF6406008F970E /* UserInfoManager.swift in Sources */,
 				D051F35527CDE2AF00ABBB4E /* AppDelegate.swift in Sources */,
 				D051F35727CDE2AF00ABBB4E /* SceneDelegate.swift in Sources */,
+				D0E16BCB27DF4E2B008F970E /* LoginVC.swift in Sources */,
 				D0E16BC527D6F38C008F970E /* Utils.swift in Sources */,
 				D051F36C27CDE9F900ABBB4E /* TodoCell.swift in Sources */,
 				D051F35F27CDE2AF00ABBB4E /* TodoList.xcdatamodeld in Sources */,
 				D051F36F27CE2ADC00ABBB4E /* TodoDetailViewController.swift in Sources */,
-				D0E16BC927DB4DCD008F970E /* firstViewController.swift in Sources */,
+				D0E16BF227E0DAC4008F970E /* LoginInfo.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
