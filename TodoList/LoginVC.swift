@@ -21,6 +21,10 @@ class LoginVC :UIViewController, UITableViewDelegate, UITableViewDataSource{
     // 서버에서 가져온제이슨값을 담을 배열
     var dataSource: [Contact] = []
     
+    var userID: String? = nil
+    var userPassword: String? = nil
+    var userEmail: String? = nil
+    
     override func viewDidLoad() {
         //        self.navigationItem.title = "프로필"
         
@@ -69,8 +73,7 @@ class LoginVC :UIViewController, UITableViewDelegate, UITableViewDataSource{
                              "Accept" : "application/json"
                             ]
         ).validate(statusCode: 200..<300)
-        // responseString()응답 메시지의 본문을 문자열로 처리한후 전달한다.
-        //API의 결과가 JSON타입이므로, 응답메소드를 responseJSON()을 사용한다.
+
         // responseJSON()응답 메시지의 본문을 JSON 객체로 변환하여 전달한다.서버로 보냄
             .responseJSON(completionHandler: {
                 (response) in
@@ -85,31 +88,33 @@ class LoginVC :UIViewController, UITableViewDelegate, UITableViewDataSource{
 //                        self.alert("서버호출과정에서 오류발생")
 //                        return
 //                        }
-//                    print("userID= \(jsonObject["userID"]!)")
+                    // 아이디 값이 있으면 a출력하고 없으면 ?? -를 출력한다.(coalesce)
+                    print("userID= \(jsonObject["userID"] ?? "" )")
+                    print("userPassword =\(jsonObject["userPassword"] ?? "")")
 //                    print("userPassword =\(jsonObject["userPassword"]!)")
                     // userID 파싱
-                    let userID = jsonObject["userID"] as? String ?? "222"
-                    let userPassword = jsonObject["userPassword"] as? String ?? "222"
-                    let userEmail = jsonObject["userEmail"] as? String ?? "222"
+                    let userID = jsonObject["userID"] as? String ?? ""
+                    let userPassword = jsonObject["userPassword"] as? String ?? ""
+                    let userEmail = jsonObject["userEmail"] as? String ?? ""
                     // 뷰에 적용
                     self.textView.text = userID
                     self.textView.text = userPassword
                     // append해야 하나에 같이 써짐
-                        self.textView.text.append("\n\(userID )")
+                    self.textView.text.append("\n\(userID )")
                     self.textView.text.append("\n\(userEmail)")
                     //성공시 얼럿띄우기
-                    
-                     self.alert("로그인 성공")
-                     //화면이동시키기
-                    guard let uvc = self.storyboard?.instantiateViewController(withIdentifier: "ViewController") else {
-                        return
-                    }
-                    self.navigationController?.pushViewController(uvc, animated: true)
-                    
-                    } else{
-                        // nil값일 때의 처리???????
-
-                    }
+                        if userID  == "" {
+                            self.alert("등록되지 않은 아이디입니다.")
+                        }else{
+                            self.alert("로그인 성공")
+                            //화면이동시키기
+                           guard let uvc = self.storyboard?.instantiateViewController(withIdentifier: "ViewController") else {
+                               return
+                           }
+                           self.navigationController?.pushViewController(uvc, animated: true)
+                           }
+                        }
+                        
                     // 성공시 네비게이션 컨트롤러로 이동
            
                 case .failure(let error):
