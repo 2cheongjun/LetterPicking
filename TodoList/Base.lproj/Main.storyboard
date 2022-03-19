@@ -94,12 +94,12 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="883" y="134"/>
+            <point key="canvasLocation" x="43" y="166"/>
         </scene>
         <!--LoginVC-->
         <scene sceneID="LDO-Tu-7tg">
             <objects>
-                <viewController id="Kfd-OM-4pa" customClass="LoginVC" customModule="TodoList" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="LoginVC" id="Kfd-OM-4pa" customClass="LoginVC" customModule="TodoList" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="7x3-rB-524">
                         <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -125,6 +125,7 @@
                                 <buttonConfiguration key="configuration" style="gray" title="둘러보기"/>
                                 <connections>
                                     <action selector="testBtn:" destination="Kfd-OM-4pa" eventType="touchUpInside" id="M7M-nQ-SNh"/>
+                                    <segue destination="Rsg-eS-JWQ" kind="show" id="ByW-IT-vK6"/>
                                 </connections>
                             </button>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" text="응답결과" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="1As-M3-gN1">
@@ -158,6 +159,80 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2Wk-dD-Xw7" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-658.46153846153845" y="827.48815165876772"/>
+        </scene>
+        <!--지도로보기-->
+        <scene sceneID="Ro0-nH-3p6">
+            <objects>
+                <viewController id="xae-ay-8n1" customClass="secondTabVC" customModule="TodoList" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="dEF-c6-i7n">
+                        <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="S45-Ec-F91"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="지도로보기" image="map" catalog="system" id="h17-9b-BE0"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Rwt-jd-GbI" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-692" y="2250"/>
+        </scene>
+        <!--글자피드-->
+        <scene sceneID="wa2-wn-qsS">
+            <objects>
+                <viewController id="b6h-lu-bIc" customClass="firstTabVC" customModule="TodoList" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Hst-fb-OqB">
+                        <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="aul-Ii-F7e">
+                                <rect key="frame" x="20" y="108" width="140" height="20.333333333333343"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="acf-t2-Anh">
+                                        <rect key="frame" x="0.0" y="0.0" width="41.333333333333336" height="20.333333333333332"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="님 안녕하세요" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NCU-uI-uvA">
+                                        <rect key="frame" x="47.333333333333321" y="0.0" width="92.666666666666686" height="20.333333333333332"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                            </stackView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="cl6-87-8Cp"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="aul-Ii-F7e" firstAttribute="top" secondItem="cl6-87-8Cp" secondAttribute="top" constant="20" id="3RI-JK-pSZ"/>
+                            <constraint firstItem="aul-Ii-F7e" firstAttribute="leading" secondItem="cl6-87-8Cp" secondAttribute="leading" constant="20" id="xPX-04-EBU"/>
+                        </constraints>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="글자피드" image="doc.text.image" catalog="system" id="Q0Z-zW-T8j"/>
+                    <connections>
+                        <outlet property="userName" destination="acf-t2-Anh" id="WiJ-3b-DR8"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="sun-sp-ASU" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1486.1538461538462" y="2250"/>
+        </scene>
+        <!--마이페이지-->
+        <scene sceneID="uVv-H1-Dzb">
+            <objects>
+                <viewController id="Q2T-7y-hwX" customClass="thirdTabVC" customModule="TodoList" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="7pv-sE-wlF">
+                        <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="TaG-k5-gGE"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="마이페이지" image="person" catalog="system" id="Gda-5Y-CbM"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="e84-RV-OJs" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="123" y="2250"/>
         </scene>
         <!--신규계정등록-->
         <scene sceneID="9fI-5s-IK6">
@@ -210,7 +285,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="AVa-fR-Kfg" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="151" y="827"/>
+            <point key="canvasLocation" x="63" y="827"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="vgB-yj-gUg">
@@ -230,7 +305,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bgR-mR-mHN" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="152" y="134"/>
+            <point key="canvasLocation" x="-658" y="166"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="oRX-NL-lIh">
@@ -250,9 +325,33 @@
             </objects>
             <point key="canvasLocation" x="-1387" y="828"/>
         </scene>
+        <!--Tab Bar Controller-->
+        <scene sceneID="Vsg-Cd-Wv3">
+            <objects>
+                <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="Rsg-eS-JWQ" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationItem key="navigationItem" id="jdV-pa-t8S"/>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
+                    <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="oXS-Ls-jO7">
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </tabBar>
+                    <connections>
+                        <segue destination="b6h-lu-bIc" kind="relationship" relationship="viewControllers" id="f6B-Ia-jbK"/>
+                        <segue destination="xae-ay-8n1" kind="relationship" relationship="viewControllers" id="hJH-Sd-ndG"/>
+                        <segue destination="Q2T-7y-hwX" kind="relationship" relationship="viewControllers" id="vvk-H4-b08"/>
+                    </connections>
+                </tabBarController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="snI-pK-qqC" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-658" y="1518"/>
+        </scene>
     </scenes>
     <resources>
         <image name="Account" width="40" height="40"/>
+        <image name="doc.text.image" catalog="system" width="115" height="128"/>
+        <image name="map" catalog="system" width="128" height="110"/>
+        <image name="person" catalog="system" width="128" height="117"/>
         <namedColor name="AccentColor">
             <color red="0.0" green="0.46000000000000002" blue="0.89000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>

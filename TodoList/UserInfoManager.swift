@@ -37,7 +37,7 @@ class UserInfoManager {
     // 옵셔널 타입으로 선언, 이류는 비로그인 상태일때 이값을 nil로 설정하기위함
     var account: String? {
         get {
-            // 프로퍼티 리스트에 저장된 로그인 아이디를 꺼내어 제공
+            // 프로퍼티 리스트에 저장된 로그인 account를 꺼내어 제공
             return UserDefaults.standard.string(forKey: UserInfoKey.account)
         }
         set(v){
@@ -95,7 +95,8 @@ class UserInfoManager {
     func login(account: String, passwd: String) -> Bool {
         //TODO : 서버와 연동되는 코드도 대체될 예정...
         // 계정값과, 비번값 받아서 true/false 반환
-        if account.isEqual("abc@gmail.com") && passwd.isEqual("1234"){
+//        if account.isEqual("hoho") && passwd.isEqual(""){
+            if account.isEqual("hoho") && passwd.isEqual(""){
             let ud = UserDefaults.standard
             ud.set(100, forKey: UserInfoKey.loginId)// 로그인값 100 저장
             ud.set(account, forKey: UserInfoKey.account)

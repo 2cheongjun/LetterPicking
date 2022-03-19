@@ -13,10 +13,46 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
-        // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
-        // If using a storyboard, the `window` property will automatically be initialized and attached to the scene.
-        // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
-        guard let _ = (scene as? UIWindowScene) else { return }
+        //루트뷰 컨트롤러를 UITabBarController로 캐스팅한다.
+              if let tbC = self.window?.rootViewController as? UITabBarController {
+                  
+       
+                  
+                  //탭바에서 탭바 아이템 배열을 가져온다.
+                  if let tbItems = tbC.tabBar.items {
+                      //탭바 아이템에 커스텀 이미지를 등록한다.
+      //                tbItems[0].image = UIImage(named: "calendar")
+      //                tbItems[1].image = UIImage(named: "file-tree")
+      //                tbItems[2].image = UIImage(named: "photo")
+                      
+                      // 탭바 아이템에 커스텀 이미지를 등록한다.2
+                      // 원본이미지 설정을 위해 UI이미지렌더링을 해주어야함.
+                      tbItems[0].image = UIImage(named: "designbump")?.withRenderingMode(.alwaysOriginal)
+                      tbItems[1].image = UIImage(named: "rss")?.withRenderingMode(.alwaysOriginal)
+                      tbItems[2].image = UIImage(named: "facebook")?.withRenderingMode(.alwaysOriginal)
+                      
+                      // 탭 바 아이템 전체를 순회하면서 selectedImage 속성에 이미지를 설정한다.
+                      // selectedImage는 탭바아이템이 선택되었을때의 이미지이다.
+                      for tbItem in tbItems {
+                          // 체크가 공통적으로 표시됨
+                          let image = UIImage(named:
+                                                "checkmark")?.withRenderingMode(.alwaysOriginal)
+                          tbItem.selectedImage = image
+                      }
+                      
+                      //탭바 아이템에 타이틀을 설정한다.
+                      tbItems[0].title = "calendar"
+                      tbItems[1].title = "file"
+                      tbItems[2].title = "photo"
+                      
+                  }
+      //            // ⑤ 탭 바 아이템의 이미지 색상을 변경한다.
+//                  tbC.tabBar.tintColor = .white // 선택된 탭 바 아이템의 색상
+//                  tbC.tabBar.unselectedItemTintColor = .gray // 선택되지 않은 나머지 탭 바 아이템의 색상
+//      //
+//      //            // ⑥ 탭 바에 배경 이미지를 설정한다.
+//                  tbC.tabBar.backgroundImage = UIImage(named:"menubar-bg-mini")
+              }
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {
