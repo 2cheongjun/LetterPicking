@@ -181,7 +181,7 @@
         <!--글자피드-->
         <scene sceneID="wa2-wn-qsS">
             <objects>
-                <viewController id="b6h-lu-bIc" customClass="firstTabVC" customModule="TodoList" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="firstTabVC" id="b6h-lu-bIc" customClass="firstTabVC" customModule="TodoList" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Hst-fb-OqB">
                         <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -323,7 +323,7 @@
         <!--마이페이지-->
         <scene sceneID="uVv-H1-Dzb">
             <objects>
-                <viewController id="Q2T-7y-hwX" customClass="thirdTabVC" customModule="TodoList" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="thirdTabVC" id="Q2T-7y-hwX" customClass="thirdTabVC" customModule="TodoList" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="7pv-sE-wlF">
                         <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -497,19 +497,24 @@
                                                     <rect key="frame" x="8" y="8" width="112" height="112"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 </imageView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jtb-JT-7uN">
-                                                    <rect key="frame" x="43" y="54" width="42" height="21"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="close" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2PS-2I-bGq">
+                                                    <rect key="frame" x="88" y="0.0" width="40" height="32"/>
+                                                    <buttonConfiguration key="configuration" style="gray">
+                                                        <color key="baseBackgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    </buttonConfiguration>
+                                                    <connections>
+                                                        <action selector="closeBtn:" destination="rj0-uA-LaZ" eventType="touchUpInside" id="LOM-h0-vcX"/>
+                                                    </connections>
+                                                </button>
                                             </subviews>
+                                            <constraints>
+                                                <constraint firstItem="2PS-2I-bGq" firstAttribute="top" secondItem="9mn-IJ-mkT" secondAttribute="top" id="3PC-XJ-D4T"/>
+                                                <constraint firstAttribute="trailing" secondItem="2PS-2I-bGq" secondAttribute="trailing" id="Bh0-sM-KwI"/>
+                                            </constraints>
                                         </collectionViewCellContentView>
                                         <color key="backgroundColor" systemColor="linkColor"/>
                                         <connections>
                                             <outlet property="imgView" destination="5yt-1f-jGC" id="uGD-kJ-0CK"/>
-                                            <outlet property="label" destination="jtb-JT-7uN" id="iGD-dP-jRS"/>
                                         </connections>
                                     </collectionViewCell>
                                 </cells>

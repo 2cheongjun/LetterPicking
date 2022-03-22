@@ -9,17 +9,16 @@ import UIKit
 //마이페이지
 class thirdTabVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
-    
-    
     let profileImage = UIImageView() //프로필사진이미지
     let tv = UITableView() //프로필목록
-    //    let uinfo = UserInfoManager()//개인정보 관리 매니저(로그인/ 로그아웃정보)
+    let uinfo = UserInfoManager()//개인정보 관리 매니저(로그인/ 로그아웃정보)/프사저장함...
     
     
     // 저장한 이름 가져오기
     let plist = UserDefaults.standard
     //지정된 값을 꺼내어 각 컨트롤에 설정한다.
     var name = ""
+    var email = ""
     
     
     override func viewDidLoad() {
@@ -90,7 +89,8 @@ class thirdTabVC: UIViewController, UITableViewDelegate, UITableViewDataSource, 
         let tap = UITapGestureRecognizer(target: self, action: #selector(profile(_:)))
         self.profileImage.addGestureRecognizer(tap)
         self.profileImage.isUserInteractionEnabled = true //상호반응허락
-        
+        self.profileImage.image = self.uinfo.profile// 이미지갱신
+
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -118,7 +118,7 @@ class thirdTabVC: UIViewController, UITableViewDelegate, UITableViewDataSource, 
             name =  plist.string(forKey: "name") ?? ""
         case 1:
             cell.textLabel?.text = "e-mail"
-            cell.detailTextLabel?.text = plist.string(forKey: "name") ?? "Login please"
+            cell.detailTextLabel?.text = plist.string(forKey: "email") ?? "Login please"
             
         case 2:
             cell.textLabel?.text = "북마크"
@@ -314,8 +314,30 @@ class thirdTabVC: UIViewController, UITableViewDelegate, UITableViewDataSource, 
     // 이미지를 선택하면 이 메소드가 자동으로 호출된다.
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         if let img = info[UIImagePickerController.InfoKey.editedImage] as? UIImage {
-            //                self.uinfo.profile = img // 프로필이미지를 uinfo에 저장
+            self.uinfo.profile = img // 프로필이미지를 uinfo에 저장******************************************
             self.profileImage.image = img //이미지를 이미지뷰에 설정
+            
+            let image = self.profileImage.image
+            
+            if let data = image?.pngData() {
+                // Create URL
+                let documents = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
+                let url = documents.appendingPathComponent("image_name.png")
+
+                do {
+                    // Write to Disk
+                    try data.write(to: url)
+
+                    // Store URL in User Defaults
+                    UserDefaults.standard.set(url, forKey: "image")
+
+                } catch {
+                    print("Unable to Write Data to Disk (\(error))")
+                }
+            }
+            
+            // userDefault에 저장하기
+            
         }
         // 이미지 피커 컨트롤러 창 닫기!! 안해주면 안닫힘
         picker.dismiss(animated: true)

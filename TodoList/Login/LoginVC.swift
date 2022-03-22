@@ -110,6 +110,11 @@ class LoginVC :UIViewController, UITableViewDelegate, UITableViewDataSource{
                            plist.setValue(userID, forKey: "name")//이름이라는 키로 저장
                            plist.synchronize()//동기화처리
                         
+                        // userDefault 기본저장소객체가져오기
+                           plist.setValue(userEmail, forKey: "email")//이메일이라는 키로 저장
+                           plist.synchronize()//동기화처리
+                        
+                        
                         // 뷰에 적용
 //                        self.textView.text = userID
 //                        self.textView.text = userPassword
@@ -126,7 +131,7 @@ class LoginVC :UIViewController, UITableViewDelegate, UITableViewDataSource{
                             self.spend(userID: userID, userPassword: userPassword)
                             
                             //화면이동시키기
-                            guard let uvc = self.storyboard?.instantiateViewController(withIdentifier: "ViewController") else {
+                            guard let uvc = self.storyboard?.instantiateViewController(withIdentifier: "thirdTabVC") else {
                                 return
                             }
                             self.navigationController?.pushViewController(uvc, animated: true)

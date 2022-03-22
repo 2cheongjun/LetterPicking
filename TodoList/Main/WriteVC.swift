@@ -9,17 +9,20 @@ import UIKit
 import BSImagePicker
 import Photos
 
+
+
 class WriteVC : UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextViewDelegate{
     
     @IBOutlet weak var imgView: UIImageView!
     @IBOutlet weak var textView: UITextView!
     
     @IBOutlet weak var collectionView: UICollectionView!//콜렉션뷰
-    var list = ["1", "2", "3", "4" ,"5", "6", "7", "8", "9", "10"]
+//    var list = ["1", "2", "3", "4" ,"5", "6", "7", "8", "9", "10"]
     
     var selectedAssets = [PHAsset]()
     var photoArray = [UIImage]()
 
+    var isSelected = false
     
     override func viewDidLoad() {
         //컬렉션뷰 델리게이트
@@ -33,7 +36,11 @@ class WriteVC : UIViewController, UIImagePickerControllerDelegate, UINavigationC
     @IBAction func pick(_ sender: Any) {
         
         let imagePicker = ImagePickerController()
-        
+        imagePicker.settings.selection.max = 10
+        imagePicker.settings.theme.selectionStyle = .numbered
+        imagePicker.settings.fetch.assets.supportedMediaTypes = [.image, .video]
+        imagePicker.settings.selection.unselectOnReachingMax = true
+
         presentImagePicker(imagePicker, select: {
             (asset) in
                 // 사진 하나 선택할 때마다 실행되는 내용 쓰기
@@ -110,17 +117,37 @@ extension WriteVC: UICollectionViewDelegate, UICollectionViewDataSource {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! CVcell
         
         cell.backgroundColor = .lightGray
-        cell.label.text = list[indexPath.row]
-        cell.label.backgroundColor = .yellow
+//        cell.label.text = list[indexPath.row]
+//        cell.label.backgroundColor = .yellow
      
         // 이미지 꺼내오기
         if let hasImg = UIImage?(photoArray[indexPath.row]){
             cell.imgView.image = hasImg
         }
         
+        cell.imgView.tag = indexPath.row // 버튼에 tag를 입력해줍니다!!
+//        cell.imgView.addTarget(self, action: #selector(closeBtn(sender:)), for: .touchUpInside)
+        print(indexPath.row)
+        //
+           if indexPath.item == 0 {
+               cell.isSelected = true
+           }
+           print(isSelected)
+            
         return cell
     }
+    
+    // 셀선택
+//    func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
+//        // 컬랙션뷰의 데이터를 먼저 삭제 해주고, 데이터 배열의 값을 삭제해줍니다!! , '반대로할시에 데이터가 꼬이는 현상이 발생합니다.'
+//
+//        print("1111")
+//
+//            return true
+//    }
 }
+
+
 
 // cell layout
 extension WriteVC: UICollectionViewDelegateFlowLayout {
@@ -146,4 +173,8 @@ extension WriteVC: UICollectionViewDelegateFlowLayout {
         let size = CGSize(width: width, height: width)
         return size
     }
+
 }
+
+
+

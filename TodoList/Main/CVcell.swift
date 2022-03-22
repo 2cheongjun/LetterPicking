@@ -9,8 +9,13 @@ import UIKit
 
 class CVcell :UICollectionViewCell {
     
-    @IBOutlet var label : UILabel!
+//    @IBOutlet var label : UILabel!
     
     @IBOutlet var imgView: UIImageView!
+    
+    // 글 작성버튼
+    @IBAction func closeBtn(_ sender: Any) {
+        
+    }
     
 }
