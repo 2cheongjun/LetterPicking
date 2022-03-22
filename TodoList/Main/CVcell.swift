@@ -1,0 +1,16 @@
+//
+//  File.swift
+//  TodoList
+//
+//  Created by 이청준 on 2022/03/22.
+//
+
+import UIKit
+
+class CVcell :UICollectionViewCell {
+    
+    @IBOutlet var label : UILabel!
+    
+    @IBOutlet var imgView: UIImageView!
+    
+}

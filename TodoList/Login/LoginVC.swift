@@ -15,7 +15,7 @@ class LoginVC :UIViewController, UITableViewDelegate, UITableViewDataSource{
     @IBOutlet weak var textView: UITextView! //테스트값출력필드
     
     //개인정보 관리 매니저(로그인/ 로그아웃정보)
-    let uinfo = UserInfoManager()
+//    let uinfo = UserInfoManager()
     //    let profileImage = UIImageView() //프로필사진이미지
     let tv = UITableView() //프로필목록
     // 서버에서 가져온제이슨값을 담을 배열
