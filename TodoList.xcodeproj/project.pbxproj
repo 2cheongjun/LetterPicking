@@ -26,6 +26,7 @@
 		D08B028C27E8577700012766 /* FeedModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D08B028B27E8577700012766 /* FeedModel.swift */; };
 		D08B028E27E941D800012766 /* WriteVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D08B028D27E941D800012766 /* WriteVC.swift */; };
 		D08B029727E9C86B00012766 /* CVcell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D08B029627E9C86B00012766 /* CVcell.swift */; };
+		D08B02C527EB62F300012766 /* imgUploadVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D08B02C427EB62F300012766 /* imgUploadVC.swift */; };
 		D0E16BC527D6F38C008F970E /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0E16BC427D6F38C008F970E /* Utils.swift */; };
 		D0E16BC727D6FBCB008F970E /* JoinVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0E16BC627D6FBCB008F970E /* JoinVC.swift */; };
 		D0E16BCB27DF4E2B008F970E /* LoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0E16BCA27DF4E2B008F970E /* LoginVC.swift */; };
@@ -57,6 +58,7 @@
 		D08B028B27E8577700012766 /* FeedModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedModel.swift; sourceTree = "<group>"; };
 		D08B028D27E941D800012766 /* WriteVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WriteVC.swift; sourceTree = "<group>"; };
 		D08B029627E9C86B00012766 /* CVcell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CVcell.swift; sourceTree = "<group>"; };
+		D08B02C427EB62F300012766 /* imgUploadVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = imgUploadVC.swift; sourceTree = "<group>"; };
 		D0E16BC427D6F38C008F970E /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		D0E16BC627D6FBCB008F970E /* JoinVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoinVC.swift; sourceTree = "<group>"; };
 		D0E16BCA27DF4E2B008F970E /* LoginVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginVC.swift; sourceTree = "<group>"; };
@@ -114,6 +116,9 @@
 		D051F35327CDE2AF00ABBB4E /* TodoList */ = {
 			isa = PBXGroup;
 			children = (
+				D08B02C327EB62C400012766 /* TestFolder */,
+				D08B02C027EB605A00012766 /* Map */,
+				D08B02BF27EB604300012766 /* Mypage */,
 				D08B028A27E83DE600012766 /* Login */,
 				D08B028927E838E000012766 /* Main */,
 				D08B028227E5C74700012766 /* Resources */,
@@ -125,8 +130,6 @@
 				D051F36E27CE2ADC00ABBB4E /* TodoDetailViewController.xib */,
 				D051F36B27CDE9F800ABBB4E /* TodoCell.swift */,
 				D051F35A27CDE2AF00ABBB4E /* Main.storyboard */,
-				D08B027C27E5C23E00012766 /* secondTabVC.swift */,
-				D08B027E27E5C25D00012766 /* thirdTabVC.swift */,
 				D051F36027CDE2B100ABBB4E /* Assets.xcassets */,
 				D051F36227CDE2B100ABBB4E /* LaunchScreen.storyboard */,
 				D051F36527CDE2B100ABBB4E /* Info.plist */,
@@ -164,6 +167,30 @@
 				D0E16BF127E0DAC3008F970E /* APIResponse.swift */,
 			);
 			path = Login;
+			sourceTree = "<group>";
+		};
+		D08B02BF27EB604300012766 /* Mypage */ = {
+			isa = PBXGroup;
+			children = (
+				D08B027E27E5C25D00012766 /* thirdTabVC.swift */,
+			);
+			path = Mypage;
+			sourceTree = "<group>";
+		};
+		D08B02C027EB605A00012766 /* Map */ = {
+			isa = PBXGroup;
+			children = (
+				D08B027C27E5C23E00012766 /* secondTabVC.swift */,
+			);
+			path = Map;
+			sourceTree = "<group>";
+		};
+		D08B02C327EB62C400012766 /* TestFolder */ = {
+			isa = PBXGroup;
+			children = (
+				D08B02C427EB62F300012766 /* imgUploadVC.swift */,
+			);
+			path = TestFolder;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -299,6 +326,7 @@
 				D0E16BF227E0DAC4008F970E /* APIResponse.swift in Sources */,
 				D08B027B27E5C21700012766 /* firstTabVC.swift in Sources */,
 				D08B028C27E8577700012766 /* FeedModel.swift in Sources */,
+				D08B02C527EB62F300012766 /* imgUploadVC.swift in Sources */,
 				D08B029727E9C86B00012766 /* CVcell.swift in Sources */,
 				D08B028E27E941D800012766 /* WriteVC.swift in Sources */,
 			);

@@ -148,6 +148,7 @@ extension WriteVC: UICollectionViewDelegate, UICollectionViewDataSource {
         // 이미지 꺼내오기
         if let hasImg = UIImage?(photoArray[indexPath.row]){
             cell.imgView.image = hasImg
+            print(cell.imgView.image = hasImg)
         }
         
         print(indexPath.row)
