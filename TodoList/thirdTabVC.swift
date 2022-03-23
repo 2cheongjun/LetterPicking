@@ -67,7 +67,7 @@ class thirdTabVC: UIViewController, UITableViewDelegate, UITableViewDataSource, 
         self.profileImage.image = image
         self.profileImage.frame.size = CGSize(width: 100, height: 100)
         // 이미지 중앙정렬
-        self.profileImage.center = CGPoint(x:self.view.frame.width / 2, y: 270)
+        self.profileImage.center = CGPoint(x:self.view.frame.width / 2, y: 240)
         // 3.이미지둥글게
         self.profileImage.layer.cornerRadius = self.profileImage.frame.width / 2
         self.profileImage.layer.borderWidth = 0
