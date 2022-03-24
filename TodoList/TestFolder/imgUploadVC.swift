@@ -10,6 +10,7 @@ import Alamofire
 
 class imgUploadVC: UIViewController,UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
+    
     //이미지뷰
     @IBOutlet weak var imgView: UIImageView!
     
@@ -31,10 +32,10 @@ class imgUploadVC: UIViewController,UIImagePickerControllerDelegate, UINavigatio
         // 선택된이미지를 미리보기에 출력한다.
         self.imgView.image = info[.editedImage] as? UIImage
         
-        // 이미지값받아서 서버로 보내기
-        newProfile(info[.editedImage] as? UIImage)
+        // 갤러리에서 받아온이미지를 업로드 버튼을 눌렀을때 서버로 전송
+        upLoadImg(info[.editedImage] as? UIImage)
         
-//        print("UIImage :\(info[.editedImage] as? UIImage)")
+        // print("UIImage :\(info[.editedImage] as? UIImage)")
         
         // 이미지 피커 컨트롤러를 닫는다.
         picker.dismiss(animated: false)
@@ -44,28 +45,42 @@ class imgUploadVC: UIViewController,UIImagePickerControllerDelegate, UINavigatio
     
     // 서버로 전송
     @IBAction func uploadBtn(_ sender: Any) {
-      
-      
+        
+        // 갤러리에서 받아온 UIImage값 받아서 newProfile함수 호출
+        
     }
     
-    
-    func newProfile(_ profile: UIImage?) {
-//    func newProfile(_ profile: UIImage?, success: (()->Void)? = nil, fail: ((String)->Void)? = nil) {
+    // 서버로 이미지전송로직
+    func upLoadImg(_ image: UIImage?) {
+        //    func newProfile(_ profile: UIImage?, success: (()->Void)? = nil, fail: ((String)->Void)? = nil) {
+        
+        // UI이미지를 가져오자마자, 가로200픽셀로 resize
+        let image = image?.resized(toWidth: 200.0)
+        print("이미지사이즈:\(image!)")
+        
+        // 랜덤String으로 이미지명 생성
+        let str = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+        let size = 5
+        let rn = str.createRandomStr(length: size)
+        
+        // let profileData = image!.jpegData(compressionQuality: 1)! // jpg로하니까 안됬음
+        //이미지를 데이터로 변환한뒤에, JSON형태로 전송하기 위해서 base64로 인코딩한다.
+        let profileData = image!.pngData()?.base64EncodedString()
+        let param: Parameters = [ "image" : profileData ?? "noImg",
+                                  "postText" : "내용",
+                                  "name": rn
+        ]
+        
         // API 호출 URL
-     
         let url = "http://3.37.202.166/post/0iOS_cookPostInsert.php"
         
-        // 전송할 프로필 이미지
-//        let profileData = profile!.pngData()?.base64EncodedString()
-        // 이미지를 데이터로 변환한뒤에, JSON형태로 전송하기 위해서 base64로 인코딩한다.
-        let profileData = profile!.pngData()?.base64EncodedString()
-        let param: Parameters = [ "image" : profileData! ]
-        
-        // 이미지 전송
+        //이미지 전송
         let call = AF.request(url, method: .post, parameters: param,
-                                     encoding: JSONEncoding.default)
+                              encoding: JSONEncoding.default)
+        //                call.responseJSON { res in
         call.responseJSON { res in
             
+            // 성공실패케이스문 작성하기
             print("서버로 보냄!!!!!")
             print("JSON= \(try! res.result.get())!)")
             
@@ -73,20 +88,48 @@ class imgUploadVC: UIViewController,UIImagePickerControllerDelegate, UINavigatio
                 print("올바른 응답값이 아닙니다.")
                 return
             }
-            // 응답 코드 확인. 0이면 성공
-//            let resultCode = jsonObject["result_code"] as! Int
-//
-//            if resultCode == 0 { // if success
-////                self.profile = profile // 이미지가 업로드되었다면 UserDefault에 저장된 이미지도 변경한다.
-////                success?()
-//            } else {
-//                let msg = (jsonObject["error_msg"] as? String) ??
-//                "이미지 프로필 변경이 실패했습니다."
-////                fail?(msg)
-//            }
+            
+            if let jsonObject = try! res.result.get() as? [String :Any]{
+                let success = jsonObject["success"] as? Int ?? 0
+                
+                if success == 1 {
+                    self.alert("응답값 JSON= \(try! res.result.get())!)")
+                }else{
+                    //sucess가 0이면
+                    self.alert("응답실패")
+                }
+            }
         }
     }
+}
 
+
+//랜덤 영어 생성
+extension String {
     
+    func createRandomStr(length: Int) -> String {
+        let str = (0 ..< length).map{ _ in self.randomElement()! }
+        return String(str)
+    }
     
+}
+
+// 이미지 사이즈 줄이기
+extension UIImage {
+    func resized(withPercentage percentage: CGFloat, isOpaque: Bool = true) -> UIImage? {
+        let canvas = CGSize(width: size.width * percentage, height: size.height * percentage)
+        let format = imageRendererFormat
+        format.opaque = isOpaque
+        return UIGraphicsImageRenderer(size: canvas, format: format).image {
+            _ in draw(in: CGRect(origin: .zero, size: canvas))
+        }
+    }
+    func resized(toWidth width: CGFloat, isOpaque: Bool = true) -> UIImage? {
+        let canvas = CGSize(width: width, height: CGFloat(ceil(width/size.width * size.height)))
+        let format = imageRendererFormat
+        format.opaque = isOpaque
+        return UIGraphicsImageRenderer(size: canvas, format: format).image {
+            _ in draw(in: CGRect(origin: .zero, size: canvas))
+        }
+    }
 }

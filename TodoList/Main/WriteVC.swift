@@ -8,20 +8,24 @@
 import UIKit
 import BSImagePicker
 import Photos
-
+import Alamofire
 
 
 class WriteVC : UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextViewDelegate{
     
     @IBOutlet weak var imgView: UIImageView!
- 
+    
     @IBOutlet weak var textView: UITextView!
     @IBOutlet weak var collectionView: UICollectionView!//콜렉션뷰
     //    var list = ["1", "2", "3", "4" ,"5", "6", "7", "8", "9", "10"]
     //    var numberOfCell: Int = 10
     
+    // 갤러리에서 선택해 가져온 이미지의 원래형태인것같음..
     var selectedAssets = [PHAsset]()
+    // 이미지들 담은 배열
     var photoArray = [UIImage]()
+    
+    
     
     var isSelected = false
     
@@ -35,7 +39,7 @@ class WriteVC : UIViewController, UIImagePickerControllerDelegate, UINavigationC
         self.textView.layer.cornerRadius = 6
     }
     
-
+    
     // 업로드
     // 공유버튼을 누를때 텍스트값 + 이미지값을 가져와서 서버로 업로드한다.
     // 창닫기
@@ -43,7 +47,7 @@ class WriteVC : UIViewController, UIImagePickerControllerDelegate, UINavigationC
         if let text = textView.text {
             print(text)
         }
-  
+        
     }
     
     //취소버튼
@@ -54,7 +58,7 @@ class WriteVC : UIViewController, UIImagePickerControllerDelegate, UINavigationC
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true) /// 화면을 누르면 키보드 내려가게 하는 것
     }
-
+    
     
     // 이미지다중선택을 위한 BSImagePicker 라이브러리사용
     @IBAction func pick(_ sender: Any) {
@@ -87,25 +91,7 @@ class WriteVC : UIViewController, UIImagePickerControllerDelegate, UINavigationC
             self.convertAssetToImage()
             self.collectionView.reloadData()
         })
-        
-        //        // 기본이미지 피커 인스턴스를 생성한다.
-        //               let picker = UIImagePickerController()
-        //
-        //               picker.delegate = self // 이미지피커컨트롤러 인스턴스의 델리게이트 속성 현재뷰 컨트롤러 인스턴스로설정
-        //               picker.allowsEditing = true // 피커이미지편집 허용
-        //
-        //               // 이미지피커 화면을 표시한다.
-        //               self.present(picker, animated: true)
-        //           }
-        //
-        //           // 사용자가 이미지를 선택하면 자동으로 이 메소드가 호출된다.
-        //           func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        //               // 선택된이미지를 미리보기에 출력한다.
-        //               self.imgView.image = info[.editedImage] as? UIImage
-        //
-        //               // 이미지 피커 컨트롤러를 닫는다.
-        //               picker.dismiss(animated: false)
-        
+
     }
     
     // 이미지다중선택을 위한 BSImagePicker 라이브러리사용
@@ -145,15 +131,17 @@ extension WriteVC: UICollectionViewDelegate, UICollectionViewDataSource {
         //        cell.label.text = list[indexPath.row]
         //        cell.label.backgroundColor = .yellow
         
-        // 이미지 꺼내오기
+        // 이미지 여러장 꺼내오기
         if let hasImg = UIImage?(photoArray[indexPath.row]){
+            // 각쎌에 이미지 넣기
             cell.imgView.image = hasImg
             print(cell.imgView.image = hasImg)
+            //        print(indexPath.row)
         }
-        
-        print(indexPath.row)
-        
-        
+ 
+        // 꺼내온 이미지 여러장 서버로 전송하기 ****************************************
+//        upLoadImg(UIImage?(photoArray[indexPath.row]))
+
         return cell
     }
     
@@ -177,7 +165,48 @@ extension WriteVC: UICollectionViewDelegate, UICollectionViewDataSource {
         }
         
     }
+    
+    // 이미지 여러장 서버업로드 *************************************************************************************
+//    func upLoadImg(_ image: UIImage?) {
+//        //    func newProfile(_ profile: UIImage?, success: (()->Void)? = nil, fail: ((String)->Void)? = nil) {
+//
+//        var imageStr: [String] = []
+//
+//        for a in 0..<self.photoArray.count {
+//            let imageData: Data = self.photoArray[a].jpegData(compressionQuality: 0.1)!
+//            //이미지를 데이터로 변환한뒤에, JSON형태로 전송하기 위해서 base64로 인코딩한다.
+//            imageStr.append(imageData.base64EncodedString())
+//        }
+//
+//        guard let data = try? JSONSerialization.data(withJSONObject: imageStr, options: []) else {
+//            return
+//        }
+//
+//        let jsonImageString: String = String(data: data, encoding: String.Encoding.utf8) ?? ""
+//        let urlString: String = "imageStr=" + jsonImageString
+//
+////        print("이미지들:\(urlString)")
+//
+//        var request: URLRequest = URLRequest(url: URL(string: "http://3.37.202.166/post/0iOS_cookPostInsert.php")!)
+//        request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
+//        request.httpMethod = "POST"
+//        request.httpBody = urlString.data(using: .utf8)
+//
+//        NSURLConnection.sendAsynchronousRequest(request, queue: .main, completionHandler: { (request, data, error) in
+//
+//            guard let data = data else {
+//                return
+//            }
+//
+//            let responseString: String = String(data: data, encoding: .utf8)!
+//            print("my_log = " + responseString)
+//
+//        })
+//    }// 함수끝
+//}
+
 }
+
 
 
 // cell layout
@@ -204,7 +233,5 @@ extension WriteVC: UICollectionViewDelegateFlowLayout {
         let size = CGSize(width: width, height: width)
         return size
     }
-    
+
 }
-
-
