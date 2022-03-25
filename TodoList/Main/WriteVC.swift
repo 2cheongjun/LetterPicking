@@ -25,6 +25,8 @@ class WriteVC : UIViewController, UIImagePickerControllerDelegate, UINavigationC
     // 이미지들 담은 배열
     var photoArray = [UIImage]()
     
+    // UI이미지 담을 변수(갤러리에서 가져온이미지)***************
+    var newImages: UIImage? = nil
     
     
     var isSelected = false
@@ -35,19 +37,8 @@ class WriteVC : UIViewController, UIImagePickerControllerDelegate, UINavigationC
         self.collectionView.dataSource = self
         // 텍스트뷰 테두리
         self.textView.layer.borderWidth = 1.0
-        self.textView.layer.borderColor = UIColor.systemGray.cgColor
-        self.textView.layer.cornerRadius = 6
-    }
-    
-    
-    // 업로드
-    // 공유버튼을 누를때 텍스트값 + 이미지값을 가져와서 서버로 업로드한다.
-    // 창닫기
-    @IBAction func uploadBtn(_ sender: Any) {
-        if let text = textView.text {
-            print(text)
-        }
-        
+        self.textView.layer.borderColor = UIColor.systemGray4.cgColor
+        self.textView.layer.cornerRadius = 4
     }
     
     //취소버튼
@@ -115,6 +106,22 @@ class WriteVC : UIViewController, UIImagePickerControllerDelegate, UINavigationC
         }
     }
     
+    
+    // 업로드
+    // 공유버튼을 누를때 텍스트값 + 이미지값을 가져와서 서버로 업로드한다.
+    // 창닫기
+    @IBAction func uploadBtn(_ sender: Any) {
+        if let text = textView.text {
+            print(text)
+        }
+        
+        // 갤러리에서 받아온 UIImage값 받아서 newProfile함수 호출
+        if let getImage = newImages{
+            upLoadImg(getImage)
+        }
+        
+    }
+    
 }
 // cell data
 extension WriteVC: UICollectionViewDelegate, UICollectionViewDataSource {
@@ -135,9 +142,10 @@ extension WriteVC: UICollectionViewDelegate, UICollectionViewDataSource {
         if let hasImg = UIImage?(photoArray[indexPath.row]){
             // 각쎌에 이미지 넣기
             cell.imgView.image = hasImg
-            print(cell.imgView.image = hasImg)
-            //        print(indexPath.row)
+            
+            newImages = hasImg
         }
+        
  
         // 꺼내온 이미지 여러장 서버로 전송하기 ****************************************
 //        upLoadImg(UIImage?(photoArray[indexPath.row]))
@@ -187,7 +195,7 @@ extension WriteVC: UICollectionViewDelegate, UICollectionViewDataSource {
 
 //        print("이미지들:\(urlString)")
 
-        var request: URLRequest = URLRequest(url: URL(string: "http://3.37.202.166/post/0iOS_cookPostInsert.php")!)
+        var request: URLRequest = URLRequest(url: URL(string: "http://3.37.202.166/post/0iOS_images.php")!)
         request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
         request.httpMethod = "POST"
         request.httpBody = urlString.data(using: .utf8)
@@ -197,9 +205,12 @@ extension WriteVC: UICollectionViewDelegate, UICollectionViewDataSource {
             guard let data = data else {
                 return
             }
+            
 
             let responseString: String = String(data: data, encoding: .utf8)!
-            print("my_log = " + responseString)
+            print(" 업로드 이미지들 = " + responseString)
+            
+            self.alert("이미지 업로드 성공")
 
         })
     }// 함수끝
