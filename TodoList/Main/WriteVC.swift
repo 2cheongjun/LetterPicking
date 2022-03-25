@@ -111,18 +111,27 @@ class WriteVC : UIViewController, UIImagePickerControllerDelegate, UINavigationC
     // 공유버튼을 누를때 텍스트값 + 이미지값을 가져와서 서버로 업로드한다.
     // 창닫기
     @IBAction func uploadBtn(_ sender: Any) {
-        if let text = textView.text {
-            print(text)
-        }
         
-        // 갤러리에서 받아온 UIImage값 받아서 newProfile함수 호출
-        if let getImage = newImages{
-            upLoadImg(getImage)
-        }
+        let alert = UIAlertController(title: "게시물 공유", message: "업로드 하시겠습니까?", preferredStyle: .alert)
+        let alertAction = UIAlertAction(title: "업로드", style: .default) { [self] (_) in
+                    //  여기에 실행할 코드
+                    // 갤러리에서 받아온 UIImage값 받아서 newProfile함수 호출
+                    if let getImage = self.newImages{
+                        self.upLoadImg(getImage)
+                    }
+                }
+                alert.addAction(alertAction)
         
+                // 왜인지 취소글자가 더두꺼워보임???
+                let cancel = UIAlertAction(title: "취소", style: .cancel)
+                alert.addAction(cancel)
+//                alert.view.tintColor =  UIColor(ciColor: .black)
+        self.present(alert, animated: true, completion: nil)
     }
-    
 }
+
+
+
 // cell data
 extension WriteVC: UICollectionViewDelegate, UICollectionViewDataSource {
     
@@ -178,8 +187,14 @@ extension WriteVC: UICollectionViewDelegate, UICollectionViewDataSource {
     func upLoadImg(_ image: UIImage?) {
         //    func newProfile(_ profile: UIImage?, success: (()->Void)? = nil, fail: ((String)->Void)? = nil) {
 
+        // 텍스트필드에 적힌 내용이 있으면 가져옴
+        if let text = textView.text {
+            print(text)
+        }
+        
         var imageStr: [String] = []
-
+        
+        //userID, postText어떻게 담아?????
         for a in 0..<self.photoArray.count {
             let imageData: Data = self.photoArray[a].jpegData(compressionQuality: 0.1)!
             //이미지를 데이터로 변환한뒤에, JSON형태로 전송하기 위해서 base64로 인코딩한다.
@@ -215,7 +230,6 @@ extension WriteVC: UICollectionViewDelegate, UICollectionViewDataSource {
         })
     }// 함수끝
 }
-
 
 
 
