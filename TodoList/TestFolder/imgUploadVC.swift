@@ -10,6 +10,8 @@ import Alamofire
 
 class imgUploadVC: UIViewController,UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
+    // UI이미지 담을 변수(갤러리에서 가져온이미지)
+    var newImage: UIImage? = nil
     
     //이미지뷰
     @IBOutlet weak var imgView: UIImageView!
@@ -32,23 +34,23 @@ class imgUploadVC: UIViewController,UIImagePickerControllerDelegate, UINavigatio
         // 선택된이미지를 미리보기에 출력한다.
         self.imgView.image = info[.editedImage] as? UIImage
         
-        // 갤러리에서 받아온이미지를 업로드 버튼을 눌렀을때 서버로 전송
-        upLoadImg(info[.editedImage] as? UIImage)
-        
+        // 갤러리에서 받아온이미지를 글로벌변수 newImage에 넣는다.
+        newImage = info[.editedImage] as? UIImage
+
         // print("UIImage :\(info[.editedImage] as? UIImage)")
         
         // 이미지 피커 컨트롤러를 닫는다.
         picker.dismiss(animated: false)
     }
     
-    
-    
-    // 서버로 전송
+    // 업로드버튼을 누르면 서버로 이미지 전송
     @IBAction func uploadBtn(_ sender: Any) {
-        
         // 갤러리에서 받아온 UIImage값 받아서 newProfile함수 호출
-        
+        if let getImage = newImage{
+            upLoadImg(getImage)
+        }
     }
+
     
     // 서버로 이미지전송로직
     func upLoadImg(_ image: UIImage?) {
@@ -93,7 +95,8 @@ class imgUploadVC: UIViewController,UIImagePickerControllerDelegate, UINavigatio
                 let success = jsonObject["success"] as? Int ?? 0
                 
                 if success == 1 {
-                    self.alert("응답값 JSON= \(try! res.result.get())!)")
+//                    self.alert("응답값 JSON= \(try! res.result.get())!)")
+                    self.dismiss(animated: true, completion: nil)
                 }else{
                     //sucess가 0이면
                     self.alert("응답실패")

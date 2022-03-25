@@ -417,7 +417,7 @@
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="filled" title="업로드"/>
                                 <connections>
-                                    <action selector="uploadBtn:" destination="liK-92-IgN" eventType="touchUpInside" id="oWu-9j-rXu"/>
+                                    <action selector="uploadBtn:" destination="liK-92-IgN" eventType="touchUpInside" id="IUU-FG-aJa"/>
                                 </connections>
                             </button>
                         </subviews>

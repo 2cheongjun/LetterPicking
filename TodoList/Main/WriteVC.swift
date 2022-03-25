@@ -167,45 +167,45 @@ extension WriteVC: UICollectionViewDelegate, UICollectionViewDataSource {
     }
     
     // 이미지 여러장 서버업로드 *************************************************************************************
-//    func upLoadImg(_ image: UIImage?) {
-//        //    func newProfile(_ profile: UIImage?, success: (()->Void)? = nil, fail: ((String)->Void)? = nil) {
-//
-//        var imageStr: [String] = []
-//
-//        for a in 0..<self.photoArray.count {
-//            let imageData: Data = self.photoArray[a].jpegData(compressionQuality: 0.1)!
-//            //이미지를 데이터로 변환한뒤에, JSON형태로 전송하기 위해서 base64로 인코딩한다.
-//            imageStr.append(imageData.base64EncodedString())
-//        }
-//
-//        guard let data = try? JSONSerialization.data(withJSONObject: imageStr, options: []) else {
-//            return
-//        }
-//
-//        let jsonImageString: String = String(data: data, encoding: String.Encoding.utf8) ?? ""
-//        let urlString: String = "imageStr=" + jsonImageString
-//
-////        print("이미지들:\(urlString)")
-//
-//        var request: URLRequest = URLRequest(url: URL(string: "http://3.37.202.166/post/0iOS_cookPostInsert.php")!)
-//        request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
-//        request.httpMethod = "POST"
-//        request.httpBody = urlString.data(using: .utf8)
-//
-//        NSURLConnection.sendAsynchronousRequest(request, queue: .main, completionHandler: { (request, data, error) in
-//
-//            guard let data = data else {
-//                return
-//            }
-//
-//            let responseString: String = String(data: data, encoding: .utf8)!
-//            print("my_log = " + responseString)
-//
-//        })
-//    }// 함수끝
-//}
+    func upLoadImg(_ image: UIImage?) {
+        //    func newProfile(_ profile: UIImage?, success: (()->Void)? = nil, fail: ((String)->Void)? = nil) {
 
+        var imageStr: [String] = []
+
+        for a in 0..<self.photoArray.count {
+            let imageData: Data = self.photoArray[a].jpegData(compressionQuality: 0.1)!
+            //이미지를 데이터로 변환한뒤에, JSON형태로 전송하기 위해서 base64로 인코딩한다.
+            imageStr.append(imageData.base64EncodedString())
+        }
+
+        guard let data = try? JSONSerialization.data(withJSONObject: imageStr, options: []) else {
+            return
+        }
+
+        let jsonImageString: String = String(data: data, encoding: String.Encoding.utf8) ?? ""
+        let urlString: String = "imageStr=" + jsonImageString
+
+//        print("이미지들:\(urlString)")
+
+        var request: URLRequest = URLRequest(url: URL(string: "http://3.37.202.166/post/0iOS_cookPostInsert.php")!)
+        request.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
+        request.httpMethod = "POST"
+        request.httpBody = urlString.data(using: .utf8)
+
+        NSURLConnection.sendAsynchronousRequest(request, queue: .main, completionHandler: { (request, data, error) in
+
+            guard let data = data else {
+                return
+            }
+
+            let responseString: String = String(data: data, encoding: .utf8)!
+            print("my_log = " + responseString)
+
+        })
+    }// 함수끝
 }
+
+
 
 
 
