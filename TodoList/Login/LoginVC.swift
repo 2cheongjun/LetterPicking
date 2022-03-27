@@ -47,7 +47,11 @@ class LoginVC :UIViewController, UITableViewDelegate, UITableViewDataSource{
         self.view.addSubview(self.tv)
         //로그인상태에 따라 로그인/로그아웃버튼 출력
         //최초화면 로딩 시 로그인 상태에 따라 적절히 로그인/로그아웃 버튼을 출력한다.
-        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        // 마이페이지에서 다시 로그인창으로 왔을때, 상단 백버튼가림
+        self.navigationController?.navigationBar.isHidden = true
     }
     
     // 테스트버튼, 둘러보기
@@ -130,8 +134,8 @@ class LoginVC :UIViewController, UITableViewDelegate, UITableViewDataSource{
                             // 성공했을때에만 로그인info로 값보내기
                             self.spend(userID: userID, userPassword: userPassword)
                             
-                            //화면이동시키기
-                            guard let uvc = self.storyboard?.instantiateViewController(withIdentifier: "thirdTabVC") else {
+                            //화면이동시키기 ************************************************************************
+                            guard let uvc = self.storyboard?.instantiateViewController(withIdentifier: "tabVC") else {
                                 return
                             }
                             self.navigationController?.pushViewController(uvc, animated: true)
@@ -172,14 +176,17 @@ class LoginVC :UIViewController, UITableViewDelegate, UITableViewDataSource{
         loginAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
         // 로그인버튼 눌렀을때
         loginAlert.addAction(UIAlertAction(title: "Login", style: .destructive){ (_) in
-            let account = loginAlert.textFields?[0].text ?? "" //첫번째 필드: 계정
-            let passwd = loginAlert.textFields?[1].text ?? "" //두번쨰 필드: 비밀번호
+//            let account = loginAlert.textFields?[0].text ?? "" //첫번째 필드: 계정
+//            let passwd = loginAlert.textFields?[1].text ?? "" //두번쨰 필드: 비밀번호
             
-            // 아이디, 비번 입력받은값 서버로 전송하고 아이디값 받아옴
-             self.sendRequest(id: account, pw: passwd)
+            // 아이디, 비번 입력받은값 서버로 전송
+
+//            self.sendRequest(id: account, pw: passwd)
+            let account = "jun"
+            let passwd = "1111"
             
-            // 로그인 버튼을 누르면 uinfo에 계정,비번 받아서 넣기************************************************
-            
+            self.sendRequest(id: account, pw: passwd)
+
         })
         self.present(loginAlert, animated: false)
     }

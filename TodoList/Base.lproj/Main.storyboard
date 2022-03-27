@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Hfz-3A-864">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="MFc-vg-QuY">
     <device id="retina6_0" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19519"/>
@@ -107,7 +107,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="y9w-G7-wft">
-                                <rect key="frame" x="144.66666666666666" y="728" width="101" height="31"/>
+                                <rect key="frame" x="144.66666666666666" y="684" width="101" height="31"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" title="회원가입 하기"/>
                                 <connections>
@@ -160,14 +160,14 @@
                     </view>
                     <toolbarItems/>
                     <navigationItem key="navigationItem" id="SnJ-PP-GKR"/>
-                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
+                    <nil key="simulatedTopBarMetrics"/>
                     <connections>
                         <outlet property="textView" destination="1As-M3-gN1" id="6bO-2y-ozW"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2Wk-dD-Xw7" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-658.46153846153845" y="827.48815165876772"/>
+            <point key="canvasLocation" x="-692" y="827"/>
         </scene>
         <!--지도로보기-->
         <scene sceneID="Ro0-nH-3p6">
@@ -338,6 +338,8 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="마이페이지" image="person" catalog="system" id="Gda-5Y-CbM"/>
+                    <nil key="simulatedTopBarMetrics"/>
+                    <nil key="simulatedBottomBarMetrics"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="e84-RV-OJs" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -394,7 +396,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="AVa-fR-Kfg" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="63" y="827"/>
+            <point key="canvasLocation" x="122" y="827"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="vgB-yj-gUg">
@@ -415,24 +417,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bgR-mR-mHN" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-658" y="166"/>
-        </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="oRX-NL-lIh">
-            <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Hfz-3A-864" sceneMemberID="viewController">
-                    <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="ad4-af-GiK">
-                        <rect key="frame" x="0.0" y="44" width="390" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
-                    <connections>
-                        <segue destination="Kfd-OM-4pa" kind="relationship" relationship="rootViewController" id="pic-Bd-r6P"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Qn3-he-8l2" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-1387" y="828"/>
         </scene>
         <!--WriteVC-->
         <scene sceneID="a0K-fk-DMJ">
@@ -576,14 +560,13 @@
         <!--Tab Bar Controller-->
         <scene sceneID="Vsg-Cd-Wv3">
             <objects>
-                <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="Rsg-eS-JWQ" sceneMemberID="viewController">
+                <tabBarController storyboardIdentifier="tabVC" id="Rsg-eS-JWQ" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationItem key="navigationItem" id="jdV-pa-t8S"/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="oXS-Ls-jO7">
                         <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </tabBar>
                     <connections>
                         <segue destination="b6h-lu-bIc" kind="relationship" relationship="viewControllers" id="f6B-Ia-jbK"/>
@@ -594,6 +577,24 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="snI-pK-qqC" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-658" y="1518"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="6Pe-FG-OME">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="MFc-vg-QuY" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="21H-hF-UaD">
+                        <rect key="frame" x="0.0" y="44" width="390" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="Kfd-OM-4pa" kind="relationship" relationship="rootViewController" id="2RH-pJ-SYA"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="rTq-QW-nvV" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1580" y="827"/>
         </scene>
     </scenes>
     <resources>

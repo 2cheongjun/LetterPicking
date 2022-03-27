@@ -24,20 +24,20 @@ class thirdTabVC: UIViewController, UITableViewDelegate, UITableViewDataSource, 
     override func viewDidLoad() {
         //1.타이틀레이블 생성
 //        let title = UILabel(frame: CGRect(x: 0, y: 100, width: 100, height: 30))
-        
-        //2.타이틀 레이블속성설정
+//
+//        //2.타이틀 레이블속성설정
 //        title.text = "마이페이지"
 //        title.textColor = .red
 //        title.textAlignment = .center
 //        title.font = UIFont.boldSystemFont(ofSize: 16)
 //
-//        //콘텐츠 내용에 맞게 레이블 크기 변경
+//        //콘텐츠 내용에 맞게 레이블 크기 변경ㅌ
 //        title.sizeToFit()
 //
 //        //x축의 중앙에 오도록 설정
 //        title.center.x = self.view.frame.width / 2
-        
-        //수퍼뷰에 추가***************************** 탭설정끝
+//
+//        //수퍼뷰에 추가***************************** 탭설정끝
 //        self.view.addSubview(title)
         
         // 뒤로가기 버튼 처리
@@ -73,9 +73,6 @@ class thirdTabVC: UIViewController, UITableViewDelegate, UITableViewDataSource, 
 //        //프로필 이미지와 테이블뷰 객체를 뷰 계층의 맨앞으로 가져오는 구문
         self.view.bringSubviewToFront(self.tv)
         self.view.bringSubviewToFront(self.profileImage)
-//        // 상단 백버튼가림
-//        self.navigationController?.navigationBar.isHidden = true
-//
         
         
         //테이블뷰의 기본 프로퍼티의 기본 속성을 설정합니다. // 테이블뷰 높이설정
@@ -239,6 +236,9 @@ class thirdTabVC: UIViewController, UITableViewDelegate, UITableViewDataSource, 
                     return
                 }
                 self.navigationController?.pushViewController(uvc, animated: true)
+                // 창닫는 방식
+//                self.dismiss(animated: true, completion: nil)
+                
                 
             //uinfo의 logout메소드 사용
 //                if self.uinfo.logout(){
