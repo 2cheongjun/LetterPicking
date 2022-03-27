@@ -134,7 +134,7 @@ class LoginVC :UIViewController, UITableViewDelegate, UITableViewDataSource{
                             // 성공했을때에만 로그인info로 값보내기
                             self.spend(userID: userID, userPassword: userPassword)
                             
-                            //화면이동시키기 ************************************************************************
+                            // 네비바로 화면이동 ************************************************************************
                             guard let uvc = self.storyboard?.instantiateViewController(withIdentifier: "tabVC") else {
                                 return
                             }

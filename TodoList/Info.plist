@@ -2,10 +2,8 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>NSPhotoLibraryUsageDescription</key>
-	<string>&quot;123&quot;</string>
-	<key>CFBundleIdentifier</key>
-	<string>com.TodoList</string>
+	<key>KAKAO_APP_KEY</key>
+	<string>78eb7f9c872b5f4d6b83178c1aed4366</string>
 	<key>NSAppTransportSecurity</key>
 	<dict>
 		<key>NSExceptionDomains</key>
