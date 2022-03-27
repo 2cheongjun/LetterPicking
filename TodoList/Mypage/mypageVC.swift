@@ -9,7 +9,7 @@ import UIKit
 //마이페이지
 class thirdTabVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
-    let profileImage = UIImageView() //프로필사진이미지
+    var profileImage = UIImageView() //프로필사진이미지
     let tv = UITableView() //프로필목록
     let uinfo = UserInfoManager()//개인정보 관리 매니저(로그인/ 로그아웃정보)/프사저장함...
     
@@ -20,34 +20,31 @@ class thirdTabVC: UIViewController, UITableViewDelegate, UITableViewDataSource, 
     var name = ""
     var email = ""
     
+    // 이거를 해야뷰가 보임// 왜그렇죠?
+    override func viewWillAppear(_ animated: Bool) {
+        // 프사설정된 것이 없으면, 기본이미지 01
+        let image = self.uinfo.profile ?? UIImage(named: "01.jpg")
+//        let image = UIImage(named: "01.jpg")
+        // 2.프로필 이미지 처리
+        self.profileImage.image = image
+        self.profileImage.frame.size = CGSize(width: 100, height: 100)
+        // 이미지 중앙정렬
+        self.profileImage.center = CGPoint(x:self.view.frame.width / 2, y: 240)
+        // 3.이미지둥글게
+        self.profileImage.layer.cornerRadius = self.profileImage.frame.width / 2
+        self.profileImage.layer.borderWidth = 0
+        self.profileImage.layer.masksToBounds = true
+        // 4.루트뷰에 추가
+        self.view.addSubview(self.profileImage)
+    }
+    
     
     override func viewDidLoad() {
-        //1.타이틀레이블 생성
-//        let title = UILabel(frame: CGRect(x: 0, y: 100, width: 100, height: 30))
-//
-//        //2.타이틀 레이블속성설정
-//        title.text = "마이페이지"
-//        title.textColor = .red
-//        title.textAlignment = .center
-//        title.font = UIFont.boldSystemFont(ofSize: 16)
-//
-//        //콘텐츠 내용에 맞게 레이블 크기 변경ㅌ
-//        title.sizeToFit()
-//
-//        //x축의 중앙에 오도록 설정
-//        title.center.x = self.view.frame.width / 2
-//
-//        //수퍼뷰에 추가***************************** 탭설정끝
-//        self.view.addSubview(title)
-        
-        // 뒤로가기 버튼 처리
-//        let backBtn = UIBarButtonItem(title: "닫기", style: .plain, target: self, action: #selector(close(_:)))
-//        self.navigationItem.leftBarButtonItem = backBtn
         
         //1.프로필 사진에 들어갈 기본이미지 (Asset안에 있음) // 기본이미지가 안들어가는 문제..?
-        let image = UIImage(named: "profile-bg.png")
+//        let image = UIImage(named: "01.jpg")
 //        let image = UIImage(named: "Account.jpg")
-        //        let image = self.uinfo.profile
+        let image = self.uinfo.profile ?? UIImage(named: "01.jpg")
         // 2.프로필 이미지 처리
         self.profileImage.image = image
         self.profileImage.frame.size = CGSize(width: 100, height: 100)
@@ -70,10 +67,7 @@ class thirdTabVC: UIViewController, UITableViewDelegate, UITableViewDataSource, 
 //                bgImg.layer.borderWidth = 0
 //                bgImg.layer.masksToBounds = true
         self.view.addSubview(bgImg)
-//        //프로필 이미지와 테이블뷰 객체를 뷰 계층의 맨앞으로 가져오는 구문
-        self.view.bringSubviewToFront(self.tv)
-        self.view.bringSubviewToFront(self.profileImage)
-        
+
         
         //테이블뷰의 기본 프로퍼티의 기본 속성을 설정합니다. // 테이블뷰 높이설정
         self.tv.frame = CGRect(x: 0, y: self.profileImage.frame.origin.y + self.profileImage.frame.size.height + 20, width: self.view.frame.width, height:300)
@@ -91,6 +85,10 @@ class thirdTabVC: UIViewController, UITableViewDelegate, UITableViewDataSource, 
         self.profileImage.isUserInteractionEnabled = true //상호반응허락
         self.profileImage.image = self.uinfo.profile// 이미지갱신
 
+       //프로필 이미지와 테이블뷰 객체를 뷰 계층의 맨앞으로 가져오는 구문
+        self.view.bringSubviewToFront(self.tv)
+        self.view.bringSubviewToFront(self.profileImage)
+                
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

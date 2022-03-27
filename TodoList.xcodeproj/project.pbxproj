@@ -20,7 +20,7 @@
 		D051F37027CE2ADC00ABBB4E /* TodoDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D051F36E27CE2ADC00ABBB4E /* TodoDetailViewController.xib */; };
 		D08B027B27E5C21700012766 /* firstTabVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D08B027A27E5C21700012766 /* firstTabVC.swift */; };
 		D08B027D27E5C23E00012766 /* secondTabVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D08B027C27E5C23E00012766 /* secondTabVC.swift */; };
-		D08B027F27E5C25D00012766 /* thirdTabVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D08B027E27E5C25D00012766 /* thirdTabVC.swift */; };
+		D08B027F27E5C25D00012766 /* mypageVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D08B027E27E5C25D00012766 /* mypageVC.swift */; };
 		D08B028627E61BCE00012766 /* profile-bg.png in Resources */ = {isa = PBXBuildFile; fileRef = D08B028527E61BCE00012766 /* profile-bg.png */; };
 		D08B028827E8389D00012766 /* FeedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D08B028727E8389D00012766 /* FeedCell.swift */; };
 		D08B028C27E8577700012766 /* FeedModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D08B028B27E8577700012766 /* FeedModel.swift */; };
@@ -307,6 +307,8 @@
 		D09E65F927F0F27400077BD5 /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = D09E65F827F0F26D00077BD5 /* libc++.tbd */; };
 		D09E65FB27F0F28400077BD5 /* libxml2.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = D09E65FA27F0F27F00077BD5 /* libxml2.tbd */; };
 		D09E65FD27F0F35300077BD5 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = D09E65FC27F0F34D00077BD5 /* libsqlite3.tbd */; };
+		D09E65FF27F1034800077BD5 /* noticeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D09E65FE27F1034800077BD5 /* noticeVC.swift */; };
+		D09E660327F1079600077BD5 /* 01.jpg in Resources */ = {isa = PBXBuildFile; fileRef = D09E660227F1079600077BD5 /* 01.jpg */; };
 		D0E16BC527D6F38C008F970E /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0E16BC427D6F38C008F970E /* Utils.swift */; };
 		D0E16BC727D6FBCB008F970E /* JoinVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0E16BC627D6FBCB008F970E /* JoinVC.swift */; };
 		D0E16BCB27DF4E2B008F970E /* LoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0E16BCA27DF4E2B008F970E /* LoginVC.swift */; };
@@ -332,7 +334,7 @@
 		D051F36E27CE2ADC00ABBB4E /* TodoDetailViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TodoDetailViewController.xib; sourceTree = "<group>"; };
 		D08B027A27E5C21700012766 /* firstTabVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = firstTabVC.swift; sourceTree = "<group>"; };
 		D08B027C27E5C23E00012766 /* secondTabVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = secondTabVC.swift; sourceTree = "<group>"; };
-		D08B027E27E5C25D00012766 /* thirdTabVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = thirdTabVC.swift; sourceTree = "<group>"; };
+		D08B027E27E5C25D00012766 /* mypageVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = mypageVC.swift; sourceTree = "<group>"; };
 		D08B028527E61BCE00012766 /* profile-bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "profile-bg.png"; sourceTree = "<group>"; };
 		D08B028727E8389D00012766 /* FeedCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedCell.swift; sourceTree = "<group>"; };
 		D08B028B27E8577700012766 /* FeedModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedModel.swift; sourceTree = "<group>"; };
@@ -628,6 +630,8 @@
 		D09E65F827F0F26D00077BD5 /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
 		D09E65FA27F0F27F00077BD5 /* libxml2.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libxml2.tbd; path = usr/lib/libxml2.tbd; sourceTree = SDKROOT; };
 		D09E65FC27F0F34D00077BD5 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
+		D09E65FE27F1034800077BD5 /* noticeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = noticeVC.swift; sourceTree = "<group>"; };
+		D09E660227F1079600077BD5 /* 01.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 01.jpg; sourceTree = "<group>"; };
 		D0E16BC427D6F38C008F970E /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		D0E16BC627D6FBCB008F970E /* JoinVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoinVC.swift; sourceTree = "<group>"; };
 		D0E16BCA27DF4E2B008F970E /* LoginVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginVC.swift; sourceTree = "<group>"; };
@@ -700,9 +704,10 @@
 		D051F35327CDE2AF00ABBB4E /* TodoList */ = {
 			isa = PBXGroup;
 			children = (
+				D09E660027F1035100077BD5 /* Notice */,
 				D09E63BE27F0F19E00077BD5 /* IOS_DaumMap_SDK_1.4.0 */,
 				D08B02C327EB62C400012766 /* TestFolder */,
-				D08B02C027EB605A00012766 /* Map */,
+				D08B02C027EB605A00012766 /* MapView */,
 				D08B02BF27EB604300012766 /* Mypage */,
 				D08B028A27E83DE600012766 /* Login */,
 				D08B028927E838E000012766 /* Main */,
@@ -727,6 +732,7 @@
 		D08B028227E5C74700012766 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				D09E660227F1079600077BD5 /* 01.jpg */,
 				D08B028527E61BCE00012766 /* profile-bg.png */,
 			);
 			path = Resources;
@@ -758,17 +764,17 @@
 		D08B02BF27EB604300012766 /* Mypage */ = {
 			isa = PBXGroup;
 			children = (
-				D08B027E27E5C25D00012766 /* thirdTabVC.swift */,
+				D08B027E27E5C25D00012766 /* mypageVC.swift */,
 			);
 			path = Mypage;
 			sourceTree = "<group>";
 		};
-		D08B02C027EB605A00012766 /* Map */ = {
+		D08B02C027EB605A00012766 /* MapView */ = {
 			isa = PBXGroup;
 			children = (
 				D08B027C27E5C23E00012766 /* secondTabVC.swift */,
 			);
-			path = Map;
+			path = MapView;
 			sourceTree = "<group>";
 		};
 		D08B02C327EB62C400012766 /* TestFolder */ = {
@@ -1123,6 +1129,14 @@
 			path = search;
 			sourceTree = "<group>";
 		};
+		D09E660027F1035100077BD5 /* Notice */ = {
+			isa = PBXGroup;
+			children = (
+				D09E65FE27F1034800077BD5 /* noticeVC.swift */,
+			);
+			path = Notice;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -1231,6 +1245,7 @@
 				D09E657227F0F1A000077BD5 /* properties_4.html in Resources */,
 				D09E654227F0F1A000077BD5 /* all_6.js in Resources */,
 				D09E655127F0F1A000077BD5 /* functions_6.js in Resources */,
+				D09E660327F1079600077BD5 /* 01.jpg in Resources */,
 				D09E659B27F0F1A000077BD5 /* properties_8.js in Resources */,
 				D09E653C27F0F1A000077BD5 /* tab_b.png in Resources */,
 				D09E658A27F0F1A000077BD5 /* all_1.html in Resources */,
@@ -1512,6 +1527,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D09E65FF27F1034800077BD5 /* noticeVC.swift in Sources */,
 				D0E16BC727D6FBCB008F970E /* JoinVC.swift in Sources */,
 				D051F35927CDE2AF00ABBB4E /* ViewController.swift in Sources */,
 				D0E16BCD27DF6406008F970E /* UserInfoManager.swift in Sources */,
@@ -1520,7 +1536,7 @@
 				D0E16BCB27DF4E2B008F970E /* LoginVC.swift in Sources */,
 				D0E16BC527D6F38C008F970E /* Utils.swift in Sources */,
 				D051F36C27CDE9F900ABBB4E /* TodoCell.swift in Sources */,
-				D08B027F27E5C25D00012766 /* thirdTabVC.swift in Sources */,
+				D08B027F27E5C25D00012766 /* mypageVC.swift in Sources */,
 				D08B027D27E5C23E00012766 /* secondTabVC.swift in Sources */,
 				D051F35F27CDE2AF00ABBB4E /* TodoList.xcdatamodeld in Sources */,
 				D08B028827E8389D00012766 /* FeedCell.swift in Sources */,
@@ -1688,6 +1704,7 @@
 				);
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = TodoList/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "글자줍기";
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "\"123\"";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
@@ -1724,6 +1741,7 @@
 				);
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = TodoList/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "글자줍기";
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "\"123\"";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;

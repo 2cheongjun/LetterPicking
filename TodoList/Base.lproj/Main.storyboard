@@ -183,7 +183,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Rwt-jd-GbI" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-692" y="2250"/>
+            <point key="canvasLocation" x="-866" y="2250"/>
         </scene>
         <!--글자피드-->
         <scene sceneID="wa2-wn-qsS">
@@ -325,7 +325,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="sun-sp-ASU" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1486.1538461538462" y="2250"/>
+            <point key="canvasLocation" x="-1625" y="2250"/>
         </scene>
         <!--마이페이지-->
         <scene sceneID="uVv-H1-Dzb">
@@ -338,12 +338,26 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="마이페이지" image="person" catalog="system" id="Gda-5Y-CbM"/>
-                    <nil key="simulatedTopBarMetrics"/>
-                    <nil key="simulatedBottomBarMetrics"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="e84-RV-OJs" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="123" y="2250"/>
+            <point key="canvasLocation" x="611" y="2250"/>
+        </scene>
+        <!--게시판-->
+        <scene sceneID="WPJ-ro-8h9">
+            <objects>
+                <viewController id="hUA-8m-Pdc" customClass="noticeVC" customModule="TodoList" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="9eU-mX-44W">
+                        <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="9cW-hM-1SD"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="게시판" image="square.and.pencil" catalog="system" id="6xn-bu-G24"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="lds-IV-6kr" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-114" y="2250"/>
         </scene>
         <!--신규계정등록-->
         <scene sceneID="9fI-5s-IK6">
@@ -555,7 +569,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cW7-TG-FTW" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1486.1538461538462" y="2967.2985781990519"/>
+            <point key="canvasLocation" x="-1626" y="2981"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="Vsg-Cd-Wv3">
@@ -567,16 +581,18 @@
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="oXS-Ls-jO7">
                         <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </tabBar>
                     <connections>
                         <segue destination="b6h-lu-bIc" kind="relationship" relationship="viewControllers" id="f6B-Ia-jbK"/>
                         <segue destination="xae-ay-8n1" kind="relationship" relationship="viewControllers" id="hJH-Sd-ndG"/>
+                        <segue destination="hUA-8m-Pdc" kind="relationship" relationship="viewControllers" id="gkJ-ce-KMO"/>
                         <segue destination="Q2T-7y-hwX" kind="relationship" relationship="viewControllers" id="vvk-H4-b08"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="snI-pK-qqC" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-658" y="1518"/>
+            <point key="canvasLocation" x="-692" y="1511"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="6Pe-FG-OME">
@@ -604,6 +620,7 @@
         <image name="map" catalog="system" width="128" height="110"/>
         <image name="person" catalog="system" width="128" height="117"/>
         <image name="profile-bg" width="466.66665649414062" height="700"/>
+        <image name="square.and.pencil" catalog="system" width="128" height="115"/>
         <namedColor name="AccentColor">
             <color red="0.0" green="0.46000000000000002" blue="0.89000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
