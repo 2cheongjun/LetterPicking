@@ -317,6 +317,7 @@
                     <toolbarItems/>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
+                        <outlet property="hi" destination="NCU-uI-uvA" id="68G-HW-Qvo"/>
                         <outlet property="searchBar" destination="yHi-VC-bUU" id="C2D-gc-jbd"/>
                         <outlet property="tableView" destination="YwF-e6-yIn" id="6Qk-r7-aIm"/>
                         <outlet property="userName" destination="acf-t2-Anh" id="WiJ-3b-DR8"/>

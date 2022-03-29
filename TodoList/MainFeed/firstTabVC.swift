@@ -14,6 +14,7 @@ class firstTabVC: UIViewController {
     
     // 로그인한 아이디명표기
     @IBOutlet weak var userName: UILabel!
+    @IBOutlet var hi: UILabel! // 님 안녕하세요.
     
     @IBOutlet weak var writeBtn: UIButton!
     @IBOutlet weak var searchBar: UISearchBar!
@@ -48,8 +49,15 @@ class firstTabVC: UIViewController {
          */
         let plist = UserDefaults.standard
         //지정된 값을 꺼내어 각 컨트롤에 설정한다.
-        self.userName.text = plist.string(forKey: "name")
-        
+        let getName = plist.string(forKey: "name")
+        self.userName.text = getName ?? ""
+//        if getName != nil {
+
+//        }else{
+//            self.userName.text = getName ?? "" + "로그인이 필요합니다."
+//        }
+      
+  
         // 상단 백버튼가림
         self.navigationController?.navigationBar.isHidden = true
         

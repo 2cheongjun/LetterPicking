@@ -710,7 +710,7 @@
 				D08B02C027EB605A00012766 /* MapView */,
 				D08B02BF27EB604300012766 /* Mypage */,
 				D08B028A27E83DE600012766 /* Login */,
-				D08B028927E838E000012766 /* Main */,
+				D08B028927E838E000012766 /* MainFeed */,
 				D08B028227E5C74700012766 /* Resources */,
 				D051F35427CDE2AF00ABBB4E /* AppDelegate.swift */,
 				D051F35627CDE2AF00ABBB4E /* SceneDelegate.swift */,
@@ -738,7 +738,7 @@
 			path = Resources;
 			sourceTree = "<group>";
 		};
-		D08B028927E838E000012766 /* Main */ = {
+		D08B028927E838E000012766 /* MainFeed */ = {
 			isa = PBXGroup;
 			children = (
 				D08B027A27E5C21700012766 /* firstTabVC.swift */,
@@ -747,7 +747,7 @@
 				D08B028B27E8577700012766 /* FeedModel.swift */,
 				D08B028727E8389D00012766 /* FeedCell.swift */,
 			);
-			path = Main;
+			path = MainFeed;
 			sourceTree = "<group>";
 		};
 		D08B028A27E83DE600012766 /* Login */ = {

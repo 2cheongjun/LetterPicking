@@ -103,7 +103,7 @@ class imgUploadVC: UIViewController,UIImagePickerControllerDelegate, UINavigatio
                 }
             }
         }
-    }
+    }//함수 끝
 }
 
 
