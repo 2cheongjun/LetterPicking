@@ -51,11 +51,11 @@ class firstTabVC: UIViewController {
         //지정된 값을 꺼내어 각 컨트롤에 설정한다.
         let getName = plist.string(forKey: "name")
         self.userName.text = getName ?? ""
-//        if getName != nil {
+        if getName != nil {
 
-//        }else{
-//            self.userName.text = getName ?? "" + "로그인이 필요합니다."
-//        }
+        }else{
+            self.userName.text = getName ?? "" + "로그인이 필요합니다."
+        }
       
   
         // 상단 백버튼가림
@@ -74,15 +74,13 @@ class firstTabVC: UIViewController {
         let sessionConfig = URLSessionConfiguration.default
         let session = URLSession(configuration: sessionConfig)
         
-        var components = URLComponents(string: "https://itunes.apple.com/search")
+        let components = URLComponents(string: "http://3.37.202.166/post/0iOS_feedSelect.php")
         
-        let term = URLQueryItem(name: "term", value: "marvel")
-        let media = URLQueryItem(name: "media", value: "movie")
+//        let term = URLQueryItem(name: "term", value: "marvel")
+//        let media = URLQueryItem(name: "media", value: "movie")
+//        components?.queryItems = [term, media]
         
-        components?.queryItems = [term, media]
-        
-        //        print("컴포넌트 : \(components?.url as Any)")
-        
+    
         // url이 없으면 리턴한다. 여기서 끝
         guard let url = components?.url else {
             return
@@ -90,7 +88,7 @@ class firstTabVC: UIViewController {
         
         // 값이 있다면 받아와서 넣음.
         var request = URLRequest(url: url)
-        request.httpMethod = "GET"
+        request.httpMethod = "POST"
         
         let task = session.dataTask(with: request) { data, response, error in
             print( (response as! HTTPURLResponse).statusCode )
@@ -123,28 +121,28 @@ class firstTabVC: UIViewController {
     }// 호출메소드끝
     
     // 이미지 URL로드하기
-    func loadImage(urlString: String, completion: @escaping (UIImage?)-> Void){
-        let sessionConfig = URLSessionConfiguration.default
-        let session = URLSession(configuration: sessionConfig)
-        
-        if let hasURL = URL(string: urlString){
-            var request = URLRequest(url: hasURL)
-            request.httpMethod = "GET"
-            
-            session.dataTask(with: request) { data, response, error in
-                print( (response as! HTTPURLResponse).statusCode)
-                
-                if let hasData = data {
-                    completion(UIImage(data: hasData))
-                    return
-                }
-            }.resume() //실행한다.
-            session.finishTasksAndInvalidate()
-        }
-        // 실패시 nil리턴한다.
-        completion(nil)
-
-    }
+//    func loadImage(urlString: String, completion: @escaping (UIImage?)-> Void){
+//        let sessionConfig = URLSessionConfiguration.default
+//        let session = URLSession(configuration: sessionConfig)
+//
+//        if let hasURL = URL(string: urlString){
+//            var request = URLRequest(url: hasURL)
+//            request.httpMethod = "GET"
+//
+//            session.dataTask(with: request) { data, response, error in
+//                print( (response as! HTTPURLResponse).statusCode)
+//
+//                if let hasData = data {
+//                    completion(UIImage(data: hasData))
+//                    return
+//                }
+//            }.resume() //실행한다.
+//            session.finishTasksAndInvalidate()
+//        }
+//        // 실패시 nil리턴한다.
+//        completion(nil)
+//
+//    }
     
     
     // 애니메이션설정
@@ -190,39 +188,41 @@ extension firstTabVC: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "FeedCell", for: indexPath) as! FeedCell
         
-        cell.titleLabel.text = self.feedModel?.results[indexPath.row].trackName
-        cell.descriptionLabel.text = self.feedModel?.results[indexPath.row].shortDescription
+        cell.titleLabel.text = self.feedModel?.results[indexPath.row].userID
+        cell.descriptionLabel.text = self.feedModel?.results[indexPath.row].postText
+        cell.dataLabel.text =  self.feedModel?.results[indexPath.row].postImgs
         // 가격
-        let currency = self.feedModel?.results[indexPath.row].currency ?? ""
+//        let currency = self.feedModel?.results[indexPath.row].feedIdx ?? ""
         //는 더블임. 디스크립션으로 스트링으로 바꿔준다!*****************************************************
-        let price = self.feedModel?.results[indexPath.row].trackPrice.description ?? ""
+//        let fdIdx = self.feedModel?.results[indexPath.row].feedIdx.description ?? ""
         
         // 각 값이 옵셔널값임 +는 옵셔널을 허용하지 않음. 사용하려면 빈값일때를 값을 해줘야함.
-        cell.priceLabel.text = currency + price
+//        cell.priceLabel.text = currency + price
+//        cell.priceLabel.text = fdIdx
         
         // 이미지처리방법
-        if let hasURL = self.feedModel?.results[indexPath.row].image{
-            // 이미지로드 서버요청
-            self.loadImage(urlString: hasURL) { image in
-                DispatchQueue.main.async {
-                    cell.imageViewLabel.image = image
-                }
-            }
-        }
+//        if let hasURL = self.feedModel?.results[indexPath.row].image{
+//            // 이미지로드 서버요청
+//            self.loadImage(urlString: hasURL) { image in
+//                DispatchQueue.main.async {
+//                    cell.imageViewLabel.image = image
+//                }
+//            }
+//        }
         
-        // 날짜 맞춰서 뿌려주기
-        if let dateString = self.feedModel?.results[indexPath.row].releaseDate{
-            // 표준포맷터
-            let formatter = ISO8601DateFormatter()
-            if let isoDate = formatter.date(from: dateString){
-                let myFormatter = DateFormatter()
-                myFormatter.dateFormat = "yyyy년 MM월 dd일"
-                let dateString = myFormatter.string(from: isoDate)
-                
-                cell.dataLabel.text = dateString
-            }
-        }
-        
+//        // 날짜 맞춰서 뿌려주기
+//        if let dateString = self.feedModel?.results[indexPath.row].date{
+//            // 표준포맷터
+//            let formatter = ISO8601DateFormatter()
+//            if let isoDate = formatter.date(from: dateString){
+//                let myFormatter = DateFormatter()
+//                myFormatter.dateFormat = "yyyy년 MM월 dd일"
+//                let dateString = myFormatter.string(from: isoDate)
+//
+//                cell.dataLabel.text = dateString
+//            }
+//        }
+//
         return cell
     }
     
