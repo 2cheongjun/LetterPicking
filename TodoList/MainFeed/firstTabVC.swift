@@ -20,6 +20,7 @@ class firstTabVC: UIViewController {
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var tableView: UITableView!
     
+    
     override func viewDidLoad() {
         // 델리게이트연결
         tableView.delegate = self
@@ -63,9 +64,14 @@ class firstTabVC: UIViewController {
         
         // API호출
         requestFeedAPI()
-        
     }
     
+    // 뷰가보일때 다시 호출
+    override func viewWillAppear(_ animated: Bool) {
+        // API호출
+        requestFeedAPI()
+    }
+//
     
     // network /URL세션으로 연결
     func requestFeedAPI(){
@@ -73,13 +79,11 @@ class firstTabVC: UIViewController {
         
         let sessionConfig = URLSessionConfiguration.default
         let session = URLSession(configuration: sessionConfig)
-        
         let components = URLComponents(string: "http://3.37.202.166/post/0iOS_feedSelect.php")
         
 //        let term = URLQueryItem(name: "term", value: "marvel")
 //        let media = URLQueryItem(name: "media", value: "movie")
 //        components?.queryItems = [term, media]
-        
     
         // url이 없으면 리턴한다. 여기서 끝
         guard let url = components?.url else {
@@ -107,7 +111,6 @@ class firstTabVC: UIViewController {
                         // 테이블뷰 갱신 (자동으로 갱신안됨)
                         self.tableView.reloadData()
                     }
-                    
                 }catch{
                     print(error)
                 }
@@ -121,28 +124,28 @@ class firstTabVC: UIViewController {
     }// 호출메소드끝
     
     // 이미지 URL로드하기
-//    func loadImage(urlString: String, completion: @escaping (UIImage?)-> Void){
-//        let sessionConfig = URLSessionConfiguration.default
-//        let session = URLSession(configuration: sessionConfig)
+//       func loadImage(urlString: String, completion: @escaping (UIImage?)-> Void){
+//           let sessionConfig = URLSessionConfiguration.default
+//           let session = URLSession(configuration: sessionConfig)
 //
-//        if let hasURL = URL(string: urlString){
-//            var request = URLRequest(url: hasURL)
-//            request.httpMethod = "GET"
+//           if let hasURL = URL(string: urlString){
+//               var request = URLRequest(url: hasURL)
+//               request.httpMethod = "GET"
 //
-//            session.dataTask(with: request) { data, response, error in
-//                print( (response as! HTTPURLResponse).statusCode)
+//               session.dataTask(with: request) { data, response, error in
+//                   print( (response as! HTTPURLResponse).statusCode)
 //
-//                if let hasData = data {
-//                    completion(UIImage(data: hasData))
-//                    return
-//                }
-//            }.resume() //실행한다.
-//            session.finishTasksAndInvalidate()
-//        }
-//        // 실패시 nil리턴한다.
-//        completion(nil)
+//                   if let hasData = data {
+//                       completion(UIImage(data: hasData))
+//                       return
+//                   }
+//               }.resume() //실행한다.
+//               session.finishTasksAndInvalidate()
+//           }
+//           // 실패시 nil리턴한다.
+//           completion(nil)
 //
-//    }
+//       }
     
     
     // 애니메이션설정
@@ -188,45 +191,43 @@ extension firstTabVC: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "FeedCell", for: indexPath) as! FeedCell
         
-        cell.titleLabel.text = self.feedModel?.results[indexPath.row].userID
-        cell.descriptionLabel.text = self.feedModel?.results[indexPath.row].postText
+        cell.titleLabel.text = self.feedModel?.results[indexPath.row].postText
+        cell.descriptionLabel.text = self.feedModel?.results[indexPath.row].userID
         cell.dataLabel.text =  self.feedModel?.results[indexPath.row].postImgs
-        // 가격
+        cell.priceLabel.text =  self.feedModel?.results[indexPath.row].myPlaceText
+//        cell.priceLabel.text =  self.feedModel?.results[indexPath.row].postImgs
+        
+//        let getImgs = self.feedModel?.results[indexPath.row].postImgs
+//        cell.imageViewLabel.image = self.feedModel?.results[indexPath.row].postImgs
+        
 //        let currency = self.feedModel?.results[indexPath.row].feedIdx ?? ""
         //는 더블임. 디스크립션으로 스트링으로 바꿔준다!*****************************************************
 //        let fdIdx = self.feedModel?.results[indexPath.row].feedIdx.description ?? ""
         
         // 각 값이 옵셔널값임 +는 옵셔널을 허용하지 않음. 사용하려면 빈값일때를 값을 해줘야함.
 //        cell.priceLabel.text = currency + price
-//        cell.priceLabel.text = fdIdx
-        
+  
         // 이미지처리방법
-//        if let hasURL = self.feedModel?.results[indexPath.row].image{
+//        if let hasURL = self.feedModel?.results[indexPath.row].postImgs{
 //            // 이미지로드 서버요청
+//
+//            var components = URLComponents(string: "http://3.37.202.166/post/0iOS_feedSelect.php")
+//            let term = URLQueryItem(name: "postImgs", value: "postImgs")
+//            components?.queryItems = [term]
+//
+//
 //            self.loadImage(urlString: hasURL) { image in
-//                DispatchQueue.main.async {
-//                    cell.imageViewLabel.image = image
-//                }
-//            }
-//        }
-        
-//        // 날짜 맞춰서 뿌려주기
-//        if let dateString = self.feedModel?.results[indexPath.row].date{
-//            // 표준포맷터
-//            let formatter = ISO8601DateFormatter()
-//            if let isoDate = formatter.date(from: dateString){
-//                let myFormatter = DateFormatter()
-//                myFormatter.dateFormat = "yyyy년 MM월 dd일"
-//                let dateString = myFormatter.string(from: isoDate)
-//
-//                cell.dataLabel.text = dateString
-//            }
-//        }
-//
+                           DispatchQueue.main.async {
+                               cell.imageViewLabel.image = UIImage(named: "01.jpg")
+                           }
+//                       }
+//                   }
+                   
         return cell
+        }
     }
-    
-}
+
+
 // 서치바
 extension firstTabVC: UISearchBarDelegate {
     

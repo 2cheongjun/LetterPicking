@@ -20,6 +20,19 @@ class FeedCell: UITableViewCell{
             dataLabel.font = .systemFont(ofSize: 13, weight: .light)
         }
     }
-    @IBOutlet weak var descriptionLabel: UILabel!
-    @IBOutlet weak var priceLabel: UILabel!
+    @IBOutlet weak var descriptionLabel: UILabel!{
+        didSet{
+            descriptionLabel.font = .systemFont(ofSize: 13, weight: .light)
+        }
+    }
+    @IBOutlet weak var priceLabel: UILabel!{
+        didSet{
+            priceLabel.font = .systemFont(ofSize: 13, weight: .light)
+        }
+    }
+    @IBOutlet var postImgs: UILabel!{
+        didSet{
+            postImgs.font = .systemFont(ofSize: 13, weight: .light)
+        }
+    }
 }
