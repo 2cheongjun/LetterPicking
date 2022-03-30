@@ -9,6 +9,7 @@ import UIKit
 import BSImagePicker
 import Photos
 import Alamofire
+import CoreLocation
 
 
 class WriteVC : UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextViewDelegate{
@@ -19,6 +20,10 @@ class WriteVC : UIViewController, UIImagePickerControllerDelegate, UINavigationC
     @IBOutlet weak var collectionView: UICollectionView!//콜렉션뷰
     //    var list = ["1", "2", "3", "4" ,"5", "6", "7", "8", "9", "10"]
     //    var numberOfCell: Int = 10
+    
+    @IBOutlet var placeText: UIButton! // 위치추가
+    @IBOutlet var myPlaceText: UILabel! // 내위치표시
+    var locationManager : CLLocationManager! // 로케이션매니저
     
     // 갤러리에서 선택해 가져온 이미지의 원래형태인것같음..
     var selectedAssets = [PHAsset]()
@@ -31,6 +36,12 @@ class WriteVC : UIViewController, UIImagePickerControllerDelegate, UINavigationC
     
     var isSelected = false
     
+    /*
+     *  userDefaults에 저장된이름값 가져오기
+     */
+    let plist = UserDefaults.standard
+    
+    
     override func viewDidLoad() {
         //컬렉션뷰 델리게이트
         self.collectionView.delegate = self
@@ -39,6 +50,19 @@ class WriteVC : UIViewController, UIImagePickerControllerDelegate, UINavigationC
         self.textView.layer.borderWidth = 1.0
         self.textView.layer.borderColor = UIColor.systemGray4.cgColor
         self.textView.layer.cornerRadius = 4
+        
+        //지도설정
+        // locationManager 인스턴스를 생성
+        locationManager = CLLocationManager()
+        // 앱을 사용할 때만 위치 정보를 허용할 경우 호출
+        locationManager.requestWhenInUseAuthorization()
+        // 위치 정보 제공의 정확도를 설정할 수 있다.
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        // 위치 정보를 지속적으로 받고 싶은 경우 이벤트를 시작
+        locationManager.startUpdatingLocation()
+        // 기존에 생성했던 CLLocationManager 인스턴스에 delegate 지정
+        locationManager.delegate = self
+        
     }
     
     //취소버튼
@@ -117,11 +141,7 @@ class WriteVC : UIViewController, UIImagePickerControllerDelegate, UINavigationC
             //  여기에 실행할 코드
             // 갤러리에서 받아온 UIImage값 받아서 newProfile함수 호출
             if let getImage = self.newImages{
-                self.upLoadImg(getImage) //받아온이미지들
-                
-//                let postText = textView.text
-                
-//                print("작성내용 \(postText)")
+                self.upLoadImg(getImage) // 받아온이미지들 넣어서 upLoadImg실행
             }
         }
         alert.addAction(alertAction)
@@ -132,7 +152,33 @@ class WriteVC : UIViewController, UIImagePickerControllerDelegate, UINavigationC
         //                alert.view.tintColor =  UIColor(ciColor: .black)
         self.present(alert, animated: true, completion: nil)
     }
-}
+    
+    // 위치추가액션 (현재위치 가져와 보여주기)
+    @IBAction func placeBtn(_ sender: Any) {
+        
+        // 얼럿을 띄우고 입력을 받아서, placeText에 넣기
+        let alert = UIAlertController(title: "위치를 직접 작성하세요!", message: nil, preferredStyle: .alert)
+                
+        alert.addTextField{ (myTextField) in
+//            myTextField.textColor = UIColor.cyan
+            myTextField.placeholder = "ex)금천구 독산동"
+        }
+        
+               let ok = UIAlertAction(title: "OK", style: .default) { (ok) in
+                    //code // 내위치정보 받아다가 넣기
+                   self.myPlaceText.text = alert.textFields?[0].text
+
+               }
+               let cancel = UIAlertAction(title: "cancel", style: .cancel) { (cancel) in
+                    //code
+               }
+               alert.addAction(cancel)
+               alert.addAction(ok)
+               self.present(alert, animated: true, completion: nil)
+    }
+    
+}// VC끝
+
 
 
 
@@ -160,11 +206,6 @@ extension WriteVC: UICollectionViewDelegate, UICollectionViewDataSource {
             
             print(hasImg)
         }
-        
-        
-        // 꺼내온 이미지 여러장 서버로 전송하기 ****************************************
-        //        upLoadImg(UIImage?(photoArray[indexPath.row]))
-        
         return cell
     }
     
@@ -192,35 +233,25 @@ extension WriteVC: UICollectionViewDelegate, UICollectionViewDataSource {
     /*
      // 이미지 여러장 서버업로드 *************************************************************************************
      */
-    func upLoadImg(_ imageData: UIImage?) {
-          //    func newProfile(_ profile: UIImage?, success: (()->Void)? = nil, fail: ((String)->Void)? = nil) {
+    func upLoadImg(_ imageData: UIImage?, success: (()->Void)? = nil, fail: ((String)->Void)? = nil) {
         
-        // UI이미지를 가져오자마자, 가로200픽셀로 resize
-//        let image = imageData?.resized(toWidth: 200.0)
-//        print("이미지사이즈:\(image!)")
+        // 이미지들을 담을 배열생성
+        var imageStr: [String] = []
         
-        // 이미지전송
-          var imageStr: [String] = []
-
-          //userID, postText어떻게 담아????? //가져온 사진의 갯수만큼,jpgData로 바꾼뒤에 imageData에 담는다.
-          for a in 0..<self.photoArray.count {
-              let resultImage: Data = self.photoArray[a].jpegData(compressionQuality: 0.1)!
-              //이미지를 데이터로 변환한뒤에, JSON형태로 전송하기 위해서 base64로 인코딩한다.
-              imageStr.append(resultImage.base64EncodedString())
-          }
+        //가져온 사진의 갯수만큼,jpgData로 바꾼뒤에 imageData에 담는다.
+        for a in 0..<self.photoArray.count {
+            let resultImage: Data = self.photoArray[a].jpegData(compressionQuality: 0.1)!
+            //이미지를 데이터로 변환한뒤에, JSON형태로 전송하기 위해서 base64로 인코딩한다.
+            imageStr.append(resultImage.base64EncodedString())
+        }
         
-        // 랜덤String으로 이미지명 생성
-        let str = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
-        let size = 5
-        let imgName = str.createRandomStr(length: size)
+        // userID, postText,이미지묶음을 파라미터에 담아보냄
+        let userID = plist.string(forKey: "name")
         
-        // let profileData = image!.jpegData(compressionQuality: 1)! // jpg로하니까 안됬음
-        //이미지를 데이터로 변환한뒤에, JSON형태로 전송하기 위해서 base64로 인코딩한다.
-//        let profileData = image!.pngData()?.base64EncodedString()
         let param: Parameters = [ "imageStr" :  imageStr,
                                   "postText" : textView.text ?? "",
-                                  "name": imgName,
-                                  "userID" : "hoho"
+                                  "userID" : userID as Any,
+                                  "myPlaceText": myPlaceText.text ?? ""
         ]
         
         // API 호출 URL
@@ -236,7 +267,7 @@ extension WriteVC: UICollectionViewDelegate, UICollectionViewDataSource {
             print("서버로 보냄!!!!!")
             print("JSON= \(try! res.result.get())!)")
             
-            guard let jsonObject = try! res.result.get() as? NSDictionary else {
+            guard (try! res.result.get() as? NSDictionary) != nil else {
                 print("올바른 응답값이 아닙니다.")
                 return
             }
@@ -245,7 +276,7 @@ extension WriteVC: UICollectionViewDelegate, UICollectionViewDataSource {
                 let success = jsonObject["success"] as? Int ?? 0
                 
                 if success == 1 {
-//                    self.alert("응답값 JSON= \(try! res.result.get())!)")
+                    self.alert("응답값 JSON= \(try! res.result.get())!)")
                     self.dismiss(animated: true, completion: nil)
                 }else{
                     //sucess가 0이면
@@ -254,7 +285,6 @@ extension WriteVC: UICollectionViewDelegate, UICollectionViewDataSource {
             }
         }
     }//함수 끝
-      
 }
 
 
@@ -282,7 +312,39 @@ extension WriteVC: UICollectionViewDelegateFlowLayout {
         let size = CGSize(width: width, height: width)
         return size
     }
-    
 }
 
 
+// locations에 사용자의 위치 정보가 들어옴. 위도, 경도
+extension WriteVC: CLLocationManagerDelegate {
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        if let coordinate = locations.last?.coordinate {
+            //            print(coordinate.latitude)
+            //            print(coordinate.longitude)
+            // 현재 나의 위치 위도 경도 받아옴
+            let latitude : Double = coordinate.latitude
+            let longitude : Double = coordinate.longitude
+            
+            //latitude: 위도, 도: 경도
+            let findLocation = CLLocation(latitude: latitude, longitude: longitude)
+            // 화면상에 경도/위도값을 가지고 네트워크 연결을 하여, placemark를 뽑아주는 기능!! 지오코딩
+            let geocoder = CLGeocoder()
+            let locale = Locale(identifier: "Ko-kr") //원하는 나라 코드
+            geocoder.reverseGeocodeLocation(findLocation, preferredLocale: locale, completionHandler: {(placemarks, error) in
+                if let address: [CLPlacemark] = placemarks {
+                    DispatchQueue.main.async {
+                        
+                        if let locality: String = address.last?.locality {
+                            // 장소 표시와 연결된 도시 (예) 수원시
+                            self.myPlaceText.text = locality
+                        }  //추가 도시 수준 정보 (예) 동작구
+                        if let subLocality: String = address.last?.subLocality{
+                            self.myPlaceText.text?.append(" " + subLocality)
+                        }
+                        
+                    }
+                }
+            })
+        }
+    }
+}
