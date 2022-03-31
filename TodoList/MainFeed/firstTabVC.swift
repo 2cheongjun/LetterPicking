@@ -74,7 +74,7 @@ class firstTabVC: UIViewController {
     }
 //
     
-    // network /URL세션으로 호출
+    // network /URL세션으로 호출 // 추후 아이디값을 보내서 호출하는것도..생각해보기?? 전체다 가져오는것이니 상관없을까?..
     func requestFeedAPI(){
         print("API호출")
         
@@ -91,7 +91,7 @@ class firstTabVC: UIViewController {
         
         // 값이 있다면 받아와서 넣음.
         var request = URLRequest(url: url)
-        request.httpMethod = "POST"
+        request.httpMethod = "GET" //GET방식이다. 컨텐츠타입이 없고, 담아서 보내는 내용이 없음, URL호출만!
         
         let task = session.dataTask(with: request) { data, response, error in
             print( (response as! HTTPURLResponse).statusCode )
@@ -127,10 +127,11 @@ class firstTabVC: UIViewController {
            let sessionConfig = URLSessionConfiguration.default
            let session = URLSession(configuration: sessionConfig)
 
+           // urlString 이미지이름을(ex:http://3.37.202.166/img/2-jun.jpg) 가져와서 URL타입으로 바꿔준다.
            if let hasURL = URL(string: urlString){
                var request = URLRequest(url: hasURL)
-//               request.httpMethod = "GET"
-               request.httpMethod = "POST"
+               request.httpMethod = "GET"
+//               request.httpMethod = "POST"
 
                session.dataTask(with: request) { data, response, error in
 //                   print( (response as! HTTPURLResponse).statusCode)
@@ -206,8 +207,7 @@ extension firstTabVC: UITableViewDelegate, UITableViewDataSource {
         
         // 각 값이 옵셔널값임 +는 옵셔널을 허용하지 않음. 사용하려면 빈값일때를 값을 해줘야함.
 //        cell.priceLabel.text = currency + price
-        
-        
+                
         // 이미지처리방법
         if let hasURL = self.feedModel?.results[indexPath.row].postImgs{
             // 이미지로드 서버요청
