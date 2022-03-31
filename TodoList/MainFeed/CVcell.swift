@@ -7,6 +7,7 @@
 
 import UIKit
 
+// 컬렉션뷰 셀
 class CVcell :UICollectionViewCell {
     
 //    @IBOutlet var label : UILabel!

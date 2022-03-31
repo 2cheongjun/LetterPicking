@@ -70,10 +70,11 @@ class firstTabVC: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         // API호출
         requestFeedAPI()
+        // 이미지 호출은 어떻게?
     }
 //
     
-    // network /URL세션으로 연결
+    // network /URL세션으로 호출
     func requestFeedAPI(){
         print("API호출")
         
@@ -86,9 +87,7 @@ class firstTabVC: UIViewController {
 //        components?.queryItems = [term, media]
     
         // url이 없으면 리턴한다. 여기서 끝
-        guard let url = components?.url else {
-            return
-        }
+        guard let url = components?.url else { return }
         
         // 값이 있다면 받아와서 넣음.
         var request = URLRequest(url: url)
@@ -123,29 +122,30 @@ class firstTabVC: UIViewController {
         
     }// 호출메소드끝
     
-    // 이미지 URL로드하기
-//       func loadImage(urlString: String, completion: @escaping (UIImage?)-> Void){
-//           let sessionConfig = URLSessionConfiguration.default
-//           let session = URLSession(configuration: sessionConfig)
-//
-//           if let hasURL = URL(string: urlString){
-//               var request = URLRequest(url: hasURL)
+    // 이미지 URL로드하기 ***********************************************************************************************8
+       func loadImage(urlString: String, completion: @escaping (UIImage?)-> Void){
+           let sessionConfig = URLSessionConfiguration.default
+           let session = URLSession(configuration: sessionConfig)
+
+           if let hasURL = URL(string: urlString){
+               var request = URLRequest(url: hasURL)
 //               request.httpMethod = "GET"
-//
-//               session.dataTask(with: request) { data, response, error in
+               request.httpMethod = "POST"
+
+               session.dataTask(with: request) { data, response, error in
 //                   print( (response as! HTTPURLResponse).statusCode)
-//
-//                   if let hasData = data {
-//                       completion(UIImage(data: hasData))
-//                       return
-//                   }
-//               }.resume() //실행한다.
-//               session.finishTasksAndInvalidate()
-//           }
-//           // 실패시 nil리턴한다.
-//           completion(nil)
-//
-//       }
+
+                   if let hasData = data {
+                       completion(UIImage(data: hasData))
+                       return
+                   }
+               }.resume() //실행한다.
+               session.finishTasksAndInvalidate()
+           }
+           // 실패시 nil리턴한다.
+           completion(nil)
+
+       }
     
     
     // 애니메이션설정
@@ -206,23 +206,17 @@ extension firstTabVC: UITableViewDelegate, UITableViewDataSource {
         
         // 각 값이 옵셔널값임 +는 옵셔널을 허용하지 않음. 사용하려면 빈값일때를 값을 해줘야함.
 //        cell.priceLabel.text = currency + price
-  
+        
+        
         // 이미지처리방법
-//        if let hasURL = self.feedModel?.results[indexPath.row].postImgs{
-//            // 이미지로드 서버요청
-//
-//            var components = URLComponents(string: "http://3.37.202.166/post/0iOS_feedSelect.php")
-//            let term = URLQueryItem(name: "postImgs", value: "postImgs")
-//            components?.queryItems = [term]
-//
-//
-//            self.loadImage(urlString: hasURL) { image in
-                           DispatchQueue.main.async {
-                               cell.imageViewLabel.image = UIImage(named: "01.jpg")
-                           }
-//                       }
-//                   }
-                   
+        if let hasURL = self.feedModel?.results[indexPath.row].postImgs{
+            // 이미지로드 서버요청
+            self.loadImage(urlString: hasURL) { image in
+                DispatchQueue.main.async {
+                    cell.imageViewLabel.image = image
+                }
+            }
+        }
         return cell
         }
     }

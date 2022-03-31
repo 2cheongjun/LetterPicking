@@ -4,9 +4,9 @@
 //
 //  Created by 이청준 on 2022/03/21.
 //
-
 import UIKit
 
+// 글가져오기할때 모델 쏄
 class FeedCell: UITableViewCell{
     
     @IBOutlet weak var imageViewLabel: UIImageView!
@@ -30,9 +30,9 @@ class FeedCell: UITableViewCell{
             priceLabel.font = .systemFont(ofSize: 13, weight: .light)
         }
     }
-    @IBOutlet var postImgs: UILabel!{
-        didSet{
-            postImgs.font = .systemFont(ofSize: 13, weight: .light)
-        }
-    }
+//    @IBOutlet var postImgs: UILabel!{
+//        didSet{
+//            postImgs.font = .systemFont(ofSize: 13, weight: .light)
+//        }
+//    }
 }

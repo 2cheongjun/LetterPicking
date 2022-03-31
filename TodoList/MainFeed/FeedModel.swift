@@ -7,6 +7,7 @@
 
 import Foundation
 
+// 글가져오기할때 모델
 struct FeedModel: Codable{
     
 //    let resultCount: Int
@@ -22,8 +23,6 @@ struct Result: Codable{
     let postImgs: String?
     let myPlaceText: String
     let date: String
-    // 가져온이름을 바꿔서 사용하고싶을때, 정의해야함.
-    //artworkUrl100를 image로 바꿔서 사용하고 싶다.
 }
 
 //

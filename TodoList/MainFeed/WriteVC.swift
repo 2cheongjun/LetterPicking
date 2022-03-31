@@ -11,7 +11,7 @@ import Photos
 import Alamofire
 import CoreLocation
 
-
+// 글작성화면 VC
 class WriteVC : UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextViewDelegate{
     
     @IBOutlet weak var imgView: UIImageView!
