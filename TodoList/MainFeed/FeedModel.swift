@@ -12,10 +12,10 @@ struct FeedModel: Codable{
     
 //    let resultCount: Int
     // 아래정의된 배열묶음
-    let results:[Result]
+    let results:[FeedResult]
 }
 
-struct Result: Codable{
+struct FeedResult: Codable{
 //    let success: String
 //    let feedIdx: String
     let userID: String

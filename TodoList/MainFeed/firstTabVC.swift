@@ -188,13 +188,31 @@ extension firstTabVC: UITableViewDelegate, UITableViewDataSource {
         return UITableView.automaticDimension
     }
     
+    // 눌렀을때 이벤트 호출
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        // 이동하고자하는 뷰턴 객체생성해 호출하기 / 스토리보드 기반으로 가져오기. 스토리보드ID
+        let detailVC = UIStoryboard(name:"DetailViewController" , bundle: nil).instantiateViewController(withIdentifier: "DetailViewController") as! DetailViewController
+        
+        // 선택한것 눌렸다가 자연스럽게 흰색으로 전환
+        tableView.deselectRow(at: indexPath, animated: true)
+        
+        //선택한 행의 내용을 feedResult에 담는다.
+        detailVC.feedResult = self.feedModel?.results[indexPath.row]
+        
+        // 전체화면보기하면 닫기버튼이 없음 만들어줘야함.
+//        detailVC.modalPresentationStyle = .fullScreen
+     
+        // 화면이 띄워진후에 값을 넣어야 널크러쉬가 안남
+        self.present(detailVC, animated: true){ }
+    }
+    
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "FeedCell", for: indexPath) as! FeedCell
         
         cell.titleLabel.text = self.feedModel?.results[indexPath.row].postText
         cell.descriptionLabel.text = self.feedModel?.results[indexPath.row].userID
-        cell.dataLabel.text =  self.feedModel?.results[indexPath.row].postImgs
+        cell.dataLabel.text =  self.feedModel?.results[indexPath.row].date
         cell.priceLabel.text =  self.feedModel?.results[indexPath.row].myPlaceText
 //        cell.priceLabel.text =  self.feedModel?.results[indexPath.row].postImgs
         
@@ -222,7 +240,9 @@ extension firstTabVC: UITableViewDelegate, UITableViewDataSource {
     }
 
 
-// 서치바
+// 서치바, 검색창
 extension firstTabVC: UISearchBarDelegate {
-    
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        
+    }
 }
