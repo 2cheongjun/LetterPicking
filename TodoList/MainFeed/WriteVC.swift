@@ -63,6 +63,8 @@ class WriteVC : UIViewController, UIImagePickerControllerDelegate, UINavigationC
         // 기존에 생성했던 CLLocationManager 인스턴스에 delegate 지정
         locationManager.delegate = self
         
+//        // 네비게이션바 숨김처리
+//        self.navigationController?.navigationBar.isHidden = false
     }
     
     //취소버튼
