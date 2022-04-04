@@ -10,5 +10,7 @@
 
 #import <DaumMap/MTMapView.h>
 
+#import <DaumMap/MTMapReverseGeoCoder.h>
+
 #endif /* KaKao_Map_Bridge_Header_h */
 

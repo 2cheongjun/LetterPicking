@@ -6,23 +6,49 @@
 //
 // 지도위치
 import UIKit
+import Alamofire
+import SwiftyJSON
 
-class secondTabVC : UIViewController, MTMapViewDelegate {
+class secondTabVC : UIViewController, MTMapViewDelegate, MTMapReverseGeoCoderDelegate {
     //지도map
     var mapView: MTMapView?
     var mapPoint1: MTMapPoint?
     var poiItem1: MTMapPOIItem?
+    var geocoder: MTMapReverseGeoCoder!
     
-    var latitude : Double = 37.576568
-    var longitude : Double = 127.029148
+//    var latitude : Double = 37.576568
+//    var longitude : Double = 127.02914
+    
+
     
     var allCircle = [MTMapCircle]()
+    
+
+    //검색창
+//    @IBOutlet var placeSearch: UISearchBar!
+    
+    @IBOutlet var test: UITextField!
+    
+    public struct Place{
+                let placeName :String
+                let roadAdressName:String
+                let longitudeX:String
+                let latitudeY:String
+            }
+            
+        var resultList=[Place]()
         
+        var keyword = ""
+        var page = 4
+        
+        
+      
     
     override func viewDidLoad() {
         // 상단 백버튼가림
         self.navigationController?.navigationBar.isHidden = true
         
+        self.view.bringSubviewToFront(self.test)
         // 지도 맵뷰시작
         mapView = MTMapView(frame: self.view.bounds)
         if let mapView = mapView {
@@ -38,22 +64,48 @@ class secondTabVC : UIViewController, MTMapViewDelegate {
             // 지도의 센터를 설정 (x와 y 좌표, 줌 레벨 등을 설정)
             mapView.setMapCenter(MTMapPoint(geoCoord: MTMapPointGeo(latitude:   37.47538105879285, longitude:  126.90334542924597)), zoomLevel: 5, animated: true)
             self.view.addSubview(mapView)
-            
-            let poiltem1 = MTMapPOIItem()
-            poiltem1.itemName = "우리집"
-            poiltem1.mapPoint = MTMapPoint(geoCoord: MTMapPointGeo(latitude: 37.47538105879285, longitude: 126.90334542924597))
-            poiltem1.markerType = .redPin
-            
-            mapView.addPOIItems([poiltem1])
+//
+//            let poiltem1 = MTMapPOIItem()
+//            poiltem1.itemName = "우리집"
+//            poiltem1.mapPoint = MTMapPoint(geoCoord: MTMapPointGeo(latitude: 37.47538105879285, longitude: 126.90334542924597))
+//            poiltem1.markerType = .redPin
+//
+//            mapView.addPOIItems([poiltem1])
             
         }
     }
+
     
     // poiItem 클릭 이벤트
        func mapView(_ mapView: MTMapView!, touchedCalloutBalloonOf poiItem: MTMapPOIItem!) {
            // 인덱스는 poiItem의 태그로 접근
            let index = poiItem.tag
        }
+    
+    
+    
+    //finishedMapMoveAnimation함수는 지도가 이동이 끝난 후의 좌표값(위도, 경도 → 여기서는 mapCenterPoint)을 얻을 수 있다.
+//    func mapView(_ mapView: MTMapView!, finishedMapMoveAnimation mapCenterPoint: MTMapPoint!) {
+//
+//        let geocoder = MTMapReverseGeoCoder(
+//            mapPoint: MTMapPoint(geoCoord: MTMapPointGeo(
+//            latitude : mapCenterPoint.mapPointGeo().latitude,
+//            longitude : mapCenterPoint.mapPointGeo().longitude)),
+//            with: self, withOpenAPIKey:"78eb7f9c872b5f4d6b83178c1aed4366")
+//
+//        self.geocoder = geocoder
+//        geocoder?.startFindingAddress()
+//
+//        print(geocoder?.startFindingAddress() as Any? ?? "")
+//
+//        }
+//
+//    // 그리고 좌표값을 변환해서 문자열값을 얻기 위한함수
+//    func mtMapReverseGeoCoder(_ rGeoCoder: MTMapReverseGeoCoder!, foundAddress addressString: String!) {
+//        guard let addressSting = addressString else { return }
+//        address = addressSting
+//    }
+
        
 //       override func viewWillDisappear(_ animated: Bool) {
 //           // mapView의 모든 poiItem 제거

@@ -2,6 +2,8 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>NMFClientId</key>
+	<string>uvryr3s84w</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>위치를 사용하것어?</string>
 	<key>NSLocationAlwaysUsageDescription</key>
