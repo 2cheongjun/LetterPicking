@@ -16,8 +16,7 @@ class nMapVC : UIViewController {
     let NAVER_CLIENT_SECRET = "rSXrAAZE5FUNue2BEbh68p6LAFiNDE2wUVdpI9JV"
     let NAVER_GEOCODE_URL = "https://naveropenapi.apigw.ntruss.com/map-geocode/v2/geocode?query="
     
-    
-    // 코더블 모델
+    // 네이버지도 파싱 // 코더블 모델
     var model: MapModel?
     
     struct MapModel: Codable{
@@ -28,11 +27,12 @@ class nMapVC : UIViewController {
         let y: String
     }
     
-    // UIView 맵
+    // UIView 맵 // 네이버 지도뷰 만들고 클래스 설정함.
     @IBOutlet var mapView: NMFMapView!
     
-    // 주소입력하면
+    // 주소입력하면 위도경도 가져와 지도에 표기 + 마커
     let place = "금천구 독산동"
+//    let place = "덕양구 행신동"
 //    let place = "관악구 조원동"// 구동 순서 바꾸면 null값뜸
     
     override func viewDidLoad() {
@@ -50,6 +50,7 @@ class nMapVC : UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        // 맵요청(안에 카메라위치 함수, 마커함수실행)
         mapRequest()
     }
     
@@ -78,18 +79,17 @@ class nMapVC : UIViewController {
                         let data = try JSONSerialization.data(withJSONObject: value, options: .prettyPrinted)
                         
 //                         print("데이타\(data)")
+                        // 제이슨데이터 가져와서 디코딩해 파싱하기
                         let mapModels = try JSONDecoder().decode(MapModel.self, from: data)
                         print("mapModels/ 위도 \(mapModels.addresses[0].x)")
                         print("mapModels/ 경도 \(mapModels.addresses[0].y)")
                         
-                        // 더블형태로 바꾸기
+                        // 카메라 함수에 넣기위해 더블형태로 바꾸기
                         let lat = Double(mapModels.addresses[0].y)!
                         let lon = Double(mapModels.addresses[0].x)!
                         print(lat,lon)
                         
                         // 가져온 위도 경도값을 카메라 세팅에 대입한다.
-                        // self.setCamera(lat.double , lon.double)
-//                        print("place","위도는",mapModels.y,"경도는",mapModels.x)
                         self.setCamera(lat,lon)
                         self.setMarker(lat,lon)
                         
