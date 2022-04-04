@@ -18,6 +18,6 @@ struct MapModel: Codable{
 struct MapResult: Codable{
 //    let success: String
 //    let feedIdx: String
-    let lat: Double
-    let lon: Double
+    let lat: Double?
+    let lon: Double?
 }
