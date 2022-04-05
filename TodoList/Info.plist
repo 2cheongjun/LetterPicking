@@ -10,8 +10,6 @@
 	<string>위치 사용권한을 허용하시겠습니까?</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
 	<string>위치 사용권한을 허용하시겠습니까?</string>
-	<key>KAKAO_APP_KEY</key>
-	<string>78eb7f9c872b5f4d6b83178c1aed4366</string>
 	<key>NSAppTransportSecurity</key>
 	<dict>
 		<key>NSExceptionDomains</key>

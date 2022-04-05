@@ -19,25 +19,31 @@ class nMapVC : UIViewController {
     // 네이버지도 파싱 // 코더블 모델
     var model: MapModel?
     
-    struct MapModel: Codable{
-        let addresses:[AddressResult]
-    }
-    struct AddressResult:Codable{
-        let x: String
-        let y: String
-    }
+    // 피드 모델가져오기
+    var feedModel: FeedModel?
+    
+//    struct MapModel: Codable{
+//        let addresses:[AddressResult]
+//    }
+//    struct AddressResult:Codable{
+//        let x: String
+//        let y: String
+//    }
     
     // UIView 맵 // 네이버 지도뷰 만들고 클래스 설정함.
     @IBOutlet var mapView: NMFMapView!
     
     // 주소입력하면 위도경도 가져와 지도에 표기 + 마커
-    let place = "금천구 독산동"
-//    let place = "덕양구 행신동"
+    var place = ""
 //    let place = "관악구 조원동"// 구동 순서 바꾸면 null값뜸
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        mapRequest() //위도경도값 요청
+        
+        //서버에 업로드된 마지막 이미지 장소 가져옴  // 맵요청(안에 카메라위치 함수, 마커함수실행)
+        requestFeedAPI()
+        //위도경도값 요청
+//        mapRequest()
         
         // 코드로 지도추가하는 방법
         // let naverMapView = NMFNaverMapView(frame: view.frame)
@@ -46,12 +52,11 @@ class nMapVC : UIViewController {
         // 현재 위치 얻기
         let cameraPosition = mapView.cameraPosition
         print(cameraPosition)
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        // 맵요청(안에 카메라위치 함수, 마커함수실행)
-        mapRequest()
+       
+        requestFeedAPI()
     }
     
     // 입력한 주소값의 위도경도값 알아오기 ***** 네이버API
@@ -81,12 +86,12 @@ class nMapVC : UIViewController {
 //                         print("데이타\(data)")
                         // 제이슨데이터 가져와서 디코딩해 파싱하기
                         let mapModels = try JSONDecoder().decode(MapModel.self, from: data)
-                        print("mapModels/ 위도 \(mapModels.addresses[0].x)")
-                        print("mapModels/ 경도 \(mapModels.addresses[0].y)")
+//                        print("mapModels/ 위도 \(mapModels.addresses[0].x)")
+//                        print("mapModels/ 경도 \(mapModels.addresses[0].y)")
                         
                         // 카메라 함수에 넣기위해 더블형태로 바꾸기
-                        let lat = Double(mapModels.addresses[0].y)!
-                        let lon = Double(mapModels.addresses[0].x)!
+                        let lat = Double(mapModels.addresses[0].y) ?? 37.4702453
+                        let lon = Double(mapModels.addresses[0].x) ?? 126.897041
                         print(lat,lon)
                         
                         // 가져온 위도 경도값을 카메라 세팅에 대입한다.
@@ -137,7 +142,56 @@ class nMapVC : UIViewController {
         
     }
     
-    
+    // network /URL세션으로 호출 // 마지막 장소표기를 위해서 서버호출함..
+    func requestFeedAPI(){
+        print("API호출")
+        
+        let sessionConfig = URLSessionConfiguration.default
+        let session = URLSession(configuration: sessionConfig)
+        let components = URLComponents(string: "http://3.37.202.166/post/0iOS_feedSelect.php")
+        
+        // url이 없으면 리턴한다. 여기서 끝
+        guard let url = components?.url else { return }
+        
+        // 값이 있다면 받아와서 넣음.
+        var request = URLRequest(url: url)
+        request.httpMethod = "GET" //GET방식이다. 컨텐츠타입이 없고, 담아서 보내는 내용이 없음, URL호출만!
+        
+        let task = session.dataTask(with: request) { data, response, error in
+            print( (response as! HTTPURLResponse).statusCode )
+            
+            // 데이터가 있을때만 파싱한다.
+            if let hasData = data {
+                // 모델만든것 가져다가 디코더해준다.
+                do{
+                    // 만들어놓은 피드모델에 담음, 데이터를 디코딩해서, 디코딩은 try catch문 써줘야함
+                    // 여기서 실행을 하고 오류가 나면 catch로 던져서 프린트해주겠다.
+                    self.feedModel = try JSONDecoder().decode(FeedModel.self, from: hasData)
+//                    print(self.feedModel ?? "no data")
+                    
+                    print("mapModels/ 위도 \(self.feedModel?.results[0].myPlaceText)")
+                    if let lastplace = self.feedModel?.results[0].myPlaceText {
+                        print("마지막 사진업로드 장소값:\(lastplace)")
+                    
+                        self.place = lastplace
+                        
+                        self.mapRequest()
+                        
+                    }else{
+                        self.place = "흥덕구 복대동"
+                    }
+                 
+                }catch{
+                    print(error)
+                }
+            }
+        }
+        // task를 실행한다.
+        task.resume()
+        // 세션끝내기
+        session.finishTasksAndInvalidate()
+        
+    }// 호출메소드끝
     
     
 }

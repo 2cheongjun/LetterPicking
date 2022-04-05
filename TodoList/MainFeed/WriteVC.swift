@@ -32,7 +32,9 @@ class WriteVC : UIViewController, UIImagePickerControllerDelegate, UINavigationC
     
     // UI이미지 담을 변수(갤러리에서 가져온이미지)***************
     var newImages: UIImage? = nil
-    var text = ""
+    var text = "" // 작성글
+    var address = "" // 직접작성주소
+    var autoAddress = "" // 자동위치
     
     var isSelected = false
     
@@ -159,17 +161,17 @@ class WriteVC : UIViewController, UIImagePickerControllerDelegate, UINavigationC
     @IBAction func placeBtn(_ sender: Any) {
         
         // 얼럿을 띄우고 입력을 받아서, placeText에 넣기
-        let alert = UIAlertController(title: "위치를 직접 작성하세요!", message: nil, preferredStyle: .alert)
+        let alert = UIAlertController(title: "위치 직접입력 ", message:"시/구/동을 입력하세요.(한국)", preferredStyle: .alert)
                 
         alert.addTextField{ (myTextField) in
 //            myTextField.textColor = UIColor.cyan
-            myTextField.placeholder = "ex)금천구 독산동"
+            myTextField.placeholder = "ex)흥덕구 복대동"
         }
         
                let ok = UIAlertAction(title: "OK", style: .default) { (ok) in
                     //code // 내위치정보 받아다가 넣기
                    self.myPlaceText.text = alert.textFields?[0].text
-
+                  
                }
                let cancel = UIAlertAction(title: "cancel", style: .cancel) { (cancel) in
                     //code
@@ -255,6 +257,8 @@ extension WriteVC: UICollectionViewDelegate, UICollectionViewDataSource {
                                   "userID" : userID as Any,
                                   "myPlaceText": myPlaceText.text ?? ""
         ]
+        
+        print(address)
         
         // API 호출 URL
         let url = "http://3.37.202.166/post/0iOS_images.php"
@@ -342,6 +346,10 @@ extension WriteVC: CLLocationManagerDelegate {
                         }  //추가 도시 수준 정보 (예) 동작구
                         if let subLocality: String = address.last?.subLocality{
                             self.myPlaceText.text?.append(" " + subLocality)
+                            
+//                            if let autoAddress =  self.myPlaceText.text?.append(" " + subLocality){
+//                                print("자동입력주소 : \(autoAddress)")
+//                            }
                         }
                         
                     }
