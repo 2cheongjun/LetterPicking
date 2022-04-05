@@ -33,7 +33,7 @@ class WriteVC : UIViewController, UIImagePickerControllerDelegate, UINavigationC
     // UI이미지 담을 변수(갤러리에서 가져온이미지)***************
     var newImages: UIImage? = nil
     var text = "" // 작성글
-    var address = "" // 직접작성주소
+    var add = "" // 직접작성주소
     var autoAddress = "" // 자동위치
     
     var isSelected = false
@@ -171,6 +171,13 @@ class WriteVC : UIViewController, UIImagePickerControllerDelegate, UINavigationC
                let ok = UIAlertAction(title: "OK", style: .default) { (ok) in
                     //code // 내위치정보 받아다가 넣기
                    self.myPlaceText.text = alert.textFields?[0].text
+//                   print("WriteVC/직접입력받은 주소: \(self.myPlaceText.text)")
+                   
+                   if let add = self.myPlaceText.text{
+                       print("작정한주소 :\(add) ")
+                   }else{
+                     
+                   }
                   
                }
                let cancel = UIAlertAction(title: "cancel", style: .cancel) { (cancel) in
@@ -255,10 +262,11 @@ extension WriteVC: UICollectionViewDelegate, UICollectionViewDataSource {
         let param: Parameters = [ "imageStr" :  imageStr,
                                   "postText" : textView.text ?? "",
                                   "userID" : userID as Any,
+//                                  "myPlaceText": add
                                   "myPlaceText": myPlaceText.text ?? ""
         ]
         
-        print(address)
+        print("WriteVC/ 기본입력내용 :\(self.myPlaceText.text ?? "")")
         
         // API 호출 URL
         let url = "http://3.37.202.166/post/0iOS_images.php"
