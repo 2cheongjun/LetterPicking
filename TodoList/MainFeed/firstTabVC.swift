@@ -76,7 +76,7 @@ class firstTabVC: UIViewController {
     
     // network /URL세션으로 호출 // 추후 아이디값을 보내서 호출하는것도..생각해보기?? 전체다 가져오는것이니 상관없을까?..
     func requestFeedAPI(){
-        print("API호출")
+        print("메인 피드 API호출")
         
         let sessionConfig = URLSessionConfiguration.default
         let session = URLSession(configuration: sessionConfig)
@@ -103,7 +103,7 @@ class firstTabVC: UIViewController {
                     // 만들어놓은 피드모델에 담음, 데이터를 디코딩해서, 디코딩은 try catch문 써줘야함
                     // 여기서 실행을 하고 오류가 나면 catch로 던져서 프린트해주겠다.
                     self.feedModel = try JSONDecoder().decode(FeedModel.self, from: hasData)
-                    print(self.feedModel ?? "no data")
+//                    print(self.feedModel ?? "no data")
                     
                     // 모든UI 작업은 메인쓰레드에서 이루어져야한다.
                     DispatchQueue.main.async {

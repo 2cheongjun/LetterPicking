@@ -35,8 +35,8 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="postText" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Fzk-Cy-g37">
-                                <rect key="frame" x="20" y="447" width="374" height="56"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="postText" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Fzk-Cy-g37">
+                                <rect key="frame" x="20" y="447" width="374" height="20.5"/>
                                 <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -47,6 +47,30 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Qo3-qJ-bOg">
+                                <rect key="frame" x="20" y="587.5" width="180" height="45"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="180" id="6UE-hA-tVz"/>
+                                    <constraint firstAttribute="height" constant="45" id="PJk-oI-I6D"/>
+                                </constraints>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="gray" title="삭제"/>
+                                <connections>
+                                    <action selector="delBtn:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="AmR-7B-qiZ"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="M0y-b4-EjN">
+                                <rect key="frame" x="209" y="587.5" width="185" height="45"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="185" id="EeX-jl-kaR"/>
+                                    <constraint firstAttribute="height" constant="45" id="vwf-2o-rMU"/>
+                                </constraints>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="gray" title="수정"/>
+                                <connections>
+                                    <action selector="modifyBtn:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="u4S-wh-Av4"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="vDu-zF-Fre"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -59,11 +83,15 @@
                             <constraint firstItem="uef-po-aMj" firstAttribute="top" secondItem="vDu-zF-Fre" secondAttribute="top" constant="20" id="Cg1-E3-W7d"/>
                             <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="MCi-zG-vdq" secondAttribute="trailing" constant="20" id="DRH-qg-cTa"/>
                             <constraint firstItem="tVs-HH-Otr" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" constant="20" id="FOx-y1-TNi"/>
+                            <constraint firstItem="Qo3-qJ-bOg" firstAttribute="top" secondItem="Fzk-Cy-g37" secondAttribute="bottom" constant="120" id="K9B-ec-fDw"/>
                             <constraint firstItem="vDu-zF-Fre" firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="Fzk-Cy-g37" secondAttribute="bottom" constant="20" id="Kzn-oE-cZg"/>
+                            <constraint firstItem="M0y-b4-EjN" firstAttribute="top" secondItem="Qo3-qJ-bOg" secondAttribute="top" id="LNf-Ee-KEu"/>
                             <constraint firstItem="xAC-8X-dwT" firstAttribute="top" secondItem="uef-po-aMj" secondAttribute="bottom" constant="20" id="Lik-rK-vqu"/>
                             <constraint firstItem="xAC-8X-dwT" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" constant="20" id="NVT-Yj-MN8"/>
                             <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="xAC-8X-dwT" secondAttribute="trailing" constant="20" id="Pdu-mQ-A0b"/>
                             <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="tVs-HH-Otr" secondAttribute="trailing" constant="20" id="QNU-SN-Pgb"/>
+                            <constraint firstItem="Qo3-qJ-bOg" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" constant="20" id="TfL-Ks-Cz8"/>
+                            <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="M0y-b4-EjN" secondAttribute="trailing" constant="20" id="V5X-Cm-3lu"/>
                             <constraint firstItem="MCi-zG-vdq" firstAttribute="top" secondItem="xAC-8X-dwT" secondAttribute="bottom" constant="20" id="fSk-Ec-B8S"/>
                             <constraint firstItem="MCi-zG-vdq" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" constant="20" id="riw-lV-Sxj"/>
                             <constraint firstItem="Fzk-Cy-g37" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" constant="20" id="xBu-Lc-FII"/>

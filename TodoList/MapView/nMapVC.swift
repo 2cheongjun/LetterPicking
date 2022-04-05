@@ -74,7 +74,7 @@ class nMapVC : UIViewController {
                     
                 case .success(let value as [String:Any]):
                     let json = JSON(value)
-                    print(json)
+//                    print(json)
 //                    let data = json["addresses"]
 //                    let lat = data[0]["y"]
 //                    let lon = data[0]["x"]
@@ -89,7 +89,7 @@ class nMapVC : UIViewController {
 //                        print("mapModels/ 위도 \(mapModels.addresses[0].x)")
 //                        print("mapModels/ 경도 \(mapModels.addresses[0].y)")
                         
-                        // 카메라 함수에 넣기위해 더블형태로 바꾸기
+                        // 카메라 함수에 넣기위해 더블형태로 바꾸기 // 이거 영문일때,,앱 죽음...처리?// 구 동바꾸면 뻑남..
                         let lat = Double(mapModels.addresses[0].y) ?? 37.4702453
                         let lon = Double(mapModels.addresses[0].x) ?? 126.897041
                         print(lat,lon)
@@ -169,7 +169,7 @@ class nMapVC : UIViewController {
                     self.feedModel = try JSONDecoder().decode(FeedModel.self, from: hasData)
 //                    print(self.feedModel ?? "no data")
                     
-                    print("mapModels/ 위도 \(self.feedModel?.results[0].myPlaceText)")
+//                    print("mapModels/ 위도 \(self.feedModel?.results[0].myPlaceText)")
                     if let lastplace = self.feedModel?.results[0].myPlaceText {
                         print("마지막 사진업로드 장소값:\(lastplace)")
                     
