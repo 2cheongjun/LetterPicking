@@ -22,6 +22,7 @@ class nMapVC : UIViewController {
     // 피드 모델가져오기
     var feedModel: FeedModel?
     
+    
 //    struct MapModel: Codable{
 //        let addresses:[AddressResult]
 //    }
@@ -39,6 +40,7 @@ class nMapVC : UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+    
         
         //서버에 업로드된 마지막 이미지 장소 가져옴  // 맵요청(안에 카메라위치 함수, 마커함수실행)
         requestFeedAPI()
@@ -55,7 +57,6 @@ class nMapVC : UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-       
         requestFeedAPI()
     }
     

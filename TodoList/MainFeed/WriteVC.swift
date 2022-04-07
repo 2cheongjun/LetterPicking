@@ -11,6 +11,7 @@ import Photos
 import Alamofire
 import CoreLocation
 
+
 // 글작성화면 VC
 class WriteVC : UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextViewDelegate{
     
@@ -43,6 +44,9 @@ class WriteVC : UIViewController, UIImagePickerControllerDelegate, UINavigationC
      */
     let plist = UserDefaults.standard
     
+    // 노티1.시작의 시작등록.글작성후에 메인피드를 새로고침하기위한 노티피케이션등록 (노티의 이름은 DissmissWriteVC)
+    let DissmissWriteVC: Notification.Name = Notification.Name("DissmissWriteVC")
+
     
     override func viewDidLoad() {
         //컬렉션뷰 델리게이트
@@ -288,7 +292,7 @@ extension WriteVC: UICollectionViewDelegate, UICollectionViewDataSource {
         let call = AF.request(url, method: .post, parameters: param,
                               encoding: JSONEncoding.default)
         //                call.responseJSON { res in
-        call.responseJSON { res in
+        call.responseJSON { [self] res in
             
             // 성공실패케이스문 작성하기
             print("서버로 보냄!!!!!")
@@ -305,6 +309,8 @@ extension WriteVC: UICollectionViewDelegate, UICollectionViewDataSource {
                 if success == 1 {
                     self.alert("응답값 JSON= \(try! res.result.get())!)")
                     self.dismiss(animated: true, completion: nil)
+                    // 노티2.창이 닫힐때 노티를 메인피드로 신호를 보낸다. //(노티의 이름은 DissmissWriteVC)
+                    NotificationCenter.default.post(name: DissmissWriteVC, object: nil, userInfo: nil)
                 }else{
                     //sucess가 0이면
                     self.alert("응답실패")

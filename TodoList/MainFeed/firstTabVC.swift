@@ -9,7 +9,7 @@ import UIKit
 import Alamofire
 import SwiftyJSON
 
-class firstTabVC: UIViewController {
+class firstTabVC: UIViewController{
     
     // 모델가져오기
     var feedModel: FeedModel?
@@ -18,7 +18,6 @@ class firstTabVC: UIViewController {
     // 로그인한 아이디명표기
     @IBOutlet weak var userName: UILabel!
     @IBOutlet var hi: UILabel! // 님 안녕하세요.
-    
     @IBOutlet weak var writeBtn: UIButton!
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var tableView: UITableView!
@@ -29,7 +28,17 @@ class firstTabVC: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
         searchBar.delegate = self
+        // 당겨서 새로고침설정
+        tableView.refreshControl = UIRefreshControl()
+//        tableView.refreshControl?.attributedTitle = NSAttributedString(string:"당겨서 새로고침")
+        tableView.refreshControl?.addTarget(self, action: #selector(pullToRefresh(_:)), for: .valueChanged)
         
+        // 노티3.WriteVC에서 보낸 값을 받기위해 DissmissWrite의 노티피케이션을 정의해 받을 준비한다.
+        let DissmissWriteVC = Notification.Name("DissmissWriteVC")
+        // 노티4.옵저버를 등록하고,DissmissWrite가 오면 writeVCNotification함수를 실행한다.
+        NotificationCenter.default.addObserver(self, selector: #selector(self.writeVCNotification(_:)), name: DissmissWriteVC, object: nil)
+        
+      
         //1.타이틀레이블 생성
         let title = UILabel(frame: CGRect(x: 0, y: 100, width: 100, height: 30))
         
@@ -67,6 +76,7 @@ class firstTabVC: UIViewController {
         
         // API호출
         requestFeedAPI()
+
     }
     
     // 뷰가보일때 다시 호출
@@ -79,6 +89,21 @@ class firstTabVC: UIViewController {
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
     }
+    
+    // 노티5.옵저버가 DissmissWrite를 받았을때 실행할 내용: 데이터 리로드
+    @objc func writeVCNotification(_ noti: Notification) {
+          
+        // API호출
+         requestFeedAPI()
+          // 이 부분을 해주어야 다시 comment들을 api로 가져올 수 있었다.
+          // 즉, reload할 데이터를 불러와야 바뀌는 게 있다는 의미다.
+          // 안 해서 고생함...
+            OperationQueue.main.addOperation { // DispatchQueue도 가능.
+                
+                self.tableView.reloadData()
+            }
+
+        }
     
     // network /URL세션으로 호출 // 추후 아이디값을 보내서 호출하는것도..생각해보기?? 전체다 가져오는것이니 상관없을까?..
     func requestFeedAPI(){
@@ -154,6 +179,15 @@ class firstTabVC: UIViewController {
 
        }
     
+    // 당겨서 새로고침 함수
+    @objc func pullToRefresh(_ sender: Any) {
+        // 테이블뷰에 입력되는 데이터를 갱신한다.
+        // API호출
+        requestFeedAPI()
+        self.tableView.reloadData()
+        //당겨서 새로고침 기능 종료
+        self.tableView.refreshControl?.endRefreshing()
+    }
     
     // 애니메이션설정
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -221,6 +255,8 @@ class firstTabVC: UIViewController {
 
 // 테이블뷰
 extension firstTabVC: UITableViewDelegate, UITableViewDataSource {
+    
+  
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // 데이터 모델에 맞게 갯수
