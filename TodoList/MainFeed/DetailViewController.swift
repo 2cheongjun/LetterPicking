@@ -6,6 +6,8 @@
 //
 
 import UIKit
+import Alamofire
+import SwiftyJSON
 
 // 게시글눌렀을때 상세
 class DetailViewController: UIViewController, UITextViewDelegate{
@@ -34,10 +36,11 @@ class DetailViewController: UIViewController, UITextViewDelegate{
     // 완료버튼
     @IBAction func barOKBtn(_ sender: Any) {
         // 수정API호출
+        upDatePostText()
     }
     
     
-    /// 화면을 누르면 키보드 내려가게 하는 것
+    // 화면을 누르면 키보드 내려가게 하는 것
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
     }
@@ -66,6 +69,9 @@ class DetailViewController: UIViewController, UITextViewDelegate{
             }
         }
     }
+    
+    // 키보드 설정
+ 
     
     // 이미지 Get요청
     func loadImage(urlString: String, completion: @escaping (UIImage?)-> Void){
@@ -125,6 +131,58 @@ class DetailViewController: UIViewController, UITextViewDelegate{
     }
     
     
+    // 수정API호출
+    func upDatePostText(success: (()->Void)? = nil, fail: ((String)->Void)? = nil) {
+        
+        // userID, postText,이미지묶음을 파라미터에 담아보냄
+        let userID = feedResult?.userID
+        
+        let param: Parameters = [
+            "feedIdx": feedIdx,
+            "postText" : postText.text ?? "",
+            "userID" : userID as Any,
+        ]
+        
+        print("WriteVC/ 기본입력내용 :\(self.myPlaceText.text ?? "")")
+        
+        // API 호출 URL
+        let url = "http://3.37.202.166/post/0iOS_feedUpdate.php"
+        
+        //이미지 전송
+        let call = AF.request(url, method: .post, parameters: param,
+                              encoding: JSONEncoding.default)
+        //                call.responseJSON { res in
+        call.responseJSON { res in
+            
+            // 성공실패케이스문 작성하기
+            print("서버로 보냄!!!!!")
+            print("JSON= \(try! res.result.get())!)")
+            
+            guard (try! res.result.get() as? NSDictionary) != nil else {
+                print("올바른 응답값이 아닙니다.")
+                return
+            }
+            
+            if let jsonObject = try! res.result.get() as? [String :Any]{
+                let success = jsonObject["success"] as? Int ?? 0
+                let message = jsonObject["message"] as? String ?? ""
+                
+                if success == 1 {
+                    self.alert("응답값 JSON= \(try! res.result.get())!)")
+                    self.dismiss(animated: true, completion: nil)
+                    print("응답내용\(message)")
+                }else{
+                    //sucess가 0이면
+                    self.alert("응답실패")
+                    print("응답내용\(message)")
+                }
+            }
+        }
+        
+    }//수정 함수끝
+    
+    
+    
     // 게시글삭제 API호출
     func requestFeedDeleateAPI(){
         print("삭제 API호출")
@@ -173,6 +231,11 @@ class DetailViewController: UIViewController, UITextViewDelegate{
             } // end if DispatchQueue.main.async()
         }   // 6. POST 전송
         task.resume()
-    }
+    }// 함수 끝
+    
+    
+ 
 }
+
+
 

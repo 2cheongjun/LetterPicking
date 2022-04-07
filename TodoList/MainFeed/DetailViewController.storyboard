@@ -25,7 +25,7 @@
                                 </constraints>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Qo3-qJ-bOg">
-                                <rect key="frame" x="16" y="772" width="184" height="45"/>
+                                <rect key="frame" x="16" y="722" width="184" height="45"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="45" id="5dz-iy-cU4"/>
                                     <constraint firstAttribute="width" constant="184" id="GNq-M8-p8I"/>
@@ -55,10 +55,10 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="postText" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="jhI-Hq-8Ex">
-                                <rect key="frame" x="16" y="562" width="382" height="150"/>
+                                <rect key="frame" x="16" y="562" width="382" height="100"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="150" id="No5-WX-uI1"/>
+                                    <constraint firstAttribute="height" constant="100" id="No5-WX-uI1"/>
                                     <constraint firstAttribute="width" constant="382" id="U5H-to-cMX"/>
                                 </constraints>
                                 <color key="textColor" systemColor="labelColor"/>
@@ -83,7 +83,7 @@
                                 </items>
                             </navigationBar>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="M0y-b4-EjN">
-                                <rect key="frame" x="209" y="772" width="189" height="45"/>
+                                <rect key="frame" x="209" y="722" width="189" height="45"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="gray" title="수정"/>
                                 <connections>
