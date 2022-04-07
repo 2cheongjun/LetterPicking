@@ -26,7 +26,22 @@ class DetailViewController: UIViewController, UITextViewDelegate{
             postText.font = UIFont.systemFont(ofSize: 16, weight: .light)
         }
     }
-
+    //취소버튼
+    @IBAction func barCancleBtn(_ sender: Any) {
+        self.dismiss(animated: true, completion: nil)
+    }
+    
+    // 완료버튼
+    @IBAction func barOKBtn(_ sender: Any) {
+        // 수정API호출
+    }
+    
+    
+    /// 화면을 누르면 키보드 내려가게 하는 것
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
+    }
+    
     // 화면이 그려지기전에 세팅한다.
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -39,7 +54,7 @@ class DetailViewController: UIViewController, UITextViewDelegate{
         postText.text = feedResult?.postText
         
         // 게시글번호
-         feedIdx = feedResult!.feedIdx
+        feedIdx = feedResult!.feedIdx
         
         // 이미지처리방법
         if let hasURL = self.feedResult?.postImgs{
@@ -89,7 +104,7 @@ class DetailViewController: UIViewController, UITextViewDelegate{
             requestFeedDeleateAPI()
             // 창을 닫는다.
             self.dismiss(animated: true, completion: nil)
-
+            
         }
         alert.addAction(alertAction)
         
@@ -98,26 +113,22 @@ class DetailViewController: UIViewController, UITextViewDelegate{
         alert.addAction(cancel)
         //                alert.view.tintColor =  UIColor(ciColor: .black)
         self.present(alert, animated: true, completion: nil)
-
-        }
         
-    /// 화면을 누르면 키보드 내려가게 하는 것
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        self.view.endEditing(true)
     }
+    
     
     //수정버튼
     @IBAction func modifyBtn(_ sender: Any) {
-//        let postText = UITextField()
+        //        let postText = UITextField()
         postText.becomeFirstResponder()// 키보드가 나타나고 입력상태가 된다.
-//        postText.clearButtonMode = .always // 텍스트필드만 됨
+        //        postText.clearButtonMode = .always // 텍스트필드만 됨
     }
     
     
     // 게시글삭제 API호출
     func requestFeedDeleateAPI(){
         print("삭제 API호출")
-           
+        
         // 1. 전송할 값 준비
         // JSON으로 요청하기 ************************************************************************
         let param = ["feedIdx" : feedIdx]
@@ -150,12 +161,12 @@ class DetailViewController: UIViewController, UITextViewDelegate{
                     
                     print("DetailViewController 삭제요청/ 서버응답") // 코더블안해서 그런것같다???
                     // ② JSON 결과값을 추출한다.
-//                    let result = jsonObject as? String
+                    //                    let result = jsonObject as? String
                     let success = jsonObject["success"] as? String
-//                    let userID = jsonObject["userID"] as? String
+                    //                    let userID = jsonObject["userID"] as? String
                     print("DetailViewController 응답결과 \(success)")
                     
-    
+                    
                 } catch let e as NSError {
                     print("DetailViewController 삭제요청/ 파싱오류: \(e.localizedDescription)")
                 }
@@ -164,4 +175,4 @@ class DetailViewController: UIViewController, UITextViewDelegate{
         task.resume()
     }
 }
-    
+
