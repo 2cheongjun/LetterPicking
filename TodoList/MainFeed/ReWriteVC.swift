@@ -12,7 +12,7 @@ import Alamofire
 import CoreLocation
 
 // 글작성화면 VC
-class WriteVC : UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextViewDelegate{
+class ReWriteVC : UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextViewDelegate{
     
     @IBOutlet weak var imgView: UIImageView!
     
@@ -65,8 +65,8 @@ class WriteVC : UIViewController, UIImagePickerControllerDelegate, UINavigationC
         // 기존에 생성했던 CLLocationManager 인스턴스에 delegate 지정
         locationManager.delegate = self
         
-        //        // 네비게이션바 숨김처리
-        //        self.navigationController?.navigationBar.isHidden = false
+//        // 네비게이션바 숨김처리
+//        self.navigationController?.navigationBar.isHidden = false
     }
     
     //취소버튼
@@ -126,12 +126,10 @@ class WriteVC : UIViewController, UIImagePickerControllerDelegate, UINavigationC
                     (result, info) in
                     thumbnail = result!
                 }
+                
                 let data = thumbnail.jpegData(compressionQuality: 0.7)
                 let newImage = UIImage(data: data!)
-                // 이미지 리사이즈
-                let resizedImg = newImage?.imgResized(toWidth: 300.0)
-                print("이미지리사이징\(resizedImg)")
-                self.photoArray.append(resizedImg! as UIImage)
+                self.photoArray.append(newImage! as UIImage)
             }
         }
     }
@@ -147,9 +145,6 @@ class WriteVC : UIViewController, UIImagePickerControllerDelegate, UINavigationC
             //  여기에 실행할 코드
             // 갤러리에서 받아온 UIImage값 받아서 newProfile함수 호출
             if let getImage = self.newImages{
-                
-                print("getimg :\(getImage)")
-                
                 self.upLoadImg(getImage) // 받아온이미지들 넣어서 upLoadImg실행
             }
         }
@@ -167,30 +162,30 @@ class WriteVC : UIViewController, UIImagePickerControllerDelegate, UINavigationC
         
         // 얼럿을 띄우고 입력을 받아서, placeText에 넣기
         let alert = UIAlertController(title: "위치 직접입력 ", message:"시/구/동을 입력하세요.(한국)", preferredStyle: .alert)
-        
+                
         alert.addTextField{ (myTextField) in
-            //            myTextField.textColor = UIColor.cyan
+//            myTextField.textColor = UIColor.cyan
             myTextField.placeholder = "ex)흥덕구 복대동"
         }
         
-        let ok = UIAlertAction(title: "OK", style: .default) { (ok) in
-            //code // 내위치정보 받아다가 넣기
-            self.myPlaceText.text = alert.textFields?[0].text
-            //                   print("WriteVC/직접입력받은 주소: \(self.myPlaceText.text)")
-            
-            if let add = self.myPlaceText.text{
-                print("작정한주소 :\(add) ")
-            }else{
-                
-            }
-            
-        }
-        let cancel = UIAlertAction(title: "cancel", style: .cancel) { (cancel) in
-            //code
-        }
-        alert.addAction(cancel)
-        alert.addAction(ok)
-        self.present(alert, animated: true, completion: nil)
+               let ok = UIAlertAction(title: "OK", style: .default) { (ok) in
+                    //code // 내위치정보 받아다가 넣기
+                   self.myPlaceText.text = alert.textFields?[0].text
+//                   print("WriteVC/직접입력받은 주소: \(self.myPlaceText.text)")
+                   
+                   if let add = self.myPlaceText.text{
+                       print("작정한주소 :\(add) ")
+                   }else{
+                     
+                   }
+                  
+               }
+               let cancel = UIAlertAction(title: "cancel", style: .cancel) { (cancel) in
+                    //code
+               }
+               alert.addAction(cancel)
+               alert.addAction(ok)
+               self.present(alert, animated: true, completion: nil)
     }
     
 }// VC끝
@@ -199,7 +194,7 @@ class WriteVC : UIViewController, UIImagePickerControllerDelegate, UINavigationC
 
 
 // cell data
-extension WriteVC: UICollectionViewDelegate, UICollectionViewDataSource {
+extension ReWriteVC: UICollectionViewDelegate, UICollectionViewDataSource {
     
     // 셀갯수반환
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -253,19 +248,13 @@ extension WriteVC: UICollectionViewDelegate, UICollectionViewDataSource {
         
         // 이미지들을 담을 배열생성
         var imageStr: [String] = []
-
-        //가져온 사진의 갯수만큼,jpgData로 바꾼뒤에 imageData에 담는다.// PhotoArray에 담겨있는 사진을 바로 가져옴...
-        for a in 0..<self.photoArray.count {
-                      
-            let finalImage: Data = self.photoArray[a].jpegData(compressionQuality: 0.9)!
-            // 데이터로 변환된 이미지 / 용량이 찍힘
-//            print("finalImage\( finalImage)")
-            
-            //이미지를 데이터로 변환한뒤에, JSON형태로 전송하기 위해서 base64로 인코딩한다.
-            imageStr.append(finalImage.base64EncodedString())
-        }
         
-//        print("이미지사이즈:\(imageStr)")
+        //가져온 사진의 갯수만큼,jpgData로 바꾼뒤에 imageData에 담는다.
+        for a in 0..<self.photoArray.count {
+            let resultImage: Data = self.photoArray[a].jpegData(compressionQuality: 0.1)!
+            //이미지를 데이터로 변환한뒤에, JSON형태로 전송하기 위해서 base64로 인코딩한다.
+            imageStr.append(resultImage.base64EncodedString())
+        }
         
         // userID, postText,이미지묶음을 파라미터에 담아보냄
         let userID = plist.string(forKey: "name")
@@ -273,7 +262,7 @@ extension WriteVC: UICollectionViewDelegate, UICollectionViewDataSource {
         let param: Parameters = [ "imageStr" :  imageStr,
                                   "postText" : textView.text ?? "",
                                   "userID" : userID as Any,
-                                  //                                  "myPlaceText": add
+//                                  "myPlaceText": add
                                   "myPlaceText": myPlaceText.text ?? ""
         ]
         
@@ -309,32 +298,12 @@ extension WriteVC: UICollectionViewDelegate, UICollectionViewDataSource {
                 }
             }
         }
-        
     }//함수 끝
 }
 
-// 이미지 사이즈 줄이기
-extension UIImage {
-    func imgResized(withPercentage percentage: CGFloat, isOpaque: Bool = true) -> UIImage? {
-        let canvas = CGSize(width: size.width * percentage, height: size.height * percentage)
-        let format = imageRendererFormat
-        format.opaque = isOpaque
-        return UIGraphicsImageRenderer(size: canvas, format: format).image {
-            _ in draw(in: CGRect(origin: .zero, size: canvas))
-        }
-    }
-    func imgResized(toWidth width: CGFloat, isOpaque: Bool = true) -> UIImage? {
-        let canvas = CGSize(width: width, height: CGFloat(ceil(width/size.width * size.height)))
-        let format = imageRendererFormat
-        format.opaque = isOpaque
-        return UIGraphicsImageRenderer(size: canvas, format: format).image {
-            _ in draw(in: CGRect(origin: .zero, size: canvas))
-        }
-    }
-}
 
 // cell layout
-extension WriteVC: UICollectionViewDelegateFlowLayout {
+extension ReWriteVC: UICollectionViewDelegateFlowLayout {
     
     // 위 아래 간격
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
@@ -360,9 +329,8 @@ extension WriteVC: UICollectionViewDelegateFlowLayout {
 }
 
 
-
 // locations에 사용자의 위치 정보가 들어옴. 위도, 경도
-extension WriteVC: CLLocationManagerDelegate {
+extension ReWriteVC: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         if let coordinate = locations.last?.coordinate {
             //            print(coordinate.latitude)
@@ -387,9 +355,9 @@ extension WriteVC: CLLocationManagerDelegate {
                         if let subLocality: String = address.last?.subLocality{
                             self.myPlaceText.text?.append(" " + subLocality)
                             
-                            //                            if let autoAddress =  self.myPlaceText.text?.append(" " + subLocality){
-                            //                                print("자동입력주소 : \(autoAddress)")
-                            //                            }
+//                            if let autoAddress =  self.myPlaceText.text?.append(" " + subLocality){
+//                                print("자동입력주소 : \(autoAddress)")
+//                            }
                         }
                         
                     }
