@@ -6,11 +6,14 @@
 //
 
 import UIKit
+import Alamofire
+import SwiftyJSON
 
 class firstTabVC: UIViewController {
     
     // 모델가져오기
     var feedModel: FeedModel?
+    var word = ""
     
     // 로그인한 아이디명표기
     @IBOutlet weak var userName: UILabel!
@@ -70,9 +73,12 @@ class firstTabVC: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         // API호출
         requestFeedAPI()
-        // 이미지 호출은 어떻게?
     }
-//
+    
+    // 화면을 누르면 키보드 내려가게 하는 것
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
+    }
     
     // network /URL세션으로 호출 // 추후 아이디값을 보내서 호출하는것도..생각해보기?? 전체다 가져오는것이니 상관없을까?..
     func requestFeedAPI(){
@@ -163,10 +169,52 @@ class firstTabVC: UIViewController {
     
     // 글 작성버튼
     @IBAction func writeBtn(_ sender: Any) {
+        // 스토리보드 세그로 연결함
         
     }
     
-}
+    // 검색요청 API ***************************************************************************************
+    func searchWord(success: (()->Void)? = nil, fail: ((String)->Void)? = nil) {
+        // 검색창에 작성한 단어
+        let param: Parameters = ["word":  word ]
+        print("firstTabVC/ 단어입력내용 :\(self.word)")
+        
+        // API 호출 URL
+        let url = "http://3.37.202.166/post/0iOS_feedSearch.php"
+        
+        //이미지 전송
+        let call = AF.request(url, method: .post, parameters: param,
+                              encoding: JSONEncoding.default)
+        //                call.responseJSON { res in
+        call.responseJSON { res in
+            
+            // 성공실패케이스문 작성하기
+            print("서버로 보냄!!!!!")
+            print("JSON= \(try! res.result.get())!)")
+            
+            guard (try! res.result.get() as? NSDictionary) != nil else {
+                print("올바른 응답값이 아닙니다.")
+                return
+            }
+            
+            if let jsonObject = try! res.result.get() as? [String :Any]{
+                let success = jsonObject["result"] as? Int ?? 0
+                
+                //값가져와서 코더블해서 파싱하기 ...작업필요
+                
+                if success == 1 {
+                    self.alert("응답값 JSON= \(try! res.result.get())!)")
+                    self.dismiss(animated: true, completion: nil)
+                }else{
+                    //sucess가 0이면
+                    self.alert("응답실패")
+                }
+            }
+        }
+        
+    }//함수 끝
+    
+}// 뷰컨끝
 
 
 
@@ -242,7 +290,16 @@ extension firstTabVC: UITableViewDelegate, UITableViewDataSource {
 
 // 서치바, 검색창
 extension firstTabVC: UISearchBarDelegate {
-    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        
+        guard let hasText = searchBar.text else {
+            return
+        }
+        
+        word = hasText
+        // 검색요청하기
+        searchWord()
+        self.view.endEditing(true)
         
     }
 }
