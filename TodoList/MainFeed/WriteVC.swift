@@ -146,12 +146,12 @@ class WriteVC : UIViewController, UIImagePickerControllerDelegate, UINavigationC
         let alertAction = UIAlertAction(title: "업로드", style: .default) { [self] (_) in
             //  여기에 실행할 코드
             // 갤러리에서 받아온 UIImage값 받아서 newProfile함수 호출
-            if let getImage = self.newImages{
-                
-                print("getimg :\(getImage)")
-                
-                self.upLoadImg(getImage) // 받아온이미지들 넣어서 upLoadImg실행
-            }
+//            if let getImage = self.newImages{
+//                print("getimg :\(getImage)")
+//                self.upLoadImg(getImage) // 받아온이미지들 넣어서 upLoadImg실행
+//            }
+            // 전역변수에 담긴 photoArray값을 업로드함
+            self.upLoadImg()
         }
         alert.addAction(alertAction)
         
@@ -249,8 +249,9 @@ extension WriteVC: UICollectionViewDelegate, UICollectionViewDataSource {
     /*
      // 이미지 여러장 서버업로드 *************************************************************************************
      */
-    func upLoadImg(_ imageData: UIImage?, success: (()->Void)? = nil, fail: ((String)->Void)? = nil) {
-        
+    func upLoadImg(success: (()->Void)? = nil, fail: ((String)->Void)? = nil) {
+//    func upLoadImg(_ imageData: UIImage?, success: (()->Void)? = nil, fail: ((String)->Void)? = nil) {
+        // UI이미지를 받아와서 실행하는줄 알았는데,photoArray에 전역변수로 담긴 값을 가져오는 거였음..ㅜㅜ
         // 이미지들을 담을 배열생성
         var imageStr: [String] = []
 
