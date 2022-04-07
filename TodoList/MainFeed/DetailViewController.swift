@@ -8,7 +8,7 @@
 import UIKit
 
 // 게시글눌렀을때 상세
-class DetailViewController: UIViewController {
+class DetailViewController: UIViewController, UITextViewDelegate{
     
     //피드 모델에 값이 있으면 가져온다.
     var feedResult: FeedResult?
@@ -18,17 +18,20 @@ class DetailViewController: UIViewController {
     @IBOutlet var movieCotainer: UIImageView!
     
     @IBOutlet var userID: UILabel!
-    @IBOutlet var myPlaceText: UILabel!
     @IBOutlet var date: UILabel!
-    @IBOutlet var postText: UILabel!{
+    @IBOutlet var myPlaceText: UILabel!
+    
+    @IBOutlet var postText: UITextView!{
         didSet{
-            postText.font = UIFont.systemFont(ofSize: 24, weight: .light)
+            postText.font = UIFont.systemFont(ofSize: 16, weight: .light)
         }
     }
-    
+
     // 화면이 그려지기전에 세팅한다.
     override func viewDidLoad() {
         super.viewDidLoad()
+        // 델리게이트 연결
+        self.postText.delegate = self
         
         userID.text = feedResult?.userID
         myPlaceText.text = feedResult?.myPlaceText
@@ -98,10 +101,16 @@ class DetailViewController: UIViewController {
 
         }
         
-  
+    /// 화면을 누르면 키보드 내려가게 하는 것
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
+    }
     
     //수정버튼
     @IBAction func modifyBtn(_ sender: Any) {
+//        let postText = UITextField()
+        postText.becomeFirstResponder()// 키보드가 나타나고 입력상태가 된다.
+//        postText.clearButtonMode = .always // 텍스트필드만 됨
     }
     
     

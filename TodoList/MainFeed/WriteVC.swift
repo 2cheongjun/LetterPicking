@@ -74,8 +74,9 @@ class WriteVC : UIViewController, UIImagePickerControllerDelegate, UINavigationC
         self.dismiss(animated: true, completion: nil)
     }
     
+    /// 화면을 누르면 키보드 내려가게 하는 것
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        self.view.endEditing(true) /// 화면을 누르면 키보드 내려가게 하는 것
+        self.view.endEditing(true)
     }
     
     
