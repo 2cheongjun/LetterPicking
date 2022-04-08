@@ -11,6 +11,9 @@ import SwiftyJSON
 
 // 게시글눌렀을때 상세
 class DetailViewController: UIViewController, UITextViewDelegate{
+  
+ 
+//    @IBOutlet var keyHeight: NSLayoutConstraint!
     
     //피드 모델에 값이 있으면 가져온다.
     var feedResult: FeedResult?
@@ -28,6 +31,7 @@ class DetailViewController: UIViewController, UITextViewDelegate{
             postText.font = UIFont.systemFont(ofSize: 16, weight: .light)
         }
     }
+ 
     //취소버튼
     @IBAction func barCancleBtn(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)
@@ -49,7 +53,7 @@ class DetailViewController: UIViewController, UITextViewDelegate{
     override func viewDidLoad() {
         super.viewDidLoad()
         // 델리게이트 연결
-        self.postText.delegate = self
+        postText.delegate = self
         
         userID.text = feedResult?.userID
         myPlaceText.text = feedResult?.myPlaceText
@@ -68,10 +72,31 @@ class DetailViewController: UIViewController, UITextViewDelegate{
                 }
             }
         }
-    }
+        
+//        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(_:)), name: UIResponder.keyboardWillShowNotification, object: nil)
+//
+//        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(_:)), name: UIResponder.keyboardWillHideNotification, object: nil)
+
+    }// 뷰디드로드끝
     
-    // 키보드 설정
- 
+//
+//    @objc func keyboardWillShow(_ sender: Notification) {
+//          if let userInfo:NSDictionary = sender.userInfo as NSDictionary?,
+//             let keyboardFrame:NSValue = userInfo.value(forKey: UIResponder.keyboardFrameEndUserInfoKey) as? NSValue {
+//              let keyboardRectangle = keyboardFrame.cgRectValue
+//              let keyboardHeight = keyboardRectangle.height
+//              keyHeight.constant = keyboardHeight
+//          }
+//
+//
+//
+//      }
+//
+//      @objc func keyboardWillHide(_ sender: Notification) {
+//          //우리가 지정한 constaraint
+//          keyHeight.constant = 1
+//      }
+
     
     // 이미지 Get요청
     func loadImage(urlString: String, completion: @escaping (UIImage?)-> Void){
@@ -233,9 +258,6 @@ class DetailViewController: UIViewController, UITextViewDelegate{
         task.resume()
     }// 함수 끝
     
-    
- 
 }
-
 
 
