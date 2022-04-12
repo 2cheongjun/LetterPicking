@@ -180,24 +180,6 @@ class JoinVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UINa
                 
             }
             
-            // if let을 못벗김..
-            //              if let jsonObject = try! response.result.get() as? [String: Any] {
-            //                  _ = jsonObject["result_code"] as? String
-            //                  _ = jsonObject["success"] as? String
-            //                  print("JSON = \(try! response.result.get())")
-            //             }
-            
-            //              switch response.result {
-            //                         case .success:
-            //                             if let jsonObject = try! response.result.get() as? [String: Any] {
-            //                                 let result_code = jsonObject["result_code"] as? String
-            //                                 let success = jsonObject["success"] as? String
-            //
-            //                             }
-            //                         case .failure(let error):
-            //                             print(error)
-            //                             return
-            //                         }
         }
         self.navigationController?.popViewController(animated: true)
     }

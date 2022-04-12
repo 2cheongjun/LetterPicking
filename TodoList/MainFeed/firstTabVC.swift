@@ -278,41 +278,52 @@ class firstTabVC: UIViewController{
     // 검색요청 API ***************************************************************************************
     func searchWord(success: (()->Void)? = nil, fail: ((String)->Void)? = nil) {
         // 검색창에 작성한 단어
-        let param: Parameters = ["word":  word ]
         print("firstTabVC/ 단어입력내용 :\(self.word)")
         
-        // API 호출 URL
-        let url = "http://3.37.202.166/post/0iOS_feedSearch.php"
-        
-        //이미지 전송
-        let call = AF.request(url, method: .post, parameters: param,
-                              encoding: JSONEncoding.default)
-        //                call.responseJSON { res in
-        call.responseJSON { res in
-            
-            // 성공실패케이스문 작성하기
-            print("서버로 보냄!!!!!")
-            print("JSON= \(try! res.result.get())!)")
-            
-            guard (try! res.result.get() as? NSDictionary) != nil else {
-                print("올바른 응답값이 아닙니다.")
-                return
-            }
-            
-            if let jsonObject = try! res.result.get() as? [String :Any]{
-                let success = jsonObject["result"] as? Int ?? 0
-                
-                //값가져와서 코더블해서 파싱하기 ...작업필요
-                
-                if success == 1 {
-                    self.alert("응답값 JSON= \(try! res.result.get())!)")
-                    self.dismiss(animated: true, completion: nil)
-                }else{
-                    //sucess가 0이면
-                    self.alert("응답실패")
-                }
-            }
-        }
+        let sessionConfig = URLSessionConfiguration.default
+              let session = URLSession(configuration: sessionConfig)
+              var components = URLComponents(string: "http://3.37.202.166/post/0iOS_feedSearch.php?word=\(word)")
+              
+      //        let term = URLQueryItem(name: "term", value: "marvel")
+              let page = URLQueryItem(name: "word", value: word )
+              components?.queryItems = [page]
+          
+              // url이 없으면 리턴한다. 여기서 끝
+              guard let url = components?.url else { return }
+              
+              // 값이 있다면 받아와서 넣음.
+              var request = URLRequest(url: url)
+              
+              print("url :\(request)")
+              
+              request.httpMethod = "GET" //GET방식이다. 컨텐츠타입이 없고, 담아서 보내는 내용이 없음, URL호출만!
+              
+              let task = session.dataTask(with: request) { data, response, error in
+                  print( (response as! HTTPURLResponse).statusCode )
+                  
+                  // 데이터가 있을때만 파싱한다.
+                  if let hasData = data {
+                      // 모델만든것 가져다가 디코더해준다.
+                      do{
+                          // 만들어놓은 피드모델에 담음, 데이터를 디코딩해서, 디코딩은 try catch문 써줘야함
+                          // 여기서 실행을 하고 오류가 나면 catch로 던져서 프린트해주겠다.
+                          self.feedModel = try JSONDecoder().decode(FeedModel.self, from: hasData)
+      //                    print(self.feedModel ?? "no data")
+                          
+                          // 모든UI 작업은 메인쓰레드에서 이루어져야한다.
+                          DispatchQueue.main.async {
+                              // 테이블뷰 갱신 (자동으로 갱신안됨)
+                              self.tableView.reloadData()
+                          }
+                      }catch{
+                          print(error)
+                      }
+                  }
+              }
+              // task를 실행한다.
+              task.resume()
+              // 세션끝내기
+              session.finishTasksAndInvalidate()
         
     }//함수 끝
     
