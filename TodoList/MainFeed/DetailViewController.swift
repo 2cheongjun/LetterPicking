@@ -31,6 +31,9 @@ class DetailViewController: UIViewController, UITextViewDelegate{
             postText.font = UIFont.systemFont(ofSize: 16, weight: .light)
         }
     }
+    
+    // 노티1.시작의 시작등록.글수정후에 메인피드를 새로고침하기위한 노티 (노티의 이름은 ModifyVCNotification)
+    let ModifyVCNotification: Notification.Name = Notification.Name("ModifyVCNotification")
  
     //취소버튼
     @IBAction func barCancleBtn(_ sender: Any) {
@@ -41,12 +44,15 @@ class DetailViewController: UIViewController, UITextViewDelegate{
     @IBAction func barOKBtn(_ sender: Any) {
         // 수정API호출
         upDatePostText()
+        // 노티2.창이 닫힐때 노티를 메인피드로 신호를 보낸다. //(노티의 이름은 ModifyVCNotification)
+        NotificationCenter.default.post(name: ModifyVCNotification, object: nil, userInfo: nil)
+        self.dismiss(animated: true, completion: nil)
+
     }
     
-    // 화면을 누르면 키보드 내려가게 하는 것 (갑자기 안먹음??????????????)
-//    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-//        self.view.endEditing(true)
-//    }
+    override func viewWillAppear(_ animated: Bool) {
+        
+    }
     
    
     // 화면이 그려지기전에 세팅한다.
@@ -74,11 +80,6 @@ class DetailViewController: UIViewController, UITextViewDelegate{
         }
        
     }// 뷰디드로드끝
-
-    
-    
-    
-   
 
 
 
