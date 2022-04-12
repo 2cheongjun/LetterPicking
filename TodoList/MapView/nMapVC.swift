@@ -149,7 +149,7 @@ class nMapVC : UIViewController {
         
         let sessionConfig = URLSessionConfiguration.default
         let session = URLSession(configuration: sessionConfig)
-        let components = URLComponents(string: "http://3.37.202.166/post/0iOS_feedSelect.php")
+        let components = URLComponents(string: "http://3.37.202.166/post/0iOS_feedSelect.php?page=\(1)")
         
         // url이 없으면 리턴한다. 여기서 끝
         guard let url = components?.url else { return }
@@ -173,13 +173,13 @@ class nMapVC : UIViewController {
 //                    print("mapModels/ 위도 \(self.feedModel?.results[0].myPlaceText)")
                     if let lastplace = self.feedModel?.results[0].myPlaceText {
                         print("마지막 사진업로드 장소값:\(lastplace)")
-                    
+              
                         self.place = lastplace
-                        
                         self.mapRequest()
                         
                     }else{
-                        self.place = "흥덕구 복대동"
+                        self.place = "서울시 서초구"
+                        self.mapRequest()
                     }
                  
                 }catch{

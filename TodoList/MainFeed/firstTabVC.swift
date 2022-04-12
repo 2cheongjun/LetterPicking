@@ -24,9 +24,8 @@ class firstTabVC: UIViewController{
     
     //현재까지 읽어 온 데이터의 페이지 정보
     // 최초에 화면을 실행할때 이미 1페이지에 해당하는 데이터를 읽어 왔으므로,page의 초기값으로 1을 할당하는것이 맞다.
-    var page = 0
-//    var total = 5
-    var perPage = 10
+    var page = 1
+//    var perPage = 10
     
     // 더보기
     @IBAction func moreBtn(_ sender: Any) {
@@ -85,6 +84,8 @@ class firstTabVC: UIViewController{
     }
     
     override func viewDidLoad() {
+        // 더보기 페이지 세팅
+        page = 1
         // 델리게이트연결
         tableView.delegate = self
         tableView.dataSource = self
@@ -142,6 +143,8 @@ class firstTabVC: UIViewController{
     
     // 뷰가보일때 다시 호출
     override func viewWillAppear(_ animated: Bool) {
+        // 더보기 페이지 세팅
+        page = 1
         // API호출
         requestFeedAPI()
     }
@@ -246,6 +249,9 @@ class firstTabVC: UIViewController{
     @objc func pullToRefresh(_ sender: Any) {
         // 테이블뷰에 입력되는 데이터를 갱신한다.
         // API호출
+        // 당겨서 새로고침하면,more누를때 다시 page번호를 1로세팅해준다.1부터 다시더해지도록...************************************
+        page = 1
+        print("page=\(page)")
         requestFeedAPI()
         self.tableView.reloadData()
         //당겨서 새로고침 기능 종료
