@@ -44,9 +44,9 @@ class DetailViewController: UIViewController, UITextViewDelegate{
     }
     
     // 화면을 누르면 키보드 내려가게 하는 것 (갑자기 안먹음??????????????)
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        self.view.endEditing(true)
-    }
+//    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+//        self.view.endEditing(true)
+//    }
     
    
     // 화면이 그려지기전에 세팅한다.
@@ -72,9 +72,14 @@ class DetailViewController: UIViewController, UITextViewDelegate{
                 }
             }
         }
-        
+       
     }// 뷰디드로드끝
+
     
+    
+    
+   
+
 
 
     // 이미지 Get요청
@@ -182,7 +187,6 @@ class DetailViewController: UIViewController, UITextViewDelegate{
                 }
             }
         }
-        
     }//수정 함수끝
     
     

@@ -188,7 +188,6 @@ class firstTabVC: UIViewController{
         // 값이 있다면 받아와서 넣음.
         var request = URLRequest(url: url)
         request.httpMethod = "GET" //GET방식이다. 컨텐츠타입이 없고, 담아서 보내는 내용이 없음, URL호출만!
-//        request.httpMethod = "POST" //GET방식이다. 컨텐츠타입이 없고, 담아서 보내는 내용이 없음, URL호출만!
         
         let task = session.dataTask(with: request) { data, response, error in
             print( (response as! HTTPURLResponse).statusCode )
