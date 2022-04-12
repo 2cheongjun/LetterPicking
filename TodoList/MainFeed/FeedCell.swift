@@ -30,6 +30,11 @@ class FeedCell: UITableViewCell{
             priceLabel.font = .systemFont(ofSize: 13, weight: .light)
         }
     }
+    
+    
+    
+    
+    
 //    @IBOutlet var postImgs: UILabel!{
 //        didSet{
 //            postImgs.font = .systemFont(ofSize: 13, weight: .light)

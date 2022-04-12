@@ -8,6 +8,7 @@
 import UIKit
 import Alamofire
 import SwiftyJSON
+import SwiftUI
 
 class firstTabVC: UIViewController{
     
@@ -26,6 +27,20 @@ class firstTabVC: UIViewController{
     // 최초에 화면을 실행할때 이미 1페이지에 해당하는 데이터를 읽어 왔으므로,page의 초기값으로 1을 할당하는것이 맞다.
     var page = 1
 //    var perPage = 10
+    
+    //좋아요버튼
+    @IBAction func likeBtn(_ sender: Any) {
+    }
+    
+    //북마크 버튼
+    @IBAction func bookMarkBtn(_ sender: Any) {
+    }
+    
+    //댓글더보기버튼
+    @IBAction func replyBton(_ sender: Any) {
+    }
+    
+    
     
     // 더보기
     @IBAction func moreBtn(_ sender: Any) {
@@ -418,3 +433,4 @@ extension firstTabVC: UISearchBarDelegate {
         
     }
 }
+
