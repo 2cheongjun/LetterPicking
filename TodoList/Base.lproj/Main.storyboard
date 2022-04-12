@@ -107,7 +107,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="y9w-G7-wft">
-                                <rect key="frame" x="144.66666666666666" y="684" width="101" height="31"/>
+                                <rect key="frame" x="144.66666666666666" y="673" width="101" height="31"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" title="회원가입 하기"/>
                                 <connections>
@@ -115,7 +115,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mRM-t3-5gM">
-                                <rect key="frame" x="158.66666666666666" y="639" width="73" height="31"/>
+                                <rect key="frame" x="158.66666666666666" y="625" width="73" height="31"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="gray" title="둘러보기"/>
                                 <connections>
@@ -140,6 +140,14 @@
                                     <constraint firstAttribute="width" constant="390" id="MKV-JF-GCh"/>
                                 </constraints>
                             </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wJb-qY-BUu">
+                                <rect key="frame" x="154.66666666666666" y="734" width="81" height="31"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="tinted" title="📝메모장"/>
+                                <connections>
+                                    <segue destination="m6X-Wm-skt" kind="show" id="USC-6U-L6s"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="Vrh-ze-cFm"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -147,9 +155,11 @@
                             <constraint firstItem="mRM-t3-5gM" firstAttribute="centerX" secondItem="7x3-rB-524" secondAttribute="centerX" id="0sC-VZ-Z2F"/>
                             <constraint firstItem="Mf3-v1-FJg" firstAttribute="centerX" secondItem="7x3-rB-524" secondAttribute="centerX" id="2eX-dF-EvQ"/>
                             <constraint firstItem="Mf3-v1-FJg" firstAttribute="top" secondItem="7x3-rB-524" secondAttribute="top" id="5M0-5f-rc1"/>
-                            <constraint firstItem="mRM-t3-5gM" firstAttribute="top" secondItem="1As-M3-gN1" secondAttribute="bottom" constant="14" id="Iih-TC-EmR"/>
+                            <constraint firstItem="wJb-qY-BUu" firstAttribute="top" secondItem="y9w-G7-wft" secondAttribute="bottom" constant="30" id="7Mg-AF-DYK"/>
+                            <constraint firstItem="wJb-qY-BUu" firstAttribute="centerX" secondItem="7x3-rB-524" secondAttribute="centerX" id="Hyt-9K-1JU"/>
+                            <constraint firstItem="mRM-t3-5gM" firstAttribute="top" secondItem="1As-M3-gN1" secondAttribute="bottom" id="Iih-TC-EmR"/>
                             <constraint firstItem="mRM-t3-5gM" firstAttribute="centerX" secondItem="7x3-rB-524" secondAttribute="centerX" id="SrO-hl-iPZ"/>
-                            <constraint firstItem="y9w-G7-wft" firstAttribute="top" secondItem="Vrh-ze-cFm" secondAttribute="top" constant="640" id="bx6-56-dbQ"/>
+                            <constraint firstItem="y9w-G7-wft" firstAttribute="top" secondItem="Vrh-ze-cFm" secondAttribute="top" constant="629" id="bx6-56-dbQ"/>
                             <constraint firstItem="Mf3-v1-FJg" firstAttribute="leading" secondItem="Vrh-ze-cFm" secondAttribute="leading" id="f8r-EC-MYI"/>
                             <constraint firstItem="1As-M3-gN1" firstAttribute="leading" secondItem="Vrh-ze-cFm" secondAttribute="leading" constant="41" id="gDe-ng-f5Y"/>
                             <constraint firstItem="Mf3-v1-FJg" firstAttribute="trailing" secondItem="Vrh-ze-cFm" secondAttribute="trailing" id="m7W-HW-nwu"/>
@@ -167,7 +177,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2Wk-dD-Xw7" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-692" y="827"/>
+            <point key="canvasLocation" x="-692.30769230769226" y="826.77725118483409"/>
         </scene>
         <!--지도로보기-->
         <scene sceneID="Ro0-nH-3p6">
@@ -232,6 +242,26 @@
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="YwF-e6-yIn">
                                 <rect key="frame" x="0.0" y="175.33333333333331" width="390" height="536.66666666666674"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <view key="tableFooterView" contentMode="scaleToFill" id="rWN-fh-BWg">
+                                    <rect key="frame" x="0.0" y="421.33333206176758" width="390" height="44"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <subviews>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2s7-fs-WBt">
+                                            <rect key="frame" x="16" y="0.0" width="358" height="31"/>
+                                            <state key="normal" title="Button"/>
+                                            <buttonConfiguration key="configuration" style="plain" title="더보기"/>
+                                            <connections>
+                                                <action selector="moreBtn:" destination="b6h-lu-bIc" eventType="touchUpInside" id="Uyr-E8-4JI"/>
+                                            </connections>
+                                        </button>
+                                    </subviews>
+                                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                    <constraints>
+                                        <constraint firstItem="2s7-fs-WBt" firstAttribute="top" secondItem="rWN-fh-BWg" secondAttribute="top" id="H6Q-9u-7ZB"/>
+                                        <constraint firstItem="2s7-fs-WBt" firstAttribute="leading" secondItem="rWN-fh-BWg" secondAttribute="leading" constant="16" id="IoO-2u-7uA"/>
+                                        <constraint firstAttribute="trailing" secondItem="2s7-fs-WBt" secondAttribute="trailing" constant="16" id="q0z-0f-lu6"/>
+                                    </constraints>
+                                </view>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="FeedCell" rowHeight="354" id="e4l-z6-1cF" customClass="FeedCell" customModule="TodoList" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="44.666666030883789" width="390" height="354"/>

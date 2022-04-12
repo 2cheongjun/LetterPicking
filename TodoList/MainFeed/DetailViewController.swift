@@ -43,12 +43,12 @@ class DetailViewController: UIViewController, UITextViewDelegate{
         upDatePostText()
     }
     
-    
-    // 화면을 누르면 키보드 내려가게 하는 것
+    // 화면을 누르면 키보드 내려가게 하는 것 (갑자기 안먹음??????????????)
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
     }
     
+   
     // 화면이 그려지기전에 세팅한다.
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -61,7 +61,7 @@ class DetailViewController: UIViewController, UITextViewDelegate{
         postText.text = feedResult?.postText
         
         // 게시글번호
-        feedIdx = feedResult!.feedIdx
+        feedIdx = feedResult!.feedIdx ?? 0
         
         // 이미지처리방법
         if let hasURL = self.feedResult?.postImgs{
@@ -73,31 +73,10 @@ class DetailViewController: UIViewController, UITextViewDelegate{
             }
         }
         
-//        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(_:)), name: UIResponder.keyboardWillShowNotification, object: nil)
-//
-//        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(_:)), name: UIResponder.keyboardWillHideNotification, object: nil)
-
     }// 뷰디드로드끝
     
-//
-//    @objc func keyboardWillShow(_ sender: Notification) {
-//          if let userInfo:NSDictionary = sender.userInfo as NSDictionary?,
-//             let keyboardFrame:NSValue = userInfo.value(forKey: UIResponder.keyboardFrameEndUserInfoKey) as? NSValue {
-//              let keyboardRectangle = keyboardFrame.cgRectValue
-//              let keyboardHeight = keyboardRectangle.height
-//              keyHeight.constant = keyboardHeight
-//          }
-//
-//
-//
-//      }
-//
-//      @objc func keyboardWillHide(_ sender: Notification) {
-//          //우리가 지정한 constaraint
-//          keyHeight.constant = 1
-//      }
 
-    
+
     // 이미지 Get요청
     func loadImage(urlString: String, completion: @escaping (UIImage?)-> Void){
         let sessionConfig = URLSessionConfiguration.default

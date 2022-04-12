@@ -22,6 +22,67 @@ class firstTabVC: UIViewController{
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var tableView: UITableView!
     
+    //현재까지 읽어 온 데이터의 페이지 정보
+    // 최초에 화면을 실행할때 이미 1페이지에 해당하는 데이터를 읽어 왔으므로,page의 초기값으로 1을 할당하는것이 맞다.
+    var page = 0
+//    var total = 5
+    var perPage = 10
+    
+    // 더보기
+    @IBAction func moreBtn(_ sender: Any) {
+        // 현재 페이지의 값에 1을 추가한다.
+        // 호출시에 다음차례에 읽어야할 페이지를API에 실어서 함께 전달해야한다.
+        self.page += 1
+        
+        let sessionConfig = URLSessionConfiguration.default
+        let session = URLSession(configuration: sessionConfig)
+        var components = URLComponents(string: "http://3.37.202.166/post/0iOS_feedSelect.php?page=\(self.page)")
+//        var components = URLComponents(string: "http://3.37.202.166/post/0iOS_feedSelect.php")
+        
+//        let term = URLQueryItem(name: "term", value: "marvel")
+        let page = URLQueryItem(name: "page", value: "\(self.page)")
+        components?.queryItems = [page]
+    
+        // url이 없으면 리턴한다. 여기서 끝
+        guard let url = components?.url else { return }
+        
+        // 값이 있다면 받아와서 넣음.
+        var request = URLRequest(url: url)
+        
+        print("url :\(request)")
+        
+//        request.httpMethod = "GET" //GET방식이다. 컨텐츠타입이 없고, 담아서 보내는 내용이 없음, URL호출만!
+        request.httpMethod = "GET" //GET방식이다. 컨텐츠타입이 없고, 담아서 보내는 내용이 없음, URL호출만!
+        
+        let task = session.dataTask(with: request) { data, response, error in
+            print( (response as! HTTPURLResponse).statusCode )
+            
+            // 데이터가 있을때만 파싱한다.
+            if let hasData = data {
+                // 모델만든것 가져다가 디코더해준다.
+                do{
+                    // 만들어놓은 피드모델에 담음, 데이터를 디코딩해서, 디코딩은 try catch문 써줘야함
+                    // 여기서 실행을 하고 오류가 나면 catch로 던져서 프린트해주겠다.
+                    self.feedModel = try JSONDecoder().decode(FeedModel.self, from: hasData)
+//                    print(self.feedModel ?? "no data")
+                    
+                    // 모든UI 작업은 메인쓰레드에서 이루어져야한다.
+                    DispatchQueue.main.async {
+                        // 테이블뷰 갱신 (자동으로 갱신안됨)
+                        self.tableView.reloadData()
+                    }
+                }catch{
+                    print(error)
+                }
+            }
+        }
+        // task를 실행한다.
+        task.resume()
+        // 세션끝내기
+        session.finishTasksAndInvalidate()
+        
+        
+    }
     
     override func viewDidLoad() {
         // 델리게이트연결
@@ -99,7 +160,6 @@ class firstTabVC: UIViewController{
           // 즉, reload할 데이터를 불러와야 바뀌는 게 있다는 의미다.
           // 안 해서 고생함...
             OperationQueue.main.addOperation { // DispatchQueue도 가능.
-                
                 self.tableView.reloadData()
             }
 
@@ -111,18 +171,21 @@ class firstTabVC: UIViewController{
         
         let sessionConfig = URLSessionConfiguration.default
         let session = URLSession(configuration: sessionConfig)
-        let components = URLComponents(string: "http://3.37.202.166/post/0iOS_feedSelect.php")
+        var components = URLComponents(string: "http://3.37.202.166/post/0iOS_feedSelect.php?page=\(1)")
         
 //        let term = URLQueryItem(name: "term", value: "marvel")
-//        let media = URLQueryItem(name: "media", value: "movie")
-//        components?.queryItems = [term, media]
+//        let page = URLQueryItem(name: "page", value: "1")
+//        components?.queryItems = [page]
     
         // url이 없으면 리턴한다. 여기서 끝
         guard let url = components?.url else { return }
         
+        print("기본피드 : \(url)")
+        
         // 값이 있다면 받아와서 넣음.
         var request = URLRequest(url: url)
         request.httpMethod = "GET" //GET방식이다. 컨텐츠타입이 없고, 담아서 보내는 내용이 없음, URL호출만!
+//        request.httpMethod = "POST" //GET방식이다. 컨텐츠타입이 없고, 담아서 보내는 내용이 없음, URL호출만!
         
         let task = session.dataTask(with: request) { data, response, error in
             print( (response as! HTTPURLResponse).statusCode )

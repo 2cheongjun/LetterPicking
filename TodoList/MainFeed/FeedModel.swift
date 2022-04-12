@@ -21,7 +21,7 @@ struct FeedResult: Codable{
     let userID: String
     let postText: String?
     let postImgs: String?
-    let myPlaceText: String
+    let myPlaceText: String?
     let date: String
 //    let feedIdx:String
     let feedIdx:Int
