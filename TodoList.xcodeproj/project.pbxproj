@@ -44,6 +44,9 @@
 		D0E16BCB27DF4E2B008F970E /* LoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0E16BCA27DF4E2B008F970E /* LoginVC.swift */; };
 		D0E16BCD27DF6406008F970E /* UserInfoManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0E16BCC27DF6406008F970E /* UserInfoManager.swift */; };
 		D0E16BF227E0DAC4008F970E /* APIResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0E16BF127E0DAC3008F970E /* APIResponse.swift */; };
+		D0E3BFAA280804BC00958C30 /* likeBtn.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0E3BFA9280804BC00958C30 /* likeBtn.swift */; };
+		D0E3BFAD28084BCC00958C30 /* NewFeedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0E3BFAB28084BCC00958C30 /* NewFeedCell.swift */; };
+		D0E3BFAE28084BCC00958C30 /* NewFeedCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D0E3BFAC28084BCC00958C30 /* NewFeedCell.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -88,6 +91,9 @@
 		D0E16BCA27DF4E2B008F970E /* LoginVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginVC.swift; sourceTree = "<group>"; };
 		D0E16BCC27DF6406008F970E /* UserInfoManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInfoManager.swift; sourceTree = "<group>"; };
 		D0E16BF127E0DAC3008F970E /* APIResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIResponse.swift; sourceTree = "<group>"; };
+		D0E3BFA9280804BC00958C30 /* likeBtn.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = likeBtn.swift; sourceTree = "<group>"; };
+		D0E3BFAB28084BCC00958C30 /* NewFeedCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewFeedCell.swift; sourceTree = "<group>"; };
+		D0E3BFAC28084BCC00958C30 /* NewFeedCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NewFeedCell.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -196,6 +202,9 @@
 				D08B028B27E8577700012766 /* FeedModel.swift */,
 				D0C98B7127F5EDCB00445A00 /* DetailViewController.storyboard */,
 				D08B028727E8389D00012766 /* FeedCell.swift */,
+				D0E3BFAB28084BCC00958C30 /* NewFeedCell.swift */,
+				D0E3BFAC28084BCC00958C30 /* NewFeedCell.xib */,
+				D0E3BFA9280804BC00958C30 /* likeBtn.swift */,
 			);
 			path = MainFeed;
 			sourceTree = "<group>";
@@ -310,6 +319,7 @@
 				D0C98B7227F5EDCB00445A00 /* DetailViewController.storyboard in Resources */,
 				D051F36127CDE2B100ABBB4E /* Assets.xcassets in Resources */,
 				D051F35C27CDE2AF00ABBB4E /* Main.storyboard in Resources */,
+				D0E3BFAE28084BCC00958C30 /* NewFeedCell.xib in Resources */,
 				D08B028627E61BCE00012766 /* profile-bg.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -373,11 +383,13 @@
 				D0E16BCB27DF4E2B008F970E /* LoginVC.swift in Sources */,
 				D0E16BC527D6F38C008F970E /* Utils.swift in Sources */,
 				D051F36C27CDE9F900ABBB4E /* TodoCell.swift in Sources */,
+				D0E3BFAD28084BCC00958C30 /* NewFeedCell.swift in Sources */,
 				D0C98B7427F736DF00445A00 /* nMapVC.swift in Sources */,
 				D08B027F27E5C25D00012766 /* mypageVC.swift in Sources */,
 				D051F35F27CDE2AF00ABBB4E /* TodoList.xcdatamodeld in Sources */,
 				D08B028827E8389D00012766 /* FeedCell.swift in Sources */,
 				D051F36F27CE2ADC00ABBB4E /* TodoDetailViewController.swift in Sources */,
+				D0E3BFAA280804BC00958C30 /* likeBtn.swift in Sources */,
 				D0C98B7627FAF47D00445A00 /* MapModel.swift in Sources */,
 				D0E16BF227E0DAC4008F970E /* APIResponse.swift in Sources */,
 				D08B027B27E5C21700012766 /* firstTabVC.swift in Sources */,

@@ -6,8 +6,19 @@
 //
 import UIKit
 
+
+// 범용성을 위해 class가 아닌 AnyObject로 선언해준다.
+protocol ContentsMainTextDelegate: AnyObject {
+    // 위임해줄 기능
+    func categoryButtonTapped()
+}
+
 // 글가져오기할때 모델 쏄
 class FeedCell: UITableViewCell{
+    
+    var cellDelegate: ContentsMainTextDelegate?
+     
+   
     
     @IBOutlet weak var imageViewLabel: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!{
@@ -30,14 +41,7 @@ class FeedCell: UITableViewCell{
             priceLabel.font = .systemFont(ofSize: 13, weight: .light)
         }
     }
-    
-    
-    
-    
-    
-//    @IBOutlet var postImgs: UILabel!{
-//        didSet{
-//            postImgs.font = .systemFont(ofSize: 13, weight: .light)
-//        }
-//    }
+
+
 }
+

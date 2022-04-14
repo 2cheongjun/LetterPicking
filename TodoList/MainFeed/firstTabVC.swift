@@ -10,6 +10,8 @@ import Alamofire
 import SwiftyJSON
 import SwiftUI
 
+
+
 class firstTabVC: UIViewController{
     
     // 모델가져오기
@@ -23,25 +25,22 @@ class firstTabVC: UIViewController{
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var tableView: UITableView!
     
+
+    //좋아요버튼
     //현재까지 읽어 온 데이터의 페이지 정보
     // 최초에 화면을 실행할때 이미 1페이지에 해당하는 데이터를 읽어 왔으므로,page의 초기값으로 1을 할당하는것이 맞다.
     var page = 1
-//    var perPage = 10
-    
-    //좋아요버튼
+//    var isLike = false //좋아요버튼
+
+    //좋아요
     @IBAction func likeBtn(_ sender: Any) {
-    }
-    
-    //북마크 버튼
-    @IBAction func bookMarkBtn(_ sender: Any) {
-    }
-    
-    //댓글더보기버튼
-    @IBAction func replyBton(_ sender: Any) {
+        print("button clicked!")
     }
     
     
     
+   
+
     // 더보기
     @IBAction func moreBtn(_ sender: Any) {
         // 현재 페이지의 값에 1을 추가한다.
@@ -103,6 +102,7 @@ class firstTabVC: UIViewController{
         // 더보기 페이지 세팅
         page = 1
         // 델리게이트연결
+        tableView.register(NewFeedCell.nib(), forCellReuseIdentifier: NewFeedCell.identifier)
         tableView.delegate = self
         tableView.dataSource = self
         searchBar.delegate = self
@@ -117,7 +117,6 @@ class firstTabVC: UIViewController{
         // 노티4.옵저버를 등록하고,DissmissWrite가 오면 writeVCNotification함수를 실행한다.
         NotificationCenter.default.addObserver(self, selector: #selector(self.writeVCNotification(_:)), name: DissmissWriteVC, object: nil)
         
-      
         //1.타이틀레이블 생성
         let title = UILabel(frame: CGRect(x: 0, y: 100, width: 100, height: 30))
         
@@ -155,8 +154,10 @@ class firstTabVC: UIViewController{
         
         // API호출
         requestFeedAPI()
-
+        // 좋아요버튼 눌렀을때
     }
+
+
     
     // 뷰가보일때 다시 호출
     override func viewWillAppear(_ animated: Bool) {
@@ -368,8 +369,6 @@ class firstTabVC: UIViewController{
 // 테이블뷰
 extension firstTabVC: UITableViewDelegate, UITableViewDataSource {
     
-  
-    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // 데이터 모델에 맞게 갯수
         return self.feedModel?.results.count ?? 0
@@ -404,7 +403,9 @@ extension firstTabVC: UITableViewDelegate, UITableViewDataSource {
     
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "FeedCell", for: indexPath) as! FeedCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: NewFeedCell.identifier, for: indexPath) as! NewFeedCell
+        // 델리게이트위임
+        cell.delegate = self
         
         cell.titleLabel.text = self.feedModel?.results[indexPath.row].postText
         cell.descriptionLabel.text = self.feedModel?.results[indexPath.row].userID
@@ -452,3 +453,9 @@ extension firstTabVC: UISearchBarDelegate {
     }
 }
 
+extension firstTabVC: firstTabVCCellDelegate{
+    
+    func didTapButton() {
+        print("얍")
+    }
+}

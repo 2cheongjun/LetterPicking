@@ -262,7 +262,7 @@
                                     </constraints>
                                 </view>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="FeedCell" rowHeight="396" id="e4l-z6-1cF" customClass="FeedCell" customModule="TodoList" customModuleProvider="target">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="FeedCell" rowHeight="396" id="e4l-z6-1cF" customClass="NewFeedCell" customModule="TodoList" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="44.666666030883789" width="390" height="396"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="e4l-z6-1cF" id="GOW-cc-aKw">
@@ -277,13 +277,13 @@
                                                     </constraints>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" text="title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8JS-VN-dSx">
-                                                    <rect key="frame" x="16" y="288" width="358" height="20.333333333333314"/>
+                                                    <rect key="frame" x="16" y="294" width="358" height="20.333333333333314"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="name" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RsW-P9-YGQ">
-                                                    <rect key="frame" x="16.000000000000004" y="318.33333333333331" width="42.333333333333343" height="27.333333333333314"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="749" text="name" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RsW-P9-YGQ">
+                                                    <rect key="frame" x="16.000000000000004" y="324.33333333333331" width="42.333333333333343" height="21.333333333333314"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -294,24 +294,22 @@
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NHW-QT-qxs">
-                                                    <rect key="frame" x="10" y="242" width="28" height="26"/>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NHW-QT-qxs">
+                                                    <rect key="frame" x="10" y="242" width="36" height="36"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="36" id="Fb4-cl-j22"/>
                                                         <constraint firstAttribute="width" constant="36" id="t9Y-Uy-LHK"/>
                                                     </constraints>
                                                     <color key="tintColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                    <state key="normal" title="Button"/>
-                                                    <buttonConfiguration key="configuration" style="plain">
+                                                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                    <state key="normal" title="Button">
                                                         <imageReference key="image" image="heart" catalog="system" symbolScale="large"/>
-                                                        <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage" scale="medium" weight="medium"/>
-                                                    </buttonConfiguration>
-                                                    <connections>
-                                                        <action selector="likeBtn:" destination="b6h-lu-bIc" eventType="touchUpInside" id="tTS-d2-dkz"/>
-                                                    </connections>
+                                                        <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="medium" weight="medium"/>
+                                                    </state>
+                                                    <state key="selected" image="heart.fill" catalog="system"/>
                                                 </button>
                                                 <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Qhx-Tt-i2m">
-                                                    <rect key="frame" x="46" y="242" width="27" height="26"/>
+                                                    <rect key="frame" x="46" y="242" width="27" height="36"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="26" id="1SB-ko-Dzo"/>
                                                         <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="32" id="C16-iI-Rof"/>
@@ -324,35 +322,17 @@
                                                         <imageReference key="image" image="message" catalog="system" symbolScale="large"/>
                                                         <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage" scale="medium" weight="medium"/>
                                                     </buttonConfiguration>
-                                                    <connections>
-                                                        <action selector="replyBton:" destination="b6h-lu-bIc" eventType="touchUpInside" id="nz1-Ck-AoN"/>
-                                                    </connections>
                                                 </button>
-                                                <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ebN-mV-eaa">
-                                                    <rect key="frame" x="355" y="244" width="19" height="24"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="width" constant="36" id="0yC-I0-0me"/>
-                                                        <constraint firstAttribute="height" constant="36" id="UPH-Qe-6tC"/>
-                                                    </constraints>
-                                                    <color key="tintColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                    <state key="normal" title="Button"/>
-                                                    <buttonConfiguration key="configuration" style="plain" title="">
-                                                        <imageReference key="image" image="bookmark" catalog="system" symbolScale="large"/>
-                                                        <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage" scale="medium" weight="medium"/>
-                                                    </buttonConfiguration>
-                                                    <connections>
-                                                        <action selector="bookMarkBtn:" destination="b6h-lu-bIc" eventType="touchUpInside" id="4aw-Ll-H7V"/>
-                                                    </connections>
-                                                </button>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="253" misplaced="YES" text="date" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1KX-Bl-njf">
-                                                    <rect key="frame" x="71" y="325" width="34" height="20.333333333333314"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="253" text="date" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1KX-Bl-njf">
+                                                    <rect key="frame" x="70.333333333333329" y="324.33333333333331" width="34" height="20.333333333333314"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstAttribute="trailing" secondItem="ebN-mV-eaa" secondAttribute="trailing" constant="16" id="44c-i7-Ufx"/>
+                                                <constraint firstItem="Qhx-Tt-i2m" firstAttribute="top" secondItem="NHW-QT-qxs" secondAttribute="top" id="32q-eV-o4l"/>
+                                                <constraint firstItem="8JS-VN-dSx" firstAttribute="top" secondItem="NHW-QT-qxs" secondAttribute="bottom" constant="16" id="4Z4-Iv-oQs"/>
                                                 <constraint firstItem="3cv-lC-GKO" firstAttribute="top" secondItem="RsW-P9-YGQ" secondAttribute="bottom" constant="10" id="5pU-0e-iDu"/>
                                                 <constraint firstItem="1KX-Bl-njf" firstAttribute="leading" secondItem="RsW-P9-YGQ" secondAttribute="trailing" constant="12" id="9aT-Tw-CLL"/>
                                                 <constraint firstItem="NHW-QT-qxs" firstAttribute="leading" secondItem="GOW-cc-aKw" secondAttribute="leading" constant="10" id="BoJ-FQ-MFf"/>
@@ -362,14 +342,13 @@
                                                 <constraint firstItem="8JS-VN-dSx" firstAttribute="leading" secondItem="GOW-cc-aKw" secondAttribute="leading" constant="16" id="JNz-hg-dDv"/>
                                                 <constraint firstAttribute="trailing" secondItem="8JS-VN-dSx" secondAttribute="trailing" constant="16" id="K9P-zL-BE3"/>
                                                 <constraint firstAttribute="trailing" secondItem="STL-CI-Ywh" secondAttribute="trailing" constant="10" id="OFp-5Q-q1P"/>
-                                                <constraint firstItem="8JS-VN-dSx" firstAttribute="top" secondItem="ebN-mV-eaa" secondAttribute="bottom" constant="10" id="SV8-Bb-nOh"/>
                                                 <constraint firstItem="3cv-lC-GKO" firstAttribute="leading" secondItem="GOW-cc-aKw" secondAttribute="leading" constant="16" id="U6q-eC-h7Z"/>
                                                 <constraint firstAttribute="trailing" secondItem="3cv-lC-GKO" secondAttribute="trailing" constant="16" id="UUM-dD-6iX"/>
                                                 <constraint firstItem="STL-CI-Ywh" firstAttribute="leading" secondItem="GOW-cc-aKw" secondAttribute="leading" constant="10" id="Us1-ID-slr"/>
                                                 <constraint firstAttribute="bottom" secondItem="3cv-lC-GKO" secondAttribute="bottom" constant="20" id="VGw-y2-QOH"/>
-                                                <constraint firstItem="ebN-mV-eaa" firstAttribute="top" secondItem="STL-CI-Ywh" secondAttribute="bottom" constant="12" id="Wqy-M9-LXg"/>
                                                 <constraint firstItem="Qhx-Tt-i2m" firstAttribute="leading" secondItem="NHW-QT-qxs" secondAttribute="trailing" constant="5" id="ZvK-HH-Sqd"/>
                                                 <constraint firstAttribute="trailing" secondItem="8JS-VN-dSx" secondAttribute="trailing" constant="16" id="a9M-Ar-l38"/>
+                                                <constraint firstItem="1KX-Bl-njf" firstAttribute="top" secondItem="RsW-P9-YGQ" secondAttribute="top" id="aoM-Vb-Aq8"/>
                                                 <constraint firstItem="RsW-P9-YGQ" firstAttribute="leading" secondItem="GOW-cc-aKw" secondAttribute="leading" constant="16" id="d5G-aT-poH"/>
                                                 <constraint firstItem="RsW-P9-YGQ" firstAttribute="top" secondItem="8JS-VN-dSx" secondAttribute="bottom" constant="10" id="l6k-vh-7UF"/>
                                                 <constraint firstItem="NHW-QT-qxs" firstAttribute="top" secondItem="STL-CI-Ywh" secondAttribute="bottom" constant="12" id="olj-CY-lmp"/>
@@ -444,7 +423,7 @@
             </objects>
             <point key="canvasLocation" x="611" y="2250"/>
         </scene>
-        <!--북마크-->
+        <!--좋아요-->
         <scene sceneID="WPJ-ro-8h9">
             <objects>
                 <viewController id="hUA-8m-Pdc" customClass="noticeVC" customModule="TodoList" customModuleProvider="target" sceneMemberID="viewController">
@@ -454,7 +433,7 @@
                         <viewLayoutGuide key="safeArea" id="9cW-hM-1SD"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="북마크" image="star" catalog="system" id="6xn-bu-G24"/>
+                    <tabBarItem key="tabBarItem" title="좋아요" image="heart" catalog="system" id="6xn-bu-G24"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lds-IV-6kr" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -747,16 +726,15 @@
     </scenes>
     <resources>
         <image name="Account" width="40" height="40"/>
-        <image name="bookmark" catalog="system" width="112" height="128"/>
         <image name="camera.fill" catalog="system" width="128" height="94"/>
         <image name="doc.text.image" catalog="system" width="115" height="128"/>
         <image name="heart" catalog="system" width="128" height="109"/>
+        <image name="heart.fill" catalog="system" width="128" height="109"/>
         <image name="map" catalog="system" width="128" height="110"/>
         <image name="mappin.and.ellipse" catalog="system" width="118" height="128"/>
         <image name="message" catalog="system" width="128" height="113"/>
         <image name="person" catalog="system" width="128" height="117"/>
         <image name="profile-bg" width="466.66665649414062" height="700"/>
-        <image name="star" catalog="system" width="128" height="116"/>
         <namedColor name="AccentColor">
             <color red="0.0" green="0.46000000000000002" blue="0.89000000000000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
