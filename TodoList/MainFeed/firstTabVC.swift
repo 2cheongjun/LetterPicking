@@ -15,6 +15,14 @@ class firstTabVC: UIViewController{
     // 모델가져오기
     var feedModel: FeedModel?
     
+    //피드 모델에 값이 있으면 가져온다.
+    var feedResult: FeedResult?
+    var feedIdx = 0
+
+    //userDefaults에 저장된이름값 가져오기
+    let plist = UserDefaults.standard
+    
+    
     // 스크롤을 위한 것
     var fetchingMore = false
     
@@ -470,6 +478,52 @@ extension firstTabVC: UITableViewDelegate, UITableViewDataSource {
         
         return cell
     }
+    
+    
+    //하트 업로드
+    func uploadHeart(success: (()->Void)? = nil, fail: ((String)->Void)? = nil) {
+        
+        // userID, postText,이미지묶음을 파라미터에 담아보냄
+        let userID = plist.string(forKey: "name")
+        
+        // 선택한 셀의 게시글 번호를 가져오는 법 생각하기
+        let param: Parameters = [  "cbHeart" : true,
+                                   "postIdx" : feedResult?.feedIdx ?? 0 ,
+                                  "userID" : userID as Any]
+        
+        // API 호출 URL
+        let url = "http://3.37.202.166/post/0iOS_feedLike.php"
+        
+        //이미지 전송
+        let call = AF.request(url, method: .post, parameters: param,
+                              encoding: JSONEncoding.default)
+        //                call.responseJSON { res in
+        call.responseJSON { [self] res in
+            
+            // 성공실패케이스문 작성하기
+            print("서버로 보냄!!!!!")
+            print("JSON= \(try! res.result.get())!)")
+            
+            guard (try! res.result.get() as? NSDictionary) != nil else {
+                print("올바른 응답값이 아닙니다.")
+                return
+            }
+            
+            if let jsonObject = try! res.result.get() as? [String :Any]{
+                let success = jsonObject["success"] as? Int ?? 0
+                
+                if success == 1 {
+                    self.alert("응답값 JSON= \(try! res.result.get())!)")
+                    self.dismiss(animated: true, completion: nil)
+                   
+                }else{
+                    //sucess가 0이면
+                    self.alert("응답실패")
+                }
+            }
+        }
+        
+    }//함수 끝
 }
 
 
@@ -497,6 +551,9 @@ extension firstTabVC: firstTabVCCellDelegate{
         if like{
             likes[index] = 1
             print("cell \(likes[index]!)")
+            // 서버로 좋아요 테이블에 넣기
+            uploadHeart()
+            
         }else{
             likes[index] = 0
             print("cell \(likes[index]!)")
