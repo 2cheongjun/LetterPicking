@@ -335,14 +335,81 @@
         <!--좋아요-->
         <scene sceneID="WPJ-ro-8h9">
             <objects>
-                <viewController id="hUA-8m-Pdc" customClass="noticeVC" customModule="TodoList" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="hUA-8m-Pdc" customClass="HeartVC" customModule="TodoList" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="9eU-mX-44W">
                         <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="nJf-Zj-ciR">
+                                <rect key="frame" x="0.0" y="158" width="390" height="603"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="m6f-4e-gKg">
+                                    <size key="itemSize" width="128" height="128"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="cell" id="lKc-D7-7Ku" customClass="FriendCollectionViewCell" customModule="TodoList" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="132.99999999999997" height="102"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="CAu-jW-KfB">
+                                            <rect key="frame" x="0.0" y="0.0" width="132.99999999999997" height="102"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="nameAgeLabel" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uyd-dT-Xa1">
+                                                    <rect key="frame" x="10" y="20" width="113" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="addressLabel" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="o2A-cj-0f7">
+                                                    <rect key="frame" x="10" y="61" width="113" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <nil key="textColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="bottom" secondItem="o2A-cj-0f7" secondAttribute="bottom" constant="20" id="5lP-tF-W0b"/>
+                                                <constraint firstItem="o2A-cj-0f7" firstAttribute="leading" secondItem="CAu-jW-KfB" secondAttribute="leading" constant="10" id="JFv-vp-11i"/>
+                                                <constraint firstItem="uyd-dT-Xa1" firstAttribute="leading" secondItem="CAu-jW-KfB" secondAttribute="leading" constant="10" id="OOM-FV-bbi"/>
+                                                <constraint firstAttribute="trailing" secondItem="o2A-cj-0f7" secondAttribute="trailing" constant="10" id="PCd-aS-gSe"/>
+                                                <constraint firstItem="o2A-cj-0f7" firstAttribute="top" secondItem="uyd-dT-Xa1" secondAttribute="bottom" constant="20" id="WDp-Zg-TcV"/>
+                                                <constraint firstAttribute="trailing" secondItem="uyd-dT-Xa1" secondAttribute="trailing" constant="10" id="hcC-rU-A1Y"/>
+                                                <constraint firstItem="uyd-dT-Xa1" firstAttribute="top" secondItem="CAu-jW-KfB" secondAttribute="top" constant="20" id="v1X-BC-S3q"/>
+                                            </constraints>
+                                        </collectionViewCellContentView>
+                                        <color key="backgroundColor" systemColor="systemGreenColor"/>
+                                        <connections>
+                                            <outlet property="addressLabel" destination="o2A-cj-0f7" id="kWp-80-dix"/>
+                                            <outlet property="nameAgeLabel" destination="uyd-dT-Xa1" id="gjI-SQ-OYw"/>
+                                        </connections>
+                                    </collectionViewCell>
+                                </cells>
+                            </collectionView>
+                            <navigationBar contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="z8R-I4-AT6">
+                                <rect key="frame" x="0.0" y="44" width="390" height="44"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                <items>
+                                    <navigationItem title="좋아요" id="XTR-ad-8yi"/>
+                                </items>
+                            </navigationBar>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="9cW-hM-1SD"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="nJf-Zj-ciR" firstAttribute="top" secondItem="9cW-hM-1SD" secondAttribute="top" constant="70" id="6q5-ab-cqT"/>
+                            <constraint firstItem="nJf-Zj-ciR" firstAttribute="leading" secondItem="9cW-hM-1SD" secondAttribute="leading" id="LTr-NB-t8p"/>
+                            <constraint firstItem="9cW-hM-1SD" firstAttribute="trailing" secondItem="nJf-Zj-ciR" secondAttribute="trailing" id="iwk-SZ-JQu"/>
+                            <constraint firstItem="9cW-hM-1SD" firstAttribute="bottom" secondItem="nJf-Zj-ciR" secondAttribute="bottom" id="sm6-9v-ATL"/>
+                        </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="좋아요" image="heart" catalog="system" id="6xn-bu-G24"/>
+                    <connections>
+                        <outlet property="collectionView" destination="nJf-Zj-ciR" id="xHk-JL-lh2"/>
+                        <outletCollection property="collectionView" destination="nJf-Zj-ciR" collectionClass="NSMutableArray" id="8ac-4V-SEC"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lds-IV-6kr" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>

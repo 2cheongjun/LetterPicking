@@ -22,6 +22,10 @@ class firstTabVC: UIViewController{
     //좋아요를 하기위한 딕셔너리
     lazy var likes: [Int:Int] = [:]
     
+    // 현재까지 읽어 온 데이터의 페이지 정보
+    // 최초에 화면을 실행할때 이미 1페이지에 해당하는 데이터를 읽어 왔으므로,page의 초기값으로 1을 할당하는것이 맞다.
+    var page = 1
+    
     // 로그인한 아이디명표기
     @IBOutlet weak var userName: UILabel!
     @IBOutlet var hi: UILabel! // 님 안녕하세요.
@@ -36,9 +40,8 @@ class firstTabVC: UIViewController{
     }
     
     //좋아요버튼
-    //현재까지 읽어 온 데이터의 페이지 정보
-    // 최초에 화면을 실행할때 이미 1페이지에 해당하는 데이터를 읽어 왔으므로,page의 초기값으로 1을 할당하는것이 맞다.
-    var page = 1
+    
+
     
     //스크롤시페이징
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
@@ -54,7 +57,7 @@ class firstTabVC: UIViewController{
            
         }
     }
-    // 페이징 기능
+    // 페이징 기능 /스크롤시 바닥에 닿으면 데이터추가로 가져옴
     func moreData(){
         //현재 페이지의 값에 1을 추가한다.
         // 호출시에 다음차례에 읽어야할 페이지를API에 실어서 함께 전달해야한다.
@@ -134,6 +137,12 @@ class firstTabVC: UIViewController{
         let DissmissWriteVC = Notification.Name("DissmissWriteVC")
         // 노티4.옵저버를 등록하고,DissmissWrite가 오면 writeVCNotification함수를 실행한다.
         NotificationCenter.default.addObserver(self, selector: #selector(self.writeVCNotification(_:)), name: DissmissWriteVC, object: nil)
+        
+        // 수정업데이트노티피케이션
+        // 노티3.WriteVC에서 보낸 값을 받기위해 DissmissWrite의 노티피케이션을 정의해 받을 준비한다.
+        let ModifyVCNotification = Notification.Name("ModifyVCNotification")
+        // 노티4.옵저버를 등록하고,DissmissWrite가 오면 writeVCNotification함수를 실행한다.
+        NotificationCenter.default.addObserver(self, selector: #selector(self.ModifyVCNotification(_:)), name: ModifyVCNotification, object: nil)
         
         //1.타이틀레이블 생성
         let title = UILabel(frame: CGRect(x: 0, y: 100, width: 100, height: 30))
@@ -224,6 +233,7 @@ class firstTabVC: UIViewController{
             self.tableView.reloadData()
         }
     }
+    
     
     // network /URL세션으로 호출 // 추후 아이디값을 보내서 호출하는것도..생각해보기?? 전체다 가져오는것이니 상관없을까?..
     func requestFeedAPI(){
@@ -450,34 +460,15 @@ extension firstTabVC: UITableViewDelegate, UITableViewDataSource {
                 }
             }
         }
-        //        cell.priceLabel.text =  self.feedModel?.results[indexPath.row].postImgs
-        //        let getImgs = self.feedModel?.results[indexPath.row].postImgs
-        //        cell.imageViewLabel.image = self.feedModel?.results[indexPath.row].postImgs
-        //        let currency = self.feedModel?.results[indexPath.row].feedIdx ?? ""
-        //는 더블임. 디스크립션으로 스트링으로 바꿔준다!*****************************************************
-        //        let fdIdx = self.feedModel?.results[indexPath.row].feedIdx.description ?? ""
-        // 각 값이 옵셔널값임 +는 옵셔널을 허용하지 않음. 사용하려면 빈값일때를 값을 해줘야함.
-        //        cell.priceLabel.text = currency + price
-        
         //좋아요*********************************************************************************
         if likes[indexPath.row] == 1 {
             cell.isTouched = true
-            print("cell \(cell.isTouched!)")
+
         }else{
             cell.isTouched = false
-            print("cell \(cell.isTouched!)")
         }
         
         return cell
-    }
-    
-    // 하트눌림
-    func didPressHeart(for index: Int, like: Bool) {
-        if like{
-            likes[index] = 1
-        }else{
-            likes[index] = 0
-        }
     }
 }
 
@@ -498,13 +489,19 @@ extension firstTabVC: UISearchBarDelegate {
     }
 }
 
+//좋아요 프로토콜 구현부
 extension firstTabVC: firstTabVCCellDelegate{
-    
-    func didTapButton() {
-        print("얍")
-        // 하트컬러 변경하기
-        //if you set the image on same  UIButton
+
+    // 하트눌림
+    func didPressHeart(for index: Int, like: Bool) {
+        if like{
+            likes[index] = 1
+            print("cell \(likes[index]!)")
+        }else{
+            likes[index] = 0
+            print("cell \(likes[index]!)")
+        }
     }
-    
-    
 }
+    
+    
