@@ -244,7 +244,23 @@
                                 <view key="tableFooterView" contentMode="scaleToFill" id="rWN-fh-BWg">
                                     <rect key="frame" x="0.0" y="307.33333206176758" width="390" height="44.000000000000057"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <subviews>
+                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wF7-SX-sFc">
+                                            <rect key="frame" x="20" y="10" width="350" height="24"/>
+                                            <state key="normal" title="Button"/>
+                                            <buttonConfiguration key="configuration" style="plain" title="맨 위로 이동"/>
+                                            <connections>
+                                                <action selector="TopBtn:" destination="b6h-lu-bIc" eventType="touchUpInside" id="ej5-cE-w3k"/>
+                                            </connections>
+                                        </button>
+                                    </subviews>
                                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                    <constraints>
+                                        <constraint firstItem="wF7-SX-sFc" firstAttribute="leading" secondItem="rWN-fh-BWg" secondAttribute="leading" constant="20" id="El9-5L-2Iw"/>
+                                        <constraint firstAttribute="bottom" secondItem="wF7-SX-sFc" secondAttribute="bottom" constant="10" id="Zwi-15-NI2"/>
+                                        <constraint firstItem="wF7-SX-sFc" firstAttribute="top" secondItem="rWN-fh-BWg" secondAttribute="top" constant="10" id="fFO-qO-YDa"/>
+                                        <constraint firstAttribute="trailing" secondItem="wF7-SX-sFc" secondAttribute="trailing" constant="20" id="rp1-HU-Z1H"/>
+                                    </constraints>
                                 </view>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="FeedCell" rowHeight="240" id="e4l-z6-1cF" customClass="NewFeedCell" customModule="TodoList" customModuleProvider="target">
@@ -291,6 +307,7 @@
                         <outlet property="hi" destination="NCU-uI-uvA" id="68G-HW-Qvo"/>
                         <outlet property="searchBar" destination="yHi-VC-bUU" id="C2D-gc-jbd"/>
                         <outlet property="tableView" destination="YwF-e6-yIn" id="6Qk-r7-aIm"/>
+                        <outlet property="topBtn" destination="wF7-SX-sFc" id="bnc-a7-B98"/>
                         <outlet property="userName" destination="acf-t2-Anh" id="WiJ-3b-DR8"/>
                         <outlet property="writeBtn" destination="1o9-gh-97Q" id="bCk-Id-Bon"/>
                     </connections>

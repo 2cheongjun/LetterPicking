@@ -14,6 +14,7 @@ class firstTabVC: UIViewController{
     
     // 모델가져오기
     var feedModel: FeedModel?
+    
     // 스크롤을 위한 것
     var fetchingMore = false
     
@@ -27,7 +28,12 @@ class firstTabVC: UIViewController{
     @IBOutlet weak var writeBtn: UIButton!
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet var topBtn: UIButton!
     
+    // 탑버튼 맨위로 이동
+    @IBAction func TopBtn(_ sender: Any) {
+        tableView.setContentOffset(CGPoint(x: 0, y: 0), animated: true)
+    }
     
     //좋아요버튼
     //현재까지 읽어 온 데이터의 페이지 정보
@@ -39,11 +45,13 @@ class firstTabVC: UIViewController{
         // 스크롤뷰 세로끝 보다 테이블뷰의 하이트가 커지면(스크롤뷰가 끝에 닿으면)
         if self.tableView.contentOffset.y > tableView.contentSize.height-tableView.bounds.size.height {
             
-            print("끝에 도달")
+//            print("끝에 도달")
             // fetchingMore를 사용해서 딱 한 번만 저 if문안에 있는 코드를 실행한다.
             if !fetchingMore {
+                print("끝에 도달")
                 moreData()
             }
+           
         }
     }
     // 페이징 기능
@@ -106,10 +114,7 @@ class firstTabVC: UIViewController{
         })
     }
     
-    
-    
-   
-    
+
     
     override func viewDidLoad() {
         // 더보기 페이지 세팅
@@ -168,9 +173,11 @@ class firstTabVC: UIViewController{
         // API호출
         if feedModel?.results.count != 0{
             requestFeedAPI()
+            self.topBtn.isHidden = false
         }else{
             print("데이터없음")
         }
+    
     }
     
     
@@ -180,8 +187,8 @@ class firstTabVC: UIViewController{
         // 더보기 페이지 세팅
         page = 1
         // API호출
-        requestFeedAPI()
-        
+            requestFeedAPI()
+
         // 수정업데이트노티피케이션
         // 노티3.WriteVC에서 보낸 값을 받기위해 DissmissWrite의 노티피케이션을 정의해 받을 준비한다.
         let ModifyVCNotification = Notification.Name("ModifyVCNotification")
