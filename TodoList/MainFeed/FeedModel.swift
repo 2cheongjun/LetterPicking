@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 
 // 글가져오기할때 모델
 struct FeedModel: Codable{
@@ -25,7 +26,9 @@ struct FeedResult: Codable{
     let date: String
 //    let feedIdx:String
     let feedIdx:Int
+//    let count: Int
 }
+
 
 //
 //  FeedModel.swift

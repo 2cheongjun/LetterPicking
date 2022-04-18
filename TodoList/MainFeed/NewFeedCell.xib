@@ -17,16 +17,15 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <button opaque="NO" contentMode="scaleToFill" verticalCompressionResistancePriority="752" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sB2-Lk-1Eh">
-                        <rect key="frame" x="10" y="170" width="34" height="35"/>
+                        <rect key="frame" x="17" y="177" width="21" height="22"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="34" id="RVq-W9-knM"/>
                             <constraint firstAttribute="width" constant="34" id="jny-06-4hm"/>
                         </constraints>
                         <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                        <state key="normal" title="Button" image="heart" catalog="system"/>
-                        <state key="selected" image="heart.fill" catalog="system"/>
+                        <state key="normal" image="heart" catalog="system"/>
                         <connections>
-                            <action selector="like:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="lgo-kQ-H0m"/>
+                            <action selector="didPressedHeart:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="ze6-0S-E0g"/>
                         </connections>
                     </button>
                     <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="e2o-MJ-BvU">
@@ -93,7 +92,7 @@
                 <outlet property="dataLabel" destination="aSR-Q0-wXm" id="1x5-eI-1Uk"/>
                 <outlet property="descriptionLabel" destination="w59-J2-ECF" id="9Ze-XN-AiV"/>
                 <outlet property="imageViewLabel" destination="d2h-ck-t2b" id="CZY-I5-EYw"/>
-                <outlet property="likeBtn" destination="sB2-Lk-1Eh" id="edP-7C-fOa"/>
+                <outlet property="likeBtn" destination="sB2-Lk-1Eh" id="g8z-0v-mDe"/>
                 <outlet property="priceLabel" destination="QX6-tE-Ud8" id="lrA-ks-x5u"/>
                 <outlet property="titleLabel" destination="cmY-xK-Mbl" id="gy6-kR-qZM"/>
             </connections>
@@ -102,7 +101,6 @@
     </objects>
     <resources>
         <image name="heart" catalog="system" width="128" height="109"/>
-        <image name="heart.fill" catalog="system" width="128" height="109"/>
         <image name="message" catalog="system" width="128" height="113"/>
     </resources>
 </document>
