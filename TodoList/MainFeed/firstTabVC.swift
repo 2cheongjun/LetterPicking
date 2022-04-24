@@ -17,11 +17,10 @@ class firstTabVC: UIViewController{
     
     //피드 모델에 값이 있으면 가져온다.
     var feedResult: FeedResult?
-    var feedIdx = 0
+    var postIdx = ""
 
     //userDefaults에 저장된이름값 가져오기
     let plist = UserDefaults.standard
-    
     
     // 스크롤을 위한 것
     var fetchingMore = false
@@ -33,6 +32,7 @@ class firstTabVC: UIViewController{
     // 현재까지 읽어 온 데이터의 페이지 정보
     // 최초에 화면을 실행할때 이미 1페이지에 해당하는 데이터를 읽어 왔으므로,page의 초기값으로 1을 할당하는것이 맞다.
     var page = 1
+    var BASEURL = "http://15.164.214.35/"
     
     // 로그인한 아이디명표기
     @IBOutlet weak var userName: UILabel!
@@ -56,13 +56,11 @@ class firstTabVC: UIViewController{
         // 스크롤뷰 세로끝 보다 테이블뷰의 하이트가 커지면(스크롤뷰가 끝에 닿으면)
         if self.tableView.contentOffset.y > tableView.contentSize.height-tableView.bounds.size.height {
             
-//            print("끝에 도달")
             // fetchingMore를 사용해서 딱 한 번만 저 if문안에 있는 코드를 실행한다.
             if !fetchingMore {
                 print("끝에 도달")
                 moreData()
             }
-           
         }
     }
     // 페이징 기능 /스크롤시 바닥에 닿으면 데이터추가로 가져옴
@@ -77,7 +75,7 @@ class firstTabVC: UIViewController{
             
             let sessionConfig = URLSessionConfiguration.default
             let session = URLSession(configuration: sessionConfig)
-            var components = URLComponents(string: "http://3.37.202.166/post/0iOS_feedSelect.php?page=\(self.page)")
+            var components = URLComponents(string:self.BASEURL+"post/0iOS_feedSelect.php?page=\(self.page)")
             //        var components = URLComponents(string: "http://3.37.202.166/post/0iOS_feedSelect.php")
             
             //        let term = URLQueryItem(name: "term", value: "marvel")
@@ -249,7 +247,7 @@ class firstTabVC: UIViewController{
         
         let sessionConfig = URLSessionConfiguration.default
         let session = URLSession(configuration: sessionConfig)
-        var components = URLComponents(string: "http://3.37.202.166/post/0iOS_feedSelect.php?page=\(1)")
+        var components = URLComponents(string: self.BASEURL+"post/0iOS_feedSelect.php?page=\(1)")
         
         //        let term = URLQueryItem(name: "term", value: "marvel")
         //        let page = URLQueryItem(name: "page", value: "1")
@@ -329,7 +327,7 @@ class firstTabVC: UIViewController{
         // API호출
         // 당겨서 새로고침하면,more누를때 다시 page번호를 1로세팅해준다.1부터 다시더해지도록...************************************
         page = 1
-        print("page=\(page)")
+    
         requestFeedAPI()
         self.tableView.reloadData()
         //당겨서 새로고침 기능 종료
@@ -361,7 +359,7 @@ class firstTabVC: UIViewController{
         
         let sessionConfig = URLSessionConfiguration.default
         let session = URLSession(configuration: sessionConfig)
-        var components = URLComponents(string: "http://3.37.202.166/post/0iOS_feedSearch.php?word=\(word)")
+        var components = URLComponents(string: self.BASEURL+"post/0iOS_feedSearch.php?word=\(word)")
         
         //        let term = URLQueryItem(name: "term", value: "marvel")
         let page = URLQueryItem(name: "word", value: word )
@@ -438,7 +436,6 @@ extension firstTabVC: UITableViewDelegate, UITableViewDataSource {
         
         //선택한 행의 내용을 feedResult에 담는다.
         detailVC.feedResult = self.feedModel?.results[indexPath.row]
-        
         // 전체화면보기하면 닫기버튼이 없음 만들어줘야함.
         //        detailVC.modalPresentationStyle = .fullScreen
         
@@ -458,6 +455,9 @@ extension firstTabVC: UITableViewDelegate, UITableViewDataSource {
         cell.descriptionLabel.text = self.feedModel?.results[indexPath.row].userID
         cell.dataLabel.text =  self.feedModel?.results[indexPath.row].date
         cell.priceLabel.text =  self.feedModel?.results[indexPath.row].myPlaceText
+        cell.num.text =  self.feedModel?.results[indexPath.row].feedIdx?.description ?? ""
+        postIdx =  self.feedModel?.results[indexPath.row].feedIdx?.description ?? ""
+
         
         // 이미지처리방법
         if let hasURL = self.feedModel?.results[indexPath.row].postImgs{
@@ -480,19 +480,21 @@ extension firstTabVC: UITableViewDelegate, UITableViewDataSource {
     }
     
     
-    //하트 업로드
-    func uploadHeart(success: (()->Void)? = nil, fail: ((String)->Void)? = nil) {
+    //하트 업로드API
+    func uploadHeart(postIdx: String?, success: (()->Void)? = nil, fail: ((String)->Void)? = nil) {
+        
         
         // userID, postText,이미지묶음을 파라미터에 담아보냄
         let userID = plist.string(forKey: "name")
         
         // 선택한 셀의 게시글 번호를 가져오는 법 생각하기
         let param: Parameters = [  "cbHeart" : true,
-                                   "postIdx" : feedResult?.feedIdx ?? 0 ,
+                                   "postIdx" : postIdx as Any ,
                                   "userID" : userID as Any]
-        
+
+        print(" API 게시글번호 2 :\(postIdx)")
         // API 호출 URL
-        let url = "http://3.37.202.166/post/0iOS_feedLike.php"
+        let url = self.BASEURL+"post/0iOS_feedLike.php"
         
         //이미지 전송
         let call = AF.request(url, method: .post, parameters: param,
@@ -551,9 +553,11 @@ extension firstTabVC: firstTabVCCellDelegate{
         if like{
             likes[index] = 1
             print("cell \(likes[index]!)")
-            // 서버로 좋아요 테이블에 넣기
-            uploadHeart()
             
+            self.uploadHeart(postIdx: postIdx)
+            print("게시글번호 클릭1 :\(postIdx)")
+            
+       
         }else{
             likes[index] = 0
             print("cell \(likes[index]!)")

@@ -21,7 +21,7 @@ class JoinVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UINa
     var fieldName: UITextField! // 이름 필드
     // 상황에 따라 다른 alert를 줄 때 바꿔줄 문장을 tmpMessage로 설정
     var tmpMessage: String = ""
-    
+    var BASEURL = "http://15.164.214.35/"
     
     override func viewDidLoad() {
         // 테이블 뷰의 dataSource, delegate 속성 지정
@@ -152,7 +152,7 @@ class JoinVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UINa
         ]
         
         // 2. API 호출
-        let url = "http://3.37.202.166/login/iOS_register.php"
+        let url = BASEURL+"login/iOS_register.php"
         let call = AF.request(url, method: HTTPMethod.post, parameters: param, encoding: JSONEncoding.default)
         
         // 3. 서버 응답값 처리
@@ -167,10 +167,6 @@ class JoinVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UINa
                 self.isCalling = true
                 self.alert("가입이 완료되었습니다.")
                
-                //                if let jsonObject = try! response.result.get() as? [String: Any] {
-                //                    let result_code = jsonObject["result_code"] as? String
-                //                    let success = jsonObject["success"] as? String
-                //
                 print("JSON2 = \(try! response.result.get())")
                 //                }
             case .failure(let e):

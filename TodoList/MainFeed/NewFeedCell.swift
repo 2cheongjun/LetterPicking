@@ -75,6 +75,7 @@ class NewFeedCell: UITableViewCell {
 //       }
     
 
+    @IBOutlet weak var num: UILabel!
     
     @IBOutlet weak var imageViewLabel: UIImageView!
     // 이름

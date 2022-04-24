@@ -15,7 +15,7 @@ class nMapVC : UIViewController {
     let NAVER_CLIENT_ID = "uvryr3s84w"
     let NAVER_CLIENT_SECRET = "rSXrAAZE5FUNue2BEbh68p6LAFiNDE2wUVdpI9JV"
     let NAVER_GEOCODE_URL = "https://naveropenapi.apigw.ntruss.com/map-geocode/v2/geocode?query="
-    
+    var BASEURL = "http://15.164.214.35/"
     // 네이버지도 파싱 // 코더블 모델
     var model: MapModel?
     
@@ -149,7 +149,7 @@ class nMapVC : UIViewController {
         
         let sessionConfig = URLSessionConfiguration.default
         let session = URLSession(configuration: sessionConfig)
-        let components = URLComponents(string: "http://3.37.202.166/post/0iOS_feedSelect.php?page=\(1)")
+        let components = URLComponents(string: BASEURL+"post/0iOS_feedSelect.php?page=\(1)")
         
         // url이 없으면 리턴한다. 여기서 끝
         guard let url = components?.url else { return }

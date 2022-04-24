@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19519"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -64,6 +64,12 @@
                             <constraint firstAttribute="height" constant="160" id="TNL-O9-9XB"/>
                         </constraints>
                     </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="num" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="G5x-nY-qjU">
+                        <rect key="frame" x="268" y="212" width="34" height="21"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
                 </subviews>
                 <constraints>
                     <constraint firstItem="sB2-Lk-1Eh" firstAttribute="top" secondItem="e2o-MJ-BvU" secondAttribute="top" id="5Xs-mm-Oax"/>
@@ -74,8 +80,10 @@
                     <constraint firstItem="QX6-tE-Ud8" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="DKd-c2-vMm"/>
                     <constraint firstItem="d2h-ck-t2b" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="F29-gp-D41"/>
                     <constraint firstItem="QX6-tE-Ud8" firstAttribute="top" secondItem="w59-J2-ECF" secondAttribute="bottom" constant="12" id="K9S-gH-GIj"/>
+                    <constraint firstAttribute="trailing" secondItem="G5x-nY-qjU" secondAttribute="trailing" constant="18" id="L6n-6Y-e1m"/>
                     <constraint firstItem="e2o-MJ-BvU" firstAttribute="top" secondItem="d2h-ck-t2b" secondAttribute="bottom" constant="10" id="MEQ-kN-Gl5"/>
                     <constraint firstItem="w59-J2-ECF" firstAttribute="top" secondItem="cmY-xK-Mbl" secondAttribute="bottom" constant="10" id="OaX-RH-SUW"/>
+                    <constraint firstItem="G5x-nY-qjU" firstAttribute="top" secondItem="d2h-ck-t2b" secondAttribute="bottom" constant="52" id="Re4-YD-R0a"/>
                     <constraint firstItem="w59-J2-ECF" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="To3-Ev-Jyh"/>
                     <constraint firstItem="e2o-MJ-BvU" firstAttribute="leading" secondItem="sB2-Lk-1Eh" secondAttribute="trailing" constant="4" id="aYP-Sy-P8B"/>
                     <constraint firstAttribute="trailing" secondItem="QX6-tE-Ud8" secondAttribute="trailing" constant="16" id="dx3-qG-ut8"/>
@@ -93,6 +101,7 @@
                 <outlet property="descriptionLabel" destination="w59-J2-ECF" id="9Ze-XN-AiV"/>
                 <outlet property="imageViewLabel" destination="d2h-ck-t2b" id="CZY-I5-EYw"/>
                 <outlet property="likeBtn" destination="sB2-Lk-1Eh" id="g8z-0v-mDe"/>
+                <outlet property="num" destination="G5x-nY-qjU" id="4yM-Hc-jsm"/>
                 <outlet property="priceLabel" destination="QX6-tE-Ud8" id="lrA-ks-x5u"/>
                 <outlet property="titleLabel" destination="cmY-xK-Mbl" id="gy6-kR-qZM"/>
             </connections>

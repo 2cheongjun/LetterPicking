@@ -25,7 +25,7 @@ struct FeedResult: Codable{
     let myPlaceText: String?
     let date: String
 //    let feedIdx:String
-    let feedIdx:Int
+    let feedIdx:Int?
 //    let count: Int
 }
 

@@ -38,7 +38,7 @@ class WriteVC : UIViewController, UIImagePickerControllerDelegate, UINavigationC
     var autoAddress = "" // 자동위치
     
     var isSelected = false
-    
+    var BASEURL = "http://15.164.214.35/"
     /*
      *  userDefaults에 저장된이름값 가져오기
      */
@@ -149,13 +149,7 @@ class WriteVC : UIViewController, UIImagePickerControllerDelegate, UINavigationC
         
         let alert = UIAlertController(title: "게시물 공유", message: "업로드 하시겠습니까?", preferredStyle: .alert)
         let alertAction = UIAlertAction(title: "업로드", style: .default) { [self] (_) in
-            //  여기에 실행할 코드
-            // 갤러리에서 받아온 UIImage값 받아서 newProfile함수 호출
-//            if let getImage = self.newImages{
-//                print("getimg :\(getImage)")
-//                self.upLoadImg(getImage) // 받아온이미지들 넣어서 upLoadImg실행
-//            }
-            // 전역변수에 담긴 photoArray값을 업로드함
+
             self.upLoadImg()
         }
         alert.addAction(alertAction)
@@ -180,8 +174,8 @@ class WriteVC : UIViewController, UIImagePickerControllerDelegate, UINavigationC
         
         let ok = UIAlertAction(title: "OK", style: .default) { (ok) in
             //code // 내위치정보 받아다가 넣기
-            self.myPlaceText.text = alert.textFields?[0].text
-//            self.myPlaceText.text = "금천구 독산동"
+//            self.myPlaceText.text = alert.textFields?[0].text
+            self.myPlaceText.text = "금천구 독산동"
             //                   print("WriteVC/직접입력받은 주소: \(self.myPlaceText.text)")
             
             if let add = self.myPlaceText.text{
@@ -272,22 +266,22 @@ extension WriteVC: UICollectionViewDelegate, UICollectionViewDataSource {
             imageStr.append(finalImage.base64EncodedString())
         }
         
-//        print("이미지사이즈:\(imageStr)")
-        
         // userID, postText,이미지묶음을 파라미터에 담아보냄
         let userID = plist.string(forKey: "name")
         
         let param: Parameters = [ "imageStr" :  imageStr,
                                   "postText" : textView.text ?? "",
                                   "userID" : userID as Any,
+//                                  "userID" : "jun",
                                   //                                  "myPlaceText": add
                                   "myPlaceText": myPlaceText.text ?? ""
         ]
         
         print("WriteVC/ 기본입력내용 :\(self.myPlaceText.text ?? "")")
         
+      
         // API 호출 URL
-        let url = "http://3.37.202.166/post/0iOS_images.php"
+        let url = "http://15.164.214.35/post/0iOS_images.php"
         
         //이미지 전송
         let call = AF.request(url, method: .post, parameters: param,
@@ -297,14 +291,14 @@ extension WriteVC: UICollectionViewDelegate, UICollectionViewDataSource {
             
             // 성공실패케이스문 작성하기
             print("서버로 보냄!!!!!")
-            print("JSON= \(try! res.result.get())!)")
+            print("JSON= \(try? res.result.get())!)")
             
-            guard (try! res.result.get() as? NSDictionary) != nil else {
+            guard (try? res.result.get() as? NSDictionary) != nil else {
                 print("올바른 응답값이 아닙니다.")
                 return
             }
-            
-            if let jsonObject = try! res.result.get() as? [String :Any]{
+//
+            if let jsonObject = try? res.result.get() as? [String :Any]{
                 let success = jsonObject["success"] as? Int ?? 0
                 
                 if success == 1 {

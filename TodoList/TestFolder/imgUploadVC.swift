@@ -12,7 +12,7 @@ class imgUploadVC: UIViewController,UIImagePickerControllerDelegate, UINavigatio
     
     // UI이미지 담을 변수(갤러리에서 가져온이미지)
     var newImage: UIImage? = nil
-    
+    var BASEURL = "http://15.164.214.35/"
     //이미지뷰
     @IBOutlet weak var imgView: UIImageView!
     
@@ -74,7 +74,7 @@ class imgUploadVC: UIViewController,UIImagePickerControllerDelegate, UINavigatio
         ]
         
         // API 호출 URL
-        let url = "http://3.37.202.166/post/0iOS_cookPostInsert.php"
+        let url = BASEURL+"post/0iOS_cookPostInsert.php"
         
         //이미지 전송
         let call = AF.request(url, method: .post, parameters: param,
@@ -114,7 +114,6 @@ extension String {
         let str = (0 ..< length).map{ _ in self.randomElement()! }
         return String(str)
     }
-    
 }
 
 // 이미지 사이즈 줄이기

@@ -26,7 +26,7 @@ class LoginVC :UIViewController, UITableViewDelegate, UITableViewDataSource{
     var userEmail: String? = nil
     
     var getID = ""
-
+    var BASEURL = "http://15.164.214.35/"
     
     override func viewDidLoad() {
         // self.navigationItem.title = "프로필"
@@ -73,7 +73,7 @@ class LoginVC :UIViewController, UITableViewDelegate, UITableViewDataSource{
             "userPassword": pw
         ]
         // 호출 URL
-        let url: String = "http://3.37.202.166/login/iOS_login.php"
+        let url: String = BASEURL+"login/iOS_login.php"
         
         AF.request(url,
                    method: .post,

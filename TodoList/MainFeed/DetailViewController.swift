@@ -12,14 +12,11 @@ import SwiftyJSON
 // 게시글눌렀을때 상세
 class DetailViewController: UIViewController, UITextViewDelegate{
   
- 
-//    @IBOutlet var keyHeight: NSLayoutConstraint!
-    
     //피드 모델에 값이 있으면 가져온다.
     var feedResult: FeedResult?
     
     var feedIdx = 0
-    
+    var BASEURL = "http://15.164.214.35/"
     @IBOutlet var movieCotainer: UIImageView!
     
     @IBOutlet var userID: UILabel!
@@ -156,7 +153,7 @@ class DetailViewController: UIViewController, UITextViewDelegate{
         print("WriteVC/ 기본입력내용 :\(self.myPlaceText.text ?? "")")
         
         // API 호출 URL
-        let url = "http://3.37.202.166/post/0iOS_feedUpdate.php"
+        let url = self.BASEURL+"post/0iOS_feedUpdate.php"
         
         //이미지 전송
         let call = AF.request(url, method: .post, parameters: param,
@@ -203,7 +200,7 @@ class DetailViewController: UIViewController, UITextViewDelegate{
         let paramData = try! JSONSerialization.data(withJSONObject: param, options: [])
         
         // 2. URL 객체 정의 (삭제)
-        let url = URL(string: "http://3.37.202.166/post/0iOS_feedDelete.php")
+        let url = URL(string: self.BASEURL+"post/0iOS_feedDelete.php")
         
         // 값이 있다면 받아와서 넣음.
         var request = URLRequest(url: url!)
