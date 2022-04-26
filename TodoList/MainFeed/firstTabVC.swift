@@ -517,6 +517,11 @@ extension firstTabVC: UITableViewDelegate, UITableViewDataSource {
                 if success == 1 {
                     self.alert("응답값 JSON= \(try! res.result.get())!)")
                     self.dismiss(animated: true, completion: nil)
+                    
+                    DispatchQueue.main.async {
+                        // 테이블뷰 갱신 (자동으로 갱신안됨)
+                        self.tableView.reloadData()
+                    }
                    
                 }else{
                     //sucess가 0이면

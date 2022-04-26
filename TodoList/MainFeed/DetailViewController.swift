@@ -22,6 +22,7 @@ class DetailViewController: UIViewController, UITextViewDelegate{
     @IBOutlet var userID: UILabel!
     @IBOutlet var date: UILabel!
     @IBOutlet var myPlaceText: UILabel!
+    @IBOutlet var num: UILabel!
     
     @IBOutlet var postText: UITextView!{
         didSet{
@@ -62,6 +63,7 @@ class DetailViewController: UIViewController, UITextViewDelegate{
         myPlaceText.text = feedResult?.myPlaceText
         date.text = feedResult?.date
         postText.text = feedResult?.postText
+        num.text = feedResult?.feedIdx?.description
         
         // 게시글번호
         feedIdx = feedResult!.feedIdx ?? 0
