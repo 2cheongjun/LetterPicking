@@ -26,6 +26,7 @@ struct FeedResult: Codable{
     let date: String
 //    let feedIdx:String
     let feedIdx:Int?
+    let message: String?
 //    let count: Int
 }
 

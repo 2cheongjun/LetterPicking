@@ -11,15 +11,19 @@ import UIKit
 protocol firstTabVCCellDelegate: AnyObject{
 //    func didTapButton()
     // 좋아요버튼이 눌릴때, index값과, Bool값을 저장한다.
-    func didPressHeart(for index: Int, like: Bool)
+    func didPressHeart(for index: Int, like: Bool, index2: Int)
+//    func onClickCell(index2: Int)
 }
 
 
 class NewFeedCell: UITableViewCell {
     //델리게이트생성
     weak var delegate: firstTabVCCellDelegate?
-    var index: Int?
-     
+    var index: Int? // 좋아요
+    var index2: IndexPath? // 게시글인덱스
+    
+    var feedIdx = 0
+    
     static let identifier = "NewFeedCell"
     
     static func nib() ->UINib {
@@ -32,11 +36,12 @@ class NewFeedCell: UITableViewCell {
           self.likeBtn.addTarget(self, action: #selector(didPressedHeart(_:)), for: .touchUpInside)
       }
     
-//    required init?(coder: NSCoder) {
-//        fatalError("init(coder:) has not been implemented")
-//    }
     required init?(coder aDecoder: NSCoder) {
        super.init(coder: aDecoder)
+    }
+    
+    override func setSelected(_ selected: Bool, animated: Bool) {
+//        print("하트")
     }
 
     //좋아요 버튼정의
@@ -47,14 +52,17 @@ class NewFeedCell: UITableViewCell {
                 if sender.isSelected {
                     isTouched = true
                     // 메인에서didPressHeart 함수를 실행
-                    delegate?.didPressHeart(for: idx, like: true)
+//                    delegate?.didPressHeart(for: idx, like: true)
+                    delegate?.didPressHeart(for: idx, like: true, index2:(index2?.row)!)
+                    // 클릭했을때 게시글 인덱스 가져오기
+//                    delegate?.onClickCell(index2:(index2?.row)!)
+            
                 }else {
                     isTouched = false
-                    delegate?.didPressHeart(for: idx, like: false)
+                    delegate?.didPressHeart(for: idx, like: false, index2:(index2?.row)!)
                 }
                 sender.isSelected = !sender.isSelected
-        
-//        likeClicked()
+
     }
     
     var isTouched: Bool? {
@@ -67,12 +75,7 @@ class NewFeedCell: UITableViewCell {
            }
        }
     
-    // 위임해줄 기능을 미리 구현해두어 버튼에 액션 추가
-//       @objc func likeClicked() {
-           // 뷰컨에서 실행할 didTapButton을 작성함
-         
-//           delegate?.didPressHeart()
-//       }
+
     
 
     @IBOutlet weak var num: UILabel!
