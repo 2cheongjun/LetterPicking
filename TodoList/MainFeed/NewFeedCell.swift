@@ -75,10 +75,14 @@ class NewFeedCell: UITableViewCell {
            }
        }
     
-
+    
     
 
+    // 글번호
     @IBOutlet weak var num: UILabel!
+    
+    //댓글수
+    @IBOutlet var relpySum: UILabel!
     
     @IBOutlet weak var imageViewLabel: UIImageView!
     // 이름

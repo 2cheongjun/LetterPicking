@@ -29,7 +29,7 @@
                         </connections>
                     </button>
                     <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="e2o-MJ-BvU">
-                        <rect key="frame" x="44" y="170" width="35" height="31"/>
+                        <rect key="frame" x="44" y="170" width="26" height="31"/>
                         <state key="normal" title="Button"/>
                         <buttonConfiguration key="configuration" style="plain" image="message" catalog="system"/>
                     </button>
@@ -70,6 +70,12 @@
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SFR-5V-qO1">
+                        <rect key="frame" x="78" y="177" width="26" height="17"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                        <nil key="textColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
                 </subviews>
                 <constraints>
                     <constraint firstItem="sB2-Lk-1Eh" firstAttribute="top" secondItem="e2o-MJ-BvU" secondAttribute="top" id="5Xs-mm-Oax"/>
@@ -87,11 +93,13 @@
                     <constraint firstItem="w59-J2-ECF" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="To3-Ev-Jyh"/>
                     <constraint firstItem="e2o-MJ-BvU" firstAttribute="leading" secondItem="sB2-Lk-1Eh" secondAttribute="trailing" constant="4" id="aYP-Sy-P8B"/>
                     <constraint firstAttribute="trailing" secondItem="QX6-tE-Ud8" secondAttribute="trailing" constant="16" id="dx3-qG-ut8"/>
+                    <constraint firstItem="SFR-5V-qO1" firstAttribute="top" secondItem="d2h-ck-t2b" secondAttribute="bottom" constant="17" id="eRU-Io-xcR"/>
                     <constraint firstItem="aSR-Q0-wXm" firstAttribute="top" secondItem="w59-J2-ECF" secondAttribute="top" id="epj-lz-3rt"/>
                     <constraint firstItem="sB2-Lk-1Eh" firstAttribute="top" secondItem="d2h-ck-t2b" secondAttribute="bottom" constant="10" id="hPC-Df-Oee"/>
                     <constraint firstItem="sB2-Lk-1Eh" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="ocV-hh-qnU"/>
                     <constraint firstItem="d2h-ck-t2b" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="p22-8Z-TIW"/>
                     <constraint firstAttribute="trailing" secondItem="cmY-xK-Mbl" secondAttribute="trailing" constant="16" id="qs4-4b-aLz"/>
+                    <constraint firstItem="SFR-5V-qO1" firstAttribute="leading" secondItem="e2o-MJ-BvU" secondAttribute="trailing" id="rE2-Nz-n0y"/>
                     <constraint firstItem="cmY-xK-Mbl" firstAttribute="top" secondItem="sB2-Lk-1Eh" secondAttribute="bottom" constant="10" id="xec-Va-hLi"/>
                 </constraints>
             </tableViewCellContentView>
@@ -103,6 +111,7 @@
                 <outlet property="likeBtn" destination="sB2-Lk-1Eh" id="g8z-0v-mDe"/>
                 <outlet property="num" destination="G5x-nY-qjU" id="4yM-Hc-jsm"/>
                 <outlet property="priceLabel" destination="QX6-tE-Ud8" id="lrA-ks-x5u"/>
+                <outlet property="relpySum" destination="SFR-5V-qO1" id="ten-6V-MQO"/>
                 <outlet property="titleLabel" destination="cmY-xK-Mbl" id="gy6-kR-qZM"/>
             </connections>
             <point key="canvasLocation" x="137.68115942028987" y="241.40625"/>

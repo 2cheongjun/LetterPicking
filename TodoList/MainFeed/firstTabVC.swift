@@ -47,7 +47,7 @@ class firstTabVC: UIViewController{
         tableView.setContentOffset(CGPoint(x: 0, y: 0), animated: true)
     }
     
-    //좋아요버튼
+    //댓글 버튼
     
     
     override func viewDidLoad() {
@@ -127,7 +127,6 @@ class firstTabVC: UIViewController{
         page = 1
         // API호출
             requestFeedAPI()
-
 
         // 수정업데이트노티피케이션
         // 노티3.WriteVC에서 보낸 값을 받기위해 DissmissWrite의 노티피케이션을 정의해 받을 준비한다.
@@ -492,7 +491,7 @@ extension firstTabVC: UITableViewDelegate, UITableViewDataSource{
                                    "postIdx" : numIdx as Any ,
                                   "userID" : userID as Any]
 
-        print(" API 게시글번호 2 :\(postIdx)")
+//        print(" API 게시글번호 2 :\(postIdx)")
         // API 호출 URL
         let url = self.BASEURL+"post/0iOS_feedLike.php"
         
@@ -535,18 +534,20 @@ extension firstTabVC: UITableViewDelegate, UITableViewDataSource{
     
 //    //하트 Delete API
 //    func DeleteHeart(postIdx: String?, success: (()->Void)? = nil, fail: ((String)->Void)? = nil) {
-//
-//        // userID, postText,이미지묶음을 파라미터에 담아보냄
+        // userID, postText,이미지묶음을 파라미터에 담아보냄
 //        let userID = plist.string(forKey: "name")
 //
 //        // 선택한 셀의 게시글 번호를 가져오는 법 생각하기
-//        let param: Parameters = [  "cbHeart" : false,
+//        let param: Parameters = [
+//                                   "cbHeart" : false,
 //                                   "postIdx" : numIdx as Any ,
 //                                  "userID" : userID as Any]
 //
-//        print(" API 게시글번호 2 :\(postIdx)")
+////        print(numIdx, userID, false)
+//
+////        print(" API 게시글번호 2 :\(postIdx)")
 //        // API 호출 URL
-//        let url = self.BASEURL+"post/0iOS_feedLike.php"
+//        let url = self.BASEURL+"post/0iOS_feedLike_delete.php"
 //
 //        //이미지 전송
 //        let call = AF.request(url, method: .post, parameters: param,
@@ -554,9 +555,6 @@ extension firstTabVC: UITableViewDelegate, UITableViewDataSource{
 //        //                call.responseJSON { res in
 //        call.responseJSON { [self] res in
 //
-//            // 성공실패케이스문 작성하기
-////            print("서버로 보냄!!!!!")
-////            print("JSON= \(try! res.result.get())!)")
 //
 //            guard (try! res.result.get() as? NSDictionary) != nil else {
 //                print("올바른 응답값이 아닙니다.")
@@ -566,7 +564,7 @@ extension firstTabVC: UITableViewDelegate, UITableViewDataSource{
 //            if let jsonObject = try! res.result.get() as? [String :Any]{
 //                let success = jsonObject["success"] as? Int ?? 0
 //
-//                if success == 0 {
+//                if success == 1 {
 //                    self.alert("좋아요취소성공 JSON= \(try! res.result.get())!)")
 //                    self.dismiss(animated: true, completion: nil)
 //
@@ -574,14 +572,13 @@ extension firstTabVC: UITableViewDelegate, UITableViewDataSource{
 //                        // 테이블뷰 갱신 (자동으로 갱신안됨)
 //                        self.tableView.reloadData()
 //                    }
-//
 //                }else{
 //                    //sucess가 0이면
-////                    self.alert("오류")
+//                    self.alert("0")
 //                }
 //            }
 //        }
-//
+
 //    }//함수 끝
 }
 
@@ -611,7 +608,7 @@ extension firstTabVC: firstTabVCCellDelegate{
         
         if like{
             likes[index] = 1
-            print("cell \(likes[index]!)")
+//            print("cell \(likes[index]!)")
             print("\(index2) 클릭")
             print("\(self.feedModel?.results[index2].feedIdx?.description ?? "")글번호")
             numIdx = self.feedModel?.results[index2].feedIdx?.description ?? ""
@@ -621,7 +618,7 @@ extension firstTabVC: firstTabVCCellDelegate{
 
         }else{
             likes[index] = 0
-            print("cell \(likes[index]!)")
+//            print("cell \(likes[index]!)")
             print("\(self.feedModel?.results[index2].feedIdx?.description ?? "")글번호")
             // 좋아요 Delete
             numIdx = self.feedModel?.results[index2].feedIdx?.description ?? ""

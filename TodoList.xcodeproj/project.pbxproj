@@ -28,6 +28,8 @@
 		D08B028E27E941D800012766 /* WriteVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D08B028D27E941D800012766 /* WriteVC.swift */; };
 		D08B029727E9C86B00012766 /* CVcell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D08B029627E9C86B00012766 /* CVcell.swift */; };
 		D08B02C527EB62F300012766 /* imgUploadVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D08B02C427EB62F300012766 /* imgUploadVC.swift */; };
+		D08B699B281AF6590095E54A /* DetailViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D08B6999281AF6590095E54A /* DetailViewCell.swift */; };
+		D08B699C281AF6590095E54A /* DetailViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D08B699A281AF6590095E54A /* DetailViewCell.xib */; };
 		D09E65F127F0F20400077BD5 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D09E65F027F0F20400077BD5 /* OpenGLES.framework */; };
 		D09E65F327F0F24F00077BD5 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D09E65F227F0F24F00077BD5 /* SystemConfiguration.framework */; };
 		D09E65F527F0F25800077BD5 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D09E65F427F0F25800077BD5 /* CoreLocation.framework */; };
@@ -77,6 +79,8 @@
 		D08B028D27E941D800012766 /* WriteVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WriteVC.swift; sourceTree = "<group>"; };
 		D08B029627E9C86B00012766 /* CVcell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CVcell.swift; sourceTree = "<group>"; };
 		D08B02C427EB62F300012766 /* imgUploadVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = imgUploadVC.swift; sourceTree = "<group>"; };
+		D08B6999281AF6590095E54A /* DetailViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewCell.swift; sourceTree = "<group>"; };
+		D08B699A281AF6590095E54A /* DetailViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DetailViewCell.xib; sourceTree = "<group>"; };
 		D09E65F027F0F20400077BD5 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		D09E65F227F0F24F00077BD5 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		D09E65F427F0F25800077BD5 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
@@ -204,6 +208,8 @@
 				D08B029627E9C86B00012766 /* CVcell.swift */,
 				D08B028D27E941D800012766 /* WriteVC.swift */,
 				D08B028B27E8577700012766 /* FeedModel.swift */,
+				D08B6999281AF6590095E54A /* DetailViewCell.swift */,
+				D08B699A281AF6590095E54A /* DetailViewCell.xib */,
 				D0C98B7127F5EDCB00445A00 /* DetailViewController.storyboard */,
 				D08B028727E8389D00012766 /* FeedCell.swift */,
 				D0E3BFAB28084BCC00958C30 /* NewFeedCell.swift */,
@@ -323,6 +329,7 @@
 				D09E660327F1079600077BD5 /* 01.jpg in Resources */,
 				D051F37027CE2ADC00ABBB4E /* TodoDetailViewController.xib in Resources */,
 				D0C98B7227F5EDCB00445A00 /* DetailViewController.storyboard in Resources */,
+				D08B699C281AF6590095E54A /* DetailViewCell.xib in Resources */,
 				D051F36127CDE2B100ABBB4E /* Assets.xcassets in Resources */,
 				D051F35C27CDE2AF00ABBB4E /* Main.storyboard in Resources */,
 				D0E3BFAE28084BCC00958C30 /* NewFeedCell.xib in Resources */,
@@ -396,6 +403,7 @@
 				D08B027F27E5C25D00012766 /* mypageVC.swift in Sources */,
 				D051F35F27CDE2AF00ABBB4E /* TodoList.xcdatamodeld in Sources */,
 				D08B028827E8389D00012766 /* FeedCell.swift in Sources */,
+				D08B699B281AF6590095E54A /* DetailViewCell.swift in Sources */,
 				D051F36F27CE2ADC00ABBB4E /* TodoDetailViewController.swift in Sources */,
 				D0E3BFAA280804BC00958C30 /* likeBtn.swift in Sources */,
 				D0C98B7627FAF47D00445A00 /* MapModel.swift in Sources */,

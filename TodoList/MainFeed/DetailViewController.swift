@@ -23,6 +23,8 @@ class DetailViewController: UIViewController, UITextViewDelegate{
     @IBOutlet var date: UILabel!
     @IBOutlet var myPlaceText: UILabel!
     @IBOutlet var num: UILabel!
+    //테이블뷰
+    @IBOutlet var tableView: UITableView!
     
     @IBOutlet var postText: UITextView!{
         didSet{
@@ -60,23 +62,24 @@ class DetailViewController: UIViewController, UITextViewDelegate{
         postText.delegate = self
         
         userID.text = feedResult?.userID
-        myPlaceText.text = feedResult?.myPlaceText
+//        myPlaceText.text = feedResult?.myPlaceText
         date.text = feedResult?.date
         postText.text = feedResult?.postText
-        num.text = feedResult?.feedIdx?.description
+        //글번호
+//        num.text = feedResult?.feedIdx?.description
         
         // 게시글번호
-        feedIdx = feedResult!.feedIdx ?? 0
+//        feedIdx = feedResult!.feedIdx ?? 0
         
         // 이미지처리방법
-        if let hasURL = self.feedResult?.postImgs{
-            // 이미지로드 서버요청
-            self.loadImage(urlString: hasURL) { image in
-                DispatchQueue.main.async {
-                    self.movieCotainer.image = image
-                }
-            }
-        }
+//        if let hasURL = self.feedResult?.postImgs{
+//            // 이미지로드 서버요청
+//            self.loadImage(urlString: hasURL) { image in
+//                DispatchQueue.main.async {
+//                    self.movieCotainer.image = image
+//                }
+//            }
+//        }
        
     }// 뷰디드로드끝
 
