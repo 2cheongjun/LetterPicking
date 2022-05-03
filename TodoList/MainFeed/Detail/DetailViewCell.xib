@@ -4,6 +4,7 @@
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -22,13 +23,13 @@
                             <constraint firstAttribute="width" constant="60" id="hvd-D1-3K7"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                        <nil key="textColor"/>
+                        <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="replyDate" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="boc-sS-gBW">
-                        <rect key="frame" x="16" y="43" width="288" height="17"/>
+                        <rect key="frame" x="16" y="43" width="62.5" height="17"/>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                        <nil key="textColor"/>
+                        <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="replyText" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vQu-dt-r72">
@@ -37,26 +38,47 @@
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Q98-6l-Bq3">
+                        <rect key="frame" x="286" y="39" width="24" height="29"/>
+                        <state key="normal" title="Button"/>
+                        <buttonConfiguration key="configuration" style="plain" image="trash" catalog="system">
+                            <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage" configurationType="font">
+                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                            </preferredSymbolConfiguration>
+                        </buttonConfiguration>
+                        <connections>
+                            <action selector="trashBtn:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="LG4-1F-Gh8"/>
+                        </connections>
+                    </button>
                 </subviews>
                 <constraints>
+                    <constraint firstItem="Q98-6l-Bq3" firstAttribute="top" secondItem="vQu-dt-r72" secondAttribute="bottom" constant="6" id="8Bs-WK-UKA"/>
                     <constraint firstItem="nKH-Lh-MVg" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="8JP-NN-1IQ"/>
-                    <constraint firstAttribute="trailing" secondItem="boc-sS-gBW" secondAttribute="trailing" constant="16" id="KN4-Zj-gx2"/>
+                    <constraint firstItem="boc-sS-gBW" firstAttribute="top" secondItem="nKH-Lh-MVg" secondAttribute="bottom" constant="10" id="GTR-f2-51h"/>
                     <constraint firstItem="vQu-dt-r72" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="75" id="LpH-YG-YDC"/>
                     <constraint firstItem="vQu-dt-r72" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="16" id="RZN-Va-ZL9"/>
-                    <constraint firstItem="boc-sS-gBW" firstAttribute="top" secondItem="nKH-Lh-MVg" secondAttribute="bottom" constant="10" id="Vj6-cq-9mc"/>
+                    <constraint firstAttribute="trailing" secondItem="Q98-6l-Bq3" secondAttribute="trailing" constant="10" id="ebV-iT-BQ1"/>
                     <constraint firstItem="nKH-Lh-MVg" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="16" id="f2f-4c-iHu"/>
                     <constraint firstItem="nKH-Lh-MVg" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="j4A-Iy-1MR"/>
                     <constraint firstAttribute="trailing" secondItem="vQu-dt-r72" secondAttribute="trailing" constant="16" id="jLA-Ie-fw1"/>
-                    <constraint firstItem="boc-sS-gBW" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="vPc-OD-zkv"/>
+                    <constraint firstItem="boc-sS-gBW" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="msh-ol-If1"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <color key="backgroundColor" systemColor="systemGray6Color"/>
             <connections>
                 <outlet property="replyDate" destination="boc-sS-gBW" id="8pH-9F-ODZ"/>
                 <outlet property="replyId" destination="nKH-Lh-MVg" id="s4M-10-GHh"/>
                 <outlet property="replyText" destination="vQu-dt-r72" id="ede-Hd-4CM"/>
+                <outlet property="trash" destination="Q98-6l-Bq3" id="qdi-oS-AxW"/>
             </connections>
             <point key="canvasLocation" x="137.68115942028987" y="165.06696428571428"/>
         </tableViewCell>
     </objects>
+    <resources>
+        <image name="trash" catalog="system" width="121" height="128"/>
+        <systemColor name="systemGray6Color">
+            <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+    </resources>
 </document>

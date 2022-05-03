@@ -10,7 +10,7 @@ import Alamofire
 import SwiftyJSON
 
 // 게시글눌렀을때 상세
-class DetailViewController: UIViewController, UITextViewDelegate, UITableViewDataSource, UITableViewDelegate{
+class DetailViewController: UIViewController, UITextViewDelegate, UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate{
     
     //피드 모델에 값이 있으면 가져온다.
     var feedResult: FeedResult?
@@ -19,16 +19,40 @@ class DetailViewController: UIViewController, UITextViewDelegate, UITableViewDat
     var BASEURL = "http://15.164.214.35/"
     @IBOutlet var movieCotainer: UIImageView!
     
-    @IBOutlet var userID: UILabel!
-    @IBOutlet var date: UILabel!
+    @IBOutlet var userID: UILabel!{
+        didSet{
+            userID.font = UIFont.systemFont(ofSize: 16, weight: .bold)
+        }
+    }
+    @IBOutlet var date: UILabel!{
+        didSet{
+            date.font = UIFont.systemFont(ofSize: 14, weight: .light)
+        }
+    }
     @IBOutlet var myPlaceText: UILabel!
     @IBOutlet var num: UILabel!
-    //테이블뷰
+    
+    //댓글 테이블뷰
     @IBOutlet var tableView: UITableView!
     
+    //댓글 작성영역
+    @IBOutlet var replyField: UITextField!
+    //댓글버튼
+    @IBOutlet var replyBtn: UIButton!
+    
+    //댓글버튼
+    @IBAction func replyBtn(_ sender: Any) {
+        let replyText = replyField.text ?? "댓글작성없음"
+        print("댓글작성내용:\(replyText)")
+        // 서버로 댓글 내용업로드 API
+        replyUpload()
+        // 작성한내용삭제
+        replyField.text = ""
+    }
+    
     //셀갯수
-//    var numberOfCell: Int = 10
-    let examList = ["호호","호호","호호","호호","호호","호호","호호","호호","호호","호호"]
+    //    var numberOfCell: Int = 10
+    let examList = ["안녕","호호","하하","낄낄","호호"]
     
     
     @IBOutlet var postText: UITextView!{
@@ -65,6 +89,8 @@ class DetailViewController: UIViewController, UITextViewDelegate, UITableViewDat
         super.viewDidLoad()
         // 델리게이트 연결
         postText.delegate = self
+        replyField.delegate  = self
+        // 셀따로 작성시 등록을 해주어야함
         self.tableView?.register(UINib(nibName: "DetailViewCell", bundle: nil), forCellReuseIdentifier: "DetailViewCell")
         tableView.delegate = self
         tableView.dataSource = self
@@ -74,7 +100,7 @@ class DetailViewController: UIViewController, UITextViewDelegate, UITableViewDat
         date.text = feedResult?.date
         postText.text = feedResult?.postText
         //글번호
-//        num.text = feedResult?.feedIdx?.description
+        //        num.text = feedResult?.feedIdx?.description
         
         // 게시글번호(수정시필요)
         feedIdx = feedResult!.feedIdx ?? 0
@@ -97,16 +123,16 @@ class DetailViewController: UIViewController, UITextViewDelegate, UITableViewDat
     func loadImage(urlString: String, completion: @escaping (UIImage?)-> Void){
         let sessionConfig = URLSessionConfiguration.default
         let session = URLSession(configuration: sessionConfig)
-
+        
         // urlString 이미지이름을(ex:http://3.37.202.166/img/2-jun.jpg) 가져와서 URL타입으로 바꿔준다.
         if let hasURL = URL(string: urlString){
             var request = URLRequest(url: hasURL)
             request.httpMethod = "GET"
             //               request.httpMethod = "POST"
-
+            
             session.dataTask(with: request) { data, response, error in
                 //                   print( (response as! HTTPURLResponse).statusCode)
-
+                
                 if let hasData = data {
                     completion(UIImage(data: hasData))
                     return
@@ -153,7 +179,6 @@ class DetailViewController: UIViewController, UITextViewDelegate, UITableViewDat
     
     // 수정API호출
     func upDatePostText(success: (()->Void)? = nil, fail: ((String)->Void)? = nil) {
-        
         // userID, postText,이미지묶음을 파라미터에 담아보냄
         let userID = feedResult?.userID
         
@@ -163,7 +188,7 @@ class DetailViewController: UIViewController, UITextViewDelegate, UITableViewDat
             "userID" : userID as Any,
         ]
         
-//        print("WriteVC/ 기본입력내용 :\(self.myPlaceText.text ?? "")")
+        //        print("WriteVC/ 기본입력내용 :\(self.myPlaceText.text ?? "")")
         
         // API 호출 URL
         let url = self.BASEURL+"post/0iOS_feedUpdate.php"
@@ -257,30 +282,81 @@ class DetailViewController: UIViewController, UITextViewDelegate, UITableViewDat
         return self.examList.count
     }
     
-        func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-            return 80
-        }
-
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 80
+    }
+    
     // 셀 높이 컨텐츠에 맞게 자동으로 설정// 컨텐츠의 내용높이 만큼이다.
-//    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
-//        return UITableView.automaticDimension
-//    }
+    //    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
+    //        return UITableView.automaticDimension
+    //    }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: DetailViewCell.identifier, for: indexPath) as! DetailViewCell
-
+        
         cell.replyText?.text = self.examList[indexPath.row]
         print(self.examList[indexPath.row])
         
         return cell
         // 델리게이트위임
-
+        
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        self.numberOfCell += 1
+        //        self.numberOfCell += 1
         tableView.reloadData()
     }
     
-}
     
+    // 댓글업로드 API호출*****
+    func replyUpload(success: (()->Void)? = nil, fail: ((String)->Void)? = nil) {
+        // userID, postText,이미지묶음을 파라미터에 담아보냄
+        let userID = feedResult?.userID
+        
+        let param: Parameters = [
+            "feedIdx": feedIdx,
+            "replyText" : replyField.text ?? "",
+            "userID" : userID ?? "아이디없음",
+        ]
+          
+        print("DetailVC/ 댓글기본입력내용 :\(param)")
+        
+        // API 호출 URL
+        let url = self.BASEURL+"reply/reply.php"
+        
+        //이미지 전송
+        let call = AF.request(url, method: .post, parameters: param,
+                              encoding: JSONEncoding.default)
+        //                call.responseJSON { res in
+        call.responseJSON { res in
+            
+            // 성공실패케이스문 작성하기
+            print("서버로 보냄!!!!!")
+            print("JSON= \(try? res.result.get())!)")
+            
+            self.alert("JSON= \(try? res.result.get())!)")
+            
+            guard (try! res.result.get() as? NSDictionary) != nil else {
+                print("올바른 응답값이 아닙니다.")
+                return
+            }
+
+//            if let jsonObject = try! res.result.get() as? [String :Any]{
+//                let success = jsonObject["success"] as? Int ?? 0
+//                let message = jsonObject["message"] as? String ?? ""
+//
+//                if success == 1 {
+//                    self.alert("응답값 JSON= \(try! res.result.get())!)")
+////                    self.dismiss(animated: true, completion: nil)
+////                    print("응답내용\(message)")
+//                }else{
+//                    //sucess가 0이면
+//                    self.alert("응답실패")
+//                    print("응답내용\(message)")
+//                }
+//            }
+        }
+    }//수정 함수끝
+    
+}
+
