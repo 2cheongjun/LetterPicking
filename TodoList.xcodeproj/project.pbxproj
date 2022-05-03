@@ -203,14 +203,11 @@
 		D08B028927E838E000012766 /* MainFeed */ = {
 			isa = PBXGroup;
 			children = (
+				D08B699D28215A6B0095E54A /* Detail */,
 				D08B027A27E5C21700012766 /* firstTabVC.swift */,
-				D0C98B6F27F5EC3900445A00 /* DetailViewController.swift */,
 				D08B029627E9C86B00012766 /* CVcell.swift */,
 				D08B028D27E941D800012766 /* WriteVC.swift */,
 				D08B028B27E8577700012766 /* FeedModel.swift */,
-				D08B6999281AF6590095E54A /* DetailViewCell.swift */,
-				D08B699A281AF6590095E54A /* DetailViewCell.xib */,
-				D0C98B7127F5EDCB00445A00 /* DetailViewController.storyboard */,
 				D08B028727E8389D00012766 /* FeedCell.swift */,
 				D0E3BFAB28084BCC00958C30 /* NewFeedCell.swift */,
 				D0E3BFAC28084BCC00958C30 /* NewFeedCell.xib */,
@@ -253,6 +250,17 @@
 				D08B02C427EB62F300012766 /* imgUploadVC.swift */,
 			);
 			path = TestFolder;
+			sourceTree = "<group>";
+		};
+		D08B699D28215A6B0095E54A /* Detail */ = {
+			isa = PBXGroup;
+			children = (
+				D0C98B6F27F5EC3900445A00 /* DetailViewController.swift */,
+				D08B6999281AF6590095E54A /* DetailViewCell.swift */,
+				D0C98B7127F5EDCB00445A00 /* DetailViewController.storyboard */,
+				D08B699A281AF6590095E54A /* DetailViewCell.xib */,
+			);
+			path = Detail;
 			sourceTree = "<group>";
 		};
 		D09E660027F1035100077BD5 /* Heart */ = {

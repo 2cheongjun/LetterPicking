@@ -475,7 +475,6 @@ extension firstTabVC: UITableViewDelegate, UITableViewDataSource{
             cell.isTouched = false
         }
 //
-        
         return cell
     }
     
@@ -488,7 +487,7 @@ extension firstTabVC: UITableViewDelegate, UITableViewDataSource{
         
         // 선택한 셀의 게시글 번호를 가져오는 법 생각하기
         let param: Parameters = [  "cbHeart" : true,
-                                   "postIdx" : numIdx as Any ,
+                                   "postIdx" : numIdx ?? 0 ,
                                   "userID" : userID ?? ""]
 
         print(" API좋아요:\(param)")
@@ -556,7 +555,6 @@ extension firstTabVC: UITableViewDelegate, UITableViewDataSource{
         //                call.responseJSON { res in
         call.responseJSON { [self] res in
 
-
             guard (try! res.result.get() as? NSDictionary) != nil else {
                 print("올바른 응답값이 아닙니다.")
                 return
@@ -587,7 +585,6 @@ extension firstTabVC: UISearchBarDelegate {
         guard let hasText = searchBar.text else {
             return
         }
-        
         word = hasText
         // 검색요청하기
         searchWord()

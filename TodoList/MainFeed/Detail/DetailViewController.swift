@@ -10,8 +10,8 @@ import Alamofire
 import SwiftyJSON
 
 // 게시글눌렀을때 상세
-class DetailViewController: UIViewController, UITextViewDelegate{
-  
+class DetailViewController: UIViewController, UITextViewDelegate, UITableViewDataSource, UITableViewDelegate{
+    
     //피드 모델에 값이 있으면 가져온다.
     var feedResult: FeedResult?
     
@@ -26,6 +26,11 @@ class DetailViewController: UIViewController, UITextViewDelegate{
     //테이블뷰
     @IBOutlet var tableView: UITableView!
     
+    //셀갯수
+//    var numberOfCell: Int = 10
+    let examList = ["호호","호호","호호","호호","호호","호호","호호","호호","호호","호호"]
+    
+    
     @IBOutlet var postText: UITextView!{
         didSet{
             postText.font = UIFont.systemFont(ofSize: 16, weight: .light)
@@ -34,7 +39,7 @@ class DetailViewController: UIViewController, UITextViewDelegate{
     
     // 노티1.시작의 시작등록.글수정후에 메인피드를 새로고침하기위한 노티 (노티의 이름은 ModifyVCNotification)
     let ModifyVCNotification: Notification.Name = Notification.Name("ModifyVCNotification")
- 
+    
     //취소버튼
     @IBAction func barCancleBtn(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)
@@ -47,58 +52,61 @@ class DetailViewController: UIViewController, UITextViewDelegate{
         // 노티2.창이 닫힐때 노티를 메인피드로 신호를 보낸다. //(노티의 이름은 ModifyVCNotification)
         NotificationCenter.default.post(name: ModifyVCNotification, object: nil, userInfo: nil)
         self.dismiss(animated: true, completion: nil)
-
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
         
     }
     
-   
+    
     // 화면이 그려지기전에 세팅한다.
     override func viewDidLoad() {
         super.viewDidLoad()
         // 델리게이트 연결
         postText.delegate = self
+        self.tableView?.register(UINib(nibName: "DetailViewCell", bundle: nil), forCellReuseIdentifier: "DetailViewCell")
+        tableView.delegate = self
+        tableView.dataSource = self
         
         userID.text = feedResult?.userID
-//        myPlaceText.text = feedResult?.myPlaceText
+        //        myPlaceText.text = feedResult?.myPlaceText
         date.text = feedResult?.date
         postText.text = feedResult?.postText
         //글번호
-        num.text = feedResult?.feedIdx?.description
+//        num.text = feedResult?.feedIdx?.description
         
-        // 게시글번호
-//        feedIdx = feedResult!.feedIdx ?? 0
+        // 게시글번호(수정시필요)
+        feedIdx = feedResult!.feedIdx ?? 0
         
         // 이미지처리방법
-//        if let hasURL = self.feedResult?.postImgs{
-//            // 이미지로드 서버요청
-//            self.loadImage(urlString: hasURL) { image in
-//                DispatchQueue.main.async {
-//                    self.movieCotainer.image = image
-//                }
-//            }
-//        }
-       
+        if let hasURL = self.feedResult?.postImgs{
+            // 이미지로드 서버요청
+            self.loadImage(urlString: hasURL) { image in
+                DispatchQueue.main.async {
+                    self.movieCotainer.image = image
+                }
+            }
+        }
+        
     }// 뷰디드로드끝
-
-
-
+    
+    
+    
     // 이미지 Get요청
     func loadImage(urlString: String, completion: @escaping (UIImage?)-> Void){
         let sessionConfig = URLSessionConfiguration.default
         let session = URLSession(configuration: sessionConfig)
-        
+
         // urlString 이미지이름을(ex:http://3.37.202.166/img/2-jun.jpg) 가져와서 URL타입으로 바꿔준다.
         if let hasURL = URL(string: urlString){
             var request = URLRequest(url: hasURL)
             request.httpMethod = "GET"
             //               request.httpMethod = "POST"
-            
+
             session.dataTask(with: request) { data, response, error in
                 //                   print( (response as! HTTPURLResponse).statusCode)
-                
+
                 if let hasData = data {
                     completion(UIImage(data: hasData))
                     return
@@ -155,7 +163,7 @@ class DetailViewController: UIViewController, UITextViewDelegate{
             "userID" : userID as Any,
         ]
         
-        print("WriteVC/ 기본입력내용 :\(self.myPlaceText.text ?? "")")
+//        print("WriteVC/ 기본입력내용 :\(self.myPlaceText.text ?? "")")
         
         // API 호출 URL
         let url = self.BASEURL+"post/0iOS_feedUpdate.php"
@@ -244,6 +252,35 @@ class DetailViewController: UIViewController, UITextViewDelegate{
         task.resume()
     }// 함수 끝
     
+    // 댓글 테이블뷰시작
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return self.examList.count
+    }
+    
+        func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+            return 80
+        }
+
+    // 셀 높이 컨텐츠에 맞게 자동으로 설정// 컨텐츠의 내용높이 만큼이다.
+//    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
+//        return UITableView.automaticDimension
+//    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: DetailViewCell.identifier, for: indexPath) as! DetailViewCell
+
+        cell.replyText?.text = self.examList[indexPath.row]
+        print(self.examList[indexPath.row])
+        
+        return cell
+        // 델리게이트위임
+
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+//        self.numberOfCell += 1
+        tableView.reloadData()
+    }
+    
 }
-
-
+    

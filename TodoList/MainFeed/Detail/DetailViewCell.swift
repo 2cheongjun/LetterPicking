@@ -13,6 +13,7 @@ class DetailViewCell: UITableViewCell {
     @IBOutlet var replyText: UILabel!
     @IBOutlet var replyDate: UILabel!
     
+    static let identifier = "DetailViewCell"
     
     override func awakeFromNib() {
         super.awakeFromNib()
