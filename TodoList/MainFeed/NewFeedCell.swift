@@ -23,8 +23,9 @@ class NewFeedCell: UITableViewCell {
     var index2: IndexPath? // 게시글인덱스
     
     var feedIdx = 0
-    
     static let identifier = "NewFeedCell"
+    
+
     
     static func nib() ->UINib {
         return UINib(nibName: "NewFeedCell", bundle: nil)
@@ -41,31 +42,36 @@ class NewFeedCell: UITableViewCell {
     }
     
     override func setSelected(_ selected: Bool, animated: Bool) {
-//        print("하트")
+       super.setSelected(selected, animated: animated)
     }
 
     //좋아요 버튼정의
     @IBOutlet var likeBtn: UIButton!
+
     //like버튼 직접연결하는 부분***********************************************************
     @IBAction func didPressedHeart(_ sender: UIButton) {
+        
         guard let idx = index else {return}
-                if sender.isSelected {
-                    isTouched = true
-                    // 메인에서didPressHeart 함수를 실행
+        // 위로올리니까 됨? // 스위치 버튼 만드는법 다시 공부하기
+        sender.isSelected = !sender.isSelected
+        
+            if sender.isSelected {
+                isTouched = true
+                // 메인에서didPressHeart 함수를 실행
 //                    delegate?.didPressHeart(for: idx, like: true)
-                    delegate?.didPressHeart(for: idx, like: true, index2:(index2?.row)!)
-                    // 클릭했을때 게시글 인덱스 가져오기
+                delegate?.didPressHeart(for: idx, like: true, index2:(index2?.row)!)
+                // 클릭했을때 게시글 인덱스 가져오기
 //                    delegate?.onClickCell(index2:(index2?.row)!)
+            }else {
+                isTouched = false
+                delegate?.didPressHeart(for: idx, like: false, index2:(index2?.row)!)
+            }
+//            sender.isSelected = !sender.isSelected
             
-                }else {
-                    isTouched = false
-                    delegate?.didPressHeart(for: idx, like: false, index2:(index2?.row)!)
-                }
-                sender.isSelected = !sender.isSelected
-
     }
     
     var isTouched: Bool? {
+        
            didSet {
                if isTouched == true {
                    likeBtn.setImage(UIImage(systemName: "heart.fill", withConfiguration: UIImage.SymbolConfiguration(scale: .large)), for: .normal)

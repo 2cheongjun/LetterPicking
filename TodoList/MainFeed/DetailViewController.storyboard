@@ -74,6 +74,12 @@
                                                     </tableViewCell>
                                                 </prototypes>
                                             </tableView>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="num" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="065-8N-mhl">
+                                                <rect key="frame" x="364" y="66" width="34" height="21"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
                                         </subviews>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                         <constraints>
@@ -91,8 +97,10 @@
                                             <constraint firstItem="rxe-9I-iua" firstAttribute="trailing" secondItem="ZUg-8M-lqw" secondAttribute="trailingMargin" id="Owu-mQ-yXK"/>
                                             <constraint firstItem="rxe-9I-iua" firstAttribute="top" secondItem="ZUg-8M-lqw" secondAttribute="top" constant="60" id="WTn-Mq-hmo"/>
                                             <constraint firstAttribute="bottom" secondItem="AU3-cP-rX3" secondAttribute="bottom" constant="862" id="a3o-q7-gO6"/>
+                                            <constraint firstItem="065-8N-mhl" firstAttribute="top" secondItem="ZUg-8M-lqw" secondAttribute="top" constant="66" id="cLa-qh-GV7"/>
                                             <constraint firstItem="sDc-Vn-4mJ" firstAttribute="top" secondItem="ZUg-8M-lqw" secondAttribute="top" constant="99" id="cdN-Fn-JVZ"/>
                                             <constraint firstItem="AU3-cP-rX3" firstAttribute="width" secondItem="EFr-ob-zcn" secondAttribute="height" multiplier="183:31" id="hc0-QZ-Yza"/>
+                                            <constraint firstAttribute="trailing" secondItem="065-8N-mhl" secondAttribute="trailing" constant="16" id="lMI-0w-NxN"/>
                                             <constraint firstItem="kDR-ct-H71" firstAttribute="leading" secondItem="ZUg-8M-lqw" secondAttribute="leading" constant="16" id="mnh-Hb-7A6"/>
                                             <constraint firstItem="kDR-ct-H71" firstAttribute="top" secondItem="sDc-Vn-4mJ" secondAttribute="bottom" constant="20" id="nz2-QW-AWv"/>
                                             <constraint firstItem="EFr-ob-zcn" firstAttribute="top" secondItem="kDR-ct-H71" secondAttribute="bottom" constant="36" id="olJ-tS-aoj"/>
@@ -143,6 +151,7 @@
                     </view>
                     <connections>
                         <outlet property="date" destination="sDc-Vn-4mJ" id="5ik-Jg-TcK"/>
+                        <outlet property="num" destination="065-8N-mhl" id="KUg-g2-vfy"/>
                         <outlet property="postText" destination="rxe-9I-iua" id="Wqx-Be-KAf"/>
                         <outlet property="tableView" destination="kDR-ct-H71" id="5om-m3-bvA"/>
                         <outlet property="userID" destination="ZqU-dw-t3R" id="0Mn-I4-aHM"/>

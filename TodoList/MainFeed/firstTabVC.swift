@@ -448,7 +448,7 @@ extension firstTabVC: UITableViewDelegate, UITableViewDataSource{
         cell.delegate = self
         // 좋아요를위한 인덱스 담기
         cell.index = indexPath.row
-        cell.index2 =  indexPath
+        cell.index2 = indexPath
         
         cell.titleLabel.text = self.feedModel?.results[indexPath.row].postText
         cell.descriptionLabel.text = self.feedModel?.results[indexPath.row].userID
@@ -613,7 +613,7 @@ extension firstTabVC: firstTabVCCellDelegate{
             print("\(self.feedModel?.results[index2].feedIdx?.description ?? "")글번호")
             numIdx = self.feedModel?.results[index2].feedIdx?.description ?? ""
             // 좋아요 insert
-            uploadHeart(postIdx:numIdx)
+//            uploadHeart(postIdx:numIdx)
             
 
         }else{

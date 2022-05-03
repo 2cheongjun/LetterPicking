@@ -66,7 +66,7 @@ class DetailViewController: UIViewController, UITextViewDelegate{
         date.text = feedResult?.date
         postText.text = feedResult?.postText
         //글번호
-//        num.text = feedResult?.feedIdx?.description
+        num.text = feedResult?.feedIdx?.description
         
         // 게시글번호
 //        feedIdx = feedResult!.feedIdx ?? 0
