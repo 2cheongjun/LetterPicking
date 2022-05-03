@@ -51,10 +51,11 @@ class NewFeedCell: UITableViewCell {
     //like버튼 직접연결하는 부분***********************************************************
     @IBAction func didPressedHeart(_ sender: UIButton) {
         
-        guard let idx = index else {return}
-        // 위로올리니까 됨? // 스위치 버튼 만드는법 다시 공부하기
         sender.isSelected = !sender.isSelected
         
+        guard let idx = index else {return}
+        // 위로올리니까 됨? // 스위치 버튼 만드는법 다시 공부하기
+      
             if sender.isSelected {
                 isTouched = true
                 // 메인에서didPressHeart 함수를 실행

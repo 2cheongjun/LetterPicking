@@ -489,9 +489,9 @@ extension firstTabVC: UITableViewDelegate, UITableViewDataSource{
         // 선택한 셀의 게시글 번호를 가져오는 법 생각하기
         let param: Parameters = [  "cbHeart" : true,
                                    "postIdx" : numIdx as Any ,
-                                  "userID" : userID as Any]
+                                  "userID" : userID ?? ""]
 
-//        print(" API 게시글번호 2 :\(postIdx)")
+        print(" API좋아요:\(param)")
         // API 호출 URL
         let url = self.BASEURL+"post/0iOS_feedLike.php"
         
@@ -517,10 +517,11 @@ extension firstTabVC: UITableViewDelegate, UITableViewDataSource{
                     self.alert("좋아요업로드 성공 JSON= \(try! res.result.get())!)")
                     self.dismiss(animated: true, completion: nil)
                     
-                    DispatchQueue.main.async {
-                        // 테이블뷰 갱신 (자동으로 갱신안됨)
-                        self.tableView.reloadData()
-                    }
+                    // 이거땜에 좋아요가 두번눌리고 오류냠
+//                    DispatchQueue.main.async {
+//                        // 테이블뷰 갱신 (자동으로 갱신안됨)
+//                        self.tableView.reloadData()
+//                    }
                    
                 }else{
                     //sucess가 0이면
@@ -533,53 +534,49 @@ extension firstTabVC: UITableViewDelegate, UITableViewDataSource{
     
     
 //    //하트 Delete API
-//    func DeleteHeart(postIdx: String?, success: (()->Void)? = nil, fail: ((String)->Void)? = nil) {
+    func DeleteHeart(postIdx: String?, success: (()->Void)? = nil, fail: ((String)->Void)? = nil) {
         // userID, postText,이미지묶음을 파라미터에 담아보냄
-//        let userID = plist.string(forKey: "name")
-//
-//        // 선택한 셀의 게시글 번호를 가져오는 법 생각하기
-//        let param: Parameters = [
-//                                   "cbHeart" : false,
-//                                   "postIdx" : numIdx as Any ,
-//                                  "userID" : userID as Any]
-//
-////        print(numIdx, userID, false)
-//
-////        print(" API 게시글번호 2 :\(postIdx)")
-//        // API 호출 URL
-//        let url = self.BASEURL+"post/0iOS_feedLike_delete.php"
-//
-//        //이미지 전송
-//        let call = AF.request(url, method: .post, parameters: param,
-//                              encoding: JSONEncoding.default)
-//        //                call.responseJSON { res in
-//        call.responseJSON { [self] res in
-//
-//
-//            guard (try! res.result.get() as? NSDictionary) != nil else {
-//                print("올바른 응답값이 아닙니다.")
-//                return
-//            }
-//
-//            if let jsonObject = try! res.result.get() as? [String :Any]{
-//                let success = jsonObject["success"] as? Int ?? 0
-//
-//                if success == 1 {
-//                    self.alert("좋아요취소성공 JSON= \(try! res.result.get())!)")
-//                    self.dismiss(animated: true, completion: nil)
-//
-//                    DispatchQueue.main.async {
-//                        // 테이블뷰 갱신 (자동으로 갱신안됨)
-//                        self.tableView.reloadData()
-//                    }
-//                }else{
-//                    //sucess가 0이면
-//                    self.alert("0")
-//                }
-//            }
-//        }
+        let userID = plist.string(forKey: "name")
 
-//    }//함수 끝
+        // 선택한 셀의 게시글 번호를 가져오는 법 생각하기
+        let param: Parameters = [
+                                   "cbHeart" : true,
+                                   "postIdx" : numIdx ?? 0 ,
+                                  "userID" : userID ?? ""]
+
+        print("좋아요취소\(param)")
+
+//        print(" API 게시글번호 2 :\(postIdx)")
+        // API 호출 URL
+        let url = self.BASEURL+"post/0iOS_feedLike_delete.php"
+
+        //이미지 전송
+        let call = AF.request(url, method: .post, parameters: param,
+                              encoding: JSONEncoding.default)
+        //                call.responseJSON { res in
+        call.responseJSON { [self] res in
+
+
+            guard (try! res.result.get() as? NSDictionary) != nil else {
+                print("올바른 응답값이 아닙니다.")
+                return
+            }
+
+            if let jsonObject = try! res.result.get() as? [String :Any]{
+                let success = jsonObject["success"] as? Int ?? 0
+
+                if success == 1 {
+                    self.alert("좋아요취소성공 JSON= \(try! res.result.get())!)")
+                    self.dismiss(animated: true, completion: nil)
+//                    }
+                }else{
+                    //sucess가 0이면
+                    self.alert("0")
+                }
+            }
+        }
+
+    }//함수 끝
 }
 
 
@@ -595,7 +592,6 @@ extension firstTabVC: UISearchBarDelegate {
         // 검색요청하기
         searchWord()
         self.view.endEditing(true)
-        
     }
 }
 
@@ -610,19 +606,19 @@ extension firstTabVC: firstTabVCCellDelegate{
             likes[index] = 1
 //            print("cell \(likes[index]!)")
             print("\(index2) 클릭")
-            print("\(self.feedModel?.results[index2].feedIdx?.description ?? "")글번호")
+            print("\(self.feedModel?.results[index2].feedIdx?.description ?? "")글번호 좋아요눌림")
             numIdx = self.feedModel?.results[index2].feedIdx?.description ?? ""
             // 좋아요 insert
-//            uploadHeart(postIdx:numIdx)
+            uploadHeart(postIdx:numIdx)
             
 
         }else{
             likes[index] = 0
 //            print("cell \(likes[index]!)")
-            print("\(self.feedModel?.results[index2].feedIdx?.description ?? "")글번호")
+            print("\(self.feedModel?.results[index2].feedIdx?.description ?? "")글번호 좋아요꺼짐")
             // 좋아요 Delete
             numIdx = self.feedModel?.results[index2].feedIdx?.description ?? ""
-//            DeleteHeart(postIdx: numIdx)
+            DeleteHeart(postIdx: numIdx)
         }
     }
 }
