@@ -32,6 +32,11 @@ class DetailViewController: UIViewController, UITextViewDelegate, UITableViewDat
     @IBOutlet var myPlaceText: UILabel!
     @IBOutlet var num: UILabel!
     
+    // 댓글모델가져오기
+    var DetailModel: DetailModel?
+    // 댓글모델
+//    var DetailResult: DetailResult?
+    
     //댓글 테이블뷰
     @IBOutlet var tableView: UITableView!
     
@@ -114,6 +119,9 @@ class DetailViewController: UIViewController, UITextViewDelegate, UITableViewDat
                 }
             }
         }
+        
+        // 댓글목록 가져오기 API호출
+        loadReply()
         
     }// 뷰디드로드끝
     
@@ -308,15 +316,16 @@ class DetailViewController: UIViewController, UITextViewDelegate, UITableViewDat
     }
     
     
-    // 댓글업로드 API호출*****
+    // 댓글작성 업로드 API호출*****
     func replyUpload(success: (()->Void)? = nil, fail: ((String)->Void)? = nil) {
         // userID, postText,이미지묶음을 파라미터에 담아보냄
         let userID = feedResult?.userID
         
         let param: Parameters = [
             "feedIdx": feedIdx,
-            "replyText" : replyField.text ?? "",
+            "title" : replyField.text ?? "",
             "userID" : userID ?? "아이디없음",
+            "step" : 0 ,
         ]
           
         print("DetailVC/ 댓글기본입력내용 :\(param)")
@@ -332,7 +341,7 @@ class DetailViewController: UIViewController, UITextViewDelegate, UITableViewDat
             
             // 성공실패케이스문 작성하기
             print("서버로 보냄!!!!!")
-            print("JSON= \(try? res.result.get())!)")
+//            print("JSON= \(try? res.result.get())!)")
             
             self.alert("JSON= \(try? res.result.get())!)")
             
@@ -341,22 +350,75 @@ class DetailViewController: UIViewController, UITextViewDelegate, UITableViewDat
                 return
             }
 
-//            if let jsonObject = try! res.result.get() as? [String :Any]{
-//                let success = jsonObject["success"] as? Int ?? 0
-//                let message = jsonObject["message"] as? String ?? ""
-//
-//                if success == 1 {
-//                    self.alert("응답값 JSON= \(try! res.result.get())!)")
-////                    self.dismiss(animated: true, completion: nil)
-////                    print("응답내용\(message)")
-//                }else{
-//                    //sucess가 0이면
+            if let jsonObject = try! res.result.get() as? [String :Any]{
+                let success = jsonObject["success"] as? Int ?? 0
+                let message = jsonObject["message"] as? String ?? ""
+
+                if success == 1 {
+                    self.alert("응답값 JSON= \(try! res.result.get())!)")
+//                    self.dismiss(animated: true, completion: nil)
+                    print("응답내용\(message)")
+                }else{
+                    //sucess가 0이면
 //                    self.alert("응답실패")
-//                    print("응답내용\(message)")
-//                }
-//            }
+                    // 쿼리내용확인하기**************************************************
+                    print("응답내용\(message)")
+                }
+            }
         }
     }//수정 함수끝
     
+    
+    // 댓글가져오기 API호출***** (게시글번호 보냄)
+    func loadReply(success: (()->Void)? = nil, fail: ((String)->Void)? = nil) {
+        // userID, postText,이미지묶음을 파라미터에 담아보냄
+        let userID = feedResult?.userID
+        
+        let param: Parameters = [
+            "feedIdx": feedIdx
+//            "replyText" : replyField.text ?? "",
+//            "userID" : userID ?? "아이디없음",
+//            "step" : 0 ,
+        ]
+          
+        print("DetailVC/ 댓글불러오기 :\(param)")
+        
+        // API 호출 URL
+        let url = self.BASEURL+"reply/replySelect.php"
+        
+        //이미지 전송
+        let call = AF.request(url, method: .post, parameters: param,
+                              encoding: JSONEncoding.default)
+        //                call.responseJSON { res in
+        call.responseJSON { res in
+            
+            // 성공실패케이스문 작성하기
+//            print("서버로 보냄!!!!!")
+            print("JSON= \(try? res.result.get())!)")
+            
+//            self.alert("JSON= \(try? res.result.get())!)")
+            
+            guard (try! res.result.get() as? NSDictionary) != nil else {
+                print("올바른 응답값이 아닙니다.")
+                return
+            }
+
+            if let jsonObject = try! res.result.get() as? [String :Any]{
+                let success = jsonObject["success"] as? Int ?? 0
+                let message = jsonObject["message"] as? String ?? ""
+
+                if success == 1 {
+                    self.alert("응답값 JSON= \(try! res.result.get())!)")
+//                    self.dismiss(animated: true, completion: nil)
+                    print("응답값 JSON= \(try! res.result.get())!)")
+                }else{
+                    //sucess가 0이면
+//                    self.alert("응답실패")
+                    // 쿼리내용확인하기**************************************************
+                    print("응답내용\(message)")
+                }
+            }
+        }
+    }//수정 함수끝
 }
 

@@ -20,6 +20,7 @@
 		D051F36C27CDE9F900ABBB4E /* TodoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D051F36B27CDE9F800ABBB4E /* TodoCell.swift */; };
 		D051F36F27CE2ADC00ABBB4E /* TodoDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D051F36D27CE2ADC00ABBB4E /* TodoDetailViewController.swift */; };
 		D051F37027CE2ADC00ABBB4E /* TodoDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D051F36E27CE2ADC00ABBB4E /* TodoDetailViewController.xib */; };
+		D082E99628218D6F00DDF586 /* DetailModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D082E99528218D6F00DDF586 /* DetailModel.swift */; };
 		D08B027B27E5C21700012766 /* firstTabVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D08B027A27E5C21700012766 /* firstTabVC.swift */; };
 		D08B027F27E5C25D00012766 /* mypageVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D08B027E27E5C25D00012766 /* mypageVC.swift */; };
 		D08B028627E61BCE00012766 /* profile-bg.png in Resources */ = {isa = PBXBuildFile; fileRef = D08B028527E61BCE00012766 /* profile-bg.png */; };
@@ -71,6 +72,7 @@
 		D051F36B27CDE9F800ABBB4E /* TodoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoCell.swift; sourceTree = "<group>"; };
 		D051F36D27CE2ADC00ABBB4E /* TodoDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoDetailViewController.swift; sourceTree = "<group>"; };
 		D051F36E27CE2ADC00ABBB4E /* TodoDetailViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TodoDetailViewController.xib; sourceTree = "<group>"; };
+		D082E99528218D6F00DDF586 /* DetailModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailModel.swift; sourceTree = "<group>"; };
 		D08B027A27E5C21700012766 /* firstTabVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = firstTabVC.swift; sourceTree = "<group>"; };
 		D08B027E27E5C25D00012766 /* mypageVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = mypageVC.swift; sourceTree = "<group>"; };
 		D08B028527E61BCE00012766 /* profile-bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "profile-bg.png"; sourceTree = "<group>"; };
@@ -259,6 +261,7 @@
 				D08B6999281AF6590095E54A /* DetailViewCell.swift */,
 				D0C98B7127F5EDCB00445A00 /* DetailViewController.storyboard */,
 				D08B699A281AF6590095E54A /* DetailViewCell.xib */,
+				D082E99528218D6F00DDF586 /* DetailModel.swift */,
 			);
 			path = Detail;
 			sourceTree = "<group>";
@@ -410,6 +413,7 @@
 				D0C98B7427F736DF00445A00 /* nMapVC.swift in Sources */,
 				D08B027F27E5C25D00012766 /* mypageVC.swift in Sources */,
 				D051F35F27CDE2AF00ABBB4E /* TodoList.xcdatamodeld in Sources */,
+				D082E99628218D6F00DDF586 /* DetailModel.swift in Sources */,
 				D08B028827E8389D00012766 /* FeedCell.swift in Sources */,
 				D08B699B281AF6590095E54A /* DetailViewCell.swift in Sources */,
 				D051F36F27CE2ADC00ABBB4E /* TodoDetailViewController.swift in Sources */,
