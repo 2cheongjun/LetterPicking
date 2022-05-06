@@ -18,13 +18,27 @@ struct DetailModel: Codable{
 
 struct DetailResult: Codable{
     let success: String?
-    let message: String?
+    let userID: String
+    let title: String?
+    let replyDate: String
     let replyIdx: Int?
     let feedIdx:Int?
-    let userID: String?
-    let title: String?
-    let replyDate: String?
+    let message: String?
     let ref : String?
     let step: String?
 }
 
+/*
+$response["success"] = $success;
+$response["message"] = $message;
+
+$response["userID"] = $userID;
+$response["feedIdx"] = $feedIdx;
+$response["title"] = $title;
+$response["ref"] = $ref;
+$response["step"] = $step;
+ 
+
+ // echo json_encode(['results' => $result] );
+    echo json_encode($response);
+*/

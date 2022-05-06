@@ -33,7 +33,7 @@ class DetailViewController: UIViewController, UITextViewDelegate, UITableViewDat
     @IBOutlet var num: UILabel!
     
     // 댓글모델가져오기
-    var DetailModel: DetailModel?
+    var detailModel: DetailModel?
     // 댓글모델
 //    var DetailResult: DetailResult?
     
@@ -303,7 +303,7 @@ class DetailViewController: UIViewController, UITextViewDelegate, UITableViewDat
         let cell = tableView.dequeueReusableCell(withIdentifier: DetailViewCell.identifier, for: indexPath) as! DetailViewCell
         
         cell.replyText?.text = self.examList[indexPath.row]
-        print(self.examList[indexPath.row])
+//        print(self.examList[indexPath.row])
         
         return cell
         // 델리게이트위임
@@ -368,57 +368,65 @@ class DetailViewController: UIViewController, UITextViewDelegate, UITableViewDat
         }
     }//수정 함수끝
     
-    
-    // 댓글가져오기 API호출***** (게시글번호 보냄)
-    func loadReply(success: (()->Void)? = nil, fail: ((String)->Void)? = nil) {
-        // userID, postText,이미지묶음을 파라미터에 담아보냄
-        let userID = feedResult?.userID
-        
-        let param: Parameters = [
-            "feedIdx": feedIdx
-//            "replyText" : replyField.text ?? "",
-//            "userID" : userID ?? "아이디없음",
-//            "step" : 0 ,
-        ]
-          
-        print("DetailVC/ 댓글불러오기 :\(param)")
-        
-        // API 호출 URL
-        let url = self.BASEURL+"reply/replySelect.php"
-        
-        //이미지 전송
-        let call = AF.request(url, method: .post, parameters: param,
-                              encoding: JSONEncoding.default)
-        //                call.responseJSON { res in
-        call.responseJSON { res in
+    // 페이징 기능 /스크롤시 바닥에 닿으면 데이터추가로 가져옴
+    func loadReply(){
+        //현재 페이지의 값에 1을 추가한다.
+        // 호출시에 다음차례에 읽어야할 페이지를API에 실어서 함께 전달해야한다.
+        // 스크롤뷰가 바닥에 닿으면 데이터를 새로불러온다.
+//        fetchingMore = true
+        //asyncAfter는 실행할 시간(deadline)를 정해두고 실행 코드를 실행합니다(execute)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.7, execute: {
+//            self.page += 1
             
-            // 성공실패케이스문 작성하기
-//            print("서버로 보냄!!!!!")
-            print("JSON= \(try? res.result.get())!)")
+            let sessionConfig = URLSessionConfiguration.default
+            let session = URLSession(configuration: sessionConfig)
+//            var components = URLComponents(string:self.BASEURL+"post/0iOS_feedSelect.php?page=\(self.page)")
+            var components = URLComponents(string: self.BASEURL+"reply/replySelect.php")
             
-//            self.alert("JSON= \(try? res.result.get())!)")
+//            let term = URLQueryItem(name: "term", value: "marvel")
+            let page = URLQueryItem(name: "feedIdx", value: self.feedIdx.description)
+            components?.queryItems = [page]
             
-            guard (try! res.result.get() as? NSDictionary) != nil else {
-                print("올바른 응답값이 아닙니다.")
-                return
-            }
-
-            if let jsonObject = try! res.result.get() as? [String :Any]{
-                let success = jsonObject["success"] as? Int ?? 0
-                let message = jsonObject["message"] as? String ?? ""
-
-                if success == 1 {
-                    self.alert("응답값 JSON= \(try! res.result.get())!)")
-//                    self.dismiss(animated: true, completion: nil)
-                    print("응답값 JSON= \(try! res.result.get())!)")
-                }else{
-                    //sucess가 0이면
-//                    self.alert("응답실패")
-                    // 쿼리내용확인하기**************************************************
-                    print("응답내용\(message)")
+            // url이 없으면 리턴한다. 여기서 끝
+            guard let url = components?.url else { return }
+            
+            // 값이 있다면 받아와서 넣음.
+            var request = URLRequest(url: url)
+            
+            print("url :\(request)")
+            
+            request.httpMethod = "GET" //GET방식이다. 컨텐츠타입이 없고, 담아서 보내는 내용이 없음, URL호출만!
+            
+            let task = session.dataTask(with: request) { data, response, error in
+                print( (response as! HTTPURLResponse).statusCode )
+                
+                // 데이터가 있을때만 파싱한다.
+                if let hasData = data {
+                    // 모델만든것 가져다가 디코더해준다.
+                    do{
+                        // 만들어놓은 피드모델에 담음, 데이터를 디코딩해서, 디코딩은 try catch문 써줘야함
+                        // 여기서 실행을 하고 오류가 나면 catch로 던져서 프린트해주겠다.
+                        self.detailModel = try JSONDecoder().decode(DetailModel.self, from: hasData)
+                                            print(self.detailModel ?? "no data")
+                    
+                        // 모든UI 작업은 메인쓰레드에서 이루어져야한다.
+                        DispatchQueue.main.async {
+                            // 테이블뷰 갱신 (자동으로 갱신안됨)
+                            self.tableView.reloadData()
+                        }
+                    }catch{
+                        print(error)
+                    }
                 }
             }
-        }
-    }//수정 함수끝
+            // task를 실행한다.
+            task.resume()
+            // 세션끝내기
+            session.finishTasksAndInvalidate()
+        })
+    }
+    
+
+    
 }
 
