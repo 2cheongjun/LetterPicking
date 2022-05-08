@@ -16,6 +16,7 @@ class DetailViewController: UIViewController, UITextViewDelegate, UITableViewDat
     var feedResult: FeedResult?
     
     var feedIdx = 0
+    
     var BASEURL = "http://15.164.214.35/"
     @IBOutlet var movieCotainer: UIImageView!
     
@@ -109,7 +110,7 @@ class DetailViewController: UIViewController, UITextViewDelegate, UITableViewDat
         
         // 게시글번호(수정시필요)
         feedIdx = feedResult!.feedIdx ?? 0
-        
+      
         // 이미지처리방법
         if let hasURL = self.feedResult?.postImgs{
             // 이미지로드 서버요청
@@ -384,8 +385,8 @@ class DetailViewController: UIViewController, UITextViewDelegate, UITableViewDat
             var components = URLComponents(string: self.BASEURL+"reply/replySelect.php")
             
 //            let term = URLQueryItem(name: "term", value: "marvel")
-            let page = URLQueryItem(name: "feedIdx", value: self.feedIdx.description)
-            components?.queryItems = [page]
+            let presentPage = URLQueryItem(name: "presentPage", value: self.feedIdx.description)
+            components?.queryItems = [presentPage]
             
             // url이 없으면 리턴한다. 여기서 끝
             guard let url = components?.url else { return }
@@ -407,13 +408,13 @@ class DetailViewController: UIViewController, UITextViewDelegate, UITableViewDat
                         // 만들어놓은 피드모델에 담음, 데이터를 디코딩해서, 디코딩은 try catch문 써줘야함
                         // 여기서 실행을 하고 오류가 나면 catch로 던져서 프린트해주겠다.
                         self.detailModel = try JSONDecoder().decode(DetailModel.self, from: hasData)
-                                            print(self.detailModel ?? "no data")
-                    
-                        // 모든UI 작업은 메인쓰레드에서 이루어져야한다.
-                        DispatchQueue.main.async {
-                            // 테이블뷰 갱신 (자동으로 갱신안됨)
-                            self.tableView.reloadData()
-                        }
+                                         print(self.detailModel ?? "no data")
+//
+//                         모든UI 작업은 메인쓰레드에서 이루어져야한다.
+//                        DispatchQueue.main.async {
+//                            // 테이블뷰 갱신 (자동으로 갱신안됨)
+//                            self.tableView.reloadData()
+//                        }
                     }catch{
                         print(error)
                     }

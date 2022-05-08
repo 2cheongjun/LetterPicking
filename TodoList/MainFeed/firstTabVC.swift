@@ -8,7 +8,7 @@
 import UIKit
 import Alamofire
 import SwiftyJSON
-import SwiftUI
+
 
 class firstTabVC: UIViewController{
     
