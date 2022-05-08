@@ -7,7 +7,19 @@
 
 import UIKit
 
+protocol detailViewCellDelegate: AnyObject{
+    
+}
+
 class DetailViewCell: UITableViewCell {
+    // 델리게이트 생성
+    weak var delegate: detailViewCellDelegate?
+    var index2: IndexPath? // 게시글인덱스
+    
+    static let identifier = "DetailViewCell"
+    static func nib() ->UINib {
+        return UINib(nibName: "DetailViewCell", bundle: nil)
+    }
     
     //댓글작성아이디
     @IBOutlet var replyId: UILabel!{
@@ -24,8 +36,7 @@ class DetailViewCell: UITableViewCell {
         }
     }
     
-    static let identifier = "DetailViewCell"
-    
+   
     
     @IBOutlet var trash: UIButton!
     //삭제버튼

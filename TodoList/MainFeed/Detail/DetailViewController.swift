@@ -10,7 +10,7 @@ import Alamofire
 import SwiftyJSON
 
 // 게시글눌렀을때 상세
-class DetailViewController: UIViewController, UITextViewDelegate, UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate{
+class DetailViewController: UIViewController, UITextViewDelegate, UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, detailViewCellDelegate{
     
     //피드 모델에 값이 있으면 가져온다.
     var feedResult: FeedResult?
@@ -36,7 +36,7 @@ class DetailViewController: UIViewController, UITextViewDelegate, UITableViewDat
     // 댓글모델가져오기
     var detailModel: DetailModel?
     // 댓글모델
-//    var DetailResult: DetailResult?
+    //    var DetailResult: DetailResult?
     
     //댓글 테이블뷰
     @IBOutlet var tableView: UITableView!
@@ -54,11 +54,14 @@ class DetailViewController: UIViewController, UITextViewDelegate, UITableViewDat
         replyUpload()
         // 작성한내용삭제
         replyField.text = ""
+        //댓글 가져오기
+        self.loadReply()
+        
     }
     
     //셀갯수
     //    var numberOfCell: Int = 10
-    let examList = ["안녕","호호","하하","낄낄","호호"]
+    //    let examList = ["안녕","호호","하하","낄낄","호호"]
     
     
     @IBOutlet var postText: UITextView!{
@@ -97,7 +100,10 @@ class DetailViewController: UIViewController, UITextViewDelegate, UITableViewDat
         postText.delegate = self
         replyField.delegate  = self
         // 셀따로 작성시 등록을 해주어야함
-        self.tableView?.register(UINib(nibName: "DetailViewCell", bundle: nil), forCellReuseIdentifier: "DetailViewCell")
+        //        self.tableView?.register(UINib(nibName: "DetailViewCell", bundle: nil), forCellReuseIdentifier: "DetailViewCell")
+        
+        tableView.register(DetailViewCell.nib(), forCellReuseIdentifier: DetailViewCell.identifier)
+        
         tableView.delegate = self
         tableView.dataSource = self
         
@@ -110,7 +116,7 @@ class DetailViewController: UIViewController, UITextViewDelegate, UITableViewDat
         
         // 게시글번호(수정시필요)
         feedIdx = feedResult!.feedIdx ?? 0
-      
+        
         // 이미지처리방법
         if let hasURL = self.feedResult?.postImgs{
             // 이미지로드 서버요청
@@ -286,9 +292,10 @@ class DetailViewController: UIViewController, UITextViewDelegate, UITableViewDat
         task.resume()
     }// 함수 끝
     
-    // 댓글 테이블뷰시작
+    
+    // 댓글 테이블뷰시작 **************************************************************************************
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.examList.count
+        return self.detailModel?.results.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -302,9 +309,11 @@ class DetailViewController: UIViewController, UITextViewDelegate, UITableViewDat
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: DetailViewCell.identifier, for: indexPath) as! DetailViewCell
-        
-        cell.replyText?.text = self.examList[indexPath.row]
-//        print(self.examList[indexPath.row])
+        // 델리게이트위임
+        cell.delegate = self
+        cell.replyText.text = self.detailModel?.results[indexPath.row].title
+        cell.replyDate.text = self.detailModel?.results[indexPath.row].replyDate
+        cell.replyId.text = self.detailModel?.results[indexPath.row].userID
         
         return cell
         // 델리게이트위임
@@ -328,7 +337,7 @@ class DetailViewController: UIViewController, UITextViewDelegate, UITableViewDat
             "userID" : userID ?? "아이디없음",
             "step" : 0 ,
         ]
-          
+        
         print("DetailVC/ 댓글기본입력내용 :\(param)")
         
         // API 호출 URL
@@ -342,7 +351,7 @@ class DetailViewController: UIViewController, UITextViewDelegate, UITableViewDat
             
             // 성공실패케이스문 작성하기
             print("서버로 보냄!!!!!")
-//            print("JSON= \(try? res.result.get())!)")
+            //            print("JSON= \(try? res.result.get())!)")
             
             self.alert("JSON= \(try? res.result.get())!)")
             
@@ -350,18 +359,20 @@ class DetailViewController: UIViewController, UITextViewDelegate, UITableViewDat
                 print("올바른 응답값이 아닙니다.")
                 return
             }
-
+            
+            
             if let jsonObject = try! res.result.get() as? [String :Any]{
                 let success = jsonObject["success"] as? Int ?? 0
                 let message = jsonObject["message"] as? String ?? ""
-
+                
                 if success == 1 {
                     self.alert("응답값 JSON= \(try! res.result.get())!)")
-//                    self.dismiss(animated: true, completion: nil)
+                    //                    self.dismiss(animated: true, completion: nil)
                     print("응답내용\(message)")
+                    
                 }else{
                     //sucess가 0이면
-//                    self.alert("응답실패")
+                    //                    self.alert("응답실패")
                     // 쿼리내용확인하기**************************************************
                     print("응답내용\(message)")
                 }
@@ -374,17 +385,17 @@ class DetailViewController: UIViewController, UITextViewDelegate, UITableViewDat
         //현재 페이지의 값에 1을 추가한다.
         // 호출시에 다음차례에 읽어야할 페이지를API에 실어서 함께 전달해야한다.
         // 스크롤뷰가 바닥에 닿으면 데이터를 새로불러온다.
-//        fetchingMore = true
+        //        fetchingMore = true
         //asyncAfter는 실행할 시간(deadline)를 정해두고 실행 코드를 실행합니다(execute)
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.7, execute: {
-//            self.page += 1
+            //            self.page += 1
             
             let sessionConfig = URLSessionConfiguration.default
             let session = URLSession(configuration: sessionConfig)
-//            var components = URLComponents(string:self.BASEURL+"post/0iOS_feedSelect.php?page=\(self.page)")
+            //            var components = URLComponents(string:self.BASEURL+"post/0iOS_feedSelect.php?page=\(self.page)")
             var components = URLComponents(string: self.BASEURL+"reply/replySelect.php")
             
-//            let term = URLQueryItem(name: "term", value: "marvel")
+            //            let term = URLQueryItem(name: "term", value: "marvel")
             let presentPage = URLQueryItem(name: "presentPage", value: self.feedIdx.description)
             components?.queryItems = [presentPage]
             
@@ -408,13 +419,13 @@ class DetailViewController: UIViewController, UITextViewDelegate, UITableViewDat
                         // 만들어놓은 피드모델에 담음, 데이터를 디코딩해서, 디코딩은 try catch문 써줘야함
                         // 여기서 실행을 하고 오류가 나면 catch로 던져서 프린트해주겠다.
                         self.detailModel = try JSONDecoder().decode(DetailModel.self, from: hasData)
-                                         print(self.detailModel ?? "no data")
-//
-//                         모든UI 작업은 메인쓰레드에서 이루어져야한다.
-//                        DispatchQueue.main.async {
-//                            // 테이블뷰 갱신 (자동으로 갱신안됨)
-//                            self.tableView.reloadData()
-//                        }
+                        print(self.detailModel ?? "no data")
+                        //
+                        //                         모든UI 작업은 메인쓰레드에서 이루어져야한다.
+                        DispatchQueue.main.async {
+                            // 테이블뷰 갱신 (자동으로 갱신안됨)
+                            self.tableView.reloadData()
+                        }
                     }catch{
                         print(error)
                     }
@@ -426,8 +437,5 @@ class DetailViewController: UIViewController, UITextViewDelegate, UITableViewDat
             session.finishTasksAndInvalidate()
         })
     }
-    
-
-    
 }
 
