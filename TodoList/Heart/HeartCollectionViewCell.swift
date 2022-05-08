@@ -7,8 +7,10 @@
 
 import UIKit
 
-class FriendCollectionViewCell: UICollectionViewCell {
+class HeartCollectionViewCell: UICollectionViewCell {
     
-    @IBOutlet var nameAgeLabel: UILabel!
+
     @IBOutlet var addressLabel: UILabel!
+    
+    @IBOutlet var postImg: UIImageView!
 }

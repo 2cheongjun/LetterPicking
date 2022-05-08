@@ -8,8 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		52F7C0BFE3E3C6BA11C2BB03 /* Pods_TodoList.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 30B307A72FEED269DC7BDEE3 /* Pods_TodoList.framework */; };
-		D015EE16280DBFAA00FCDAC3 /* Friend.swift in Sources */ = {isa = PBXBuildFile; fileRef = D015EE15280DBFAA00FCDAC3 /* Friend.swift */; };
-		D015EE1A280DC1F700FCDAC3 /* FriendCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D015EE19280DC1F700FCDAC3 /* FriendCollectionViewCell.swift */; };
+		D015EE1A280DC1F700FCDAC3 /* HeartCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D015EE19280DC1F700FCDAC3 /* HeartCollectionViewCell.swift */; };
 		D051F35527CDE2AF00ABBB4E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D051F35427CDE2AF00ABBB4E /* AppDelegate.swift */; };
 		D051F35727CDE2AF00ABBB4E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D051F35627CDE2AF00ABBB4E /* SceneDelegate.swift */; };
 		D051F35927CDE2AF00ABBB4E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D051F35827CDE2AF00ABBB4E /* ViewController.swift */; };
@@ -58,8 +57,7 @@
 		30B307A72FEED269DC7BDEE3 /* Pods_TodoList.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TodoList.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		518C0CCF59DDA5D402F2AC95 /* Pods-TodoList.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TodoList.debug.xcconfig"; path = "Target Support Files/Pods-TodoList/Pods-TodoList.debug.xcconfig"; sourceTree = "<group>"; };
 		6A5D8B478D0260FCEE51BBF1 /* Pods-TodoList.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TodoList.release.xcconfig"; path = "Target Support Files/Pods-TodoList/Pods-TodoList.release.xcconfig"; sourceTree = "<group>"; };
-		D015EE15280DBFAA00FCDAC3 /* Friend.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Friend.swift; sourceTree = "<group>"; };
-		D015EE19280DC1F700FCDAC3 /* FriendCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendCollectionViewCell.swift; sourceTree = "<group>"; };
+		D015EE19280DC1F700FCDAC3 /* HeartCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeartCollectionViewCell.swift; sourceTree = "<group>"; };
 		D051F35127CDE2AF00ABBB4E /* TodoList.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TodoList.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D051F35427CDE2AF00ABBB4E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D051F35627CDE2AF00ABBB4E /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -270,8 +268,7 @@
 			isa = PBXGroup;
 			children = (
 				D09E65FE27F1034800077BD5 /* HeartVC.swift */,
-				D015EE19280DC1F700FCDAC3 /* FriendCollectionViewCell.swift */,
-				D015EE15280DBFAA00FCDAC3 /* Friend.swift */,
+				D015EE19280DC1F700FCDAC3 /* HeartCollectionViewCell.swift */,
 			);
 			path = Heart;
 			sourceTree = "<group>";
@@ -399,7 +396,6 @@
 			files = (
 				D09E65FF27F1034800077BD5 /* HeartVC.swift in Sources */,
 				D0E16BC727D6FBCB008F970E /* JoinVC.swift in Sources */,
-				D015EE16280DBFAA00FCDAC3 /* Friend.swift in Sources */,
 				D051F35927CDE2AF00ABBB4E /* ViewController.swift in Sources */,
 				D0E16BCD27DF6406008F970E /* UserInfoManager.swift in Sources */,
 				D051F35527CDE2AF00ABBB4E /* AppDelegate.swift in Sources */,
@@ -409,7 +405,7 @@
 				D0E16BC527D6F38C008F970E /* Utils.swift in Sources */,
 				D051F36C27CDE9F900ABBB4E /* TodoCell.swift in Sources */,
 				D0E3BFAD28084BCC00958C30 /* NewFeedCell.swift in Sources */,
-				D015EE1A280DC1F700FCDAC3 /* FriendCollectionViewCell.swift in Sources */,
+				D015EE1A280DC1F700FCDAC3 /* HeartCollectionViewCell.swift in Sources */,
 				D0C98B7427F736DF00445A00 /* nMapVC.swift in Sources */,
 				D08B027F27E5C25D00012766 /* mypageVC.swift in Sources */,
 				D051F35F27CDE2AF00ABBB4E /* TodoList.xcdatamodeld in Sources */,

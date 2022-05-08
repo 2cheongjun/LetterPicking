@@ -354,7 +354,7 @@ class DetailViewController: UIViewController, UITextViewDelegate, UITableViewDat
             print("서버로 보냄!!!!!")
             //            print("JSON= \(try? res.result.get())!)")
             
-            self.alert("JSON= \(try? res.result.get())!)")
+//            self.alert("JSON= \(try? res.result.get())!)")
             
             guard (try! res.result.get() as? NSDictionary) != nil else {
                 print("올바른 응답값이 아닙니다.")
@@ -367,7 +367,7 @@ class DetailViewController: UIViewController, UITextViewDelegate, UITableViewDat
                 let message = jsonObject["message"] as? String ?? ""
                 
                 if success == 1 {
-                    self.alert("응답값 JSON= \(try! res.result.get())!)")
+//                    self.alert("응답값 JSON= \(try! res.result.get())!)")
                     //                    self.dismiss(animated: true, completion: nil)
                     print("응답내용\(message)")
                     
@@ -472,7 +472,7 @@ class DetailViewController: UIViewController, UITextViewDelegate, UITableViewDat
                 let success = jsonObject["success"] as? Int ?? 0
 
                 if success == 1 {
-                    self.alert("댓글삭제성공 JSON= \(try! res.result.get())!)")
+//                    self.alert("댓글삭제성공 JSON= \(try! res.result.get())!)")
 //                    self.dismiss(animated: true, completion: nil)
 //                    }
                     // 이거땜에 좋아요가 두번눌리고 오류냠
