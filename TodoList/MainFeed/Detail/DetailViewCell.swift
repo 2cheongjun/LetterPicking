@@ -8,17 +8,22 @@
 import UIKit
 
 protocol detailViewCellDelegate: AnyObject{
-    
+    func onClickCell(index: Int)
 }
 
 class DetailViewCell: UITableViewCell {
     // 델리게이트 생성
     weak var delegate: detailViewCellDelegate?
-    var index2: IndexPath? // 게시글인덱스
+    var index: IndexPath? // 게시글인덱스
     
     static let identifier = "DetailViewCell"
     static func nib() ->UINib {
         return UINib(nibName: "DetailViewCell", bundle: nil)
+    }
+    
+    // ?
+    required init?(coder aDecoder: NSCoder) {
+       super.init(coder: aDecoder)
     }
     
     //댓글작성아이디
@@ -37,10 +42,11 @@ class DetailViewCell: UITableViewCell {
     }
     
    
-    
-    @IBOutlet var trash: UIButton!
     //삭제버튼
-    @IBAction func trashBtn(_ sender: Any) {
+    @IBOutlet var trash: UIButton!
+    //삭제버튼액션
+    @IBAction func trashBtn(_ sender: UIButton) {
+        delegate?.onClickCell(index: (index?.row)!)
     }
     
     

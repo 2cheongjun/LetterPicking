@@ -10,12 +10,13 @@ import Alamofire
 import SwiftyJSON
 
 // 게시글눌렀을때 상세
-class DetailViewController: UIViewController, UITextViewDelegate, UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, detailViewCellDelegate{
+class DetailViewController: UIViewController, UITextViewDelegate, UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate{
     
     //피드 모델에 값이 있으면 가져온다.
     var feedResult: FeedResult?
     
     var feedIdx = 0
+    var replyNum = 0
     
     var BASEURL = "http://15.164.214.35/"
     @IBOutlet var movieCotainer: UIImageView!
@@ -37,6 +38,7 @@ class DetailViewController: UIViewController, UITextViewDelegate, UITableViewDat
     var detailModel: DetailModel?
     // 댓글모델
     //    var DetailResult: DetailResult?
+   
     
     //댓글 테이블뷰
     @IBOutlet var tableView: UITableView!
@@ -100,8 +102,6 @@ class DetailViewController: UIViewController, UITextViewDelegate, UITableViewDat
         postText.delegate = self
         replyField.delegate  = self
         // 셀따로 작성시 등록을 해주어야함
-        //        self.tableView?.register(UINib(nibName: "DetailViewCell", bundle: nil), forCellReuseIdentifier: "DetailViewCell")
-        
         tableView.register(DetailViewCell.nib(), forCellReuseIdentifier: DetailViewCell.identifier)
         
         tableView.delegate = self
@@ -314,6 +314,7 @@ class DetailViewController: UIViewController, UITextViewDelegate, UITableViewDat
         cell.replyText.text = self.detailModel?.results[indexPath.row].title
         cell.replyDate.text = self.detailModel?.results[indexPath.row].replyDate
         cell.replyId.text = self.detailModel?.results[indexPath.row].userID
+        cell.index = indexPath
         
         return cell
         // 델리게이트위임
@@ -380,14 +381,14 @@ class DetailViewController: UIViewController, UITextViewDelegate, UITableViewDat
         }
     }//수정 함수끝
     
-    // 페이징 기능 /스크롤시 바닥에 닿으면 데이터추가로 가져옴
+    // 작성한댓글 Load하기
     func loadReply(){
         //현재 페이지의 값에 1을 추가한다.
         // 호출시에 다음차례에 읽어야할 페이지를API에 실어서 함께 전달해야한다.
         // 스크롤뷰가 바닥에 닿으면 데이터를 새로불러온다.
         //        fetchingMore = true
         //asyncAfter는 실행할 시간(deadline)를 정해두고 실행 코드를 실행합니다(execute)
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.7, execute: {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1, execute: {
             //            self.page += 1
             
             let sessionConfig = URLSessionConfiguration.default
@@ -436,6 +437,72 @@ class DetailViewController: UIViewController, UITextViewDelegate, UITableViewDat
             // 세션끝내기
             session.finishTasksAndInvalidate()
         })
+    }// 함수끝
+    
+    
+    // 댓글삭제 API호출
+    func DeleteReply(replyIndex: Int?, success: (()->Void)? = nil, fail: ((String)->Void)? = nil) {
+        // userID, postText,이미지묶음을 파라미터에 담아보냄
+        let userID = feedResult?.userID
+
+        // 선택한 셀의 댓글번호보내기
+        let param: Parameters = [
+                                   "feedIdx" : feedIdx,
+                                   "replyIdx" : replyNum ,
+                                   "userID" : userID ?? ""]
+
+        print("댓글삭제\(param)")
+
+//        print(" API 게시글번호 2 :\(postIdx)")
+        // API 호출 URL
+        let url = self.BASEURL+"reply/replyDelete.php"
+
+        //이미지 전송
+        let call = AF.request(url, method: .post, parameters: param,
+                              encoding: JSONEncoding.default)
+        //                call.responseJSON { res in
+        call.responseJSON { [self] res in
+
+            guard (try! res.result.get() as? NSDictionary) != nil else {
+                print("올바른 응답값이 아닙니다.")
+                return
+            }
+
+            if let jsonObject = try! res.result.get() as? [String :Any]{
+                let success = jsonObject["success"] as? Int ?? 0
+
+                if success == 1 {
+                    self.alert("댓글삭제성공 JSON= \(try! res.result.get())!)")
+//                    self.dismiss(animated: true, completion: nil)
+//                    }
+                    // 이거땜에 좋아요가 두번눌리고 오류냠
+                    DispatchQueue.main.async {
+                        // 테이블뷰 갱신 (자동으로 갱신안됨)
+                        self.tableView.reloadData()
+                        print("댓글 테이블갱신")
+                    }
+                }else{
+                    //sucess가 0이면
+                    self.alert("댓글삭제실패")
+                }
+            }
+        }
+
+    }//함수 끝
+    
+}
+
+// 댓글삭제 버튼 프로토콜 셀
+extension DetailViewController: detailViewCellDelegate {
+    
+    func onClickCell(index: Int) {
+        print("\(self.detailModel?.results[index].replyIdx?.description ?? "")글번호댓글눌림")
+        // 댓글번호
+        replyNum = self.detailModel?.results[index].replyIdx ?? 0
+        // 댓글 삭제API 호출
+        DeleteReply(replyIndex: replyNum)
+        // 댓글다시로드하기
+        loadReply()
     }
 }
 

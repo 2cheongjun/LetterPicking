@@ -26,7 +26,6 @@ class NewFeedCell: UITableViewCell {
     static let identifier = "NewFeedCell"
     
 
-    
     static func nib() ->UINib {
         return UINib(nibName: "NewFeedCell", bundle: nil)
     }
