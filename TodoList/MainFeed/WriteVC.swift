@@ -281,7 +281,7 @@ extension WriteVC: UICollectionViewDelegate, UICollectionViewDataSource {
         
       
         // API 호출 URL
-        let url = "http://15.164.214.35/post/0iOS_images.php"
+        let url = BASEURL+"post/0iOS_images.php"
         
         //이미지 전송
         let call = AF.request(url, method: .post, parameters: param,

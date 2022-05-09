@@ -12,7 +12,7 @@ class imgUploadVC: UIViewController,UIImagePickerControllerDelegate, UINavigatio
     
     // UI이미지 담을 변수(갤러리에서 가져온이미지)
     var newImage: UIImage? = nil
-    var BASEURL = "http://15.164.214.35/"
+    var BASEURL = "http://3.39.79.206/"
     //이미지뷰
     @IBOutlet weak var imgView: UIImageView!
     
