@@ -26,7 +26,7 @@ class LoginVC :UIViewController, UITableViewDelegate, UITableViewDataSource{
     var userEmail: String? = nil
     
     var getID = ""
-    var BASEURL = "http://15.164.214.35/"
+    var BASEURL = "http://3.39.79.206/"
     
     override func viewDidLoad() {
         // self.navigationItem.title = "프로필"

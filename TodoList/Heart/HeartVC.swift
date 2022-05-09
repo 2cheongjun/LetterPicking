@@ -14,7 +14,7 @@ class HeartVC: UIViewController, UICollectionViewDataSource, UICollectionViewDel
     // 모델가져오기
     var feedModel: FeedModel?
     var page = 1
-    var BASEURL = "http://15.164.214.35/"
+    var BASEURL = "http://3.39.79.206/"
     
     // 콜렉션뷰 연결
     @IBOutlet weak var collectionView: UICollectionView!

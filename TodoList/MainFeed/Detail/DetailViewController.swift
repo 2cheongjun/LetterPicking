@@ -18,7 +18,7 @@ class DetailViewController: UIViewController, UITextViewDelegate, UITableViewDat
     var feedIdx = 0
     var replyNum = 0
     
-    var BASEURL = "http://15.164.214.35/"
+    var BASEURL = "http://3.39.79.206/"
     @IBOutlet var movieCotainer: UIImageView!
     
     @IBOutlet var userID: UILabel!{

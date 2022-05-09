@@ -32,7 +32,7 @@ class firstTabVC: UIViewController{
     // 현재까지 읽어 온 데이터의 페이지 정보
     // 최초에 화면을 실행할때 이미 1페이지에 해당하는 데이터를 읽어 왔으므로,page의 초기값으로 1을 할당하는것이 맞다.
     var page = 1
-    var BASEURL = "http://15.164.214.35/"
+    var BASEURL = "http://3.39.79.206/"
     
     // 로그인한 아이디명표기
     @IBOutlet weak var userName: UILabel!

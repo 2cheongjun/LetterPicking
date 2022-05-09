@@ -15,7 +15,7 @@ class nMapVC : UIViewController {
     let NAVER_CLIENT_ID = "uvryr3s84w"
     let NAVER_CLIENT_SECRET = "rSXrAAZE5FUNue2BEbh68p6LAFiNDE2wUVdpI9JV"
     let NAVER_GEOCODE_URL = "https://naveropenapi.apigw.ntruss.com/map-geocode/v2/geocode?query="
-    var BASEURL = "http://15.164.214.35/"
+    var BASEURL = "http://3.39.79.206/"
     // 네이버지도 파싱 // 코더블 모델
     var model: MapModel?
     

@@ -38,7 +38,7 @@ class WriteVC : UIViewController, UIImagePickerControllerDelegate, UINavigationC
     var autoAddress = "" // 자동위치
     
     var isSelected = false
-    var BASEURL = "http://15.164.214.35/"
+    var BASEURL = "http://3.39.79.206/"
     /*
      *  userDefaults에 저장된이름값 가져오기
      */
