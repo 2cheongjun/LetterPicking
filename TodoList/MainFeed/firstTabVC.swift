@@ -8,6 +8,7 @@
 import UIKit
 import Alamofire
 import SwiftyJSON
+import Kingfisher
 
 
 class firstTabVC: UIViewController{
@@ -33,7 +34,8 @@ class firstTabVC: UIViewController{
     // 최초에 화면을 실행할때 이미 1페이지에 해당하는 데이터를 읽어 왔으므로,page의 초기값으로 1을 할당하는것이 맞다.
     var page = 1
     var BASEURL = "http://3.39.79.206/"
-    
+    //이미지캐시
+    lazy var cache: NSCache<AnyObject, UIImage> = NSCache()
     // 로그인한 아이디명표기
     @IBOutlet weak var userName: UILabel!
     @IBOutlet var hi: UILabel! // 님 안녕하세요.
@@ -76,23 +78,23 @@ class firstTabVC: UIViewController{
         NotificationCenter.default.addObserver(self, selector: #selector(self.ModifyVCNotification(_:)), name: ModifyVCNotification, object: nil)
         
         //1.타이틀레이블 생성
-//        let title = UILabel(frame: CGRect(x: 0, y: 100, width: 100, height: 30))
+        //        let title = UILabel(frame: CGRect(x: 0, y: 100, width: 100, height: 30))
         
         //2.타이틀 레이블속성설정
         //        title.text = "첫번째탭"
-//        title.textColor = .red
-//        title.textAlignment = .center
-//        title.font = UIFont.boldSystemFont(ofSize: 16)
-//
-//        //콘텐츠 내용에 맞게 레이블 크기 변경
-//        title.sizeToFit()
-//
-//        //x축의 중앙에 오도록 설정
-//        title.center.x = self.view.frame.width / 2
-//
-//        //수퍼뷰에 추가
-//        self.view.addSubview(title)
-//
+        //        title.textColor = .red
+        //        title.textAlignment = .center
+        //        title.font = UIFont.boldSystemFont(ofSize: 16)
+        //
+        //        //콘텐츠 내용에 맞게 레이블 크기 변경
+        //        title.sizeToFit()
+        //
+        //        //x축의 중앙에 오도록 설정
+        //        title.center.x = self.view.frame.width / 2
+        //
+        //        //수퍼뷰에 추가
+        //        self.view.addSubview(title)
+        //
         /*
          *  userDefaults에 저장된이름값 가져오기
          */
@@ -126,8 +128,8 @@ class firstTabVC: UIViewController{
         // 더보기 페이지 세팅
         page = 1
         // API호출
-            requestFeedAPI()
-
+        requestFeedAPI()
+        
         // 수정업데이트노티피케이션
         // 노티3.WriteVC에서 보낸 값을 받기위해 DissmissWrite의 노티피케이션을 정의해 받을 준비한다.
         let ModifyVCNotification = Notification.Name("ModifyVCNotification")
@@ -136,7 +138,7 @@ class firstTabVC: UIViewController{
         
     }
     
-
+    
     
     //스크롤시페이징
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
@@ -210,8 +212,8 @@ class firstTabVC: UIViewController{
         })
     }
     
-
- 
+    
+    
     // 화면을 누르면 키보드 내려가게 하는 것
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
@@ -273,7 +275,7 @@ class firstTabVC: UIViewController{
                     // 여기서 실행을 하고 오류가 나면 catch로 던져서 프린트해주겠다.
                     self.feedModel = try JSONDecoder().decode(FeedModel.self, from: hasData)
                     //파싱이 끝나면 스크롤
-
+                    
                     // 모든UI 작업은 메인쓰레드에서 이루어져야한다.
                     DispatchQueue.main.async {
                         // 테이블뷰 갱신 (자동으로 갱신안됨)
@@ -294,6 +296,7 @@ class firstTabVC: UIViewController{
     
     // 이미지 URL로드하기 ***********************************************************************************************8
     func loadImage(urlString: String, completion: @escaping (UIImage?)-> Void){
+        
         let sessionConfig = URLSessionConfiguration.default
         let session = URLSession(configuration: sessionConfig)
         
@@ -324,7 +327,7 @@ class firstTabVC: UIViewController{
         // API호출
         // 당겨서 새로고침하면,more누를때 다시 page번호를 1로세팅해준다.1부터 다시더해지도록...************************************
         page = 1
-    
+        
         requestFeedAPI()
         self.tableView.reloadData()
         //당겨서 새로고침 기능 종료
@@ -435,7 +438,7 @@ extension firstTabVC: UITableViewDelegate, UITableViewDataSource{
         detailVC.feedResult = self.feedModel?.results[indexPath.row]
         // 전체화면보기하면 닫기버튼이 없음 만들어줘야함.
         //        detailVC.modalPresentationStyle = .fullScreen
-
+        
         
         // 화면이 띄워진후에 값을 넣어야 널크러쉬가 안남
         self.present(detailVC, animated: true){ }
@@ -455,26 +458,37 @@ extension firstTabVC: UITableViewDelegate, UITableViewDataSource{
         cell.dataLabel.text =  self.feedModel?.results[indexPath.row].date
         cell.priceLabel.text =  self.feedModel?.results[indexPath.row].myPlaceText
         cell.num.text =  self.feedModel?.results[indexPath.row].feedIdx?.description ?? ""
-      
-        // 이미지처리방법
-        if let hasURL = self.feedModel?.results[indexPath.row].postImgs{
-            // 이미지로드 서버요청
-            self.loadImage(urlString: hasURL) { image in
-                DispatchQueue.main.async {
-                    cell.imageViewLabel.image = image
+        
+        if (cache.object(forKey: (indexPath as NSIndexPath).row as AnyObject) != nil) {
+            /// 해당 row에 해당되는 부분이 캐시에 존재하는 경우
+            //  cell.imageView?.image = cache.object(forKey: (indexPath as NSIndexPath).row as AnyObject)
+            cell.imageViewLabel.image = cache.object(forKey: (indexPath as NSIndexPath).row as AnyObject)
+        } else {
+            // 이미지처리방법
+            if let hasURL = self.feedModel?.results[indexPath.row].postImgs{
+                // 이미지로드 서버요청
+                self.loadImage(urlString: hasURL) { image in
+                    DispatchQueue.main.async {
+                        
+                        cell.imageViewLabel.image = image
+            
+                    }
                 }
             }
+            
         }
-//        //좋아요*********************************************************************************
+        
+        
+        //        //좋아요*********************************************************************************
         if likes[indexPath.row] == 1 {
             cell.isTouched = true
             numIdx  =  self.feedModel?.results[indexPath.row].feedIdx?.description ?? ""
             print("게시글 true :\(numIdx)")
-
+            
         }else{
             cell.isTouched = false
         }
-//
+        //
         return cell
     }
     
@@ -488,8 +502,8 @@ extension firstTabVC: UITableViewDelegate, UITableViewDataSource{
         // 선택한 셀의 게시글 번호를 가져오는 법 생각하기
         let param: Parameters = [  "cbHeart" : true,
                                    "postIdx" : numIdx ?? 0 ,
-                                  "userID" : userID ?? ""]
-
+                                   "userID" : userID ?? ""]
+        
         print(" API좋아요:\(param)")
         // API 호출 URL
         let url = self.BASEURL+"post/0iOS_feedLike.php"
@@ -501,8 +515,8 @@ extension firstTabVC: UITableViewDelegate, UITableViewDataSource{
         call.responseJSON { [self] res in
             
             // 성공실패케이스문 작성하기
-//            print("서버로 보냄!!!!!")
-//            print("JSON= \(try! res.result.get())!)")
+            //            print("서버로 보냄!!!!!")
+            //            print("JSON= \(try! res.result.get())!)")
             
             guard (try! res.result.get() as? NSDictionary) != nil else {
                 print("올바른 응답값이 아닙니다.")
@@ -517,11 +531,11 @@ extension firstTabVC: UITableViewDelegate, UITableViewDataSource{
                     self.dismiss(animated: true, completion: nil)
                     
                     // 이거땜에 좋아요가 두번눌리고 오류냠
-//                    DispatchQueue.main.async {
-//                        // 테이블뷰 갱신 (자동으로 갱신안됨)
-//                        self.tableView.reloadData()
-//                    }
-                   
+                    //                    DispatchQueue.main.async {
+                    //                        // 테이블뷰 갱신 (자동으로 갱신안됨)
+                    //                        self.tableView.reloadData()
+                    //                    }
+                    
                 }else{
                     //sucess가 0이면
                     self.alert("좋아요업로드 응답실패")
@@ -532,49 +546,55 @@ extension firstTabVC: UITableViewDelegate, UITableViewDataSource{
     }//함수 끝
     
     
-//    //하트 Delete API
+    //    //하트 Delete API
     func DeleteHeart(postIdx: String?, success: (()->Void)? = nil, fail: ((String)->Void)? = nil) {
         // userID, postText,이미지묶음을 파라미터에 담아보냄
         let userID = plist.string(forKey: "name")
-
+        
         // 선택한 셀의 게시글 번호를 가져오는 법 생각하기
         let param: Parameters = [
-                                   "cbHeart" : true,
-                                   "postIdx" : numIdx ?? 0 ,
-                                  "userID" : userID ?? ""]
-
+            "cbHeart" : true,
+            "postIdx" : numIdx ?? 0 ,
+            "userID" : userID ?? ""]
+        
         print("좋아요취소\(param)")
-
-//        print(" API 게시글번호 2 :\(postIdx)")
+        
+        //        print(" API 게시글번호 2 :\(postIdx)")
         // API 호출 URL
         let url = self.BASEURL+"post/0iOS_feedLike_delete.php"
-
+        
         //이미지 전송
         let call = AF.request(url, method: .post, parameters: param,
                               encoding: JSONEncoding.default)
         //                call.responseJSON { res in
         call.responseJSON { [self] res in
-
+            
             guard (try! res.result.get() as? NSDictionary) != nil else {
                 print("올바른 응답값이 아닙니다.")
                 return
             }
-
+            
             if let jsonObject = try! res.result.get() as? [String :Any]{
                 let success = jsonObject["success"] as? Int ?? 0
-
+                
                 if success == 1 {
                     self.alert("좋아요취소성공 JSON= \(try! res.result.get())!)")
                     self.dismiss(animated: true, completion: nil)
-//                    }
+                    //                    }
                 }else{
                     //sucess가 0이면
                     self.alert("0")
                 }
             }
         }
-
+        
     }//함수 끝
+}
+
+// 이미지캐시작업을 위한 싱글톤 클래스생성
+class ImageCacheManager{
+    static let shared = NSCache<NSString, UIImage>()
+    private init() {}
 }
 
 
@@ -595,23 +615,23 @@ extension firstTabVC: UISearchBarDelegate {
 
 //좋아요 프로토콜 구현부
 extension firstTabVC: firstTabVCCellDelegate{
-
+    
     // 하트눌림
     func didPressHeart(for index: Int, like: Bool, index2: Int) {
         
         if like{
             likes[index] = 1
-//            print("cell \(likes[index]!)")
+            //            print("cell \(likes[index]!)")
             print("\(index2) 클릭")
             print("\(self.feedModel?.results[index2].feedIdx?.description ?? "")글번호 좋아요눌림")
             numIdx = self.feedModel?.results[index2].feedIdx?.description ?? ""
             // 좋아요 insert
             uploadHeart(postIdx:numIdx)
             
-
+            
         }else{
             likes[index] = 0
-//            print("cell \(likes[index]!)")
+            //            print("cell \(likes[index]!)")
             print("\(self.feedModel?.results[index2].feedIdx?.description ?? "")글번호 좋아요꺼짐")
             // 좋아요 Delete
             numIdx = self.feedModel?.results[index2].feedIdx?.description ?? ""
@@ -619,5 +639,5 @@ extension firstTabVC: firstTabVCCellDelegate{
         }
     }
 }
-    
-    
+
+
