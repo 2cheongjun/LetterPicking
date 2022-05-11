@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Kingfisher
 
 // 하트모음 컬렉션뷰
 class HeartVC: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate {
@@ -46,15 +47,37 @@ class HeartVC: UIViewController, UICollectionViewDataSource, UICollectionViewDel
         // 델리게이트위임
         // cell.delegate = self
         cell.addressLabel.text = self.feedModel?.results[indexPath.row].feedIdx?.description ?? ""
-        // 이미지처리방법
-        if let hasURL = self.feedModel?.results[indexPath.row].postImgs{
-            // 이미지로드 서버요청
-            self.loadImage(urlString: hasURL) { image in
-                DispatchQueue.main.async {
-                    cell.postImg.image = image
+        
+        
+        // 킹피셔를 사용한 이미지 처리방법
+        if let imageURL =  self.feedModel?.results[indexPath.row].postImgs {
+            // 이미지처리방법
+            guard let url = URL(string: imageURL) else {
+                //리턴할 셀지정하기
+                return cell
+            }
+            //            cell.postImg.kf.setImage(with:url)
+            cell.postImg.kf.indicatorType = .activity
+            cell.postImg.kf.setImage(
+                with: url,
+                placeholder: UIImage(named: "placeholderImage"),
+                options: [
+                    .scaleFactor(UIScreen.main.scale),
+                    .transition(.fade(1)),
+                    .cacheOriginalImage
+                ])
+            {
+                result in
+                switch result {
+                case .success(let value):
+                    print("좋아요킹피셔 Task done")
+                case .failure(let err):
+                    print(err.localizedDescription)
                 }
             }
         }
+        
+        
         return cell
     }
     
@@ -66,19 +89,19 @@ class HeartVC: UIViewController, UICollectionViewDataSource, UICollectionViewDel
         
     }
     
-   
+    
     // network /URL세션으로 호출 // 추후 아이디값을 보내서 호출하는것도..생각해보기?? 전체다 가져오는것이니 상관없을까?..
     func requestFeedAPI(){
         print("메인 피드 API호출")
         
         let sessionConfig = URLSessionConfiguration.default
         let session = URLSession(configuration: sessionConfig)
-//        var components = URLComponents(string: self.BASEURL+"bookMark/heartBookmark.php?page=\(1)")
+        //        var components = URLComponents(string: self.BASEURL+"bookMark/heartBookmark.php?page=\(1)")
         var components = URLComponents(string: self.BASEURL+"bookMark/heartBookmarkcopy.php?page=\(1)")
-//        var components = URLComponents(string: self.BASEURL+"bookMark/heartBookmark.php")
+        //        var components = URLComponents(string: self.BASEURL+"bookMark/heartBookmark.php")
         //        let term = URLQueryItem(name: "term", value: "marvel")
         //        let page = URLQueryItem(name: "page", value: "1")
-//                components?.queryItems = [page]
+        //                components?.queryItems = [page]
         
         // url이 없으면 리턴한다. 여기서 끝
         guard let url = components?.url else { return }
@@ -121,55 +144,30 @@ class HeartVC: UIViewController, UICollectionViewDataSource, UICollectionViewDel
     }// 호출메소드끝
     
     
-    // 이미지 URL로드하기 ***********************************************************************************************8
-    func loadImage(urlString: String, completion: @escaping (UIImage?)-> Void){
-        let sessionConfig = URLSessionConfiguration.default
-        let session = URLSession(configuration: sessionConfig)
-        
-        // urlString 이미지이름을(ex:http://3.37.202.166/img/2-jun.jpg) 가져와서 URL타입으로 바꿔준다.
-        if let hasURL = URL(string: urlString){
-            var request = URLRequest(url: hasURL)
-            request.httpMethod = "GET"
-            
-            session.dataTask(with: request) { data, response, error in
-                //                   print( (response as! HTTPURLResponse).statusCode)
-                // 데이터가 있으면 UIImage로 리턴
-                if let hasData = data {
-                    
-                    completion(UIImage(data: hasData))
-                    return
-                }
-            }.resume() //실행한다.
-            session.finishTasksAndInvalidate()
-        }
-        // 실패시 nil리턴한다.
-        completion(nil)
-        
-    }
 }
 
 
 // cell layout
 extension HeartVC: UICollectionViewDelegateFlowLayout {
-
+    
     // 위 아래 간격
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return 1
     }
-
+    
     // 옆 간격
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         return 1
     }
-
+    
     // cell 사이즈( 옆 라인을 고려하여 설정 )
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-
+        
         let width = collectionView.frame.width / 3 - 1 ///  3등분하여 배치, 옆 간격이 1이므로 1을 빼줌
         print("collectionView width=\(collectionView.frame.width)")
         print("cell하나당 width=\(width)")
         print("root view width = \(self.view.frame.width)")
-
+        
         let size = CGSize(width: width, height: width)
         return size
     }
