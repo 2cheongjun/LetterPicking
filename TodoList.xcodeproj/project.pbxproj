@@ -39,6 +39,7 @@
 		D09E65FD27F0F35300077BD5 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = D09E65FC27F0F34D00077BD5 /* libsqlite3.tbd */; };
 		D09E65FF27F1034800077BD5 /* HeartVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D09E65FE27F1034800077BD5 /* HeartVC.swift */; };
 		D09E660327F1079600077BD5 /* 01.jpg in Resources */ = {isa = PBXBuildFile; fileRef = D09E660227F1079600077BD5 /* 01.jpg */; };
+		D0B4490E282BF7CE0046437C /* HeartModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B4490D282BF7CE0046437C /* HeartModel.swift */; };
 		D0C98B7027F5EC3900445A00 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0C98B6F27F5EC3900445A00 /* DetailViewController.swift */; };
 		D0C98B7227F5EDCB00445A00 /* DetailViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D0C98B7127F5EDCB00445A00 /* DetailViewController.storyboard */; };
 		D0C98B7427F736DF00445A00 /* nMapVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0C98B7327F736DF00445A00 /* nMapVC.swift */; };
@@ -90,6 +91,7 @@
 		D09E65FC27F0F34D00077BD5 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 		D09E65FE27F1034800077BD5 /* HeartVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeartVC.swift; sourceTree = "<group>"; };
 		D09E660227F1079600077BD5 /* 01.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 01.jpg; sourceTree = "<group>"; };
+		D0B4490D282BF7CE0046437C /* HeartModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeartModel.swift; sourceTree = "<group>"; };
 		D0C98B6F27F5EC3900445A00 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		D0C98B7127F5EDCB00445A00 /* DetailViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = DetailViewController.storyboard; sourceTree = "<group>"; };
 		D0C98B7327F736DF00445A00 /* nMapVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = nMapVC.swift; sourceTree = "<group>"; };
@@ -269,6 +271,7 @@
 			children = (
 				D09E65FE27F1034800077BD5 /* HeartVC.swift */,
 				D015EE19280DC1F700FCDAC3 /* HeartCollectionViewCell.swift */,
+				D0B4490D282BF7CE0046437C /* HeartModel.swift */,
 			);
 			path = Heart;
 			sourceTree = "<group>";
@@ -410,6 +413,7 @@
 				D08B027F27E5C25D00012766 /* mypageVC.swift in Sources */,
 				D051F35F27CDE2AF00ABBB4E /* TodoList.xcdatamodeld in Sources */,
 				D082E99628218D6F00DDF586 /* DetailModel.swift in Sources */,
+				D0B4490E282BF7CE0046437C /* HeartModel.swift in Sources */,
 				D08B028827E8389D00012766 /* FeedCell.swift in Sources */,
 				D08B699B281AF6590095E54A /* DetailViewCell.swift in Sources */,
 				D051F36F27CE2ADC00ABBB4E /* TodoDetailViewController.swift in Sources */,

@@ -7,15 +7,19 @@
 
 import UIKit
 import Kingfisher
+import Alamofire
+import SwiftyJSON
 
 // 하트모음 컬렉션뷰
 class HeartVC: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate {
     
     let cellIdentifier:String = "cell"
     // 모델가져오기
-    var feedModel: FeedModel?
+    var heartModel: HeartModel?
     var page = 1
     var BASEURL = "http://3.39.79.206/"
+    //userDefaults에 저장된이름값 가져오기
+    let plist = UserDefaults.standard
     
     // 콜렉션뷰 연결
     @IBOutlet weak var collectionView: UICollectionView!
@@ -26,17 +30,17 @@ class HeartVC: UIViewController, UICollectionViewDataSource, UICollectionViewDel
         collectionView.delegate = self
         collectionView.dataSource = self
         // 북마크모음게시글 요청
-        requestFeedAPI()
+        upLoadHeart()
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        // 좋아요모음글호출
-        requestFeedAPI()
+        // 북마크모음게시글 요청
+        upLoadHeart()
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         //        return self.numberOfCell
-        return self.feedModel?.results.count ?? 0
+        return self.heartModel?.results.count ?? 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -46,17 +50,17 @@ class HeartVC: UIViewController, UICollectionViewDataSource, UICollectionViewDel
         }
         // 델리게이트위임
         // cell.delegate = self
-        cell.addressLabel.text = self.feedModel?.results[indexPath.row].feedIdx?.description ?? ""
+        cell.addressLabel.text = self.heartModel?.results[indexPath.row].postIdx?.description ?? ""
         
         
         // 킹피셔를 사용한 이미지 처리방법
-        if let imageURL =  self.feedModel?.results[indexPath.row].postImgs {
+        if let imageURL =  self.heartModel?.results[indexPath.row].postImgs {
             // 이미지처리방법
             guard let url = URL(string: imageURL) else {
                 //리턴할 셀지정하기
                 return cell
             }
-            //            cell.postImg.kf.setImage(with:url)
+            //cell.postImg.kf.setImage(with:url)
             cell.postImg.kf.indicatorType = .activity
             cell.postImg.kf.setImage(
                 with: url,
@@ -90,86 +94,160 @@ class HeartVC: UIViewController, UICollectionViewDataSource, UICollectionViewDel
     }
     
     
-    // network /URL세션으로 호출 // 추후 아이디값을 보내서 호출하는것도..생각해보기?? 전체다 가져오는것이니 상관없을까?..
-    func requestFeedAPI(){
-        print("메인 피드 API호출")
+    //    func requestFeedAPI(){
+    //        print("메인 피드 API호출")
+    //
+    //        let sessionConfig = URLSessionConfiguration.default
+    //        let session = URLSession(configuration: sessionConfig)
+    //        //        var components = URLComponents(string: self.BASEURL+"bookMark/heartBookmark.php?page=\(1)")
+    ////        var components = URLComponents(string: self.BASEURL+"bookMark/heartBookmarkcopy.php?page=\(1)")
+    //                var components = URLComponents(string: self.BASEURL+"bookMark/heartBookmark.php")
+    //        //        let term = URLQueryItem(name: "term", value: "marvel")
+    ////                let page = URLQueryItem(name: "page", value: "1")
+    //        //                components?.queryItems = [page]
+    //
+    //        // url이 없으면 리턴한다. 여기서 끝
+    //        guard let url = components?.url else { return }
+    //
+    //        print("기본피드 : \(url)")
+    //
+    //        // 값이 있다면 받아와서 넣음.
+    //        var request = URLRequest(url: url)
+    //        request.httpMethod = "GET" //GET방식이다. 컨텐츠타입이 없고, 담아서 보내는 내용이 없음, URL호출만!
+    //
+    //        let task = session.dataTask(with: request) { data, response, error in
+    //            print( (response as! HTTPURLResponse).statusCode )
+    //
+    //            // 데이터가 있을때만 파싱한다.
+    //            if let hasData = data {
+    //                // 모델만든것 가져다가 디코더해준다.
+    //                do{
+    //                    // 만들어놓은 피드모델에 담음, 데이터를 디코딩해서, 디코딩은 try catch문 써줘야함
+    //                    // 여기서 실행을 하고 오류가 나면 catch로 던져서 프린트해주겠다.
+    //                    self.feedModel = try JSONDecoder().decode(FeedModel.self, from: hasData)
+    //                    print(self.feedModel ?? "no data")
+    //                    //파싱이 끝나면 스크롤
+    //
+    //                    // 모든UI 작업은 메인쓰레드에서 이루어져야한다.
+    //                    DispatchQueue.main.async {
+    //                        // 테이블뷰 갱신 (자동으로 갱신안됨)
+    //                        self.collectionView.reloadData()
+    //
+    //                    }
+    //                }catch{
+    //                    print(error)
+    //                }
+    //            }
+    //        }
+    //        // task를 실행한다.
+    //        task.resume()
+    //        // 세션끝내기
+    //        session.finishTasksAndInvalidate()
+    //
+    //    }// 호출메소드끝
+    //
+    // 좋아요가져오기
+    func upLoadHeart() {
+        //    func newProfile(_ profile: UIImage?, success: (()->Void)? = nil, fail: ((String)->Void)? = nil) {
+        // userID, postText,이미지묶음을 파라미터에 담아보냄
+        let userID = plist.string(forKey: "name")
         
-        let sessionConfig = URLSessionConfiguration.default
-        let session = URLSession(configuration: sessionConfig)
-        //        var components = URLComponents(string: self.BASEURL+"bookMark/heartBookmark.php?page=\(1)")
-        var components = URLComponents(string: self.BASEURL+"bookMark/heartBookmarkcopy.php?page=\(1)")
-        //        var components = URLComponents(string: self.BASEURL+"bookMark/heartBookmark.php")
-        //        let term = URLQueryItem(name: "term", value: "marvel")
-        //        let page = URLQueryItem(name: "page", value: "1")
-        //                components?.queryItems = [page]
+        let param: Parameters = [ "userID" :userID ?? ""
+        ]
         
-        // url이 없으면 리턴한다. 여기서 끝
-        guard let url = components?.url else { return }
+        // API 호출 URL
+        let url =  self.BASEURL+"bookMark/heartBookmark.php"
         
-        print("기본피드 : \(url)")
-        
-        // 값이 있다면 받아와서 넣음.
-        var request = URLRequest(url: url)
-        request.httpMethod = "GET" //GET방식이다. 컨텐츠타입이 없고, 담아서 보내는 내용이 없음, URL호출만!
-        
-        let task = session.dataTask(with: request) { data, response, error in
-            print( (response as! HTTPURLResponse).statusCode )
+        //이미지 전송
+        let call = AF.request(url, method: .post, parameters: param,
+                              encoding: JSONEncoding.default)
+        //                call.responseJSON { res in
+        call.responseJSON { res in
             
-            // 데이터가 있을때만 파싱한다.
-            if let hasData = data {
-                // 모델만든것 가져다가 디코더해준다.
-                do{
-                    // 만들어놓은 피드모델에 담음, 데이터를 디코딩해서, 디코딩은 try catch문 써줘야함
-                    // 여기서 실행을 하고 오류가 나면 catch로 던져서 프린트해주겠다.
-                    self.feedModel = try JSONDecoder().decode(FeedModel.self, from: hasData)
-                    print(self.feedModel ?? "no data")
-                    //파싱이 끝나면 스크롤
-                    
-                    // 모든UI 작업은 메인쓰레드에서 이루어져야한다.
-                    DispatchQueue.main.async {
-                        // 테이블뷰 갱신 (자동으로 갱신안됨)
-                        self.collectionView.reloadData()
+            // 성공실패케이스문 작성하기
+            print("좋아요로드 요청")
+            //            print("JSON= \(try! res.result.get())!)")
+            
+            guard let jsonObject = try! res.result.get() as? [String :Any] else {
+                print("올바른 응답값이 아닙니다.")
+                return
+            }
+            
+            if let jsonObject = try! res.result.get() as?  [String :Any] {
+               
+                let success = jsonObject["success"] as? Int ?? 0
+                
+                if success == 1 {
+                  
+                    print("JSON= \(try! res.result.get())!)")
+//                    self.dismiss(animated: true, completion: nil)
+                    do{
+                        // Any를 JSON으로 변경
+                        let dataJSON = try JSONSerialization.data(withJSONObject:try! res.result.get(), options: .prettyPrinted)
+//                        print(dataJSON)
+                        // JSON디코더 사용
+                        self.heartModel = try JSONDecoder().decode(HeartModel.self, from: dataJSON)
+           
+                        print((self.heartModel ?? "no data"))
+                        print((self.heartModel)!)
+                        //파싱이 끝나면 스크롤
                         
+                        // 모든UI 작업은 메인쓰레드에서 이루어져야한다.
+                        DispatchQueue.main.async {
+                            // 테이블뷰 갱신 (자동으로 갱신안됨)
+                            self.collectionView.reloadData()
+                         }
+                  
+                    }// 디코딩 에러잡기
+                        catch let DecodingError.dataCorrupted(context) {
+                           print(context)
+                       } catch let DecodingError.keyNotFound(key, context) {
+                           print("Key '\(key)' not found:", context.debugDescription)
+                           print("codingPath:", context.codingPath)
+                       } catch let DecodingError.valueNotFound(value, context) {
+                           print("Value '\(value)' not found:", context.debugDescription)
+                           print("codingPath:", context.codingPath)
+                       } catch let DecodingError.typeMismatch(type, context)  {
+                           print("Type '\(type)' mismatch:", context.debugDescription)
+                           print("codingPath:", context.codingPath)
+                       } catch {
+                           print("error: ", error)
+                       }
                     }
-                }catch{
-                    print(error)
+                else if(success == 0){
+                //sucess가 0이면
+                        print("응답실패")
+                    }
                 }
             }
+            }//함수 끝
+ 
+}
+        
+        
+        // cell layout
+        extension HeartVC: UICollectionViewDelegateFlowLayout {
+            
+            // 위 아래 간격
+            func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+                return 1
+            }
+            
+            // 옆 간격
+            func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+                return 1
+            }
+            
+            // cell 사이즈( 옆 라인을 고려하여 설정 )
+            func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+                
+                let width = collectionView.frame.width / 3 - 1 ///  3등분하여 배치, 옆 간격이 1이므로 1을 빼줌
+                print("collectionView width=\(collectionView.frame.width)")
+                print("cell하나당 width=\(width)")
+                print("root view width = \(self.view.frame.width)")
+                
+                let size = CGSize(width: width, height: width)
+                return size
+            }
         }
-        // task를 실행한다.
-        task.resume()
-        // 세션끝내기
-        session.finishTasksAndInvalidate()
         
-    }// 호출메소드끝
-    
-    
-}
-
-
-// cell layout
-extension HeartVC: UICollectionViewDelegateFlowLayout {
-    
-    // 위 아래 간격
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 1
-    }
-    
-    // 옆 간격
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
-        return 1
-    }
-    
-    // cell 사이즈( 옆 라인을 고려하여 설정 )
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        
-        let width = collectionView.frame.width / 3 - 1 ///  3등분하여 배치, 옆 간격이 1이므로 1을 빼줌
-        print("collectionView width=\(collectionView.frame.width)")
-        print("cell하나당 width=\(width)")
-        print("root view width = \(self.view.frame.width)")
-        
-        let size = CGSize(width: width, height: width)
-        return size
-    }
-}
-
