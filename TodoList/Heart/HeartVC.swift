@@ -80,72 +80,19 @@ class HeartVC: UIViewController, UICollectionViewDataSource, UICollectionViewDel
                 }
             }
         }
-        
-        
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath){
         // 컬랙션뷰의 데이터를 먼저 삭제 해주고, 데이터 배열의 값을 삭제해줍니다!! , '반대로할시에 데이터가 꼬이는 현상이 발생합니다.'
         //        self.numberOfCell += 1
-        // 선택한 번호에 해당하는 셀지우기 어떻게????
         print(indexPath.row)
+        // 클릭해서 각해당하는 상세뷰 띄우기
+        
         
     }
     
-    
-    //    func requestFeedAPI(){
-    //        print("메인 피드 API호출")
-    //
-    //        let sessionConfig = URLSessionConfiguration.default
-    //        let session = URLSession(configuration: sessionConfig)
-    //        //        var components = URLComponents(string: self.BASEURL+"bookMark/heartBookmark.php?page=\(1)")
-    ////        var components = URLComponents(string: self.BASEURL+"bookMark/heartBookmarkcopy.php?page=\(1)")
-    //                var components = URLComponents(string: self.BASEURL+"bookMark/heartBookmark.php")
-    //        //        let term = URLQueryItem(name: "term", value: "marvel")
-    ////                let page = URLQueryItem(name: "page", value: "1")
-    //        //                components?.queryItems = [page]
-    //
-    //        // url이 없으면 리턴한다. 여기서 끝
-    //        guard let url = components?.url else { return }
-    //
-    //        print("기본피드 : \(url)")
-    //
-    //        // 값이 있다면 받아와서 넣음.
-    //        var request = URLRequest(url: url)
-    //        request.httpMethod = "GET" //GET방식이다. 컨텐츠타입이 없고, 담아서 보내는 내용이 없음, URL호출만!
-    //
-    //        let task = session.dataTask(with: request) { data, response, error in
-    //            print( (response as! HTTPURLResponse).statusCode )
-    //
-    //            // 데이터가 있을때만 파싱한다.
-    //            if let hasData = data {
-    //                // 모델만든것 가져다가 디코더해준다.
-    //                do{
-    //                    // 만들어놓은 피드모델에 담음, 데이터를 디코딩해서, 디코딩은 try catch문 써줘야함
-    //                    // 여기서 실행을 하고 오류가 나면 catch로 던져서 프린트해주겠다.
-    //                    self.feedModel = try JSONDecoder().decode(FeedModel.self, from: hasData)
-    //                    print(self.feedModel ?? "no data")
-    //                    //파싱이 끝나면 스크롤
-    //
-    //                    // 모든UI 작업은 메인쓰레드에서 이루어져야한다.
-    //                    DispatchQueue.main.async {
-    //                        // 테이블뷰 갱신 (자동으로 갱신안됨)
-    //                        self.collectionView.reloadData()
-    //
-    //                    }
-    //                }catch{
-    //                    print(error)
-    //                }
-    //            }
-    //        }
-    //        // task를 실행한다.
-    //        task.resume()
-    //        // 세션끝내기
-    //        session.finishTasksAndInvalidate()
-    //
-    //    }// 호출메소드끝
-    //
+   
     // 좋아요가져오기
     func upLoadHeart() {
         //    func newProfile(_ profile: UIImage?, success: (()->Void)? = nil, fail: ((String)->Void)? = nil) {
@@ -173,14 +120,12 @@ class HeartVC: UIViewController, UICollectionViewDataSource, UICollectionViewDel
                 return
             }
             
-            if let jsonObject = try! res.result.get() as?  [String :Any] {
-               
+            if let jsonObject = try! res.result.get() as? [String :Any] {
                 let success = jsonObject["success"] as? Int ?? 0
                 
                 if success == 1 {
                   
                     print("JSON= \(try! res.result.get())!)")
-//                    self.dismiss(animated: true, completion: nil)
                     do{
                         // Any를 JSON으로 변경
                         let dataJSON = try JSONSerialization.data(withJSONObject:try! res.result.get(), options: .prettyPrinted)
@@ -189,8 +134,6 @@ class HeartVC: UIViewController, UICollectionViewDataSource, UICollectionViewDel
                         self.heartModel = try JSONDecoder().decode(HeartModel.self, from: dataJSON)
            
                         print((self.heartModel ?? "no data"))
-                        print((self.heartModel)!)
-                        //파싱이 끝나면 스크롤
                         
                         // 모든UI 작업은 메인쓰레드에서 이루어져야한다.
                         DispatchQueue.main.async {
