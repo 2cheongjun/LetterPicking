@@ -22,8 +22,8 @@ class firstTabVC: UIViewController{
     var heartResult: HeartResult?
 
     var numIdx = ""
-    var Num = ""
-//    var Num = 0
+//    var Num = ""
+    var Num = 0
     
     //userDefaults에 저장된이름값 가져오기
     let plist = UserDefaults.standard
@@ -477,15 +477,16 @@ extension firstTabVC: UITableViewDelegate, UITableViewDataSource{
         cell.priceLabel.text =  self.feedModel?.results[indexPath.row].myPlaceText
         cell.num.text =  self.feedModel?.results[indexPath.row].feedIdx?.description ?? ""
         
-        // 게시글번호를 가져옴
-//        Num = self.heartModel?.results[indexPath.row].postIdx?.description ?? ""
-//        print("하트번호 \(self.heartModel?.results[indexPath.row].postIdx?.description ?? "")")
+        // 게시글번호에 따른 하트여부 1이면 하트 눌림 ************************************************************
+        Num = self.feedModel?.results[indexPath.row].cbheart ?? 0
+        print("하트번호 \(self.feedModel?.results[indexPath.row].cbheart?.description ?? "")")
 //
-//        if ((self.heartResult?.postIdx) != nil){
-//
+        if (self.feedModel?.results[indexPath.row].cbheart ?? 0 > 0){
+            // 0보다 그면 하트를 눌린상태로 만든다.
+            likes[indexPath.row] = 1
 //           self.didPressHeart(for: 1, like: true, index2: Num)
 //           print(self.didPressHeart(for: 1, like: true, index2: Num))
-//       }
+       }
 //
         
         // 킹피셔를 사용한 이미지 처리방법

@@ -67,7 +67,6 @@ class NewFeedCell: UITableViewCell {
                 delegate?.didPressHeart(for: idx, like: false, index2:(index2?.row)!)
             }
 //            sender.isSelected = !sender.isSelected
-            
     }
     
     var isTouched: Bool? {
