@@ -10,6 +10,8 @@
 		52F7C0BFE3E3C6BA11C2BB03 /* Pods_TodoList.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 30B307A72FEED269DC7BDEE3 /* Pods_TodoList.framework */; };
 		D00A962B282FF61A00A02B36 /* HeartDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D00A962A282FF61A00A02B36 /* HeartDetailViewController.swift */; };
 		D00A962D282FF62200A02B36 /* HeartDetailViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D00A962C282FF62100A02B36 /* HeartDetailViewController.storyboard */; };
+		D01505D42830246B00743409 /* HeartReplyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D01505D22830246B00743409 /* HeartReplyCell.swift */; };
+		D01505D52830246B00743409 /* HeartReplyCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D01505D32830246B00743409 /* HeartReplyCell.xib */; };
 		D015EE1A280DC1F700FCDAC3 /* HeartCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D015EE19280DC1F700FCDAC3 /* HeartCollectionViewCell.swift */; };
 		D051F35527CDE2AF00ABBB4E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D051F35427CDE2AF00ABBB4E /* AppDelegate.swift */; };
 		D051F35727CDE2AF00ABBB4E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D051F35627CDE2AF00ABBB4E /* SceneDelegate.swift */; };
@@ -62,6 +64,8 @@
 		6A5D8B478D0260FCEE51BBF1 /* Pods-TodoList.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TodoList.release.xcconfig"; path = "Target Support Files/Pods-TodoList/Pods-TodoList.release.xcconfig"; sourceTree = "<group>"; };
 		D00A962A282FF61A00A02B36 /* HeartDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeartDetailViewController.swift; sourceTree = "<group>"; };
 		D00A962C282FF62100A02B36 /* HeartDetailViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = HeartDetailViewController.storyboard; sourceTree = "<group>"; };
+		D01505D22830246B00743409 /* HeartReplyCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeartReplyCell.swift; sourceTree = "<group>"; };
+		D01505D32830246B00743409 /* HeartReplyCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HeartReplyCell.xib; sourceTree = "<group>"; };
 		D015EE19280DC1F700FCDAC3 /* HeartCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeartCollectionViewCell.swift; sourceTree = "<group>"; };
 		D051F35127CDE2AF00ABBB4E /* TodoList.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TodoList.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D051F35427CDE2AF00ABBB4E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -151,6 +155,17 @@
 				6A5D8B478D0260FCEE51BBF1 /* Pods-TodoList.release.xcconfig */,
 			);
 			path = Pods;
+			sourceTree = "<group>";
+		};
+		D00A963228301ADB00A02B36 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				D00A962A282FF61A00A02B36 /* HeartDetailViewController.swift */,
+				D01505D22830246B00743409 /* HeartReplyCell.swift */,
+				D01505D32830246B00743409 /* HeartReplyCell.xib */,
+				D00A962C282FF62100A02B36 /* HeartDetailViewController.storyboard */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 		D051F34827CDE2AF00ABBB4E = {
@@ -273,9 +288,8 @@
 		D09E660027F1035100077BD5 /* Heart */ = {
 			isa = PBXGroup;
 			children = (
+				D00A963228301ADB00A02B36 /* View */,
 				D09E65FE27F1034800077BD5 /* HeartVC.swift */,
-				D00A962A282FF61A00A02B36 /* HeartDetailViewController.swift */,
-				D00A962C282FF62100A02B36 /* HeartDetailViewController.storyboard */,
 				D015EE19280DC1F700FCDAC3 /* HeartCollectionViewCell.swift */,
 				D0B4490D282BF7CE0046437C /* HeartModel.swift */,
 			);
@@ -342,6 +356,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D01505D52830246B00743409 /* HeartReplyCell.xib in Resources */,
 				D051F36427CDE2B100ABBB4E /* LaunchScreen.storyboard in Resources */,
 				D00A962D282FF62200A02B36 /* HeartDetailViewController.storyboard in Resources */,
 				D09E660327F1079600077BD5 /* 01.jpg in Resources */,
@@ -425,6 +440,7 @@
 				D08B028827E8389D00012766 /* FeedCell.swift in Sources */,
 				D08B699B281AF6590095E54A /* DetailViewCell.swift in Sources */,
 				D051F36F27CE2ADC00ABBB4E /* TodoDetailViewController.swift in Sources */,
+				D01505D42830246B00743409 /* HeartReplyCell.swift in Sources */,
 				D0E3BFAA280804BC00958C30 /* likeBtn.swift in Sources */,
 				D0C98B7627FAF47D00445A00 /* MapModel.swift in Sources */,
 				D0E16BF227E0DAC4008F970E /* APIResponse.swift in Sources */,

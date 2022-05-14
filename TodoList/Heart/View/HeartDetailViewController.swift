@@ -1,19 +1,15 @@
-//
-//  DetailViewController.swift
-//  TodoList
-//
-//  Created by 이청준 on 2022/03/31.
-//
 
 import UIKit
 import Alamofire
 import SwiftyJSON
 
-// 게시글눌렀을때 상세
-class DetailViewController: UIViewController, UITextViewDelegate, UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate{
-    
+class HeartDetailViewController: UIViewController, UITextViewDelegate, UITextFieldDelegate,UITableViewDataSource, UITableViewDelegate {
+
+    // 모델가져오기
+    var heartModel: HeartModel?
+
     //피드 모델에 값이 있으면 가져온다.
-    var feedResult: FeedResult?
+    var heartResult: HeartResult?
     
     var feedIdx = 0
     var replyNum = 0
@@ -36,10 +32,8 @@ class DetailViewController: UIViewController, UITextViewDelegate, UITableViewDat
     
     // 댓글모델가져오기
     var detailModel: DetailModel?
-    // 댓글모델
-    //    var DetailResult: DetailResult?
+
    
-    
     //댓글 테이블뷰
     @IBOutlet var tableView: UITableView!
     //댓글 작성영역
@@ -59,11 +53,6 @@ class DetailViewController: UIViewController, UITextViewDelegate, UITableViewDat
         self.loadReply()
         
     }
-    
-    //셀갯수
-    //    var numberOfCell: Int = 10
-    //    let examList = ["안녕","호호","하하","낄낄","호호"]
-    
     
     @IBOutlet var postText: UITextView!{
         didSet{
@@ -88,6 +77,8 @@ class DetailViewController: UIViewController, UITextViewDelegate, UITableViewDat
         self.dismiss(animated: true, completion: nil)
         
     }
+
+
     
     override func viewWillAppear(_ animated: Bool) {
         
@@ -101,23 +92,23 @@ class DetailViewController: UIViewController, UITextViewDelegate, UITableViewDat
         postText.delegate = self
         replyField.delegate  = self
         // 셀따로 작성시 등록을 해주어야함
-        tableView.register(DetailViewCell.nib(), forCellReuseIdentifier: DetailViewCell.identifier)
+        tableView.register(HeartReplyCell.nib(), forCellReuseIdentifier: HeartReplyCell.identifier)
         
         tableView.delegate = self
         tableView.dataSource = self
         
-        userID.text = feedResult?.userID
-        //        myPlaceText.text = feedResult?.myPlaceText
-        date.text = feedResult?.date
-        postText.text = feedResult?.postText
+        userID.text = heartResult?.userID
+//        myPlaceText.text = heartResult?.myPlaceText ?? ""
+        date.text = heartResult?.date
+        postText.text = heartResult?.postText
         //글번호
-        //        num.text = feedResult?.feedIdx?.description
+//        num.text = heartResult?.postIdx?.description
         
-        // 게시글번호(수정시필요)
-        feedIdx = feedResult?.feedIdx ?? 0
+         //게시글번호(수정시필요)
+        feedIdx = heartResult?.postIdx ?? 0
         
         // 이미지처리방법
-        if let hasURL = self.feedResult?.postImgs{
+        if let hasURL = self.heartResult?.postImgs{
             // 이미지로드 서버요청
             self.loadImage(urlString: hasURL) { image in
                 DispatchQueue.main.async {
@@ -126,12 +117,10 @@ class DetailViewController: UIViewController, UITextViewDelegate, UITableViewDat
             }
         }
         
-        // 댓글목록 가져오기 API호출
+//        // 댓글목록 가져오기 API호출
         loadReply()
         
     }// 뷰디드로드끝
-    
-    
     
     // 이미지 Get요청
     func loadImage(urlString: String, completion: @escaping (UIImage?)-> Void){
@@ -157,7 +146,6 @@ class DetailViewController: UIViewController, UITextViewDelegate, UITableViewDat
         // 실패시 nil리턴한다.
         completion(nil)
     }
-    
     
     //삭제버튼
     @IBAction func delBtn(_ sender: Any) {
@@ -194,15 +182,13 @@ class DetailViewController: UIViewController, UITextViewDelegate, UITableViewDat
     // 수정API호출
     func upDatePostText(success: (()->Void)? = nil, fail: ((String)->Void)? = nil) {
         // userID, postText,이미지묶음을 파라미터에 담아보냄
-        let userID = feedResult?.userID
+        let userID = heartResult?.userID
         
         let param: Parameters = [
             "feedIdx": feedIdx,
             "postText" : postText.text ?? "",
             "userID" : userID as Any,
         ]
-        
-        //        print("WriteVC/ 기본입력내용 :\(self.myPlaceText.text ?? "")")
         
         // API 호출 URL
         let url = self.BASEURL+"post/0iOS_feedUpdate.php"
@@ -238,7 +224,6 @@ class DetailViewController: UIViewController, UITextViewDelegate, UITableViewDat
             }
         }
     }//수정 함수끝
-    
     
     
     // 게시글삭제 API호출
@@ -292,6 +277,7 @@ class DetailViewController: UIViewController, UITextViewDelegate, UITableViewDat
     }// 함수 끝
     
     
+    
     // 댓글 테이블뷰시작 **************************************************************************************
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.detailModel?.results.count ?? 0
@@ -302,12 +288,12 @@ class DetailViewController: UIViewController, UITextViewDelegate, UITableViewDat
     }
     
     // 셀 높이 컨텐츠에 맞게 자동으로 설정// 컨텐츠의 내용높이 만큼이다.
-    //    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
-    //        return UITableView.automaticDimension
-    //    }
+//        func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
+//            return UITableView.automaticDimension
+//        }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: DetailViewCell.identifier, for: indexPath) as! DetailViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: HeartReplyCell.identifier, for: indexPath) as! HeartReplyCell
         // 델리게이트위임
         cell.delegate = self
         cell.replyText.text = self.detailModel?.results[indexPath.row].title
@@ -329,7 +315,7 @@ class DetailViewController: UIViewController, UITextViewDelegate, UITableViewDat
     // 댓글작성 업로드 API호출*****
     func replyUpload(success: (()->Void)? = nil, fail: ((String)->Void)? = nil) {
         // userID, postText,이미지묶음을 파라미터에 담아보냄
-        let userID = feedResult?.userID
+        let userID = heartResult?.userID
         
         let param: Parameters = [
             "feedIdx": feedIdx,
@@ -352,8 +338,7 @@ class DetailViewController: UIViewController, UITextViewDelegate, UITableViewDat
             // 성공실패케이스문 작성하기
             print("서버로 보냄!!!!!")
             //            print("JSON= \(try? res.result.get())!)")
-            
-            
+
             guard (try! res.result.get() as? NSDictionary) != nil else {
                 print("올바른 응답값이 아닙니다.")
                 return
@@ -418,9 +403,10 @@ class DetailViewController: UIViewController, UITextViewDelegate, UITableViewDat
                         // 만들어놓은 피드모델에 담음, 데이터를 디코딩해서, 디코딩은 try catch문 써줘야함
                         // 여기서 실행을 하고 오류가 나면 catch로 던져서 프린트해주겠다.
                         self.detailModel = try JSONDecoder().decode(DetailModel.self, from: hasData)
+                        print("댓글로드")
                         print(self.detailModel ?? "no data")
-                        //
-                        //                         모든UI 작업은 메인쓰레드에서 이루어져야한다.
+                        
+                        //모든UI 작업은 메인쓰레드에서 이루어져야한다.
                         DispatchQueue.main.async {
                             // 테이블뷰 갱신 (자동으로 갱신안됨)
                             self.tableView.reloadData()
@@ -441,7 +427,7 @@ class DetailViewController: UIViewController, UITextViewDelegate, UITableViewDat
     // 댓글삭제 API호출
     func DeleteReply(replyIndex: Int?, success: (()->Void)? = nil, fail: ((String)->Void)? = nil) {
         // userID, postText,이미지묶음을 파라미터에 담아보냄
-        let userID = feedResult?.userID
+        let userID = heartResult?.userID
 
         // 선택한 셀의 댓글번호보내기
         let param: Parameters = [
@@ -488,10 +474,12 @@ class DetailViewController: UIViewController, UITextViewDelegate, UITableViewDat
 
     }//함수 끝
     
+    
 }
 
+
 // 댓글삭제 버튼 프로토콜 셀
-extension DetailViewController: detailViewCellDelegate {
+extension HeartDetailViewController: HeartReplyCellDelegate {
     
     func onClickCell(index: Int) {
         print("\(self.detailModel?.results[index].replyIdx?.description ?? "")글번호댓글눌림")
@@ -503,4 +491,3 @@ extension DetailViewController: detailViewCellDelegate {
         loadReply()
     }
 }
-

@@ -16,7 +16,6 @@ class HeartVC: UIViewController, UICollectionViewDataSource, UICollectionViewDel
     let cellIdentifier:String = "cell"
     // 모델가져오기
     var heartModel: HeartModel?
-  
     //피드 모델에 값이 있으면 가져온다.
     var heartResult: HeartResult?
     
@@ -106,11 +105,10 @@ class HeartVC: UIViewController, UICollectionViewDataSource, UICollectionViewDel
         //선택한 행의 내용을 feedResult에 담는다.
         HeartDetailVC.heartResult = self.heartModel?.results[indexPath.row]
         // 전체화면보기하면 닫기버튼이 없음 만들어줘야함.
-        //        detailVC.modalPresentationStyle = .fullScreen
+        HeartDetailVC.modalPresentationStyle = .fullScreen
         
         // 화면이 띄워진후에 값을 넣어야 널크러쉬가 안남
         self.present(HeartDetailVC, animated: true){ }
-
     }
     
    
