@@ -16,6 +16,12 @@ class HeartVC: UIViewController, UICollectionViewDataSource, UICollectionViewDel
     let cellIdentifier:String = "cell"
     // 모델가져오기
     var heartModel: HeartModel?
+  
+    //피드 모델에 값이 있으면 가져온다.
+    var heartResult: HeartResult?
+    
+    var feedIdx = 0
+
     var page = 1
     var BASEURL = "http://3.39.79.206/"
     //userDefaults에 저장된이름값 가져오기
@@ -31,6 +37,8 @@ class HeartVC: UIViewController, UICollectionViewDataSource, UICollectionViewDel
         collectionView.dataSource = self
         // 북마크모음게시글 요청
         upLoadHeart()
+        
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -83,13 +91,26 @@ class HeartVC: UIViewController, UICollectionViewDataSource, UICollectionViewDel
         return cell
     }
     
+    //***************************************************************************************************************************
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath){
         // 컬랙션뷰의 데이터를 먼저 삭제 해주고, 데이터 배열의 값을 삭제해줍니다!! , '반대로할시에 데이터가 꼬이는 현상이 발생합니다.'
         //        self.numberOfCell += 1
         print(indexPath.row)
         // 클릭해서 각해당하는 상세뷰 띄우기
+        // 이동하고자하는 뷰턴 객체생성해 호출하기 / 스토리보드 기반으로 가져오기. 스토리보드ID
+        let HeartDetailVC = UIStoryboard(name:"HeartDetailViewController" , bundle: nil).instantiateViewController(withIdentifier: "HeartDetailViewController") as! HeartDetailViewController
         
+        // 선택한것 눌렸다가 자연스럽게 흰색으로 전환
+//        CollectionView.deselectRow(at: indexPath, animated: true)
+//        detailVC.feedResult = self.feedModel?.results[indexPath.row]
+        //선택한 행의 내용을 feedResult에 담는다.
+        HeartDetailVC.heartResult = self.heartModel?.results[indexPath.row]
+        // 전체화면보기하면 닫기버튼이 없음 만들어줘야함.
+        //        detailVC.modalPresentationStyle = .fullScreen
         
+        // 화면이 띄워진후에 값을 넣어야 널크러쉬가 안남
+        self.present(HeartDetailVC, animated: true){ }
+
     }
     
    
@@ -164,6 +185,7 @@ class HeartVC: UIViewController, UICollectionViewDataSource, UICollectionViewDel
                 }
             }
             }//함수 끝
+    
  
 }
         

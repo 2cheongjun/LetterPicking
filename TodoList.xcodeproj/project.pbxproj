@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		52F7C0BFE3E3C6BA11C2BB03 /* Pods_TodoList.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 30B307A72FEED269DC7BDEE3 /* Pods_TodoList.framework */; };
+		D00A962B282FF61A00A02B36 /* HeartDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D00A962A282FF61A00A02B36 /* HeartDetailViewController.swift */; };
+		D00A962D282FF62200A02B36 /* HeartDetailViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D00A962C282FF62100A02B36 /* HeartDetailViewController.storyboard */; };
 		D015EE1A280DC1F700FCDAC3 /* HeartCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D015EE19280DC1F700FCDAC3 /* HeartCollectionViewCell.swift */; };
 		D051F35527CDE2AF00ABBB4E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D051F35427CDE2AF00ABBB4E /* AppDelegate.swift */; };
 		D051F35727CDE2AF00ABBB4E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D051F35627CDE2AF00ABBB4E /* SceneDelegate.swift */; };
@@ -58,6 +60,8 @@
 		30B307A72FEED269DC7BDEE3 /* Pods_TodoList.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TodoList.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		518C0CCF59DDA5D402F2AC95 /* Pods-TodoList.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TodoList.debug.xcconfig"; path = "Target Support Files/Pods-TodoList/Pods-TodoList.debug.xcconfig"; sourceTree = "<group>"; };
 		6A5D8B478D0260FCEE51BBF1 /* Pods-TodoList.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TodoList.release.xcconfig"; path = "Target Support Files/Pods-TodoList/Pods-TodoList.release.xcconfig"; sourceTree = "<group>"; };
+		D00A962A282FF61A00A02B36 /* HeartDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeartDetailViewController.swift; sourceTree = "<group>"; };
+		D00A962C282FF62100A02B36 /* HeartDetailViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = HeartDetailViewController.storyboard; sourceTree = "<group>"; };
 		D015EE19280DC1F700FCDAC3 /* HeartCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeartCollectionViewCell.swift; sourceTree = "<group>"; };
 		D051F35127CDE2AF00ABBB4E /* TodoList.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TodoList.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D051F35427CDE2AF00ABBB4E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -270,6 +274,8 @@
 			isa = PBXGroup;
 			children = (
 				D09E65FE27F1034800077BD5 /* HeartVC.swift */,
+				D00A962A282FF61A00A02B36 /* HeartDetailViewController.swift */,
+				D00A962C282FF62100A02B36 /* HeartDetailViewController.storyboard */,
 				D015EE19280DC1F700FCDAC3 /* HeartCollectionViewCell.swift */,
 				D0B4490D282BF7CE0046437C /* HeartModel.swift */,
 			);
@@ -337,6 +343,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D051F36427CDE2B100ABBB4E /* LaunchScreen.storyboard in Resources */,
+				D00A962D282FF62200A02B36 /* HeartDetailViewController.storyboard in Resources */,
 				D09E660327F1079600077BD5 /* 01.jpg in Resources */,
 				D051F37027CE2ADC00ABBB4E /* TodoDetailViewController.xib in Resources */,
 				D0C98B7227F5EDCB00445A00 /* DetailViewController.storyboard in Resources */,
@@ -413,6 +420,7 @@
 				D08B027F27E5C25D00012766 /* mypageVC.swift in Sources */,
 				D051F35F27CDE2AF00ABBB4E /* TodoList.xcdatamodeld in Sources */,
 				D082E99628218D6F00DDF586 /* DetailModel.swift in Sources */,
+				D00A962B282FF61A00A02B36 /* HeartDetailViewController.swift in Sources */,
 				D0B4490E282BF7CE0046437C /* HeartModel.swift in Sources */,
 				D08B028827E8389D00012766 /* FeedCell.swift in Sources */,
 				D08B699B281AF6590095E54A /* DetailViewCell.swift in Sources */,

@@ -11,7 +11,7 @@ import UIKit
 protocol firstTabVCCellDelegate: AnyObject{
 //    func didTapButton()
     // 좋아요버튼이 눌릴때, index값과, Bool값을 저장한다.
-    func didPressHeart(for index: Int, like: Bool, index2: Int)
+    func didPressHeart(for index: Int, like: Bool, indexNum: Int)
 //    func onClickCell(index2: Int)
 }
 
@@ -19,8 +19,8 @@ protocol firstTabVCCellDelegate: AnyObject{
 class NewFeedCell: UITableViewCell {
     //델리게이트생성
     weak var delegate: firstTabVCCellDelegate?
-    var index: Int? // 좋아요
-    var index2: IndexPath? // 게시글인덱스
+    var index: Int? // 좋아요번호
+    var indexNum: IndexPath? // 게시글인덱스
     
     var feedIdx = 0
     static let identifier = "NewFeedCell"
@@ -59,15 +59,16 @@ class NewFeedCell: UITableViewCell {
                 isTouched = true
                 // 메인에서didPressHeart 함수를 실행
 //                    delegate?.didPressHeart(for: idx, like: true)
-                delegate?.didPressHeart(for: idx, like: true, index2:(index2?.row)!)
+                delegate?.didPressHeart(for: idx, like: true, indexNum:(indexNum?.row)!)
                 // 클릭했을때 게시글 인덱스 가져오기
 //                    delegate?.onClickCell(index2:(index2?.row)!)
             }else {
                 isTouched = false
-                delegate?.didPressHeart(for: idx, like: false, index2:(index2?.row)!)
+                delegate?.didPressHeart(for: idx, like: false, indexNum:(indexNum?.row)!)
             }
 //            sender.isSelected = !sender.isSelected
     }
+    
     
     var isTouched: Bool? {
         
@@ -118,5 +119,4 @@ class NewFeedCell: UITableViewCell {
         // Initialization code
     }
 
-    
 }

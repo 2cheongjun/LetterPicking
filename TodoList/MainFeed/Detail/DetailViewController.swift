@@ -42,7 +42,6 @@ class DetailViewController: UIViewController, UITextViewDelegate, UITableViewDat
     
     //댓글 테이블뷰
     @IBOutlet var tableView: UITableView!
-    
     //댓글 작성영역
     @IBOutlet var replyField: UITextField!
     //댓글버튼
@@ -115,7 +114,7 @@ class DetailViewController: UIViewController, UITextViewDelegate, UITableViewDat
         //        num.text = feedResult?.feedIdx?.description
         
         // 게시글번호(수정시필요)
-        feedIdx = feedResult!.feedIdx ?? 0
+        feedIdx = feedResult?.feedIdx ?? 0
         
         // 이미지처리방법
         if let hasURL = self.feedResult?.postImgs{
