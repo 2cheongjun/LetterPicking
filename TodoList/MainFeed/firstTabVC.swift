@@ -28,8 +28,10 @@ class firstTabVC: UIViewController{
     var fetchingMore = false
     
     var word = ""
-    //좋아요를 하기위한 딕셔너리
+    //좋아요를 하기위한 딕셔너리 (key값 :value값)
+    // 빈 딕셔너리 배열생성
     lazy var likes: [Int:Int] = [:]
+//    lazy var likes: [Int:Bool] = [:]
     
     // 현재까지 읽어 온 데이터의 페이지 정보
     // 최초에 화면을 실행할때 이미 1페이지에 해당하는 데이터를 읽어 왔으므로,page의 초기값으로 1을 할당하는것이 맞다.
@@ -455,11 +457,13 @@ extension firstTabVC: UITableViewDelegate, UITableViewDataSource{
         
         // 게시글번호에 따른 하트여부 1이면 하트 눌림 ************************************************************
         Num = self.feedModel?.results[indexPath.row].cbheart ?? 0
-        print("하트번호 \(self.feedModel?.results[indexPath.row].cbheart?.description ?? "")")
+//        print("하트번호 \(self.feedModel?.results[indexPath.row].cbheart?.description ?? "")")
 //
         if (self.feedModel?.results[indexPath.row].cbheart ?? 0 > 0){
             // 0보다 그면 하트를 눌린상태로 만든다.
             likes[indexPath.row] = 1
+
+            print("서버에서온 좋아요 : 키:값 \(likes)")
        }
         
         //좋아요 버튼 눌림 상태 *******************************************************************************
@@ -470,6 +474,8 @@ extension firstTabVC: UITableViewDelegate, UITableViewDataSource{
             
         }else{
             cell.isTouched = false
+            numIdx  = self.feedModel?.results[indexPath.row].feedIdx?.description ?? ""
+            print("게시글 false :\(numIdx)")
         }
 
         // 킹피셔를 사용한 이미지 처리방법
@@ -640,21 +646,21 @@ extension firstTabVC: UISearchBarDelegate {
 // 좋아요 프로토콜 구현부
 extension firstTabVC: firstTabVCCellDelegate{
     
-    // 하트눌림 (몇번째 게시글에 좋아요가 눌렸나, 좋아요시true, 게시글번호 넘김)
+    //      하트눌림( 몇번째 게시글인가 번호였음, 좋아요 상태 , 게시글번호 넘김)
     func didPressHeart(for index: Int, like: Bool, indexNum: Int) {
-
-        
+        // 좋아요가 눌리면 true
         if like{
             likes[index] = 1
-            print("\(indexNum) 클릭")
-            print("\(self.feedModel?.results[indexNum].feedIdx?.description ?? "")글번호 좋아요눌림")
+            print("좋아요On 키:값 \(likes)")
+//            print("\(indexNum) 클릭")
+//            print("\(self.feedModel?.results[indexNum].feedIdx?.description ?? "")글번호 좋아요눌림")
             numIdx = self.feedModel?.results[indexNum].feedIdx?.description ?? ""
             // 좋아요 insert
             uploadHeart(postIdx:numIdx)
             
-            
         }else{
             likes[index] = 0
+            print("좋아요Off 키:값 \(likes)")
             // print("cell \(likes[index]!)")
             print("\(self.feedModel?.results[indexNum].feedIdx?.description ?? "")글번호 좋아요꺼짐")
             numIdx = self.feedModel?.results[indexNum].feedIdx?.description ?? ""

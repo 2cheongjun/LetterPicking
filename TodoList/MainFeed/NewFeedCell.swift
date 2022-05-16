@@ -12,6 +12,7 @@ protocol firstTabVCCellDelegate: AnyObject{
 //    func didTapButton()
     // 좋아요버튼이 눌릴때, index값과, Bool값을 저장한다.
     func didPressHeart(for index: Int, like: Bool, indexNum: Int)
+    
 //    func onClickCell(index2: Int)
 }
 
@@ -19,7 +20,7 @@ protocol firstTabVCCellDelegate: AnyObject{
 class NewFeedCell: UITableViewCell {
     //델리게이트생성
     weak var delegate: firstTabVCCellDelegate?
-    var index: Int? // 좋아요번호
+    var index: Int? // 좋아요키밸류
     var indexNum: IndexPath? // 게시글인덱스
     
     var feedIdx = 0
@@ -52,8 +53,11 @@ class NewFeedCell: UITableViewCell {
         
         sender.isSelected = !sender.isSelected
         
-        guard let idx = index else {return}
-        // 위로올리니까 됨? // 스위치 버튼 만드는법 다시 공부하기
+        guard let idx = index else {
+            return
+        }
+           // 게시글 번호가 있을때에만 실행한다.
+            print("\(idx) 번째 게시글")
       
             if sender.isSelected {
                 isTouched = true
