@@ -75,10 +75,7 @@ class HeartDetailViewController: UIViewController, UITextViewDelegate, UITextFie
         // 노티2.창이 닫힐때 노티를 메인피드로 신호를 보낸다. //(노티의 이름은 ModifyVCNotification)
         NotificationCenter.default.post(name: ModifyVCNotification, object: nil, userInfo: nil)
         self.dismiss(animated: true, completion: nil)
-        
     }
-
-
     
     override func viewWillAppear(_ animated: Bool) {
         

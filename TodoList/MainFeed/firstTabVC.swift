@@ -642,6 +642,7 @@ extension firstTabVC: firstTabVCCellDelegate{
     
     // 하트눌림 (몇번째 게시글에 좋아요가 눌렸나, 좋아요시true, 게시글번호 넘김)
     func didPressHeart(for index: Int, like: Bool, indexNum: Int) {
+
         
         if like{
             likes[index] = 1
@@ -662,5 +663,6 @@ extension firstTabVC: firstTabVCCellDelegate{
         }
     }
 }
+
 
 

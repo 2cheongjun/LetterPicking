@@ -12,6 +12,8 @@
 		D00A962D282FF62200A02B36 /* HeartDetailViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D00A962C282FF62100A02B36 /* HeartDetailViewController.storyboard */; };
 		D01505D42830246B00743409 /* HeartReplyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D01505D22830246B00743409 /* HeartReplyCell.swift */; };
 		D01505D52830246B00743409 /* HeartReplyCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D01505D32830246B00743409 /* HeartReplyCell.xib */; };
+		D01505E528326FDC00743409 /* star0.png in Resources */ = {isa = PBXBuildFile; fileRef = D01505E328326FDB00743409 /* star0.png */; };
+		D01505E628326FDC00743409 /* star1.png in Resources */ = {isa = PBXBuildFile; fileRef = D01505E428326FDC00743409 /* star1.png */; };
 		D015EE1A280DC1F700FCDAC3 /* HeartCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D015EE19280DC1F700FCDAC3 /* HeartCollectionViewCell.swift */; };
 		D051F35527CDE2AF00ABBB4E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D051F35427CDE2AF00ABBB4E /* AppDelegate.swift */; };
 		D051F35727CDE2AF00ABBB4E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D051F35627CDE2AF00ABBB4E /* SceneDelegate.swift */; };
@@ -66,6 +68,8 @@
 		D00A962C282FF62100A02B36 /* HeartDetailViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = HeartDetailViewController.storyboard; sourceTree = "<group>"; };
 		D01505D22830246B00743409 /* HeartReplyCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeartReplyCell.swift; sourceTree = "<group>"; };
 		D01505D32830246B00743409 /* HeartReplyCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HeartReplyCell.xib; sourceTree = "<group>"; };
+		D01505E328326FDB00743409 /* star0.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = star0.png; sourceTree = "<group>"; };
+		D01505E428326FDC00743409 /* star1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = star1.png; sourceTree = "<group>"; };
 		D015EE19280DC1F700FCDAC3 /* HeartCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeartCollectionViewCell.swift; sourceTree = "<group>"; };
 		D051F35127CDE2AF00ABBB4E /* TodoList.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TodoList.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D051F35427CDE2AF00ABBB4E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -276,6 +280,8 @@
 		D08B699D28215A6B0095E54A /* Detail */ = {
 			isa = PBXGroup;
 			children = (
+				D01505E328326FDB00743409 /* star0.png */,
+				D01505E428326FDC00743409 /* star1.png */,
 				D0C98B6F27F5EC3900445A00 /* DetailViewController.swift */,
 				D08B6999281AF6590095E54A /* DetailViewCell.swift */,
 				D0C98B7127F5EDCB00445A00 /* DetailViewController.storyboard */,
@@ -358,6 +364,7 @@
 			files = (
 				D01505D52830246B00743409 /* HeartReplyCell.xib in Resources */,
 				D051F36427CDE2B100ABBB4E /* LaunchScreen.storyboard in Resources */,
+				D01505E628326FDC00743409 /* star1.png in Resources */,
 				D00A962D282FF62200A02B36 /* HeartDetailViewController.storyboard in Resources */,
 				D09E660327F1079600077BD5 /* 01.jpg in Resources */,
 				D051F37027CE2ADC00ABBB4E /* TodoDetailViewController.xib in Resources */,
@@ -366,6 +373,7 @@
 				D051F36127CDE2B100ABBB4E /* Assets.xcassets in Resources */,
 				D051F35C27CDE2AF00ABBB4E /* Main.storyboard in Resources */,
 				D0E3BFAE28084BCC00958C30 /* NewFeedCell.xib in Resources */,
+				D01505E528326FDC00743409 /* star0.png in Resources */,
 				D08B028627E61BCE00012766 /* profile-bg.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
