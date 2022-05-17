@@ -12,34 +12,37 @@ import Kingfisher
 
 
 class firstTabVC: UIViewController{
-    
+
     // 모델가져오기
     var feedModel: FeedModel?
     //피드 모델에 값이 있으면 가져온다.
     var feedResult: FeedResult?
-
-    var numIdx = ""
-    var Num = 0
     
     //userDefaults에 저장된이름값 가져오기
     let plist = UserDefaults.standard
     
+    // 게시글번호 담을 변수
+    var numIdx = ""
+    var Num = 0
+    
     // 스크롤을 위한 것
     var fetchingMore = false
-    
+    // 검색단어
     var word = ""
-    //좋아요를 하기위한 딕셔너리 (key값 :value값)
-    // 빈 딕셔너리 배열생성
-    lazy var likes: [Int:Int] = [:]
-//    lazy var likes: [Int:Bool] = [:]
     
+    // 좋아요를 하기위한 딕셔너리 (key값 :value값) 빈 딕셔너리 배열생성
+    lazy var likes: [Int:Int] = [:]
+
     // 현재까지 읽어 온 데이터의 페이지 정보
     // 최초에 화면을 실행할때 이미 1페이지에 해당하는 데이터를 읽어 왔으므로,page의 초기값으로 1을 할당하는것이 맞다.
     var page = 1
     var BASEURL = "http://3.39.79.206/"
     
-    //이미지캐시(URL string을 키값으로 구분하고 image를 넣어준다.)
-//    private let imageCache = NSCache<NSString, UIImage>()
+    // 인디케이터추가
+    @IBOutlet var indicator: UIActivityIndicatorView!
+    
+    //API 호출상태값을 관리할 변수
+    var isCalling = false
     
     // 로그인한 아이디명표기
     @IBOutlet weak var userName: UILabel!
@@ -100,12 +103,16 @@ class firstTabVC: UIViewController{
         
         // API호출
         if feedModel?.results.count != 0{
+            // 인디케이터 호출
+            self.indicator.startAnimating()
             requestFeedAPI()
         
             self.topBtn.isHidden = false
         }else{
             print("데이터없음")
         }
+        
+       
     }
     
     
@@ -184,6 +191,8 @@ class firstTabVC: UIViewController{
                         self.fetchingMore = false
                         // 모든UI 작업은 메인쓰레드에서 이루어져야한다.
                         DispatchQueue.main.async {
+                            // 인디케이터 에니메이션 종료
+                            self.indicator.stopAnimating()
                             // 테이블뷰 갱신 (자동으로 갱신안됨)
                             self.tableView.reloadData()
                         }
@@ -251,6 +260,7 @@ class firstTabVC: UIViewController{
         request.httpMethod = "GET" //GET방식이다. 컨텐츠타입이 없고, 담아서 보내는 내용이 없음, URL호출만!
         
         let task = session.dataTask(with: request) { data, response, error in
+            
             print( (response as! HTTPURLResponse).statusCode )
             
             // 데이터가 있을때만 파싱한다.
@@ -266,9 +276,10 @@ class firstTabVC: UIViewController{
                     
                     // 모든UI 작업은 메인쓰레드에서 이루어져야한다.
                     DispatchQueue.main.async {
+                        // 인디케이터 에니메이션 종료
+                        self.indicator.stopAnimating()
                         // 테이블뷰 갱신 (자동으로 갱신안됨)
                         self.tableView.reloadData()
-                    
                     }
                 }catch{
                     print(error)
@@ -391,6 +402,10 @@ func searchWord(success: (()->Void)? = nil, fail: ((String)->Void)? = nil) {
             } catch {
                 print("error: ", error)
             }
+        }else{
+            // sucess가 0이면
+            self.isCalling = false
+            self.alert("좋아요업로드 응답실패")
         }
     }
     // task를 실행한다.
@@ -464,7 +479,9 @@ extension firstTabVC: UITableViewDelegate, UITableViewDataSource{
             likes[indexPath.row] = 1
 
             print("서버에서온 좋아요 : 키:값 \(likes)")
-       }
+        }else if(self.feedModel?.results[indexPath.row].cbheart ?? 0 == 0){
+            likes[indexPath.row] = 0
+        }
         
         //좋아요 버튼 눌림 상태 *******************************************************************************
         if likes[indexPath.row] == 1 {
@@ -549,6 +566,8 @@ extension firstTabVC: UITableViewDelegate, UITableViewDataSource{
             //            print("JSON= \(try! res.result.get())!)")
             
             guard (try! res.result.get() as? NSDictionary) != nil else {
+                self.isCalling = false
+                self.alert("서버호출 과정에서 오류가 발생했습니다.")
                 print("올바른 응답값이 아닙니다.")
                 return
             }
@@ -567,10 +586,14 @@ extension firstTabVC: UITableViewDelegate, UITableViewDataSource{
                     //                    }
                     
                 }else{
-                    //sucess가 0이면
+                    // sucess가 0이면
+                    self.isCalling = false
                     self.alert("좋아요업로드 응답실패")
                 }
             }
+//            else{
+//
+//            }
         }
         
     }//함수 끝
@@ -600,6 +623,8 @@ extension firstTabVC: UITableViewDelegate, UITableViewDataSource{
         call.responseJSON { [self] res in
             
             guard (try! res.result.get() as? NSDictionary) != nil else {
+                self.isCalling = false
+                self.alert("서버호출 과정에서 오류가 발생했습니다.")
                 print("올바른 응답값이 아닙니다.")
                 return
             }
@@ -613,8 +638,12 @@ extension firstTabVC: UITableViewDelegate, UITableViewDataSource{
                     //                    }
                 }else{
                     //sucess가 0이면
+//                    self.isCalling = false
                     self.alert("0")
                 }
+            }else{
+                self.isCalling = false
+                self.alert("좋아요업로드 응답실패")
             }
         }
         
@@ -648,6 +677,8 @@ extension firstTabVC: firstTabVCCellDelegate{
     
     //      하트눌림( 몇번째 게시글인가 번호였음, 좋아요 상태 , 게시글번호 넘김)
     func didPressHeart(for index: Int, like: Bool, indexNum: Int) {
+        
+
         // 좋아요가 눌리면 true
         if like{
             likes[index] = 1
@@ -655,8 +686,17 @@ extension firstTabVC: firstTabVCCellDelegate{
 //            print("\(indexNum) 클릭")
 //            print("\(self.feedModel?.results[indexNum].feedIdx?.description ?? "")글번호 좋아요눌림")
             numIdx = self.feedModel?.results[indexNum].feedIdx?.description ?? ""
+           
+//            if self.isCalling == true{
+//                self.alert("진행중입니다. 잠시만 기다려주세요")
+//                return
+//            }else{
+//                self.isCalling = true
+//            }
+            
             // 좋아요 insert
             uploadHeart(postIdx:numIdx)
+            
             
         }else{
             likes[index] = 0
@@ -664,8 +704,17 @@ extension firstTabVC: firstTabVCCellDelegate{
             // print("cell \(likes[index]!)")
             print("\(self.feedModel?.results[indexNum].feedIdx?.description ?? "")글번호 좋아요꺼짐")
             numIdx = self.feedModel?.results[indexNum].feedIdx?.description ?? ""
+            
             // 좋아요 Delete
             DeleteHeart(postIdx: numIdx)
+//
+//            if self.isCalling == true{
+//                self.alert("진행중입니다. 잠시만 기다려주세요")
+//                return
+//            }else{
+//                self.isCalling = true
+//            }
+          
         }
     }
 }

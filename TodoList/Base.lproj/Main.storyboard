@@ -253,6 +253,11 @@
                                                 <action selector="TopBtn:" destination="b6h-lu-bIc" eventType="touchUpInside" id="ej5-cE-w3k"/>
                                             </connections>
                                         </button>
+                                        <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" hidesWhenStopped="YES" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="6db-0h-zrc">
+                                            <rect key="frame" x="128" y="11" width="20" height="23"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <color key="color" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </activityIndicatorView>
                                     </subviews>
                                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                     <constraints>
@@ -305,6 +310,7 @@
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="hi" destination="NCU-uI-uvA" id="68G-HW-Qvo"/>
+                        <outlet property="indicator" destination="6db-0h-zrc" id="f48-wN-VSY"/>
                         <outlet property="searchBar" destination="yHi-VC-bUU" id="C2D-gc-jbd"/>
                         <outlet property="tableView" destination="YwF-e6-yIn" id="6Qk-r7-aIm"/>
                         <outlet property="topBtn" destination="wF7-SX-sFc" id="bnc-a7-B98"/>
