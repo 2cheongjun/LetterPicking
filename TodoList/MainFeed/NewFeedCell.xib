@@ -3,6 +3,7 @@
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
+        <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -16,6 +17,23 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="307"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
+                    <button opaque="NO" contentMode="scaleToFill" verticalCompressionResistancePriority="752" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sB2-Lk-1Eh">
+                        <rect key="frame" x="4" y="170" width="32" height="36"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="34" id="RVq-W9-knM"/>
+                            <constraint firstAttribute="width" constant="34" id="jny-06-4hm"/>
+                        </constraints>
+                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                        <state key="normal">
+                            <imageReference key="image" image="heart" catalog="system" symbolScale="large"/>
+                        </state>
+                        <state key="selected">
+                            <imageReference key="image" image="heart.fill" catalog="system" symbolScale="large"/>
+                        </state>
+                        <connections>
+                            <action selector="didPressedHeart:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="LFi-Kl-gyh"/>
+                        </connections>
+                    </button>
                     <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="e2o-MJ-BvU">
                         <rect key="frame" x="44" y="170" width="26" height="29"/>
                         <state key="normal" title="Button"/>
@@ -68,23 +86,6 @@
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <button opaque="NO" contentMode="scaleToFill" verticalCompressionResistancePriority="752" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sB2-Lk-1Eh">
-                        <rect key="frame" x="0.0" y="160" width="48" height="48"/>
-                        <constraints>
-                            <constraint firstAttribute="height" constant="34" id="RVq-W9-knM"/>
-                            <constraint firstAttribute="width" constant="34" id="jny-06-4hm"/>
-                        </constraints>
-                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                        <state key="normal" image="star0.png">
-                            <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        </state>
-                        <state key="selected" image="star1.png">
-                            <color key="titleColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        </state>
-                        <connections>
-                            <action selector="didPressedHeart:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="LFi-Kl-gyh"/>
-                        </connections>
-                    </button>
                 </subviews>
                 <constraints>
                     <constraint firstItem="sB2-Lk-1Eh" firstAttribute="top" secondItem="e2o-MJ-BvU" secondAttribute="top" id="5Xs-mm-Oax"/>
@@ -127,8 +128,8 @@
         </tableViewCell>
     </objects>
     <resources>
+        <image name="heart" catalog="system" width="128" height="109"/>
+        <image name="heart.fill" catalog="system" width="128" height="109"/>
         <image name="message" catalog="system" width="128" height="113"/>
-        <image name="star0.png" width="48" height="48"/>
-        <image name="star1.png" width="48" height="48"/>
     </resources>
 </document>

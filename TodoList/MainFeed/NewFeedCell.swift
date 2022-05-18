@@ -21,7 +21,8 @@ class NewFeedCell: UITableViewCell {
     //델리게이트생성
     weak var delegate: firstTabVCCellDelegate?
     var index: Int? // 좋아요키밸류
-    var indexNum: IndexPath? // 게시글인덱스
+    var indexNum: IndexPath? // 셀클릭시 게시글번호
+    
     
     var feedIdx = 0
     static let identifier = "NewFeedCell"
@@ -54,17 +55,18 @@ class NewFeedCell: UITableViewCell {
         guard let idx = index else {
             return
         }
-           // 게시글 번호가 있을때에만 실행한다.
-            print("\(idx) 번째 게시글")
-        
+           // 이미UI가 채워져 눌려져 있을때?????
+
             sender.isSelected = !sender.isSelected
-      
+                        
+            // 버튼을 누를때
             if sender.isSelected {
-                
                 // 메인에서didPressHeart 함수를 실행
 //                    delegate?.didPressHeart(for: idx, like: true)
                 isTouched = true
                 delegate?.didPressHeart(for: idx, like: true, indexNum:(indexNum?.row)!)
+                
+                print("\(idx) 번째 게시글 : 버튼 \(isTouched)")
                 
                 // 클릭했을때 게시글 인덱스 가져오기
 //                    delegate?.onClickCell(index2:(index2?.row)!)
@@ -73,7 +75,7 @@ class NewFeedCell: UITableViewCell {
                 isTouched = false
                 delegate?.didPressHeart(for: idx, like: false, indexNum:(indexNum?.row)!)
             }
-//        sender.isSelected = !sender.isSelected
+            
     }
     
     
@@ -81,15 +83,17 @@ class NewFeedCell: UITableViewCell {
         
            didSet {
                if isTouched == true {
-//                   likeBtn.setImage(UIImage(systemName: "heart.fill", withConfiguration: UIImage.SymbolConfiguration(scale: .large)), for: .normal)
-                   let heart = UIImage(named: "star1.png")
-                   likeBtn.setImage(heart, for: .normal)
+                   likeBtn.setImage(UIImage(systemName: "heart.fill", withConfiguration: UIImage.SymbolConfiguration(scale: .large)), for: .normal)
+//                   let heart = UIImage(named: "star1.png")
+//                   likeBtn.setImage(heart, for: .normal)
                 
                }else{
-                   let heart2 = UIImage(named: "star0.png")
-                   likeBtn.setImage(heart2, for: .normal)
-//                   likeBtn.setImage(UIImage(systemName: "heart", withConfiguration: UIImage.SymbolConfiguration(scale: .large)), for: .normal)
+//                   let heart2 = UIImage(named: "star0.png")
+//                   likeBtn.setImage(heart2, for: .normal)
+                   likeBtn.setImage(UIImage(systemName: "heart", withConfiguration: UIImage.SymbolConfiguration(scale: .large)), for: .normal)
                }
+               
+               // 이미UI가 채워져 눌려져 있을때
            }
        }
     
@@ -132,3 +136,4 @@ class NewFeedCell: UITableViewCell {
     }
 
 }
+

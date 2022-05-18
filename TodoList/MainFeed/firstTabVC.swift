@@ -12,7 +12,7 @@ import Kingfisher
 
 
 class firstTabVC: UIViewController{
-
+    
     // 모델가져오기
     var feedModel: FeedModel?
     //피드 모델에 값이 있으면 가져온다.
@@ -32,7 +32,7 @@ class firstTabVC: UIViewController{
     
     // 좋아요를 하기위한 딕셔너리 (key값 :value값) 빈 딕셔너리 배열생성
     lazy var likes: [Int:Int] = [:]
-
+    
     // 현재까지 읽어 온 데이터의 페이지 정보
     // 최초에 화면을 실행할때 이미 1페이지에 해당하는 데이터를 읽어 왔으므로,page의 초기값으로 1을 할당하는것이 맞다.
     var page = 1
@@ -107,13 +107,13 @@ class firstTabVC: UIViewController{
             // 인디케이터 호출
             self.indicator.startAnimating()
             requestFeedAPI()
-        
+            
             self.topBtn.isHidden = false
         }else{
             print("데이터없음")
         }
         
-       
+        
     }
     
     
@@ -296,126 +296,126 @@ class firstTabVC: UIViewController{
     
     
     
-
-
-// 이미지 URL로드하기
-func loadImage(urlString: String, completion: @escaping (UIImage?)-> Void){
-    // url로 가져와 UIImage로 리턴한다.
     
-    let sessionConfig = URLSessionConfiguration.default
-    let session = URLSession(configuration: sessionConfig)
     
-    // urlString 이미지이름을(ex:http://3.37.202.166/img/2-jun.jpg) 가져와서 URL타입으로 바꿔준다.
-    if let hasURL = URL(string: urlString){
-        var request = URLRequest(url: hasURL)
-        request.httpMethod = "GET"
+    // 이미지 URL로드하기
+    func loadImage(urlString: String, completion: @escaping (UIImage?)-> Void){
+        // url로 가져와 UIImage로 리턴한다.
         
-        session.dataTask(with: request) { data, response, error in
-            // print( (response as! HTTPURLResponse).statusCode)
-            // 데이터가 있으면 UIImage로 리턴
-            if let hasData = data {
-                completion(UIImage(data: hasData))
-                
-                // print("hasData: \(hasData)")
-                return
-
-            }
-        }.resume() //실행한다.
-        session.finishTasksAndInvalidate()
-    }
-    // 실패시 nil리턴한다.
-    completion(nil)
-    
-}
-
-// 당겨서 새로고침 함수
-@objc func pullToRefresh(_ sender: Any) {
-    // 테이블뷰에 입력되는 데이터를 갱신한다.
-    // API호출
-    // 당겨서 새로고침하면,more누를때 다시 page번호를 1로세팅해준다.1부터 다시더해지도록..
-    page = 1
-    
-    requestFeedAPI()
-    self.tableView.reloadData()
-    //당겨서 새로고침 기능 종료
-    self.tableView.refreshControl?.endRefreshing()
-}
-
-// 애니메이션설정
-override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-    let tabBar = self.tabBarController?.tabBar
-    //        tabBar?.isHidden = (tabBar?.isHidden == true) ? false : true
-    UIView.animate(withDuration: TimeInterval(0.15),animations:{
-        //알파값이 0이면 1로, 1이면 0으로 바꿔준다.
-        //호출될때마다 점점 투명해졌다가 점점 진해질 것이다.
-        //                              (참거짓조건)? 참일때의값 : 거짓일때의 값
-        tabBar?.alpha = (tabBar?.alpha == 0 ? 1 : 0)
-    })
-}
-
-// 글 작성버튼
-@IBAction func writeBtn(_ sender: Any) {
-    // 스토리보드 세그로 연결함
-    
-}
-
-// 검색요청 API ***************************************************************************************
-func searchWord(success: (()->Void)? = nil, fail: ((String)->Void)? = nil) {
-    // 검색창에 작성한 단어
-    print("firstTabVC/ 단어입력내용 :\(self.word)")
-    
-    let sessionConfig = URLSessionConfiguration.default
-    let session = URLSession(configuration: sessionConfig)
-    var components = URLComponents(string: self.BASEURL+"post/0iOS_feedSearch.php?word=\(word)")
-    
-    //        let term = URLQueryItem(name: "term", value: "marvel")
-    let page = URLQueryItem(name: "word", value: word )
-    components?.queryItems = [page]
-    
-    // url이 없으면 리턴한다. 여기서 끝
-    guard let url = components?.url else { return }
-    
-    // 값이 있다면 받아와서 넣음.
-    var request = URLRequest(url: url)
-    
-    print("url :\(request)")
-    
-    request.httpMethod = "GET" //GET방식이다. 컨텐츠타입이 없고, 담아서 보내는 내용이 없음, URL호출만!
-    
-    let task = session.dataTask(with: request) { data, response, error in
-        print( (response as! HTTPURLResponse).statusCode )
+        let sessionConfig = URLSessionConfiguration.default
+        let session = URLSession(configuration: sessionConfig)
         
-        // 데이터가 있을때만 파싱한다.
-        if let hasData = data {
-            // 모델만든것 가져다가 디코더해준다.
-            do{
-                // 만들어놓은 피드모델에 담음, 데이터를 디코딩해서, 디코딩은 try catch문 써줘야함
-                // 여기서 실행을 하고 오류가 나면 catch로 던져서 프린트해주겠다.
-                self.feedModel = try JSONDecoder().decode(FeedModel.self, from: hasData)
-                //                    print(self.feedModel ?? "no data")
-                
-                // 모든UI 작업은 메인쓰레드에서 이루어져야한다.
-                DispatchQueue.main.async {
-                    // 테이블뷰 갱신 (자동으로 갱신안됨)
-                    self.tableView.reloadData()
-                }
+        // urlString 이미지이름을(ex:http://3.37.202.166/img/2-jun.jpg) 가져와서 URL타입으로 바꿔준다.
+        if let hasURL = URL(string: urlString){
+            var request = URLRequest(url: hasURL)
+            request.httpMethod = "GET"
             
-            } catch {
-                print("error: ", error)
-            }
-        }else{
-            // sucess가 0이면
-            self.isCalling = false
-            self.alert("좋아요업로드 응답실패")
+            session.dataTask(with: request) { data, response, error in
+                // print( (response as! HTTPURLResponse).statusCode)
+                // 데이터가 있으면 UIImage로 리턴
+                if let hasData = data {
+                    completion(UIImage(data: hasData))
+                    
+                    // print("hasData: \(hasData)")
+                    return
+                    
+                }
+            }.resume() //실행한다.
+            session.finishTasksAndInvalidate()
         }
+        // 실패시 nil리턴한다.
+        completion(nil)
+        
     }
-    // task를 실행한다.
-    task.resume()
-    // 세션끝내기
-    session.finishTasksAndInvalidate()
     
-}//함수 끝
-
+    // 당겨서 새로고침 함수
+    @objc func pullToRefresh(_ sender: Any) {
+        // 테이블뷰에 입력되는 데이터를 갱신한다.
+        // API호출
+        // 당겨서 새로고침하면,more누를때 다시 page번호를 1로세팅해준다.1부터 다시더해지도록..
+        page = 1
+        
+        requestFeedAPI()
+        self.tableView.reloadData()
+        //당겨서 새로고침 기능 종료
+        self.tableView.refreshControl?.endRefreshing()
+    }
+    
+    // 애니메이션설정
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        let tabBar = self.tabBarController?.tabBar
+        //        tabBar?.isHidden = (tabBar?.isHidden == true) ? false : true
+        UIView.animate(withDuration: TimeInterval(0.15),animations:{
+            //알파값이 0이면 1로, 1이면 0으로 바꿔준다.
+            //호출될때마다 점점 투명해졌다가 점점 진해질 것이다.
+            //                              (참거짓조건)? 참일때의값 : 거짓일때의 값
+            tabBar?.alpha = (tabBar?.alpha == 0 ? 1 : 0)
+        })
+    }
+    
+    // 글 작성버튼
+    @IBAction func writeBtn(_ sender: Any) {
+        // 스토리보드 세그로 연결함
+        
+    }
+    
+    // 검색요청 API ***************************************************************************************
+    func searchWord(success: (()->Void)? = nil, fail: ((String)->Void)? = nil) {
+        // 검색창에 작성한 단어
+        print("firstTabVC/ 단어입력내용 :\(self.word)")
+        
+        let sessionConfig = URLSessionConfiguration.default
+        let session = URLSession(configuration: sessionConfig)
+        var components = URLComponents(string: self.BASEURL+"post/0iOS_feedSearch.php?word=\(word)")
+        
+        //        let term = URLQueryItem(name: "term", value: "marvel")
+        let page = URLQueryItem(name: "word", value: word )
+        components?.queryItems = [page]
+        
+        // url이 없으면 리턴한다. 여기서 끝
+        guard let url = components?.url else { return }
+        
+        // 값이 있다면 받아와서 넣음.
+        var request = URLRequest(url: url)
+        
+        print("url :\(request)")
+        
+        request.httpMethod = "GET" //GET방식이다. 컨텐츠타입이 없고, 담아서 보내는 내용이 없음, URL호출만!
+        
+        let task = session.dataTask(with: request) { data, response, error in
+            print( (response as! HTTPURLResponse).statusCode )
+            
+            // 데이터가 있을때만 파싱한다.
+            if let hasData = data {
+                // 모델만든것 가져다가 디코더해준다.
+                do{
+                    // 만들어놓은 피드모델에 담음, 데이터를 디코딩해서, 디코딩은 try catch문 써줘야함
+                    // 여기서 실행을 하고 오류가 나면 catch로 던져서 프린트해주겠다.
+                    self.feedModel = try JSONDecoder().decode(FeedModel.self, from: hasData)
+                    //                    print(self.feedModel ?? "no data")
+                    
+                    // 모든UI 작업은 메인쓰레드에서 이루어져야한다.
+                    DispatchQueue.main.async {
+                        // 테이블뷰 갱신 (자동으로 갱신안됨)
+                        self.tableView.reloadData()
+                    }
+                    
+                } catch {
+                    print("error: ", error)
+                }
+            }else{
+                // sucess가 0이면
+                self.isCalling = false
+                self.alert("좋아요업로드 응답실패")
+            }
+        }
+        // task를 실행한다.
+        task.resume()
+        // 세션끝내기
+        session.finishTasksAndInvalidate()
+        
+    }//함수 끝
+    
 }// 뷰컨끝
 
 
@@ -469,25 +469,28 @@ extension firstTabVC: UITableViewDelegate, UITableViewDataSource{
         cell.dataLabel.text =  self.feedModel?.results[indexPath.row].date
         cell.priceLabel.text =  self.feedModel?.results[indexPath.row].myPlaceText
         cell.num.text =  self.feedModel?.results[indexPath.row].feedIdx?.description ?? ""
+    
         
         // 게시글번호에 따른 하트여부 1이면 하트 눌림 ************************************************************
         Num = self.feedModel?.results[indexPath.row].cbheart ?? 0
-//        print("하트번호 \(self.feedModel?.results[indexPath.row].cbheart?.description ?? "")")
-
+        //        print("하트번호 \(self.feedModel?.results[indexPath.row].cbheart?.description ?? "")")
+        
         
         // 서버에서 가져온 값으로 좋아요 표기
         if (self.feedModel?.results[indexPath.row].cbheart ?? 0 > 0){
             // 0보다 그면 하트를 눌린UI로 만든다.
             // 버튼 상태도 바꿔줘야함
             likes[indexPath.row] = 1
-            cell.isTouched = true
-            checkOn = true
-            
+         
+            numIdx  = self.feedModel?.results[indexPath.row].feedIdx?.description ?? ""
+            self.checkOn = true
+           
+            print ("서버에서가져온 check :\(checkOn)\(numIdx)")
+          
         }else if(self.feedModel?.results[indexPath.row].cbheart ?? 0 == 0){
             likes[indexPath.row] = 0
-            cell.isTouched = false
+            self.checkOn = false
         }
-        
         
         //좋아요 버튼 눌림 상태 *******************************************************************************
         if likes[indexPath.row] == 1 {
@@ -501,7 +504,7 @@ extension firstTabVC: UITableViewDelegate, UITableViewDataSource{
             numIdx  = self.feedModel?.results[indexPath.row].feedIdx?.description ?? ""
             print("게시글 false :\(numIdx)")
         }
-
+        
         // 킹피셔를 사용한 이미지 처리방법
         if let imageURL =  self.feedModel?.results[indexPath.row].postImgs  {
             // 이미지처리방법
@@ -587,10 +590,10 @@ extension firstTabVC: UITableViewDelegate, UITableViewDataSource{
                     self.dismiss(animated: true, completion: nil)
                     
                     // 이거땜에 좋아요가 두번눌리고 오류냠
-                    //                    DispatchQueue.main.async {
-                    //                        // 테이블뷰 갱신 (자동으로 갱신안됨)
-                    //                        self.tableView.reloadData()
-                    //                    }
+                                DispatchQueue.main.async {
+//                                    // 테이블뷰 갱신 (자동으로 갱신안됨)
+//                                    self.tableView.reloadData()
+                                }
                     
                 }else{
                     // sucess가 0이면
@@ -598,9 +601,9 @@ extension firstTabVC: UITableViewDelegate, UITableViewDataSource{
                     self.alert("좋아요업로드 응답실패")
                 }
             }
-//            else{
-//
-//            }
+            //            else{
+            //
+            //            }
         }
         
     }//함수 끝
@@ -645,7 +648,7 @@ extension firstTabVC: UITableViewDelegate, UITableViewDataSource{
                     //                    }
                 }else{
                     //sucess가 0이면
-//                    self.isCalling = false
+                    //                    self.isCalling = false
                     self.alert("0")
                 }
             }else{
@@ -682,27 +685,24 @@ extension firstTabVC: UISearchBarDelegate {
 // 좋아요 프로토콜 구현부
 extension firstTabVC: firstTabVCCellDelegate{
     
-    //      하트눌림( 몇번째 게시글인가 번호였음, 좋아요 상태 , 게시글번호 넘김)
+    //      하트눌림( 몇번째 게시글인가 번호였음, 좋아요 상태 , 게시글번호 넘김) // 체크상태도 여기에 넣어서?
     func didPressHeart(for index: Int, like: Bool, indexNum: Int) {
-        
-//                    if self.isCalling == true{
-//                        self.alert("진행중입니다. 잠시만 기다려주세요")
-//                        return
-//                    }else{
-//                        self.isCalling = true
-//                    }
 
         // 좋아요가 눌리면 true
-        if like{
-                likes[index] = 1
-                print("좋아요On 키:값 \(likes)")
-    //            print("\(self.feedModel?.results[indexNum].feedIdx?.description ?? "")글번호 좋아요눌림")
-                numIdx = self.feedModel?.results[indexNum].feedIdx?.description ?? ""
-               
-                // 좋아요 insert
-                uploadHeart(postIdx:numIdx)
-        }else{
+        if like {
+            // 하트On(로컬 눌림)/ 딕셔너리 안에 눌림값 넣기 /print("좋아요On 키:값 \(likes)")
+            likes[index] = 1
             
+            numIdx = self.feedModel?.results[indexNum].feedIdx?.description ?? ""
+            if (self.checkOn == false) {
+                print(self.checkOn)
+                uploadHeart(postIdx:numIdx)
+                
+               
+            }
+            
+        }else{
+            // 하트 Off(로컬 눌림)
             likes[index] = 0
             print("좋아요Off 키:값 \(likes)")
             // print("cell \(likes[index]!)")
@@ -711,17 +711,12 @@ extension firstTabVC: firstTabVCCellDelegate{
             
             // 좋아요 Delete
             DeleteHeart(postIdx: numIdx)
-//
-//            if self.isCalling == true{
-//                self.alert("진행중입니다. 잠시만 기다려주세요")
-//                return
-//            }else{
-//                self.isCalling = true
-//            }
-          
+            
+             }
         }
     }
-}
+
+
 
 
 
