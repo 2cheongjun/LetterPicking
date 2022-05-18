@@ -360,7 +360,7 @@ class firstTabVC: UIViewController{
         
     }
     
-    // 검색요청 API ***************************************************************************************
+    // 검색요청 API
     func searchWord(success: (()->Void)? = nil, fail: ((String)->Void)? = nil) {
         // 검색창에 작성한 단어
         print("firstTabVC/ 단어입력내용 :\(self.word)")
@@ -479,33 +479,33 @@ extension firstTabVC: UITableViewDelegate, UITableViewDataSource{
         if (self.feedModel?.results[indexPath.row].cbheart ?? 0 > 0){
             // 0보다 그면 하트를 눌린UI로 만든다.
             // 버튼 상태도 바꿔줘야함
-            // ♥ 눌림상태
+            // UI♥ 눌림상태
             cell.isTouched = true
-            // 로컬 눌림상태
+            // 로컬 눌림상태 좋아요 딕셔너리 값1 저장
             likes[indexPath.row] = 1
-           
+            // 게시글번호 저장
             numIdx  = self.feedModel?.results[indexPath.row].feedIdx?.description ?? ""
-//            self.checkOn = true
-//            print ("서버에서가져온 check :\(checkOn)\(numIdx)")
         }else{
             // ♡ 안눌림상태
             cell.isTouched = false
+            // 로컬 눌림상태
             likes[indexPath.row] = 0
+            // 게시글번호
             numIdx  = self.feedModel?.results[indexPath.row].feedIdx?.description ?? ""
-           
         }
+        
         
         //좋아요 버튼 눌림 상태 *******************************************************************************
         if likes[indexPath.row] == 1 {
             
             cell.isTouched = true
             numIdx  = self.feedModel?.results[indexPath.row].feedIdx?.description ?? ""
-            print("게시글 true :\(numIdx)")
+//            print("게시글 true :\(numIdx)")
             
         }else{
             cell.isTouched = false
             numIdx  = self.feedModel?.results[indexPath.row].feedIdx?.description ?? ""
-            print("게시글 false :\(numIdx)")
+//            print("게시글 false :\(numIdx)")
         }
         
         // 킹피셔를 사용한 이미지 처리방법
@@ -677,21 +677,20 @@ extension firstTabVC: UISearchBarDelegate {
 }
 
 
+// MARK : - firstTabVCCellDelegate
 // 좋아요 프로토콜 구현부
 extension firstTabVC: firstTabVCCellDelegate{
     
-    //      하트눌림( 몇번째 게시글인가 번호였음, 좋아요 상태 , 게시글번호 넘김) // 체크상태도 여기에 넣어서?
+    // 하트눌림( 몇번째 게시글인가 번호였음, 좋아요상태 ,게시글번호)를 셀에게 받아와서
+    // 그값으로 업로드 실행
     func didPressHeart(for index: Int, like: Bool, indexNum: Int) {
-
-        // 좋아요가 눌리면 true
+        // 좋아요상태가 On일때
         if like {
             // 하트On(로컬 눌림)/ 딕셔너리 안에 눌림값 넣기 /print("좋아요On 키:값 \(likes)")
             likes[index] = 1
-            
             numIdx = self.feedModel?.results[indexNum].feedIdx?.description ?? ""
             uploadHeart(postIdx:numIdx)
-
-            
+       // 좋아요상태가 Off일때
         }else{
             // 하트 Off(로컬 눌림)
             likes[index] = 0

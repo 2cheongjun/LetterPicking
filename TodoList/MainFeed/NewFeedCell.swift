@@ -7,10 +7,10 @@
 
 import UIKit
 
-//셀에서프로토콜선언 ->구현은 뷰컨트롤에서
+// 셀에서 프로토콜선언 -> 구현은 뷰컨트롤에서
 protocol firstTabVCCellDelegate: AnyObject{
 //    func didTapButton()
-    // 좋아요버튼이 눌릴때, index값과, Bool값을 저장한다.
+    // 좋아요버튼이 눌릴때, index값과, Bool값을 받아서, 뷰컨에서 실행해줘 // 버튼 클릭메소드를 실행해줘
     func didPressHeart(for index: Int, like: Bool, indexNum: Int)
 //    func onClickCell(index2: Int)
 }
@@ -19,9 +19,8 @@ protocol firstTabVCCellDelegate: AnyObject{
 class NewFeedCell: UITableViewCell {
     //델리게이트생성
     weak var delegate: firstTabVCCellDelegate?
-    var index: Int? // 좋아요키밸류
+    var index: Int? // 셀인덱스
     var indexNum: IndexPath? // 셀클릭시 게시글번호
-    
     
     var feedIdx = 0
     static let identifier = "NewFeedCell"
@@ -48,35 +47,37 @@ class NewFeedCell: UITableViewCell {
     //좋아요 버튼정의
     @IBOutlet var likeBtn: UIButton!
 
-    //like버튼 직접연결하는 부분***********************************************************
+    // like버튼 작동부분(UI변경, 상태값 변경)***********************************************************
+    // 버튼누르면 하트On,Off 하고
+    // 델리게이트프토코롤에게 셀인덱스,좋아요상태,게시글번호를 전달해라.
     @IBAction func didPressedHeart(_ sender: UIButton) {
         
         guard let idx = index else {
             return
         }
-         print("idx \(idx)")
-           // 이미UI가 채워져 눌려져 있을때?????
+         print("셀인덱스 idx \(idx)")
+         
             sender.isSelected = !sender.isSelected
                         
             // 버튼을 누를때 (눌려져 있을때와, 안눌려져 있을때 버튼클릭 이벤트)
             if sender.isSelected {
                 // 메인에서didPressHeart 함수를 실행
                 
-                // ♥ 이미 눌러져있던 하트 클릭시// 서버에서 가져온 값이  있을때(즉, isTouched가 true값이면)
-                if isTouched == true{
+                // ♥ 이미 눌러져있던 하트 클릭시 //서버에서온 하트 값이 있을때(즉,서버에서 가져온값이 0이상이면, isTouched = true)
+                if isTouched == true{ //
                     sender.isSelected = !sender.isSelected
                     // 빈하트로 변경
                     isTouched = false
-                    // 삭제API 호출
+                    // 델리게이트프토코롤에게 셀인덱스,좋아요상태,게시글번호를 전달해라.
                     delegate?.didPressHeart(for: idx, like: false, indexNum:(indexNum?.row)!)
-                    print("\(idx) : test")
+                    print("\(idx) 번째 게시글 : 버튼 \(isTouched!)")
                 }else{
                     // ♡ 하트버튼을 처음누르는 상태
                     isTouched = true
-                    // 업로드API 호출
+                    /// 델리게이트프토코롤에게 셀인덱스,좋아요상태,게시글번호를 전달해라.
                     delegate?.didPressHeart(for: idx, like: true, indexNum:(indexNum?.row)!)
                     
-                    print("\(idx) 번째 게시글 : 버튼 \(isTouched)")
+                    print("\(idx) 번째 게시글 : 버튼 \(isTouched!)")
                 }
                 
             }else {
@@ -84,7 +85,7 @@ class NewFeedCell: UITableViewCell {
                 isTouched = false
                 // 삭제API 호출
                 delegate?.didPressHeart(for: idx, like: false, indexNum:(indexNum?.row)!)
-                print("\(idx) 번째 게시글 : 버튼 \(isTouched)")
+                print("\(idx) 번째 게시글 : 버튼 \(isTouched!)")
             }
             
     }
@@ -103,8 +104,6 @@ class NewFeedCell: UITableViewCell {
 //                   likeBtn.setImage(heart2, for: .normal)
                    likeBtn.setImage(UIImage(systemName: "heart", withConfiguration: UIImage.SymbolConfiguration(scale: .large)), for: .normal)
                }
-               
-               // 이미UI가 채워져 눌려져 있을때
            }
        }
     
