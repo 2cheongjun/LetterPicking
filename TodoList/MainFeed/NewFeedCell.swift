@@ -12,7 +12,6 @@ protocol firstTabVCCellDelegate: AnyObject{
 //    func didTapButton()
     // 좋아요버튼이 눌릴때, index값과, Bool값을 저장한다.
     func didPressHeart(for index: Int, like: Bool, indexNum: Int)
-    
 //    func onClickCell(index2: Int)
 }
 
@@ -67,9 +66,6 @@ class NewFeedCell: UITableViewCell {
                 delegate?.didPressHeart(for: idx, like: true, indexNum:(indexNum?.row)!)
                 
                 print("\(idx) 번째 게시글 : 버튼 \(isTouched)")
-                
-                // 클릭했을때 게시글 인덱스 가져오기
-//                    delegate?.onClickCell(index2:(index2?.row)!)
                 
             }else {
                 isTouched = false

@@ -152,7 +152,7 @@ class HeartVC: UIViewController, UICollectionViewDataSource, UICollectionViewDel
                         // JSON디코더 사용
                         self.heartModel = try JSONDecoder().decode(HeartModel.self, from: dataJSON)
            
-                        print((self.heartModel ?? "no data"))
+//                        print((self.heartModel ?? "no data"))
                         
                         // 모든UI 작업은 메인쓰레드에서 이루어져야한다.
                         DispatchQueue.main.async {
@@ -205,9 +205,9 @@ class HeartVC: UIViewController, UICollectionViewDataSource, UICollectionViewDel
             func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
                 
                 let width = collectionView.frame.width / 3 - 1 ///  3등분하여 배치, 옆 간격이 1이므로 1을 빼줌
-                print("collectionView width=\(collectionView.frame.width)")
-                print("cell하나당 width=\(width)")
-                print("root view width = \(self.view.frame.width)")
+//                print("collectionView width=\(collectionView.frame.width)")
+//                print("cell하나당 width=\(width)")
+//                print("root view width = \(self.view.frame.width)")
                 
                 let size = CGSize(width: width, height: width)
                 return size

@@ -107,13 +107,14 @@ class firstTabVC: UIViewController{
             // 인디케이터 호출
             self.indicator.startAnimating()
             requestFeedAPI()
+            OperationQueue.main.addOperation { // DispatchQueue도 가능.
+                self.tableView.reloadData()
+            }
             
             self.topBtn.isHidden = false
         }else{
             print("데이터없음")
         }
-        
-        
     }
     
     
@@ -124,6 +125,9 @@ class firstTabVC: UIViewController{
         page = 1
         // API호출
         requestFeedAPI()
+        OperationQueue.main.addOperation { // DispatchQueue도 가능.
+            self.tableView.reloadData()
+        }
         
         // 수정업데이트노티피케이션
         // 노티3.WriteVC에서 보낸 값을 받기위해 DissmissWrite의 노티피케이션을 정의해 받을 준비한다.
@@ -221,9 +225,7 @@ class firstTabVC: UIViewController{
         // API호출
         requestFeedAPI()
         print("글쓰기업뎃노티피케이션")
-        // 이 부분을 해주어야 다시 comment들을 api로 가져올 수 있었다.
-        // 즉, reload할 데이터를 불러와야 바뀌는 게 있다는 의미다.
-        // 안 해서 고생함...
+
         OperationQueue.main.addOperation { // DispatchQueue도 가능.
             self.tableView.reloadData()
         }
@@ -262,7 +264,7 @@ class firstTabVC: UIViewController{
         
         let task = session.dataTask(with: request) { data, response, error in
             
-            print( (response as! HTTPURLResponse).statusCode )
+//            print( (response as! HTTPURLResponse).statusCode )
             
             // 데이터가 있을때만 파싱한다.
             if let hasData = data {
@@ -273,7 +275,7 @@ class firstTabVC: UIViewController{
                     self.feedModel = try JSONDecoder().decode(FeedModel.self, from: hasData)
                     //파싱이 끝나면 스크롤
                     
-                    print(self.feedModel ?? "no data")
+//                    print(self.feedModel ?? "no data")
                     
                     // 모든UI 작업은 메인쓰레드에서 이루어져야한다.
                     DispatchQueue.main.async {
@@ -336,7 +338,6 @@ class firstTabVC: UIViewController{
         page = 1
         
         requestFeedAPI()
-        self.tableView.reloadData()
         //당겨서 새로고침 기능 종료
         self.tableView.refreshControl?.endRefreshing()
     }
@@ -473,23 +474,22 @@ extension firstTabVC: UITableViewDelegate, UITableViewDataSource{
         
         // 게시글번호에 따른 하트여부 1이면 하트 눌림 ************************************************************
         Num = self.feedModel?.results[indexPath.row].cbheart ?? 0
-        //        print("하트번호 \(self.feedModel?.results[indexPath.row].cbheart?.description ?? "")")
-        
         
         // 서버에서 가져온 값으로 좋아요 표기
         if (self.feedModel?.results[indexPath.row].cbheart ?? 0 > 0){
             // 0보다 그면 하트를 눌린UI로 만든다.
             // 버튼 상태도 바꿔줘야함
             likes[indexPath.row] = 1
+            // ♥ 눌림상태
+            cell.isTouched = true
          
             numIdx  = self.feedModel?.results[indexPath.row].feedIdx?.description ?? ""
-            self.checkOn = true
-           
-            print ("서버에서가져온 check :\(checkOn)\(numIdx)")
-          
-        }else if(self.feedModel?.results[indexPath.row].cbheart ?? 0 == 0){
+//            self.checkOn = true
+//            print ("서버에서가져온 check :\(checkOn)\(numIdx)")
+        }else{
             likes[indexPath.row] = 0
-            self.checkOn = false
+            // ♡ 안눌림상태
+            cell.isTouched = false
         }
         
         //좋아요 버튼 눌림 상태 *******************************************************************************
@@ -586,14 +586,14 @@ extension firstTabVC: UITableViewDelegate, UITableViewDataSource{
                 let success = jsonObject["success"] as? Int ?? 0
                 
                 if success == 1 {
-                    self.alert("좋아요업로드 성공 JSON= \(try! res.result.get())!)")
-                    self.dismiss(animated: true, completion: nil)
+//                    self.alert("좋아요업로드 성공 JSON= \(try! res.result.get())!)")
+//                    self.dismiss(animated: true, completion: nil)
                     
                     // 이거땜에 좋아요가 두번눌리고 오류냠
-                                DispatchQueue.main.async {
+//                                DispatchQueue.main.async {
 //                                    // 테이블뷰 갱신 (자동으로 갱신안됨)
 //                                    self.tableView.reloadData()
-                                }
+//                                }
                     
                 }else{
                     // sucess가 0이면
@@ -643,8 +643,8 @@ extension firstTabVC: UITableViewDelegate, UITableViewDataSource{
                 let success = jsonObject["success"] as? Int ?? 0
                 
                 if success == 1 {
-                    self.alert("좋아요취소성공 JSON= \(try! res.result.get())!)")
-                    self.dismiss(animated: true, completion: nil)
+//                    self.alert("좋아요취소성공 JSON= \(try! res.result.get())!)")
+//                    self.dismiss(animated: true, completion: nil)
                     //                    }
                 }else{
                     //sucess가 0이면
@@ -658,12 +658,6 @@ extension firstTabVC: UITableViewDelegate, UITableViewDataSource{
         }
         
     }//함수 끝
-}
-
-// 이미지캐시작업을 위한 싱글톤 클래스생성
-class ImageCacheManager{
-    static let shared = NSCache<NSString, UIImage>()
-    private init() {}
 }
 
 
@@ -694,12 +688,8 @@ extension firstTabVC: firstTabVCCellDelegate{
             likes[index] = 1
             
             numIdx = self.feedModel?.results[indexNum].feedIdx?.description ?? ""
-            if (self.checkOn == false) {
-                print(self.checkOn)
-                uploadHeart(postIdx:numIdx)
-                
-               
-            }
+            uploadHeart(postIdx:numIdx)
+
             
         }else{
             // 하트 Off(로컬 눌림)
@@ -714,7 +704,7 @@ extension firstTabVC: firstTabVCCellDelegate{
             
              }
         }
-    }
+}
 
 
 

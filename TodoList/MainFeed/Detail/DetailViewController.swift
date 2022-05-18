@@ -283,9 +283,24 @@ class DetailViewController: UIViewController, UITextViewDelegate, UITableViewDat
                     print("DetailViewController 응답결과 \(success)")
                     
                     
-                } catch let e as NSError {
-                    print("DetailViewController 삭제요청/ 파싱오류: \(e.localizedDescription)")
+                }        catch let DecodingError.dataCorrupted(context) {
+                    print(context)
+                } catch let DecodingError.keyNotFound(key, context) {
+                    print("Key '\(key)' not found:", context.debugDescription)
+                    print("codingPath:", context.codingPath)
+                } catch let DecodingError.valueNotFound(value, context) {
+                    print("Value '\(value)' not found:", context.debugDescription)
+                    print("codingPath:", context.codingPath)
+                } catch let DecodingError.typeMismatch(type, context)  {
+                    print("Type '\(type)' mismatch:", context.debugDescription)
+                    print("codingPath:", context.codingPath)
+                } catch {
+                    print("error: ", error)
                 }
+                
+//                catch let e as NSError {
+//                    print("DetailViewController 삭제요청/ 파싱오류: \(e.localizedDescription)")
+//                }
             } // end if DispatchQueue.main.async()
         }   // 6. POST 전송
         task.resume()
