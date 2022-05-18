@@ -51,26 +51,29 @@ class NewFeedCell: UITableViewCell {
     //like버튼 직접연결하는 부분***********************************************************
     @IBAction func didPressedHeart(_ sender: UIButton) {
         
-        sender.isSelected = !sender.isSelected
-        
         guard let idx = index else {
             return
         }
            // 게시글 번호가 있을때에만 실행한다.
             print("\(idx) 번째 게시글")
+        
+            sender.isSelected = !sender.isSelected
       
             if sender.isSelected {
-                isTouched = true
+                
                 // 메인에서didPressHeart 함수를 실행
 //                    delegate?.didPressHeart(for: idx, like: true)
+                isTouched = true
                 delegate?.didPressHeart(for: idx, like: true, indexNum:(indexNum?.row)!)
+                
                 // 클릭했을때 게시글 인덱스 가져오기
 //                    delegate?.onClickCell(index2:(index2?.row)!)
+                
             }else {
                 isTouched = false
                 delegate?.didPressHeart(for: idx, like: false, indexNum:(indexNum?.row)!)
             }
-//            sender.isSelected = !sender.isSelected
+//        sender.isSelected = !sender.isSelected
     }
     
     
@@ -78,9 +81,14 @@ class NewFeedCell: UITableViewCell {
         
            didSet {
                if isTouched == true {
-                   likeBtn.setImage(UIImage(systemName: "heart.fill", withConfiguration: UIImage.SymbolConfiguration(scale: .large)), for: .normal)
+//                   likeBtn.setImage(UIImage(systemName: "heart.fill", withConfiguration: UIImage.SymbolConfiguration(scale: .large)), for: .normal)
+                   let heart = UIImage(named: "star1.png")
+                   likeBtn.setImage(heart, for: .normal)
+                
                }else{
-                   likeBtn.setImage(UIImage(systemName: "heart", withConfiguration: UIImage.SymbolConfiguration(scale: .large)), for: .normal)
+                   let heart2 = UIImage(named: "star0.png")
+                   likeBtn.setImage(heart2, for: .normal)
+//                   likeBtn.setImage(UIImage(systemName: "heart", withConfiguration: UIImage.SymbolConfiguration(scale: .large)), for: .normal)
                }
            }
        }

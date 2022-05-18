@@ -43,6 +43,7 @@ class firstTabVC: UIViewController{
     
     //API 호출상태값을 관리할 변수
     var isCalling = false
+    var checkOn = false
     
     // 로그인한 아이디명표기
     @IBOutlet weak var userName: UILabel!
@@ -315,7 +316,7 @@ func loadImage(urlString: String, completion: @escaping (UIImage?)-> Void){
             if let hasData = data {
                 completion(UIImage(data: hasData))
                 
-                //                    print("hasData: \(hasData)")
+                // print("hasData: \(hasData)")
                 return
 
             }
@@ -448,8 +449,7 @@ extension firstTabVC: UITableViewDelegate, UITableViewDataSource{
         //선택한 행의 내용을 feedResult에 담는다.
         detailVC.feedResult = self.feedModel?.results[indexPath.row]
         // 전체화면보기하면 닫기버튼이 없음 만들어줘야함.
-        //        detailVC.modalPresentationStyle = .fullScreen
-        
+        // detailVC.modalPresentationStyle = .fullScreen
         
         // 화면이 띄워진후에 값을 넣어야 널크러쉬가 안남
         self.present(detailVC, animated: true){ }
@@ -473,18 +473,25 @@ extension firstTabVC: UITableViewDelegate, UITableViewDataSource{
         // 게시글번호에 따른 하트여부 1이면 하트 눌림 ************************************************************
         Num = self.feedModel?.results[indexPath.row].cbheart ?? 0
 //        print("하트번호 \(self.feedModel?.results[indexPath.row].cbheart?.description ?? "")")
-//
-        if (self.feedModel?.results[indexPath.row].cbheart ?? 0 > 0){
-            // 0보다 그면 하트를 눌린상태로 만든다.
-            likes[indexPath.row] = 1
 
-            print("서버에서온 좋아요 : 키:값 \(likes)")
+        
+        // 서버에서 가져온 값으로 좋아요 표기
+        if (self.feedModel?.results[indexPath.row].cbheart ?? 0 > 0){
+            // 0보다 그면 하트를 눌린UI로 만든다.
+            // 버튼 상태도 바꿔줘야함
+            likes[indexPath.row] = 1
+            cell.isTouched = true
+            checkOn = true
+            
         }else if(self.feedModel?.results[indexPath.row].cbheart ?? 0 == 0){
             likes[indexPath.row] = 0
+            cell.isTouched = false
         }
+        
         
         //좋아요 버튼 눌림 상태 *******************************************************************************
         if likes[indexPath.row] == 1 {
+            
             cell.isTouched = true
             numIdx  = self.feedModel?.results[indexPath.row].feedIdx?.description ?? ""
             print("게시글 true :\(numIdx)")
@@ -678,27 +685,24 @@ extension firstTabVC: firstTabVCCellDelegate{
     //      하트눌림( 몇번째 게시글인가 번호였음, 좋아요 상태 , 게시글번호 넘김)
     func didPressHeart(for index: Int, like: Bool, indexNum: Int) {
         
+//                    if self.isCalling == true{
+//                        self.alert("진행중입니다. 잠시만 기다려주세요")
+//                        return
+//                    }else{
+//                        self.isCalling = true
+//                    }
 
         // 좋아요가 눌리면 true
         if like{
-            likes[index] = 1
-            print("좋아요On 키:값 \(likes)")
-//            print("\(indexNum) 클릭")
-//            print("\(self.feedModel?.results[indexNum].feedIdx?.description ?? "")글번호 좋아요눌림")
-            numIdx = self.feedModel?.results[indexNum].feedIdx?.description ?? ""
-           
-//            if self.isCalling == true{
-//                self.alert("진행중입니다. 잠시만 기다려주세요")
-//                return
-//            }else{
-//                self.isCalling = true
-//            }
-            
-            // 좋아요 insert
-            uploadHeart(postIdx:numIdx)
-            
-            
+                likes[index] = 1
+                print("좋아요On 키:값 \(likes)")
+    //            print("\(self.feedModel?.results[indexNum].feedIdx?.description ?? "")글번호 좋아요눌림")
+                numIdx = self.feedModel?.results[indexNum].feedIdx?.description ?? ""
+               
+                // 좋아요 insert
+                uploadHeart(postIdx:numIdx)
         }else{
+            
             likes[index] = 0
             print("좋아요Off 키:값 \(likes)")
             // print("cell \(likes[index]!)")

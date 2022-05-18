@@ -253,17 +253,23 @@
                                                 <action selector="TopBtn:" destination="b6h-lu-bIc" eventType="touchUpInside" id="ej5-cE-w3k"/>
                                             </connections>
                                         </button>
-                                        <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" hidesWhenStopped="YES" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="6db-0h-zrc">
-                                            <rect key="frame" x="128" y="11" width="20" height="23"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" misplaced="YES" hidesWhenStopped="YES" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="6db-0h-zrc">
+                                            <rect key="frame" x="96" y="10" width="37" height="25"/>
+                                            <constraints>
+                                                <constraint firstAttribute="width" constant="37" id="9K7-0R-JPx"/>
+                                                <constraint firstAttribute="height" constant="25" id="Mrk-t2-ahc"/>
+                                            </constraints>
                                             <color key="color" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </activityIndicatorView>
                                     </subviews>
                                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                     <constraints>
+                                        <constraint firstItem="6db-0h-zrc" firstAttribute="top" secondItem="rWN-fh-BWg" secondAttribute="top" constant="11" id="0Uh-VD-yRx"/>
                                         <constraint firstItem="wF7-SX-sFc" firstAttribute="leading" secondItem="rWN-fh-BWg" secondAttribute="leading" constant="20" id="El9-5L-2Iw"/>
+                                        <constraint firstAttribute="bottom" secondItem="6db-0h-zrc" secondAttribute="bottom" constant="8" id="ZNG-bs-UHW"/>
                                         <constraint firstAttribute="bottom" secondItem="wF7-SX-sFc" secondAttribute="bottom" constant="10" id="Zwi-15-NI2"/>
                                         <constraint firstItem="wF7-SX-sFc" firstAttribute="top" secondItem="rWN-fh-BWg" secondAttribute="top" constant="10" id="fFO-qO-YDa"/>
+                                        <constraint firstItem="6db-0h-zrc" firstAttribute="leading" secondItem="rWN-fh-BWg" secondAttribute="leading" constant="121" id="ocS-IT-fR1"/>
                                         <constraint firstAttribute="trailing" secondItem="wF7-SX-sFc" secondAttribute="trailing" constant="20" id="rp1-HU-Z1H"/>
                                     </constraints>
                                 </view>
