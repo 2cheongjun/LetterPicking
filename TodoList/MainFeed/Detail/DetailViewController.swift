@@ -281,7 +281,7 @@ class DetailViewController: UIViewController, UITextViewDelegate, UITableViewDat
                     let success = jsonObject["success"] as? String
                     //                    let userID = jsonObject["userID"] as? String
                     print("DetailViewController 응답결과 \(success)")
-                    
+   
                     
                 }        catch let DecodingError.dataCorrupted(context) {
                     print(context)
@@ -424,7 +424,7 @@ class DetailViewController: UIViewController, UITextViewDelegate, UITableViewDat
             request.httpMethod = "GET" //GET방식이다. 컨텐츠타입이 없고, 담아서 보내는 내용이 없음, URL호출만!
             
             let task = session.dataTask(with: request) { data, response, error in
-                print( (response as! HTTPURLResponse).statusCode )
+//                print( (response as! HTTPURLResponse).statusCode )
                 
                 // 데이터가 있을때만 파싱한다.
                 if let hasData = data {

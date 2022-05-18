@@ -479,17 +479,19 @@ extension firstTabVC: UITableViewDelegate, UITableViewDataSource{
         if (self.feedModel?.results[indexPath.row].cbheart ?? 0 > 0){
             // 0보다 그면 하트를 눌린UI로 만든다.
             // 버튼 상태도 바꿔줘야함
-            likes[indexPath.row] = 1
             // ♥ 눌림상태
             cell.isTouched = true
-         
+            likes[indexPath.row] = 1
+           
             numIdx  = self.feedModel?.results[indexPath.row].feedIdx?.description ?? ""
 //            self.checkOn = true
 //            print ("서버에서가져온 check :\(checkOn)\(numIdx)")
         }else{
-            likes[indexPath.row] = 0
             // ♡ 안눌림상태
             cell.isTouched = false
+            likes[indexPath.row] = 0
+            numIdx  = self.feedModel?.results[indexPath.row].feedIdx?.description ?? ""
+           
         }
         
         //좋아요 버튼 눌림 상태 *******************************************************************************
@@ -601,9 +603,7 @@ extension firstTabVC: UITableViewDelegate, UITableViewDataSource{
                     self.alert("좋아요업로드 응답실패")
                 }
             }
-            //            else{
-            //
-            //            }
+
         }
         
     }//함수 끝
