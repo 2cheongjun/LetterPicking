@@ -54,22 +54,37 @@ class NewFeedCell: UITableViewCell {
         guard let idx = index else {
             return
         }
+         print("idx \(idx)")
            // 이미UI가 채워져 눌려져 있을때?????
-
             sender.isSelected = !sender.isSelected
                         
-            // 버튼을 누를때
+            // 버튼을 누를때 (눌려져 있을때와, 안눌려져 있을때 버튼클릭 이벤트)
             if sender.isSelected {
                 // 메인에서didPressHeart 함수를 실행
-//                    delegate?.didPressHeart(for: idx, like: true)
-                isTouched = true
-                delegate?.didPressHeart(for: idx, like: true, indexNum:(indexNum?.row)!)
                 
-                print("\(idx) 번째 게시글 : 버튼 \(isTouched)")
+                // ♥ 이미 눌러져있던 하트 클릭시// 서버에서 가져온 값이  있을때(즉, isTouched가 true값이면)
+                if isTouched == true{
+                    sender.isSelected = !sender.isSelected
+                    // 빈하트로 변경
+                    isTouched = false
+                    // 삭제API 호출
+                    delegate?.didPressHeart(for: idx, like: false, indexNum:(indexNum?.row)!)
+                    print("\(idx) : test")
+                }else{
+                    // ♡ 하트버튼을 처음누르는 상태
+                    isTouched = true
+                    // 업로드API 호출
+                    delegate?.didPressHeart(for: idx, like: true, indexNum:(indexNum?.row)!)
+                    
+                    print("\(idx) 번째 게시글 : 버튼 \(isTouched)")
+                }
                 
             }else {
+                // 빈하트로 변경
                 isTouched = false
+                // 삭제API 호출
                 delegate?.didPressHeart(for: idx, like: false, indexNum:(indexNum?.row)!)
+                print("\(idx) 번째 게시글 : 버튼 \(isTouched)")
             }
             
     }

@@ -481,6 +481,7 @@ extension firstTabVC: UITableViewDelegate, UITableViewDataSource{
             // 버튼 상태도 바꿔줘야함
             // ♥ 눌림상태
             cell.isTouched = true
+            // 로컬 눌림상태
             likes[indexPath.row] = 1
            
             numIdx  = self.feedModel?.results[indexPath.row].feedIdx?.description ?? ""
