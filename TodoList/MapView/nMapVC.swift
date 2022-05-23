@@ -54,10 +54,20 @@ class nMapVC : UIViewController {
         // 현재 위치 얻기
         let cameraPosition = mapView.cameraPosition
         print(cameraPosition)
+        
+        // *********************************************************************************************
+        let markerWithCaption = NMFMarker(position: NMGLatLng(lat: 37.56436, lng: 126.97499))
+        markerWithCaption.iconImage = NMF_MARKER_IMAGE_YELLOW
+        markerWithCaption.captionMinZoom = 12.0
+        markerWithCaption.captionAligns = [NMFAlignType.left]
+        markerWithCaption.captionText = "☀캡션이 있는 마커🎉"
+        markerWithCaption.mapView = mapView
+        
+
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        requestFeedAPI()
+//        requestFeedAPI()
     }
     
     // 입력한 주소값의 위도경도값 알아오기 ***** 네이버API

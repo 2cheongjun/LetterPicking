@@ -24,6 +24,8 @@ class firstTabVC: UIViewController{
     // 게시글번호 담을 변수
     var numIdx = ""
     var Num = 0
+    let str = ""
+    let text = ""
     
     // 스크롤을 위한 것
     var fetchingMore = false
@@ -467,10 +469,22 @@ extension firstTabVC: UITableViewDelegate, UITableViewDataSource{
         
         cell.titleLabel.text = self.feedModel?.results[indexPath.row].postText
         cell.descriptionLabel.text = self.feedModel?.results[indexPath.row].userID
-        cell.dataLabel.text =  self.feedModel?.results[indexPath.row].date
+       
         cell.priceLabel.text =  self.feedModel?.results[indexPath.row].myPlaceText
-        cell.num.text =  self.feedModel?.results[indexPath.row].feedIdx?.description ?? ""
+//        cell.num.text =  self.feedModel?.results[indexPath.row].feedIdx?.description ?? ""
+        
+        // 날짜가져옴
+        let str = self.feedModel?.results[indexPath.row].date
     
+        // 글자치환
+        let newStr = str?.replacingOccurrences(of: "-", with: ".")
+        //  앞에서 세번째 글자부터 뒤에서 -3번째 글자만 보이기
+        var firstIndex = newStr?.index(newStr!.startIndex, offsetBy: 2)
+        var lastIndex = newStr?.index(newStr!.endIndex, offsetBy: -3) // "Hello"
+        var v = newStr?[firstIndex! ..< lastIndex!]
+        
+        // 앞뒤자른글자 담기
+        cell.dataLabel.text = v?.description
         
         // 게시글번호에 따른 하트여부 1이면 하트 눌림 ************************************************************
         Num = self.feedModel?.results[indexPath.row].cbheart ?? 0
@@ -701,7 +715,6 @@ extension firstTabVC: firstTabVCCellDelegate{
             
             // 좋아요 Delete
             DeleteHeart(postIdx: numIdx)
-            
              }
         }
 }
