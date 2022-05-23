@@ -176,14 +176,14 @@ class LoginVC :UIViewController, UITableViewDelegate, UITableViewDataSource{
         loginAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
         // 로그인버튼 눌렀을때
         loginAlert.addAction(UIAlertAction(title: "Login", style: .destructive){ (_) in
-//            let account = loginAlert.textFields?[0].text ?? "" //첫번째 필드: 계정
-//            let passwd = loginAlert.textFields?[1].text ?? "" //두번쨰 필드: 비밀번호
+            let account = loginAlert.textFields?[0].text ?? "" //첫번째 필드: 계정
+            let passwd = loginAlert.textFields?[1].text ?? "" //두번쨰 필드: 비밀번호
             
             // 아이디, 비번 입력받은값 서버로 전송
 
 //            self.sendRequest(id: account, pw: passwd)
-            let account = "jun"
-            let passwd = "1111"
+//            let account = "jun"
+//            let passwd = "1111"
             
             self.sendRequest(id: account, pw: passwd)
 

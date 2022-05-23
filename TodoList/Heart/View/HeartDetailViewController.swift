@@ -11,6 +11,10 @@ class HeartDetailViewController: UIViewController, UITextViewDelegate, UITextFie
     //피드 모델에 값이 있으면 가져온다.
     var heartResult: HeartResult?
     
+    
+    //userDefaults에 저장된이름값 가져오기
+    let plist = UserDefaults.standard
+    
     var feedIdx = 0
     var replyNum = 0
     
@@ -81,6 +85,9 @@ class HeartDetailViewController: UIViewController, UITextViewDelegate, UITextFie
         
     }
     
+    // 글 수정삭제버튼
+    @IBOutlet var delBtn: UIButton!
+    @IBOutlet var modifyBtn: UIButton!
     
     // 화면이 그려지기전에 세팅한다.
     override func viewDidLoad() {
@@ -94,7 +101,10 @@ class HeartDetailViewController: UIViewController, UITextViewDelegate, UITextFie
         tableView.delegate = self
         tableView.dataSource = self
         
+        // 댓글단사람아이디
         userID.text = heartResult?.userID
+        var myID = heartResult?.userID
+        
 //        myPlaceText.text = heartResult?.myPlaceText ?? ""
         date.text = heartResult?.date
         postText.text = heartResult?.postText
@@ -117,6 +127,27 @@ class HeartDetailViewController: UIViewController, UITextViewDelegate, UITextFie
 //        // 댓글목록 가져오기 API호출
         loadReply()
         
+        //userDefaults에 저장된이름값 가져오기
+        let plist = UserDefaults.standard
+        //로그인한 아이디값
+        let getName = plist.string(forKey: "name")
+        
+        // 게시글 버튼 상태 visible
+        if getName == myID {
+            //로그인한 아이디와 서버아이디 같을때에만 버튼 보임
+            delBtn.layer.isHidden = false
+            modifyBtn.layer.isHidden = false
+        }else{
+            delBtn.layer.isHidden = true
+            modifyBtn.layer.isHidden = true
+        }
+        
+        // 로그인되어있지 않으면 버튼안보임
+        if(getName == nil){
+            delBtn.layer.isHidden = true
+            modifyBtn.layer.isHidden = true
+        }
+    
     }// 뷰디드로드끝
     
     // 이미지 Get요청
@@ -296,7 +327,19 @@ class HeartDetailViewController: UIViewController, UITextViewDelegate, UITextFie
         cell.replyText.text = self.detailModel?.results[indexPath.row].title
         cell.replyDate.text = self.detailModel?.results[indexPath.row].replyDate
         cell.replyId.text = self.detailModel?.results[indexPath.row].userID
+        let getReplyName =  self.detailModel?.results[indexPath.row].userID
         cell.index = indexPath
+        
+        //userDefaults에 저장된이름값 가져오기
+        let plist = UserDefaults.standard
+        //로그인한 아이디값
+        let getName = plist.string(forKey: "name")
+        
+        if getReplyName == getName {
+            cell.trash.layer.isHidden = false
+        }else{
+            cell.trash.layer.isHidden = true
+        }
         
         return cell
         // 델리게이트위임

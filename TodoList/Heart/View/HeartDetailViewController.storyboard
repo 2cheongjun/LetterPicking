@@ -147,7 +147,7 @@
                                         <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
                                         <items>
                                             <navigationItem title="게시물" id="qvW-9n-RVk">
-                                                <barButtonItem key="leftBarButtonItem" title="취소" id="rMR-e5-tNe">
+                                                <barButtonItem key="leftBarButtonItem" title="닫기" id="rMR-e5-tNe">
                                                     <connections>
                                                         <action selector="barCancleBtn:" destination="AVg-px-JR3" id="0AH-RQ-PDB"/>
                                                     </connections>
@@ -184,6 +184,8 @@
                     </view>
                     <connections>
                         <outlet property="date" destination="3CW-cy-Ghg" id="bCz-u0-AL6"/>
+                        <outlet property="delBtn" destination="ZY1-vm-oWa" id="s7Z-MO-maG"/>
+                        <outlet property="modifyBtn" destination="FnC-5R-U9n" id="EKZ-s7-KIQ"/>
                         <outlet property="movieCotainer" destination="aeh-qh-H4R" id="5bY-wj-uGx"/>
                         <outlet property="postText" destination="hkj-0O-Lua" id="VZh-vT-jfX"/>
                         <outlet property="replyBtn" destination="UAc-Bj-NhU" id="Nyv-60-FZ2"/>

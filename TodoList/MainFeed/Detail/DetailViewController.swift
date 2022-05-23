@@ -17,6 +17,11 @@ class DetailViewController: UIViewController, UITextViewDelegate, UITableViewDat
     
     var feedIdx = 0
     var replyNum = 0
+    var myID = ""
+    
+    //userDefaults에 저장된이름값 가져오기
+    let plist = UserDefaults.standard
+  
     
     var BASEURL = "http://3.39.79.206/"
     @IBOutlet var movieCotainer: UIImageView!
@@ -36,9 +41,11 @@ class DetailViewController: UIViewController, UITextViewDelegate, UITableViewDat
     
     // 댓글모델가져오기
     var detailModel: DetailModel?
-    // 댓글모델
-    //    var DetailResult: DetailResult?
-   
+    
+    
+    // 글 삭제,수정버튼
+    @IBOutlet var delBtn: UIButton!
+    @IBOutlet var modifyBtn: UIButton!
     
     //댓글 테이블뷰
     @IBOutlet var tableView: UITableView!
@@ -57,14 +64,13 @@ class DetailViewController: UIViewController, UITextViewDelegate, UITableViewDat
         replyField.text = ""
         //댓글 가져오기
         self.loadReply()
-        
     }
     
     //셀갯수
     //    var numberOfCell: Int = 10
     //    let examList = ["안녕","호호","하하","낄낄","호호"]
     
-    
+    // 글내용
     @IBOutlet var postText: UITextView!{
         didSet{
             postText.font = UIFont.systemFont(ofSize: 16, weight: .light)
@@ -86,7 +92,6 @@ class DetailViewController: UIViewController, UITextViewDelegate, UITableViewDat
         // 노티2.창이 닫힐때 노티를 메인피드로 신호를 보낸다. //(노티의 이름은 ModifyVCNotification)
         NotificationCenter.default.post(name: ModifyVCNotification, object: nil, userInfo: nil)
         self.dismiss(animated: true, completion: nil)
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -106,7 +111,9 @@ class DetailViewController: UIViewController, UITextViewDelegate, UITableViewDat
         tableView.delegate = self
         tableView.dataSource = self
         
+        //게시글 작성자
         userID.text = feedResult?.userID
+        myID = feedResult!.userID ?? "아이디없음"
         //        myPlaceText.text = feedResult?.myPlaceText
         date.text = feedResult?.date
         postText.text = feedResult?.postText
@@ -129,37 +136,59 @@ class DetailViewController: UIViewController, UITextViewDelegate, UITableViewDat
         // 댓글목록 가져오기 API호출
         loadReply()
         
-    }// 뷰디드로드끝
-    
-    
-    
-    // 이미지 Get요청
-    func loadImage(urlString: String, completion: @escaping (UIImage?)-> Void){
-        let sessionConfig = URLSessionConfiguration.default
-        let session = URLSession(configuration: sessionConfig)
+        //userDefaults에 저장된이름값 가져오기
+        let plist = UserDefaults.standard
+        //로그인한 아이디값
+        let getName = plist.string(forKey: "name")
         
-        // urlString 이미지이름을(ex:http://3.37.202.166/img/2-jun.jpg) 가져와서 URL타입으로 바꿔준다.
-        if let hasURL = URL(string: urlString){
-            var request = URLRequest(url: hasURL)
-            request.httpMethod = "GET"
-            //               request.httpMethod = "POST"
-            
-            session.dataTask(with: request) { data, response, error in
-                //                   print( (response as! HTTPURLResponse).statusCode)
-                
-                if let hasData = data {
-                    completion(UIImage(data: hasData))
-                    return
-                }
-            }.resume() //실행한다.
-            session.finishTasksAndInvalidate()
+        // 버튼 상태 visible
+        if getName == myID {
+            //로그인한 아이디와 서버아이디 같을때에만 버튼 보임
+            delBtn.layer.isHidden = false
+            modifyBtn.layer.isHidden = false
+        }else{
+            delBtn.layer.isHidden = true
+            modifyBtn.layer.isHidden = true
         }
-        // 실패시 nil리턴한다.
-        completion(nil)
-    }
+        
+        // 로그인되어있지 않으면 버튼안보임
+        if(getName == nil){
+            delBtn.layer.isHidden = true
+            modifyBtn.layer.isHidden = true
+        }
+       
+        }// 뷰디드로드끝
+        
+        
+        
+        // 이미지 Get요청
+        func loadImage(urlString: String, completion: @escaping (UIImage?)-> Void){
+            let sessionConfig = URLSessionConfiguration.default
+            let session = URLSession(configuration: sessionConfig)
+            
+            // urlString 이미지이름을(ex:http://3.37.202.166/img/2-jun.jpg) 가져와서 URL타입으로 바꿔준다.
+            if let hasURL = URL(string: urlString){
+                var request = URLRequest(url: hasURL)
+                request.httpMethod = "GET"
+                //               request.httpMethod = "POST"
+                
+                session.dataTask(with: request) { data, response, error in
+                    //                   print( (response as! HTTPURLResponse).statusCode)
+                    
+                    if let hasData = data {
+                        completion(UIImage(data: hasData))
+                        return
+                    }
+                }.resume() //실행한다.
+                session.finishTasksAndInvalidate()
+            }
+            // 실패시 nil리턴한다.
+            completion(nil)
+        }
+
     
     
-    //삭제버튼
+    //글 삭제버튼
     @IBAction func delBtn(_ sender: Any) {
         
         let alert = UIAlertController(title: "게시물 삭제", message: "정말로 삭제하시겠습니까?", preferredStyle: .alert)
@@ -183,7 +212,8 @@ class DetailViewController: UIViewController, UITextViewDelegate, UITableViewDat
     }
     
     
-    //수정버튼
+    
+    //글 수정버튼
     @IBAction func modifyBtn(_ sender: Any) {
         //        let postText = UITextField()
         postText.becomeFirstResponder()// 키보드가 나타나고 입력상태가 된다.
@@ -194,6 +224,7 @@ class DetailViewController: UIViewController, UITextViewDelegate, UITableViewDat
     // 수정API호출
     func upDatePostText(success: (()->Void)? = nil, fail: ((String)->Void)? = nil) {
         // userID, postText,이미지묶음을 파라미터에 담아보냄
+    
         let userID = feedResult?.userID
         
         let param: Parameters = [
@@ -281,7 +312,7 @@ class DetailViewController: UIViewController, UITextViewDelegate, UITableViewDat
                     let success = jsonObject["success"] as? String
                     //                    let userID = jsonObject["userID"] as? String
                     print("DetailViewController 응답결과 \(success)")
-   
+                    
                     
                 }        catch let DecodingError.dataCorrupted(context) {
                     print(context)
@@ -298,9 +329,9 @@ class DetailViewController: UIViewController, UITextViewDelegate, UITableViewDat
                     print("error: ", error)
                 }
                 
-//                catch let e as NSError {
-//                    print("DetailViewController 삭제요청/ 파싱오류: \(e.localizedDescription)")
-//                }
+                //                catch let e as NSError {
+                //                    print("DetailViewController 삭제요청/ 파싱오류: \(e.localizedDescription)")
+                //                }
             } // end if DispatchQueue.main.async()
         }   // 6. POST 전송
         task.resume()
@@ -330,6 +361,20 @@ class DetailViewController: UIViewController, UITextViewDelegate, UITableViewDat
         cell.replyId.text = self.detailModel?.results[indexPath.row].userID
         cell.index = indexPath
         
+        // 댓글작성자에게만 삭제버튼 활성화
+        let getReplyName = self.detailModel?.results[indexPath.row].userID
+        
+        //userDefaults에 저장된이름값 가져오기
+        let plist = UserDefaults.standard
+        //로그인한 아이디값
+        let getName = plist.string(forKey: "name")
+        
+        if getReplyName == getName {
+            cell.trash.layer.isHidden = false
+        }else{
+            cell.trash.layer.isHidden = true
+        }
+        
         return cell
         // 델리게이트위임
         
@@ -344,12 +389,14 @@ class DetailViewController: UIViewController, UITextViewDelegate, UITableViewDat
     // 댓글작성 업로드 API호출*****
     func replyUpload(success: (()->Void)? = nil, fail: ((String)->Void)? = nil) {
         // userID, postText,이미지묶음을 파라미터에 담아보냄
-        let userID = feedResult?.userID
-        
+        //로그인한 아이디값
+        let getName = plist.string(forKey: "name")
+
+        // 로그인한 아이디값 담아서 댓글작성
         let param: Parameters = [
             "feedIdx": feedIdx,
             "title" : replyField.text ?? "",
-            "userID" : userID ?? "아이디없음",
+            "userID" : getName ?? "아이디없음",
             "step" : 0 ,
         ]
         
@@ -380,7 +427,7 @@ class DetailViewController: UIViewController, UITextViewDelegate, UITableViewDat
                 let message = jsonObject["message"] as? String ?? ""
                 
                 if success == 1 {
-//                    self.alert("응답값 JSON= \(try! res.result.get())!)")
+                    //                    self.alert("응답값 JSON= \(try! res.result.get())!)")
                     //                    self.dismiss(animated: true, completion: nil)
                     print("응답내용\(message)")
                     
@@ -424,7 +471,7 @@ class DetailViewController: UIViewController, UITextViewDelegate, UITableViewDat
             request.httpMethod = "GET" //GET방식이다. 컨텐츠타입이 없고, 담아서 보내는 내용이 없음, URL호출만!
             
             let task = session.dataTask(with: request) { data, response, error in
-//                print( (response as! HTTPURLResponse).statusCode )
+                //                print( (response as! HTTPURLResponse).statusCode )
                 
                 // 데이터가 있을때만 파싱한다.
                 if let hasData = data {
@@ -457,37 +504,37 @@ class DetailViewController: UIViewController, UITextViewDelegate, UITableViewDat
     func DeleteReply(replyIndex: Int?, success: (()->Void)? = nil, fail: ((String)->Void)? = nil) {
         // userID, postText,이미지묶음을 파라미터에 담아보냄
         let userID = feedResult?.userID
-
+        
         // 선택한 셀의 댓글번호보내기
         let param: Parameters = [
-                                   "feedIdx" : feedIdx,
-                                   "replyIdx" : replyNum ,
-                                   "userID" : userID ?? ""]
-
+            "feedIdx" : feedIdx,
+            "replyIdx" : replyNum ,
+            "userID" : userID ?? ""]
+        
         print("댓글삭제\(param)")
-
-//        print(" API 게시글번호 2 :\(postIdx)")
+        
+        //        print(" API 게시글번호 2 :\(postIdx)")
         // API 호출 URL
         let url = self.BASEURL+"reply/replyDelete.php"
-
+        
         //이미지 전송
         let call = AF.request(url, method: .post, parameters: param,
                               encoding: JSONEncoding.default)
         //                call.responseJSON { res in
         call.responseJSON { [self] res in
-
+            
             guard (try! res.result.get() as? NSDictionary) != nil else {
                 print("올바른 응답값이 아닙니다.")
                 return
             }
-
+            
             if let jsonObject = try! res.result.get() as? [String :Any]{
                 let success = jsonObject["success"] as? Int ?? 0
-
+                
                 if success == 1 {
-//                    self.alert("댓글삭제성공 JSON= \(try! res.result.get())!)")
-//                    self.dismiss(animated: true, completion: nil)
-//                    }
+                    //                    self.alert("댓글삭제성공 JSON= \(try! res.result.get())!)")
+                    //                    self.dismiss(animated: true, completion: nil)
+                    //                    }
                     // 이거땜에 좋아요가 두번눌리고 오류냠
                     DispatchQueue.main.async {
                         // 테이블뷰 갱신 (자동으로 갱신안됨)
@@ -500,7 +547,7 @@ class DetailViewController: UIViewController, UITextViewDelegate, UITableViewDat
                 }
             }
         }
-
+        
     }//함수 끝
     
 }

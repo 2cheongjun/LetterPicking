@@ -369,43 +369,34 @@
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" semanticContentAttribute="forceLeftToRight" reuseIdentifier="cell" id="lKc-D7-7Ku" customClass="HeartCollectionViewCell" customModule="TodoList" customModuleProvider="target">
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFit" semanticContentAttribute="forceLeftToRight" reuseIdentifier="cell" id="lKc-D7-7Ku" customClass="HeartCollectionViewCell" customModule="TodoList" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="160" height="160"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="CAu-jW-KfB">
                                             <rect key="frame" x="0.0" y="0.0" width="160" height="160"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="9VF-Xo-4YP">
-                                                    <rect key="frame" x="0.0" y="0.0" width="160" height="120"/>
+                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="9VF-Xo-4YP">
+                                                    <rect key="frame" x="0.0" y="0.0" width="160" height="160"/>
                                                     <constraints>
+                                                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="160" id="RaT-Z0-rHc"/>
                                                         <constraint firstAttribute="height" constant="160" id="TEp-mt-N1I"/>
+                                                        <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="160" id="oBT-OU-swW"/>
                                                         <constraint firstAttribute="width" constant="160" id="u4w-3M-HQR"/>
                                                     </constraints>
                                                 </imageView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" misplaced="YES" text="addressLabel" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="o2A-cj-0f7">
-                                                    <rect key="frame" x="12" y="0.0" width="140" height="21"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="9VF-Xo-4YP" firstAttribute="top" secondItem="CAu-jW-KfB" secondAttribute="top" id="0Fz-Sm-exw"/>
-                                                <constraint firstAttribute="bottom" secondItem="o2A-cj-0f7" secondAttribute="bottom" constant="20" id="5lP-tF-W0b"/>
-                                                <constraint firstItem="o2A-cj-0f7" firstAttribute="leading" secondItem="CAu-jW-KfB" secondAttribute="leading" constant="10" id="JFv-vp-11i"/>
                                                 <constraint firstItem="9VF-Xo-4YP" firstAttribute="top" secondItem="CAu-jW-KfB" secondAttribute="top" id="JVh-zC-bTv"/>
-                                                <constraint firstAttribute="trailing" secondItem="o2A-cj-0f7" secondAttribute="trailing" constant="10" id="PCd-aS-gSe"/>
                                                 <constraint firstAttribute="trailing" secondItem="9VF-Xo-4YP" secondAttribute="trailing" id="T17-sv-kdv"/>
-                                                <constraint firstAttribute="bottom" secondItem="9VF-Xo-4YP" secondAttribute="bottom" constant="40" id="dPg-5e-lYt"/>
                                                 <constraint firstItem="9VF-Xo-4YP" firstAttribute="leading" secondItem="CAu-jW-KfB" secondAttribute="leading" id="utp-5o-qpd"/>
                                                 <constraint firstItem="9VF-Xo-4YP" firstAttribute="leading" secondItem="CAu-jW-KfB" secondAttribute="leading" id="xC2-11-hfU"/>
                                             </constraints>
                                         </collectionViewCellContentView>
-                                        <color key="backgroundColor" systemColor="systemMintColor"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <size key="customSize" width="160" height="160"/>
                                         <connections>
-                                            <outlet property="addressLabel" destination="o2A-cj-0f7" id="kWp-80-dix"/>
                                             <outlet property="postImg" destination="9VF-Xo-4YP" id="aDF-q2-DCq"/>
                                         </connections>
                                     </collectionViewCell>
@@ -742,9 +733,6 @@
         </systemColor>
         <systemColor name="systemGreenColor">
             <color red="0.20392156862745098" green="0.7803921568627451" blue="0.34901960784313724" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </systemColor>
-        <systemColor name="systemMintColor">
-            <color red="0.0" green="0.7803921568627451" blue="0.74509803921568629" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

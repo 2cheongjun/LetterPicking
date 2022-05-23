@@ -56,8 +56,9 @@ class HeartVC: UIViewController, UICollectionViewDataSource, UICollectionViewDel
             return HeartCollectionViewCell()
         }
         // 델리게이트위임
-        // cell.delegate = self
-        cell.addressLabel.text = self.heartModel?.results[indexPath.row].postIdx?.description ?? ""
+//         cell.delegate = self
+        //글번호
+//        cell.addressLabel.text = self.heartModel?.results[indexPath.row].postIdx?.description ?? ""
         
         
         // 킹피셔를 사용한 이미지 처리방법

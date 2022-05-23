@@ -44,6 +44,7 @@ class DetailViewCell: UITableViewCell {
    
     //삭제버튼
     @IBOutlet var trash: UIButton!
+    
     //삭제버튼액션
     @IBAction func trashBtn(_ sender: UIButton) {
         delegate?.onClickCell(index: (index?.row)!)

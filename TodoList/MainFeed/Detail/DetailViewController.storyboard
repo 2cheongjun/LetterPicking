@@ -147,7 +147,7 @@
                                         <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
                                         <items>
                                             <navigationItem title="게시물" id="6as-db-BV2">
-                                                <barButtonItem key="leftBarButtonItem" title="취소" id="mSC-tT-dmc">
+                                                <barButtonItem key="leftBarButtonItem" title="닫기" id="mSC-tT-dmc">
                                                     <connections>
                                                         <action selector="barCancleBtn:" destination="Y6W-OH-hqX" id="ol3-5y-eHA"/>
                                                     </connections>
@@ -184,6 +184,8 @@
                     </view>
                     <connections>
                         <outlet property="date" destination="sDc-Vn-4mJ" id="5ik-Jg-TcK"/>
+                        <outlet property="delBtn" destination="NyQ-wx-Pfk" id="8yJ-89-mqr"/>
+                        <outlet property="modifyBtn" destination="OA0-44-gNM" id="Sox-WX-Brt"/>
                         <outlet property="movieCotainer" destination="IB1-yd-pN7" id="hw5-cy-uM3"/>
                         <outlet property="postText" destination="rxe-9I-iua" id="Wqx-Be-KAf"/>
                         <outlet property="replyBtn" destination="XpR-kz-ZEN" id="eXe-J9-bDA"/>
