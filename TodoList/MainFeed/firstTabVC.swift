@@ -116,9 +116,7 @@ class firstTabVC: UIViewController{
         }else{
             print("데이터없음")
         }
-        // 배열 초기화
-//        likes = [Int:Int]()
-        
+
     }
     
     
@@ -165,14 +163,20 @@ class firstTabVC: UIViewController{
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.7, execute: {
             self.page += 1
             
+            /*
+             *  userDefaults에 저장된이름값 가져오기
+             */
+            let plist = UserDefaults.standard
+            //지정된 값을 꺼내어 각 컨트롤에 설정한다.
+            let getName = plist.string(forKey: "name")
+            
             let sessionConfig = URLSessionConfiguration.default
             let session = URLSession(configuration: sessionConfig)
             var components = URLComponents(string:self.BASEURL+"post/0iOS_feedSelect.php?page=\(self.page)")
-            //        var components = URLComponents(string: "http://3.37.202.166/post/0iOS_feedSelect.php")
+            let userID = URLQueryItem(name: "userID", value: getName)
             
-            //        let term = URLQueryItem(name: "term", value: "marvel")
             let page = URLQueryItem(name: "page", value: "\(self.page)")
-            components?.queryItems = [page]
+            components?.queryItems = [page,userID]
             
             // url이 없으면 리턴한다. 여기서 끝
             guard let url = components?.url else { return }
@@ -249,6 +253,8 @@ class firstTabVC: UIViewController{
     // network /URL세션으로 호출 // 추후 아이디값을 보내서 호출하는것도..생각해보기?? 전체다 가져오는것이니 상관없을까?..*********************************
     func requestFeedAPI(){
         print("메인 피드 API호출")
+        
+        self.page += 1
         /*
          *  userDefaults에 저장된이름값 가져오기
          */
@@ -258,11 +264,14 @@ class firstTabVC: UIViewController{
         
         let sessionConfig = URLSessionConfiguration.default
         let session = URLSession(configuration: sessionConfig)
-        var components = URLComponents(string: self.BASEURL+"post/0iOS_feedSelect.php?page=\(1)")
-        //        let term = URLQueryItem(name: "term", value: "marvel")
+        var components = URLComponents(string:self.BASEURL+"post/0iOS_feedSelect.php?page=\(self.page)")
+//        var components = URLComponents(string: self.BASEURL+"post/0iOS_feedSelect.php?page=\(1)")
+        // let term = URLQueryItem(name: "term", value: "marvel")
+
         let userID = URLQueryItem(name: "userID", value: getName)
-//        components?.queryItems = [userID]
         
+        let page = URLQueryItem(name: "page", value: "\(self.page)")
+        components?.queryItems = [page,userID]
         
         // url이 없으면 리턴한다. 여기서 끝
         guard let url = components?.url else { return }
@@ -349,6 +358,7 @@ class firstTabVC: UIViewController{
         page = 1
         
         requestFeedAPI()
+//         moreData()
         //당겨서 새로고침 기능 종료
         self.tableView.refreshControl?.endRefreshing()
     }

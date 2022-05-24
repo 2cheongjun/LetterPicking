@@ -22,7 +22,7 @@ class thirdTabVC: UIViewController, UITableViewDelegate, UITableViewDataSource, 
     
     var isname = false
     
-    // 이거를 해야뷰가 보임// 왜그렇죠?
+    // 이거를 해야뷰가 보임
     override func viewWillAppear(_ animated: Bool) {
         // 프사설정된 것이 없으면, 기본이미지 01
         let image = self.uinfo.profile ?? UIImage(named: "01.jpg")
@@ -110,8 +110,6 @@ class thirdTabVC: UIViewController, UITableViewDelegate, UITableViewDataSource, 
         
         cell.textLabel?.font = UIFont.systemFont(ofSize: 14)
         cell.detailTextLabel?.font = UIFont.systemFont(ofSize: 13)
-        //          cell.accessoryType = .disclosureIndicator
-        
         
         //지정된 값을 꺼내어 각 컨트롤에 설정한다.
         
@@ -132,21 +130,17 @@ class thirdTabVC: UIViewController, UITableViewDelegate, UITableViewDataSource, 
             cell.detailTextLabel?.text = plist.string(forKey: "email") ?? "Login please"
             
         case 2:
-            cell.textLabel?.text = "북마크"
-            //            cell.detailTextLabel?.text = plist.string(forKey: "name") ?? "Login please"
+            cell.textLabel?.text = " 1.0 버전"
+//            cell.detailTextLabel?.text = plist.string(forKey: "email") ?? "Login please"
+            
+
         default:
             ()
         }
         return cell
     }
     
-    //      func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-    //          if self.uinfo.isLogin == false {
-    //              //로그인 되어있지 않다면 로그인 창을 띄워준다.
-    //              self.doLogin(self.tv)
-    //          }
-    //      }
-    
+
     // 프레젠트메소드방식으로 처리될예정이므로, 닫을때에도 dismiss 메소드를 사용한다.
     @objc func close(_ sender: Any){
         self.presentingViewController?.dismiss(animated: true)
@@ -179,12 +173,23 @@ class thirdTabVC: UIViewController, UITableViewDelegate, UITableViewDataSource, 
         btn.frame.size.height = 30
         btn.center.x = v.frame.size.width / 2 //중앙정렬
         btn.center.y = v.frame.size.height / 2 //중앙정렬
-        
-        //로그인 상태일 때는 로그아웃버튼을, 로그아웃 상태일때는 로그인 버튼을 만들어준다.????????????????
-        // 가져온이름이 있으면,? 조건작성 무엇????
-        
         btn.setTitle("로그아웃", for: .normal)
         btn.addTarget(self, action: #selector(doLogout(_:)), for: .touchUpInside)
+        
+        /*
+         *  userDefaults에 저장된이름값 가져오기
+         */
+        let plist = UserDefaults.standard
+        //지정된 값을 꺼내어 각 컨트롤에 설정한다.
+        let getName = plist.string(forKey: "name")
+        // 로그아웃 되있으면, 로그인버튼 On
+        if getName != nil {
+            btn.isHidden = false
+    
+        }else{
+            btn.isHidden = true
+            v.backgroundColor = UIColor.white
+        }
    
         v.addSubview(btn)
         }
@@ -212,6 +217,21 @@ class thirdTabVC: UIViewController, UITableViewDelegate, UITableViewDataSource, 
         
         btn.setTitle("로그인", for: .normal)
         btn.addTarget(self, action: #selector(doLogin(_:)), for: .touchUpInside)
+        
+        /*
+         *  userDefaults에 저장된이름값 가져오기
+         */
+        let plist = UserDefaults.standard
+        //지정된 값을 꺼내어 각 컨트롤에 설정한다.
+        let getName = plist.string(forKey: "name")
+        // 로그인되있으면, 로그인버튼 Off
+        if getName != nil {
+            btn.isHidden = true
+            v.backgroundColor = UIColor.white
+        }else{
+            btn.isHidden = false
+        }
+
    
         v.addSubview(btn)
         }
@@ -237,7 +257,6 @@ class thirdTabVC: UIViewController, UITableViewDelegate, UITableViewDataSource, 
             }
             self.navigationController?.pushViewController(uvc, animated: true)
         
-                
         })
         self.present(alert, animated: false)
     }
@@ -306,7 +325,7 @@ class thirdTabVC: UIViewController, UITableViewDelegate, UITableViewDataSource, 
     // 이미지를 선택하면 이 메소드가 자동으로 호출된다.
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         if let img = info[UIImagePickerController.InfoKey.editedImage] as? UIImage {
-            self.uinfo.profile = img // 프로필이미지를 uinfo에 저장******************************************
+            self.uinfo.profile = img // 프로필이미지를 uinfo에 저장
             self.profileImage.image = img //이미지를 이미지뷰에 설정
             
             let image = self.profileImage.image
