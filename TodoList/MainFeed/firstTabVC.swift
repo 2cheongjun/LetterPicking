@@ -100,7 +100,6 @@ class firstTabVC: UIViewController{
             self.userName.text = getName ?? "" + "로그인이 필요합니다."
         }
         
-        
         // 상단 백버튼가림
         self.navigationController?.navigationBar.isHidden = true
         
@@ -117,6 +116,9 @@ class firstTabVC: UIViewController{
         }else{
             print("데이터없음")
         }
+        // 배열 초기화
+//        likes = [Int:Int]()
+        
     }
     
     
@@ -184,7 +186,7 @@ class firstTabVC: UIViewController{
             request.httpMethod = "GET" //GET방식이다. 컨텐츠타입이 없고, 담아서 보내는 내용이 없음, URL호출만!
             
             let task = session.dataTask(with: request) { data, response, error in
-                print( (response as! HTTPURLResponse).statusCode )
+//                print( (response as! HTTPURLResponse).statusCode )
                 
                 // 데이터가 있을때만 파싱한다.
                 if let hasData = data {
@@ -247,13 +249,20 @@ class firstTabVC: UIViewController{
     // network /URL세션으로 호출 // 추후 아이디값을 보내서 호출하는것도..생각해보기?? 전체다 가져오는것이니 상관없을까?..*********************************
     func requestFeedAPI(){
         print("메인 피드 API호출")
+        /*
+         *  userDefaults에 저장된이름값 가져오기
+         */
+        let plist = UserDefaults.standard
+        //지정된 값을 꺼내어 각 컨트롤에 설정한다.
+        let getName = plist.string(forKey: "name")
         
         let sessionConfig = URLSessionConfiguration.default
         let session = URLSession(configuration: sessionConfig)
-        let components = URLComponents(string: self.BASEURL+"post/0iOS_feedSelect.php?page=\(1)")
+        var components = URLComponents(string: self.BASEURL+"post/0iOS_feedSelect.php?page=\(1)")
         //        let term = URLQueryItem(name: "term", value: "marvel")
-        //        let page = URLQueryItem(name: "page", value: "1")
-        //        components?.queryItems = [page]
+        let userID = URLQueryItem(name: "userID", value: getName)
+//        components?.queryItems = [userID]
+        
         
         // url이 없으면 리턴한다. 여기서 끝
         guard let url = components?.url else { return }
@@ -479,9 +488,9 @@ extension firstTabVC: UITableViewDelegate, UITableViewDataSource{
         // 글자치환
         let newStr = str?.replacingOccurrences(of: "-", with: ".")
         //  앞에서 세번째 글자부터 뒤에서 -3번째 글자만 보이기
-        var firstIndex = newStr?.index(newStr!.startIndex, offsetBy: 2)
-        var lastIndex = newStr?.index(newStr!.endIndex, offsetBy: -3) // "Hello"
-        var v = newStr?[firstIndex! ..< lastIndex!]
+        let firstIndex = newStr?.index(newStr!.startIndex, offsetBy: 2)
+        let lastIndex = newStr?.index(newStr!.endIndex, offsetBy: -3) // "Hello"
+        let v = newStr?[firstIndex! ..< lastIndex!]
         
         // 앞뒤자른글자 담기
         cell.dataLabel.text = v?.description

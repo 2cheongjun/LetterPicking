@@ -18,6 +18,7 @@ class HeartVC: UIViewController, UICollectionViewDataSource, UICollectionViewDel
     var heartModel: HeartModel?
     //피드 모델에 값이 있으면 가져온다.
     var heartResult: HeartResult?
+    var num = ""
     
     var feedIdx = 0
 
@@ -36,8 +37,7 @@ class HeartVC: UIViewController, UICollectionViewDataSource, UICollectionViewDel
         collectionView.dataSource = self
         // 북마크모음게시글 요청
         upLoadHeart()
-        
-        
+  
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -59,6 +59,7 @@ class HeartVC: UIViewController, UICollectionViewDataSource, UICollectionViewDel
 //         cell.delegate = self
         //글번호
 //        cell.addressLabel.text = self.heartModel?.results[indexPath.row].postIdx?.description ?? ""
+        let num  = self.heartModel?.results[indexPath.row].postIdx?.description ?? ""
         
         
         // 킹피셔를 사용한 이미지 처리방법
@@ -119,8 +120,7 @@ class HeartVC: UIViewController, UICollectionViewDataSource, UICollectionViewDel
         // userID, postText,이미지묶음을 파라미터에 담아보냄
         let userID = plist.string(forKey: "name")
         
-        let param: Parameters = [ "userID" :userID ?? ""
-        ]
+        let param: Parameters = [ "userID" :userID ?? "" ]
         
         // API 호출 URL
         let url =  self.BASEURL+"bookMark/heartBookmark.php"

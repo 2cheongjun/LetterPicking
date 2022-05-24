@@ -316,9 +316,9 @@ class HeartDetailViewController: UIViewController, UITextViewDelegate, UITextFie
     }
     
     // 셀 높이 컨텐츠에 맞게 자동으로 설정// 컨텐츠의 내용높이 만큼이다.
-//        func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
-//            return UITableView.automaticDimension
-//        }
+        func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
+            return UITableView.automaticDimension
+        }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: HeartReplyCell.identifier, for: indexPath) as! HeartReplyCell
