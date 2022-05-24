@@ -38,7 +38,8 @@ class WriteVC : UIViewController, UIImagePickerControllerDelegate, UINavigationC
     var autoAddress = "" // 자동위치
     
     var isSelected = false
-    var BASEURL = "http://3.39.79.206/"
+    // BASEURL
+    var BASEURL = UrlInfo.shared.url!
     /*
      *  userDefaults에 저장된이름값 가져오기
      */
@@ -68,17 +69,16 @@ class WriteVC : UIViewController, UIImagePickerControllerDelegate, UINavigationC
         locationManager.startUpdatingLocation()
         // 기존에 생성했던 CLLocationManager 인스턴스에 delegate 지정
         locationManager.delegate = self
-        
-        //        // 네비게이션바 숨김처리
-        //        self.navigationController?.navigationBar.isHidden = false
+        // 네비게이션바 숨김처리
+        // self.navigationController?.navigationBar.isHidden = false
     }
     
-    //취소버튼
+    // 취소버튼
     @IBAction func cancelBtn(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)
     }
     
-    /// 화면을 누르면 키보드 내려가게 하는 것
+    // 화면을 누르면 키보드 내려가게 하는 것
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
     }
@@ -142,7 +142,7 @@ class WriteVC : UIViewController, UIImagePickerControllerDelegate, UINavigationC
     }
     
     
-    // 업로드
+    // 글작성후 업로드 API
     // 공유버튼을 누를때 텍스트값 + 이미지값을 가져와서 서버로 업로드한다.
     // 창닫기
     @IBAction func uploadBtn(_ sender: Any) {
@@ -227,7 +227,7 @@ extension WriteVC: UICollectionViewDelegate, UICollectionViewDataSource {
     
     // 셀선택시 각아이템 삭제 **********************************************************************************************
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath){
-        // 컬랙션뷰의 데이터를 먼저 삭제 해주고, 데이터 배열의 값을 삭제해줍니다!! , '반대로할시에 데이터가 꼬이는 현상이 발생합니다.'
+        // 컬랙션뷰의 데이터를 먼저 삭제 해주고, 데이터 배열의 값을 삭제, 반대로할시에 데이터가 꼬이는 현상이 발생
         // self.numberOfCell += 1
         // collectionView.reloadData()
         
@@ -247,7 +247,7 @@ extension WriteVC: UICollectionViewDelegate, UICollectionViewDataSource {
     }
     
     /*
-     // 이미지 여러장 서버업로드 *************************************************************************************
+     // 이미지 여러장 서버업로드
      */
     func upLoadImg(success: (()->Void)? = nil, fail: ((String)->Void)? = nil) {
 //    func upLoadImg(_ imageData: UIImage?, success: (()->Void)? = nil, fail: ((String)->Void)? = nil) {
@@ -389,10 +389,6 @@ extension WriteVC: CLLocationManagerDelegate {
                         }  //추가 도시 수준 정보 (예) 동작구
                         if let subLocality: String = address.last?.subLocality{
                             self.myPlaceText.text?.append(" " + subLocality)
-                            
-                            //                            if let autoAddress =  self.myPlaceText.text?.append(" " + subLocality){
-                            //                                print("자동입력주소 : \(autoAddress)")
-                            //                            }
                         }
                         
                     }

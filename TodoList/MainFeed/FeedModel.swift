@@ -10,9 +10,6 @@ import UIKit
 
 // 글가져오기할때 모델
 struct FeedModel: Codable{
-    
-//    let resultCount: Int
-    // 아래정의된 배열묶음
     let results:[FeedResult]
 }
 
@@ -30,13 +27,6 @@ struct FeedResult: Codable{
 //    let count: Int
 }
 
-
-//
-//  FeedModel.swift
-//  TodoList
-//
-//  Created by 이청준 on 2022/03/21.
-//
 
 //import Foundation
 //

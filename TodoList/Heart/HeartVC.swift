@@ -21,21 +21,24 @@ class HeartVC: UIViewController, UICollectionViewDataSource, UICollectionViewDel
     var num = ""
     
     var feedIdx = 0
-
+    // 게시글페이징 시작
     var page = 1
-    var BASEURL = "http://3.39.79.206/"
+    
+    // BASEURL
+    var BASEURL = UrlInfo.shared.url!
     //userDefaults에 저장된이름값 가져오기
     let plist = UserDefaults.standard
     
     // 콜렉션뷰 연결
     @IBOutlet weak var collectionView: UICollectionView!
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         //델리게이트연결안하면 뷰에 보이지도 않음
         collectionView.delegate = self
         collectionView.dataSource = self
-        // 북마크모음게시글 요청
+        // 북마크모음호출 API
         upLoadHeart()
   
     }
@@ -69,7 +72,7 @@ class HeartVC: UIViewController, UICollectionViewDataSource, UICollectionViewDel
                 //리턴할 셀지정하기
                 return cell
             }
-            //cell.postImg.kf.setImage(with:url)
+            // cell.postImg.kf.setImage(with:url)
             cell.postImg.kf.indicatorType = .activity
             cell.postImg.kf.setImage(
                 with: url,
@@ -101,10 +104,7 @@ class HeartVC: UIViewController, UICollectionViewDataSource, UICollectionViewDel
         // 이동하고자하는 뷰턴 객체생성해 호출하기 / 스토리보드 기반으로 가져오기. 스토리보드ID
         let HeartDetailVC = UIStoryboard(name:"HeartDetailViewController" , bundle: nil).instantiateViewController(withIdentifier: "HeartDetailViewController") as! HeartDetailViewController
         
-        // 선택한것 눌렸다가 자연스럽게 흰색으로 전환
-//        CollectionView.deselectRow(at: indexPath, animated: true)
-//        detailVC.feedResult = self.feedModel?.results[indexPath.row]
-        //선택한 행의 내용을 feedResult에 담는다.
+        // 컬렉션뷰에 좋아요모음 가져오기
         HeartDetailVC.heartResult = self.heartModel?.results[indexPath.row]
         // 전체화면보기하면 닫기버튼이 없음 만들어줘야함.
         HeartDetailVC.modalPresentationStyle = .fullScreen
@@ -114,7 +114,7 @@ class HeartVC: UIViewController, UICollectionViewDataSource, UICollectionViewDel
     }
     
    
-    // 좋아요가져오기
+    // 좋아요북마크 모음 호출
     func upLoadHeart() {
         //    func newProfile(_ profile: UIImage?, success: (()->Void)? = nil, fail: ((String)->Void)? = nil) {
         // userID, postText,이미지묶음을 파라미터에 담아보냄
@@ -124,8 +124,6 @@ class HeartVC: UIViewController, UICollectionViewDataSource, UICollectionViewDel
         
         // API 호출 URL
         let url =  self.BASEURL+"bookMark/heartBookmark.php"
-        
-        //이미지 전송
         let call = AF.request(url, method: .post, parameters: param,
                               encoding: JSONEncoding.default)
         //                call.responseJSON { res in
@@ -155,7 +153,7 @@ class HeartVC: UIViewController, UICollectionViewDataSource, UICollectionViewDel
            
 //                        print((self.heartModel ?? "no data"))
                         
-                        // 모든UI 작업은 메인쓰레드에서 이루어져야한다.
+                        // 모든UI 작업은 메인쓰레드에서
                         DispatchQueue.main.async {
                             // 테이블뷰 갱신 (자동으로 갱신안됨)
                             self.collectionView.reloadData()
@@ -184,11 +182,9 @@ class HeartVC: UIViewController, UICollectionViewDataSource, UICollectionViewDel
                 }
             }
             }//함수 끝
-    
- 
 }
         
-        
+        // 컬렉션뷰 상태옵션
         // cell layout
         extension HeartVC: UICollectionViewDelegateFlowLayout {
             

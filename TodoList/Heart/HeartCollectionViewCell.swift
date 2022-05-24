@@ -9,8 +9,8 @@ import UIKit
 
 class HeartCollectionViewCell: UICollectionViewCell {
     
-
+    // 게시글번호테스트
     @IBOutlet var addressLabel: UILabel!
-    
+    // 좋아요한 이미지 썸네일
     @IBOutlet var postImg: UIImageView!
 }

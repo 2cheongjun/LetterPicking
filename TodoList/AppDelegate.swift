@@ -11,7 +11,7 @@ import IQKeyboardManagerSwift
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
-    
+
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         //라이브러리 사용기본설정
@@ -20,6 +20,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         IQKeyboardManager.shared.enableAutoToolbar = true
         //화면아무곳이나 터치하면 내리기
         IQKeyboardManager.shared.shouldResignOnTouchOutside = true
+        
+        // 네트워크 연결확인
+        NetworkMonitor.shared.startMonitoring()
         
         return true
     }

@@ -9,6 +9,7 @@ import UIKit
 
 extension UIViewController {
     
+    // 얼럿창
     func alert(_ message: String, completion: (()->Void)? = nil ){
         
         // 메인 스레드에서 실행되도록

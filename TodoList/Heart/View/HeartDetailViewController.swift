@@ -3,14 +3,13 @@ import UIKit
 import Alamofire
 import SwiftyJSON
 
+// 좋아요북마크 -> 디테일뷰
 class HeartDetailViewController: UIViewController, UITextViewDelegate, UITextFieldDelegate,UITableViewDataSource, UITableViewDelegate {
 
-    // 모델가져오기
+    // 좋아요 모델가져오기
     var heartModel: HeartModel?
-
-    //피드 모델에 값이 있으면 가져온다.
+    // 피드 모델에 값이 있으면 가져온다.
     var heartResult: HeartResult?
-    
     
     //userDefaults에 저장된이름값 가져오기
     let plist = UserDefaults.standard
@@ -18,7 +17,9 @@ class HeartDetailViewController: UIViewController, UITextViewDelegate, UITextFie
     var feedIdx = 0
     var replyNum = 0
     
-    var BASEURL = "http://3.39.79.206/"
+    // BASEURL
+    var BASEURL = UrlInfo.shared.url!
+    
     @IBOutlet var movieCotainer: UIImageView!
     
     @IBOutlet var userID: UILabel!{
@@ -38,14 +39,14 @@ class HeartDetailViewController: UIViewController, UITextViewDelegate, UITextFie
     var detailModel: DetailModel?
 
    
-    //댓글 테이블뷰
+    // 댓글 테이블뷰
     @IBOutlet var tableView: UITableView!
-    //댓글 작성영역
+    // 댓글 작성영역
     @IBOutlet var replyField: UITextField!
-    //댓글버튼
+    // 댓글버튼
     @IBOutlet var replyBtn: UIButton!
     
-    //댓글버튼
+    // 댓글버튼액션
     @IBAction func replyBtn(_ sender: Any) {
         let replyText = replyField.text ?? "댓글작성없음"
         print("댓글작성내용:\(replyText)")
@@ -57,7 +58,7 @@ class HeartDetailViewController: UIViewController, UITextViewDelegate, UITextFie
         self.loadReply()
         
     }
-    
+    // 글작 성내용
     @IBOutlet var postText: UITextView!{
         didSet{
             postText.font = UIFont.systemFont(ofSize: 16, weight: .light)
@@ -95,15 +96,15 @@ class HeartDetailViewController: UIViewController, UITextViewDelegate, UITextFie
         // 델리게이트 연결
         postText.delegate = self
         replyField.delegate  = self
-        // 셀따로 작성시 등록을 해주어야함
+        // 커스텀 셀 등록
         tableView.register(HeartReplyCell.nib(), forCellReuseIdentifier: HeartReplyCell.identifier)
         
         tableView.delegate = self
         tableView.dataSource = self
         
-        // 댓글단사람아이디
+        // 댓글 단사람아이디
         userID.text = heartResult?.userID
-        var myID = heartResult?.userID
+        let myID = heartResult?.userID
         
 //        myPlaceText.text = heartResult?.myPlaceText ?? ""
         date.text = heartResult?.date
@@ -124,12 +125,10 @@ class HeartDetailViewController: UIViewController, UITextViewDelegate, UITextFie
             }
         }
         
-//        // 댓글목록 가져오기 API호출
+        // 댓글목록 가져오기 API호출
         loadReply()
         
-        //userDefaults에 저장된이름값 가져오기
-        let plist = UserDefaults.standard
-        //로그인한 아이디값
+        // 로그인한 아이디값
         let getName = plist.string(forKey: "name")
         
         // 게시글 버튼 상태 visible
@@ -150,19 +149,19 @@ class HeartDetailViewController: UIViewController, UITextViewDelegate, UITextFie
     
     }// 뷰디드로드끝
     
+    
     // 이미지 Get요청
     func loadImage(urlString: String, completion: @escaping (UIImage?)-> Void){
         let sessionConfig = URLSessionConfiguration.default
         let session = URLSession(configuration: sessionConfig)
         
-        // urlString 이미지이름을(ex:http://3.37.202.166/img/2-jun.jpg) 가져와서 URL타입으로 바꿔준다.
+        // urlString 이미지이름을(ex:http://0.00.000.000/img/2-jun.jpg) 가져와서 URL타입으로 바꿔준다.
         if let hasURL = URL(string: urlString){
             var request = URLRequest(url: hasURL)
             request.httpMethod = "GET"
-            //               request.httpMethod = "POST"
             
             session.dataTask(with: request) { data, response, error in
-                //                   print( (response as! HTTPURLResponse).statusCode)
+                // print( (response as! HTTPURLResponse).statusCode)
                 
                 if let hasData = data {
                     completion(UIImage(data: hasData))
@@ -175,9 +174,9 @@ class HeartDetailViewController: UIViewController, UITextViewDelegate, UITextFie
         completion(nil)
     }
     
-    //삭제버튼
+    // 삭제버튼
     @IBAction func delBtn(_ sender: Any) {
-        
+        // 삭제확인 얼럿창 띄우기
         let alert = UIAlertController(title: "게시물 삭제", message: "정말로 삭제하시겠습니까?", preferredStyle: .alert)
         let alertAction = UIAlertAction(title: "삭제", style: .default) { [self] (_) in
             //  여기에 실행할 코드
@@ -193,13 +192,13 @@ class HeartDetailViewController: UIViewController, UITextViewDelegate, UITextFie
         // 왜인지 취소글자가 더두꺼워보임???
         let cancel = UIAlertAction(title: "취소", style: .cancel)
         alert.addAction(cancel)
-        //                alert.view.tintColor =  UIColor(ciColor: .black)
+        // alert.view.tintColor =  UIColor(ciColor: .black)
         self.present(alert, animated: true, completion: nil)
         
     }
     
     
-    //수정버튼
+    // 게시글글수정버튼
     @IBAction func modifyBtn(_ sender: Any) {
         //        let postText = UITextField()
         postText.becomeFirstResponder()// 키보드가 나타나고 입력상태가 된다.
@@ -207,7 +206,7 @@ class HeartDetailViewController: UIViewController, UITextViewDelegate, UITextFie
     }
     
     
-    // 수정API호출
+    // 게시글수정API호출
     func upDatePostText(success: (()->Void)? = nil, fail: ((String)->Void)? = nil) {
         // userID, postText,이미지묶음을 파라미터에 담아보냄
         let userID = heartResult?.userID
@@ -227,7 +226,6 @@ class HeartDetailViewController: UIViewController, UITextViewDelegate, UITextFie
         //                call.responseJSON { res in
         call.responseJSON { res in
             
-            // 성공실패케이스문 작성하기
             print("서버로 보냄!!!!!")
             print("JSON= \(try! res.result.get())!)")
             
@@ -251,7 +249,7 @@ class HeartDetailViewController: UIViewController, UITextViewDelegate, UITextFie
                 }
             }
         }
-    }//수정 함수끝
+    }// 수정 함수끝
     
     
     // 게시글삭제 API호출
@@ -306,7 +304,7 @@ class HeartDetailViewController: UIViewController, UITextViewDelegate, UITextFie
     
     
     
-    // 댓글 테이블뷰시작 **************************************************************************************
+    // 댓글 테이블뷰시작(댓글작성내용 호출한 내용 뿌려주는곳)
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.detailModel?.results.count ?? 0
     }
@@ -330,9 +328,7 @@ class HeartDetailViewController: UIViewController, UITextViewDelegate, UITextFie
         let getReplyName =  self.detailModel?.results[indexPath.row].userID
         cell.index = indexPath
         
-        //userDefaults에 저장된이름값 가져오기
-        let plist = UserDefaults.standard
-        //로그인한 아이디값
+        // 로그인한 아이디값
         let getName = plist.string(forKey: "name")
         
         if getReplyName == getName {
@@ -352,7 +348,7 @@ class HeartDetailViewController: UIViewController, UITextViewDelegate, UITextFie
     }
     
     
-    // 댓글작성 업로드 API호출*****
+    // 댓글작성 업로드 API호출
     func replyUpload(success: (()->Void)? = nil, fail: ((String)->Void)? = nil) {
         // userID, postText,이미지묶음을 파라미터에 담아보냄
         let userID = heartResult?.userID
@@ -396,8 +392,8 @@ class HeartDetailViewController: UIViewController, UITextViewDelegate, UITextFie
                     
                 }else{
                     //sucess가 0이면
-                    //                    self.alert("응답실패")
-                    // 쿼리내용확인하기**************************************************
+                    //self.alert("응답실패")
+                    
                     print("응답내용\(message)")
                 }
             }
@@ -409,17 +405,13 @@ class HeartDetailViewController: UIViewController, UITextViewDelegate, UITextFie
         //현재 페이지의 값에 1을 추가한다.
         // 호출시에 다음차례에 읽어야할 페이지를API에 실어서 함께 전달해야한다.
         // 스크롤뷰가 바닥에 닿으면 데이터를 새로불러온다.
-        //        fetchingMore = true
         //asyncAfter는 실행할 시간(deadline)를 정해두고 실행 코드를 실행합니다(execute)
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1, execute: {
             //            self.page += 1
             
             let sessionConfig = URLSessionConfiguration.default
             let session = URLSession(configuration: sessionConfig)
-            //            var components = URLComponents(string:self.BASEURL+"post/0iOS_feedSelect.php?page=\(self.page)")
             var components = URLComponents(string: self.BASEURL+"reply/replySelect.php")
-            
-            //            let term = URLQueryItem(name: "term", value: "marvel")
             let presentPage = URLQueryItem(name: "presentPage", value: self.feedIdx.description)
             components?.queryItems = [presentPage]
             
@@ -448,7 +440,7 @@ class HeartDetailViewController: UIViewController, UITextViewDelegate, UITextFie
                         
                         //모든UI 작업은 메인쓰레드에서 이루어져야한다.
                         DispatchQueue.main.async {
-                            // 테이블뷰 갱신 (자동으로 갱신안됨)
+                            // 테이블뷰 갱신
                             self.tableView.reloadData()
                         }
                     }catch{
@@ -471,9 +463,9 @@ class HeartDetailViewController: UIViewController, UITextViewDelegate, UITextFie
 
         // 선택한 셀의 댓글번호보내기
         let param: Parameters = [
-                                   "feedIdx" : feedIdx,
-                                   "replyIdx" : replyNum ,
-                                   "userID" : userID ?? ""]
+                               "feedIdx" : feedIdx,
+                               "replyIdx" : replyNum ,
+                               "userID" : userID ?? ""]
 
         print("댓글삭제\(param)")
 
@@ -527,7 +519,7 @@ extension HeartDetailViewController: HeartReplyCellDelegate {
         replyNum = self.detailModel?.results[index].replyIdx ?? 0
         // 댓글 삭제API 호출
         DeleteReply(replyIndex: replyNum)
-        // 댓글다시로드하기
+        // 댓글다시로드
         loadReply()
     }
 }

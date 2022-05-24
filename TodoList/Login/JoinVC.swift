@@ -6,9 +6,10 @@
 import UIKit
 import Alamofire
 
+// 회원가입화면
 class JoinVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate {
     
-    // API 호출 상태값을 관리할 변수
+    // API 호출 상태값을 관리할 변수(재호출방지)
     var isCalling = false
     
     @IBOutlet weak var profile: UIImageView!
@@ -21,7 +22,8 @@ class JoinVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UINa
     var fieldName: UITextField! // 이름 필드
     // 상황에 따라 다른 alert를 줄 때 바꿔줄 문장을 tmpMessage로 설정
     var tmpMessage: String = ""
-    var BASEURL = "http://3.39.79.206/"
+    // BASEURL
+    var BASEURL = UrlInfo.shared.url!
     
     override func viewDidLoad() {
         // 테이블 뷰의 dataSource, delegate 속성 지정
@@ -126,8 +128,7 @@ class JoinVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UINa
     }
     
     
-    
-    //서버에 요청
+    // 회원가입 요청API
     func post(){
         if self.isCalling == true {
             self.alert("진행 중입니다. 잠시만 기다려주세요.")
@@ -140,9 +141,6 @@ class JoinVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UINa
         self.indicatorView.startAnimating()
         
         // 1. 전달할 값 준비
-        // 1-1. 이미지를 Base64 인코딩 처리
-//        let profile = self.profile.image!.pngData()?.base64EncodedString()
-        
         // 1-2. 전달값을 Parameters 타입의 객체로 정의
         let param: Parameters = [
             "userID" : self.fieldAccount.text!,
@@ -211,6 +209,7 @@ class JoinVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UINa
             }
         }
     }
+    
     
     public func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         let rawVal = UIImagePickerController.InfoKey.originalImage.rawValue

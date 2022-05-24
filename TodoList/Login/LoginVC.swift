@@ -9,15 +9,15 @@ import UIKit
 import Alamofire
 import SwiftyJSON
 
+// 로그인화면
+// 로그인이 되어있을경우, 글자피드메인으로 자동이동
 class LoginVC :UIViewController, UITableViewDelegate, UITableViewDataSource{
     
+    // 테스트값출력필드
+    @IBOutlet weak var textView: UITextView!
     
-    @IBOutlet weak var textView: UITextView! //테스트값출력필드
-    
-    //개인정보 관리 매니저(로그인/ 로그아웃정보)
-//    let uinfo = UserInfoManager()
-    //    let profileImage = UIImageView() //프로필사진이미지
-    let tv = UITableView() //프로필목록
+    //프로필목록
+    let tv = UITableView()
     // 서버에서 가져온제이슨값을 담을 배열
     var dataSource: [Contact] = []
     
@@ -26,18 +26,14 @@ class LoginVC :UIViewController, UITableViewDelegate, UITableViewDataSource{
     var userEmail: String? = nil
     
     var getID = ""
-    var BASEURL = "http://3.39.79.206/"
+    // BASEURL
+    var BASEURL = UrlInfo.shared.url!
     
-    //userDefaults에 저장된이름값 가져오기
+    // 로그인값 가져오기
     let plist = UserDefaults.standard
     
     override func viewDidLoad() {
-        // self.navigationItem.title = "프로필"
-        
-        //뒤로가기 버튼 처리
-        // let backBtn = UIBarButtonItem(title: "닫기", style: .plain, target: self, action: #selector(close(_:)))
-        // self.navigationItem.leftBarButtonItem = backBtn
-        
+
         // 네비게이션바 숨김처리
         self.navigationController?.navigationBar.isHidden = false
         
@@ -48,14 +44,8 @@ class LoginVC :UIViewController, UITableViewDelegate, UITableViewDataSource{
         self.tv.delegate = self
         
         self.view.addSubview(self.tv)
-        //로그인상태에 따라 로그인/로그아웃버튼 출력
-
-        // 로그인이 되어있다면 메인화면으로 바로 이동한다.
-        /*
-         *  userDefaults에 저장된이름값 가져오기
-         */
-        let plist = UserDefaults.standard
-        //지정된 값을 꺼내어 각 컨트롤에 설정한다.
+        
+        // 지정된 값을 꺼내어 각 컨트롤에 설정한다.
         let getName = plist.string(forKey: "name")
         
         if getName != nil {
@@ -77,12 +67,7 @@ class LoginVC :UIViewController, UITableViewDelegate, UITableViewDataSource{
     
     // 테스트버튼, 둘러보기
     @IBAction func testBtn(_ sender: Any) {
-        //        sendRequest()
-        //화면이동시키기
-//        guard let uvc = self.storyboard?.instantiateViewController(withIdentifier: "ViewController") else {
-//            return
-//        }
-//        self.navigationController?.pushViewController(uvc, animated: true)
+        // 메인피드로 이동(세그)
     }
     
     // 로그인요청 post(아이디와, 비번값을 받아서 넣고 서버로 전송)/ 아이디비번 리턴하기(돌아오다)
@@ -129,7 +114,7 @@ class LoginVC :UIViewController, UITableViewDelegate, UITableViewDataSource{
                         let userEmail = jsonObject["userEmail"] as? String ?? ""
                         
                        
-                        //로그인성공시 아이디값을 공통저장소에 저장한다.
+                        //로그인성공시 아이디값을 공통저장소에 저장한다.UserDefaults에 아이디저장
                         // userDefault 기본저장소객체가져오기
                            let plist = UserDefaults.standard
                            plist.setValue(userID, forKey: "name")//이름이라는 키로 저장
@@ -155,16 +140,14 @@ class LoginVC :UIViewController, UITableViewDelegate, UITableViewDataSource{
                             // 성공했을때에만 로그인info로 값보내기
                             self.spend(userID: userID, userPassword: userPassword)
                             
-                            // 네비바로 화면이동 ************************************************************************
+                            // 글자피드 탭화면으로 이동
                             guard let uvc = self.storyboard?.instantiateViewController(withIdentifier: "tabVC") else {
                                 return
                             }
                             self.navigationController?.pushViewController(uvc, animated: true)
                         }
                     }
-                    
-                    // 성공시 네비게이션 컨트롤러로 이동
-                    
+
                 case .failure(let error):
                     print("에러메시지//: \(error)")
                     //                    self.indicatorView.stopAnimating()
@@ -177,7 +160,6 @@ class LoginVC :UIViewController, UITableViewDelegate, UITableViewDataSource{
     
     func spend(userID: String, userPassword:String) {
            getID = userID
-//           b = userPassword
     }
     
     
@@ -201,9 +183,7 @@ class LoginVC :UIViewController, UITableViewDelegate, UITableViewDataSource{
             let passwd = loginAlert.textFields?[1].text ?? "" //두번쨰 필드: 비밀번호
             
             // 아이디, 비번 입력받은값 서버로 전송
-
-//            self.sendRequest(id: account, pw: passwd)
-//            let account = "jun"
+//            let account = "test"
 //            let passwd = "1111"
             
             self.sendRequest(id: account, pw: passwd)
@@ -243,20 +223,9 @@ class LoginVC :UIViewController, UITableViewDelegate, UITableViewDataSource{
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        // uinfo의 isLogin프로퍼티를 이용해 로그인 상태를 체크한다.
-//        if self.uinfo.isLogin == false {
-            //로그인 되어있지 않다면 로그인 창을 띄워준다.
             self.doLogin(self.tv)
-//        }
     }
-    
-    
-//    // 프레젠트메소드방식으로 처리될예정이므로, 닫을때에도 dismiss 메소드를 사용한다.
-//    @objc func close(_ sender: Any){
-//        self.presentingViewController?.dismiss(animated: true)
-//    }
-//
-    
+
     
 }
 

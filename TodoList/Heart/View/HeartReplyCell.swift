@@ -6,7 +6,7 @@
 //
 
 import UIKit
-
+// 좋아요북마크 -> 디테일뷰창의 댓글 셀
 protocol HeartReplyCellDelegate: AnyObject{
     func onClickCell(index: Int)
 }
@@ -22,20 +22,20 @@ class HeartReplyCell: UITableViewCell {
            return UINib(nibName: "HeartReplyCell", bundle: nil)
        }
        
-       // ?
+      // 초기화
        required init?(coder aDecoder: NSCoder) {
           super.init(coder: aDecoder)
        }
        
-       //댓글작성아이디
+       // 댓글작성아이디
        @IBOutlet var replyId: UILabel!{
            didSet{
                replyId.font = UIFont.systemFont(ofSize: 16, weight: .bold)
            }
        }
-       //댓글내용
+       // 댓글내용
        @IBOutlet var replyText: UILabel!
-       //댓글날짜
+       // 댓글날짜
        @IBOutlet var replyDate: UILabel!{
            didSet{
                replyDate.font = UIFont.systemFont(ofSize: 14, weight: .light)
@@ -43,9 +43,9 @@ class HeartReplyCell: UITableViewCell {
        }
        
       
-       //삭제버튼
+       // 삭제버튼
        @IBOutlet var trash: UIButton!
-       //삭제버튼액션
+       // 삭제버튼액션
        @IBAction func trashBtn(_ sender: UIButton) {
            delegate?.onClickCell(index: (index?.row)!)
        }

@@ -6,13 +6,14 @@
 //
 
 import UIKit
-//마이페이지
+
+// 마이페이지
+// 로그인정보가 표시되는 곳, 로그인시 로그아웃버튼이, 로그아웃시 로그인 버튼이 표시됨
 class thirdTabVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     var profileImage = UIImageView() //프로필사진이미지
     let tv = UITableView() //프로필목록
     let uinfo = UserInfoManager()//개인정보 관리 매니저(로그인/ 로그아웃정보)/프사저장함...
-    
     
     // 저장한 이름 가져오기
     let plist = UserDefaults.standard
@@ -38,7 +39,7 @@ class thirdTabVC: UIViewController, UITableViewDelegate, UITableViewDataSource, 
         self.profileImage.layer.masksToBounds = true
         // 4.루트뷰에 추가
         self.view.addSubview(self.profileImage)
-        
+        // 로그인,로그아웃 버튼
         self.LoginBtn()
         self.LogOutBtn()
     }
@@ -176,11 +177,8 @@ class thirdTabVC: UIViewController, UITableViewDelegate, UITableViewDataSource, 
         btn.setTitle("로그아웃", for: .normal)
         btn.addTarget(self, action: #selector(doLogout(_:)), for: .touchUpInside)
         
-        /*
-         *  userDefaults에 저장된이름값 가져오기
-         */
-        let plist = UserDefaults.standard
-        //지정된 값을 꺼내어 각 컨트롤에 설정한다.
+
+        // 로그인아이디 가져옴
         let getName = plist.string(forKey: "name")
         // 로그아웃 되있으면, 로그인버튼 On
         if getName != nil {
@@ -211,18 +209,11 @@ class thirdTabVC: UIViewController, UITableViewDelegate, UITableViewDataSource, 
         btn.frame.size.height = 30
         btn.center.x = v.frame.size.width / 2 //중앙정렬
         btn.center.y = v.frame.size.height / 2 //중앙정렬
-        
-        //로그인 상태일 때는 로그아웃버튼을, 로그아웃 상태일때는 로그인 버튼을 만들어준다.????????????????
-        // 가져온이름이 있으면,? 조건작성 무엇????
-        
         btn.setTitle("로그인", for: .normal)
         btn.addTarget(self, action: #selector(doLogin(_:)), for: .touchUpInside)
         
-        /*
-         *  userDefaults에 저장된이름값 가져오기
-         */
-        let plist = UserDefaults.standard
-        //지정된 값을 꺼내어 각 컨트롤에 설정한다.
+
+        // 로그인아이디 가져옴
         let getName = plist.string(forKey: "name")
         // 로그인되있으면, 로그인버튼 Off
         if getName != nil {
@@ -231,8 +222,6 @@ class thirdTabVC: UIViewController, UITableViewDelegate, UITableViewDataSource, 
         }else{
             btn.isHidden = false
         }
-
-   
         v.addSubview(btn)
         }
     
@@ -249,7 +238,6 @@ class thirdTabVC: UIViewController, UITableViewDelegate, UITableViewDataSource, 
             // 로그인 데이터 삭제 ***** name과 이메일에 데이터가 있으면 삭제 *****
             UserDefaults.standard.removeObject(forKey: "name")
             UserDefaults.standard.removeObject(forKey: "email")
-            
             
             // 로그인 화면으로 이동시키기
             guard let uvc = self.storyboard?.instantiateViewController(withIdentifier: "LoginVC") else {

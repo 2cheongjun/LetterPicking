@@ -9,7 +9,7 @@ import UIKit
 import Alamofire
 import SwiftyJSON
 
-// 게시글눌렀을때 상세
+// 글자피드에서 게시글 눌렀을때 상세화면뷰
 class DetailViewController: UIViewController, UITextViewDelegate, UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate{
     
     //피드 모델에 값이 있으면 가져온다.
@@ -19,27 +19,31 @@ class DetailViewController: UIViewController, UITextViewDelegate, UITableViewDat
     var replyNum = 0
     var myID = ""
     
-    //userDefaults에 저장된이름값 가져오기
+    // 로그인값 가져오기
     let plist = UserDefaults.standard
-  
+    // BASEURL
+    var BASEURL = UrlInfo.shared.url!
     
-    var BASEURL = "http://3.39.79.206/"
+    // 이미지
     @IBOutlet var movieCotainer: UIImageView!
-    
+    // 작성자ID
     @IBOutlet var userID: UILabel!{
         didSet{
             userID.font = UIFont.systemFont(ofSize: 16, weight: .bold)
         }
     }
+    // 작성날짜
     @IBOutlet var date: UILabel!{
         didSet{
             date.font = UIFont.systemFont(ofSize: 14, weight: .light)
         }
     }
+    // 작성한 장소
     @IBOutlet var myPlaceText: UILabel!
+    // 게시글번호
     @IBOutlet var num: UILabel!
     
-    // 댓글모델가져오기
+    // 댓글모델 가져오기
     var detailModel: DetailModel?
     
     
@@ -47,14 +51,14 @@ class DetailViewController: UIViewController, UITextViewDelegate, UITableViewDat
     @IBOutlet var delBtn: UIButton!
     @IBOutlet var modifyBtn: UIButton!
     
-    //댓글 테이블뷰
+    // 댓글 테이블뷰
     @IBOutlet var tableView: UITableView!
-    //댓글 작성영역
+    // 댓글 작성영역
     @IBOutlet var replyField: UITextField!
-    //댓글버튼
+    // 댓글버튼
     @IBOutlet var replyBtn: UIButton!
     
-    //댓글버튼
+    // 댓글버튼
     @IBAction func replyBtn(_ sender: Any) {
         let replyText = replyField.text ?? "댓글작성없음"
         print("댓글작성내용:\(replyText)")
@@ -66,7 +70,7 @@ class DetailViewController: UIViewController, UITextViewDelegate, UITableViewDat
         self.loadReply()
     }
     
-    //셀갯수
+    // 셀갯수테스트
     //    var numberOfCell: Int = 10
     //    let examList = ["안녕","호호","하하","낄낄","호호"]
     
@@ -118,7 +122,7 @@ class DetailViewController: UIViewController, UITextViewDelegate, UITableViewDat
         date.text = feedResult?.date
         postText.text = feedResult?.postText
         //글번호
-        //        num.text = feedResult?.feedIdx?.description
+        // num.text = feedResult?.feedIdx?.description
         
         // 게시글번호(수정시필요)
         feedIdx = feedResult?.feedIdx ?? 0
@@ -136,9 +140,7 @@ class DetailViewController: UIViewController, UITextViewDelegate, UITableViewDat
         // 댓글목록 가져오기 API호출
         loadReply()
         
-        //userDefaults에 저장된이름값 가져오기
-        let plist = UserDefaults.standard
-        //로그인한 아이디값
+        // 로그인한 아이디값 가져옴
         let getName = plist.string(forKey: "name")
         
         // 버튼 상태 visible
@@ -188,7 +190,7 @@ class DetailViewController: UIViewController, UITextViewDelegate, UITableViewDat
 
     
     
-    //글 삭제버튼
+    // 게시글 삭제버튼액션
     @IBAction func delBtn(_ sender: Any) {
         
         let alert = UIAlertController(title: "게시물 삭제", message: "정말로 삭제하시겠습니까?", preferredStyle: .alert)
@@ -203,7 +205,7 @@ class DetailViewController: UIViewController, UITextViewDelegate, UITableViewDat
         }
         alert.addAction(alertAction)
         
-        // 왜인지 취소글자가 더두꺼워보임???
+        // 취소글자 상태값
         let cancel = UIAlertAction(title: "취소", style: .cancel)
         alert.addAction(cancel)
         //                alert.view.tintColor =  UIColor(ciColor: .black)
@@ -233,7 +235,7 @@ class DetailViewController: UIViewController, UITextViewDelegate, UITableViewDat
             "userID" : userID as Any,
         ]
         
-        //        print("WriteVC/ 기본입력내용 :\(self.myPlaceText.text ?? "")")
+        //print("WriteVC/ 기본입력내용 :\(self.myPlaceText.text ?? "")")
         
         // API 호출 URL
         let url = self.BASEURL+"post/0iOS_feedUpdate.php"
@@ -328,11 +330,7 @@ class DetailViewController: UIViewController, UITextViewDelegate, UITableViewDat
                 } catch {
                     print("error: ", error)
                 }
-                
-                //                catch let e as NSError {
-                //                    print("DetailViewController 삭제요청/ 파싱오류: \(e.localizedDescription)")
-                //                }
-            } // end if DispatchQueue.main.async()
+            }
         }   // 6. POST 전송
         task.resume()
     }// 함수 끝
@@ -376,7 +374,7 @@ class DetailViewController: UIViewController, UITextViewDelegate, UITableViewDat
         }
         
         return cell
-        // 델리게이트위임
+
         
     }
     
@@ -385,8 +383,7 @@ class DetailViewController: UIViewController, UITextViewDelegate, UITableViewDat
         tableView.reloadData()
     }
     
-    
-    // 댓글작성 업로드 API호출*****
+    // 댓글작성 업로드 API호출
     func replyUpload(success: (()->Void)? = nil, fail: ((String)->Void)? = nil) {
         // userID, postText,이미지묶음을 파라미터에 담아보냄
         //로그인한 아이디값
@@ -413,8 +410,7 @@ class DetailViewController: UIViewController, UITextViewDelegate, UITableViewDat
             
             // 성공실패케이스문 작성하기
             print("서버로 보냄!!!!!")
-            //            print("JSON= \(try? res.result.get())!)")
-            
+            //  print("JSON= \(try? res.result.get())!)")
             
             guard (try! res.result.get() as? NSDictionary) != nil else {
                 print("올바른 응답값이 아닙니다.")
@@ -443,20 +439,13 @@ class DetailViewController: UIViewController, UITextViewDelegate, UITableViewDat
     
     // 작성한댓글 Load하기
     func loadReply(){
-        //현재 페이지의 값에 1을 추가한다.
-        // 호출시에 다음차례에 읽어야할 페이지를API에 실어서 함께 전달해야한다.
-        // 스크롤뷰가 바닥에 닿으면 데이터를 새로불러온다.
-        //        fetchingMore = true
         //asyncAfter는 실행할 시간(deadline)를 정해두고 실행 코드를 실행합니다(execute)
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1, execute: {
             //            self.page += 1
             
             let sessionConfig = URLSessionConfiguration.default
             let session = URLSession(configuration: sessionConfig)
-            //            var components = URLComponents(string:self.BASEURL+"post/0iOS_feedSelect.php?page=\(self.page)")
             var components = URLComponents(string: self.BASEURL+"reply/replySelect.php")
-            
-            //            let term = URLQueryItem(name: "term", value: "marvel")
             let presentPage = URLQueryItem(name: "presentPage", value: self.feedIdx.description)
             components?.queryItems = [presentPage]
             
@@ -480,9 +469,9 @@ class DetailViewController: UIViewController, UITextViewDelegate, UITableViewDat
                         // 만들어놓은 피드모델에 담음, 데이터를 디코딩해서, 디코딩은 try catch문 써줘야함
                         // 여기서 실행을 하고 오류가 나면 catch로 던져서 프린트해주겠다.
                         self.detailModel = try JSONDecoder().decode(DetailModel.self, from: hasData)
-                        print(self.detailModel ?? "no data")
-                        //
-                        //                         모든UI 작업은 메인쓰레드에서 이루어져야한다.
+//                        print(self.detailModel ?? "no data")
+    
+                        //모든UI 작업은 메인쓰레드에서 이루어져야한다.
                         DispatchQueue.main.async {
                             // 테이블뷰 갱신 (자동으로 갱신안됨)
                             self.tableView.reloadData()
@@ -513,7 +502,7 @@ class DetailViewController: UIViewController, UITextViewDelegate, UITableViewDat
         
         print("댓글삭제\(param)")
         
-        //        print(" API 게시글번호 2 :\(postIdx)")
+        // print(" API 게시글번호 2 :\(postIdx)")
         // API 호출 URL
         let url = self.BASEURL+"reply/replyDelete.php"
         
@@ -548,7 +537,7 @@ class DetailViewController: UIViewController, UITextViewDelegate, UITableViewDat
             }
         }
         
-    }//함수 끝
+    }// 댓삭함수 끝
     
 }
 

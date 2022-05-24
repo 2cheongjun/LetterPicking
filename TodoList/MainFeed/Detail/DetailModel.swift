@@ -22,7 +22,6 @@ struct DetailResult: Codable{
     let replyIdx: Int?
     let postIdx:String?
     let userID: String
-//    let imgPath: String?
     let title: String?
     let replyDate: String
     let ref : String?
