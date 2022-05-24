@@ -28,6 +28,9 @@ class LoginVC :UIViewController, UITableViewDelegate, UITableViewDataSource{
     var getID = ""
     var BASEURL = "http://3.39.79.206/"
     
+    //userDefaults에 저장된이름값 가져오기
+    let plist = UserDefaults.standard
+    
     override func viewDidLoad() {
         // self.navigationItem.title = "프로필"
         
@@ -46,8 +49,26 @@ class LoginVC :UIViewController, UITableViewDelegate, UITableViewDataSource{
         
         self.view.addSubview(self.tv)
         //로그인상태에 따라 로그인/로그아웃버튼 출력
-        //최초화면 로딩 시 로그인 상태에 따라 적절히 로그인/로그아웃 버튼을 출력한다.
-    }
+
+        // 로그인이 되어있다면 메인화면으로 바로 이동한다.
+        /*
+         *  userDefaults에 저장된이름값 가져오기
+         */
+        let plist = UserDefaults.standard
+        //지정된 값을 꺼내어 각 컨트롤에 설정한다.
+        let getName = plist.string(forKey: "name")
+        
+        if getName != nil {
+            let isLogged: Bool = true // 우선 테스트를 위해
+            if isLogged == true {
+                // 로그인 된 상태
+                guard let uvc = self.storyboard?.instantiateViewController(withIdentifier: "tabVC") else {
+                    return
+                }
+                self.navigationController?.pushViewController(uvc, animated: true)
+            }
+        }
+    }//뷰디디로드끝
     
     override func viewWillAppear(_ animated: Bool) {
         // 마이페이지에서 다시 로그인창으로 왔을때, 상단 백버튼가림
