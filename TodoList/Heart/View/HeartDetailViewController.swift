@@ -58,12 +58,14 @@ class HeartDetailViewController: UIViewController, UITextViewDelegate, UITextFie
         self.loadReply()
         
     }
-    // 글작 성내용
+    // 글작성내용
     @IBOutlet var postText: UITextView!{
         didSet{
-            postText.font = UIFont.systemFont(ofSize: 16, weight: .light)
+            postText.font = UIFont.systemFont(ofSize: 18, weight: .semibold)
         }
     }
+    // 장소추가
+    @IBOutlet var placeText: UILabel!
     
     // 노티1.시작의 시작등록.글수정후에 메인피드를 새로고침하기위한 노티 (노티의 이름은 ModifyVCNotification)
     let ModifyVCNotification: Notification.Name = Notification.Name("ModifyVCNotification")
@@ -100,9 +102,20 @@ class HeartDetailViewController: UIViewController, UITextViewDelegate, UITextFie
         userID.text = heartResult?.userID
         let myID = heartResult?.userID
         
-//        myPlaceText.text = heartResult?.myPlaceText ?? ""
-        date.text = heartResult?.date
+        // 날짜가져옴
+        let str = heartResult?.date
+        // 글자치환
+        let newStr = str?.replacingOccurrences(of: "-", with: ".")
+        //  앞에서 세번째 글자부터 뒤에서 -3번째 글자만 보이기
+        let firstIndex = newStr?.index(newStr!.startIndex, offsetBy: 2)
+        let lastIndex = newStr?.index(newStr!.endIndex, offsetBy: -3) // "Hello"
+        let v = newStr?[firstIndex! ..< lastIndex!]
+        // 날짜넣음
+        date.text = v?.description
+        
         postText.text = heartResult?.postText
+    
+        placeText.text =  heartResult?.myPlaceText ?? ""
         //글번호
 //        num.text = heartResult?.postIdx?.description
         

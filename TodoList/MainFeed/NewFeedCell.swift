@@ -144,9 +144,10 @@ class NewFeedCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        // 셀그림자설정
         setupLayout()
     }
-    
+    // 셀그림자설정상태
     func setupLayout() {
         layer.shadowColor = UIColor.black.cgColor
         layer.shadowOpacity = 0.1

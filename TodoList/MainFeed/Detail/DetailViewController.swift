@@ -70,6 +70,8 @@ class DetailViewController: UIViewController, UITextViewDelegate, UITableViewDat
         self.loadReply()
     }
     
+    // 장소표기
+    @IBOutlet var placeText: UILabel!
     // 셀갯수테스트
     //    var numberOfCell: Int = 10
     //    let examList = ["안녕","호호","하하","낄낄","호호"]
@@ -77,7 +79,7 @@ class DetailViewController: UIViewController, UITextViewDelegate, UITableViewDat
     // 글내용
     @IBOutlet var postText: UITextView!{
         didSet{
-            postText.font = UIFont.systemFont(ofSize: 16, weight: .light)
+            postText.font = UIFont.systemFont(ofSize: 18, weight: .semibold)
         }
     }
     
@@ -118,11 +120,23 @@ class DetailViewController: UIViewController, UITextViewDelegate, UITableViewDat
         //게시글 작성자
         userID.text = feedResult?.userID
         myID = feedResult!.userID ?? "아이디없음"
-        //        myPlaceText.text = feedResult?.myPlaceText
-        date.text = feedResult?.date
+       
+        // 날짜가져옴
+        let str = feedResult?.date
+        // 글자치환
+        let newStr = str?.replacingOccurrences(of: "-", with: ".")
+        //  앞에서 세번째 글자부터 뒤에서 -3번째 글자만 보이기
+        let firstIndex = newStr?.index(newStr!.startIndex, offsetBy: 2)
+        let lastIndex = newStr?.index(newStr!.endIndex, offsetBy: -3) // "Hello"
+        let v = newStr?[firstIndex! ..< lastIndex!]
+        // 날짜넣음
+        date.text = v?.description
         postText.text = feedResult?.postText
+        
         //글번호
         // num.text = feedResult?.feedIdx?.description
+        // 장소
+        placeText.text = feedResult?.myPlaceText
         
         // 게시글번호(수정시필요)
         feedIdx = feedResult?.feedIdx ?? 0
