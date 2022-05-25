@@ -367,12 +367,13 @@ class HeartDetailViewController: UIViewController, UITextViewDelegate, UITextFie
     // 댓글작성 업로드 API호출
     func replyUpload(success: (()->Void)? = nil, fail: ((String)->Void)? = nil) {
         // userID, postText,이미지묶음을 파라미터에 담아보냄
-        let userID = heartResult?.userID
-        
+        // 로그인한 아이디값
+        let getName = plist.string(forKey: "name")
+    
         let param: Parameters = [
             "feedIdx": feedIdx,
             "title" : replyField.text ?? "",
-            "userID" : userID ?? "아이디없음",
+            "userID" : getName ?? "아이디없음",
             "step" : 0 ,
         ]
         

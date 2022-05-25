@@ -45,6 +45,25 @@
                                                     <constraint firstAttribute="height" constant="275" id="zQy-5x-Mk5"/>
                                                 </constraints>
                                             </imageView>
+                                            <tableView clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="80" estimatedRowHeight="-1" sectionHeaderHeight="28" estimatedSectionHeaderHeight="-1" sectionFooterHeight="28" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="C8y-KZ-PX7">
+                                                <rect key="frame" x="0.0" y="434" width="414" height="300"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="414" id="OHU-U6-Vdq"/>
+                                                    <constraint firstAttribute="height" constant="306" id="lEh-H5-4pb"/>
+                                                </constraints>
+                                                <color key="separatorColor" systemColor="systemGray2Color"/>
+                                                <color key="sectionIndexBackgroundColor" systemColor="systemGray5Color"/>
+                                                <prototypes>
+                                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="HeartDetailViewCell" focusStyle="custom" rowHeight="71" id="0nR-oF-Sg9" customClass="HeartDetailViewCell" customModule="TodoList" customModuleProvider="target">
+                                                        <rect key="frame" x="0.0" y="44.5" width="414" height="71"/>
+                                                        <autoresizingMask key="autoresizingMask"/>
+                                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="0nR-oF-Sg9" id="ifL-ci-ZQ6">
+                                                            <rect key="frame" x="0.0" y="0.0" width="414" height="71"/>
+                                                            <autoresizingMask key="autoresizingMask"/>
+                                                        </tableViewCellContentView>
+                                                    </tableViewCell>
+                                                </prototypes>
+                                            </tableView>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZY1-vm-oWa">
                                                 <rect key="frame" x="285.5" y="357" width="48.5" height="31"/>
                                                 <state key="normal" title="Button"/>
@@ -65,22 +84,10 @@
                                                 </connections>
                                             </button>
                                             <textField opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="댓글 달기.." textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="tZj-id-JSw">
-                                                <rect key="frame" x="8" y="770" width="310" height="30"/>
+                                                <rect key="frame" x="8" y="748" width="310" height="30"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits"/>
                                             </textField>
-                                            <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UAc-Bj-NhU">
-                                                <rect key="frame" x="326" y="770" width="70" height="30"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="height" constant="30" id="ibB-Py-UMk"/>
-                                                    <constraint firstAttribute="width" constant="70" id="y3m-IV-jPF"/>
-                                                </constraints>
-                                                <state key="normal" title="Button"/>
-                                                <buttonConfiguration key="configuration" style="tinted" title="게시"/>
-                                                <connections>
-                                                    <action selector="replyBtn:" destination="AVg-px-JR3" eventType="touchUpInside" id="L7p-jT-Uqx"/>
-                                                </connections>
-                                            </button>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="place" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Az7-EA-ynL">
                                                 <rect key="frame" x="16" y="391" width="35" height="17"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -93,21 +100,19 @@
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="80" estimatedRowHeight="-1" sectionHeaderHeight="28" estimatedSectionHeaderHeight="-1" sectionFooterHeight="28" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="C8y-KZ-PX7">
-                                                <rect key="frame" x="0.0" y="434" width="414" height="276"/>
-                                                <color key="separatorColor" systemColor="systemGray2Color"/>
-                                                <color key="sectionIndexBackgroundColor" systemColor="systemGray5Color"/>
-                                                <prototypes>
-                                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="none" indentationWidth="10" reuseIdentifier="HeartDetailViewCell" focusStyle="custom" rowHeight="71" id="0nR-oF-Sg9" customClass="HeartDetailViewCell" customModule="TodoList" customModuleProvider="target">
-                                                        <rect key="frame" x="0.0" y="44.5" width="414" height="71"/>
-                                                        <autoresizingMask key="autoresizingMask"/>
-                                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="0nR-oF-Sg9" id="ifL-ci-ZQ6">
-                                                            <rect key="frame" x="0.0" y="0.0" width="414" height="71"/>
-                                                            <autoresizingMask key="autoresizingMask"/>
-                                                        </tableViewCellContentView>
-                                                    </tableViewCell>
-                                                </prototypes>
-                                            </tableView>
+                                            <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UAc-Bj-NhU">
+                                                <rect key="frame" x="326" y="748" width="70" height="30"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="30" id="l9c-uS-BJn"/>
+                                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="70" id="w5s-rN-ouH"/>
+                                                    <constraint firstAttribute="width" constant="70" id="y3m-IV-jPF"/>
+                                                </constraints>
+                                                <state key="normal" title="Button"/>
+                                                <buttonConfiguration key="configuration" style="tinted" title="게시"/>
+                                                <connections>
+                                                    <action selector="replyBtn:" destination="AVg-px-JR3" eventType="touchUpInside" id="L7p-jT-Uqx"/>
+                                                </connections>
+                                            </button>
                                         </subviews>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                         <constraints>
@@ -117,20 +122,19 @@
                                             <constraint firstAttribute="trailing" secondItem="UAc-Bj-NhU" secondAttribute="trailing" constant="10" id="Duu-NE-NW6"/>
                                             <constraint firstItem="C8y-KZ-PX7" firstAttribute="leading" secondItem="cel-tB-q4M" secondAttribute="leading" id="E1v-ad-0Ah"/>
                                             <constraint firstItem="aeh-qh-H4R" firstAttribute="top" secondItem="cel-tB-q4M" secondAttribute="top" constant="44" id="G2Z-mh-nCZ"/>
+                                            <constraint firstItem="UAc-Bj-NhU" firstAttribute="top" secondItem="tZj-id-JSw" secondAttribute="top" id="GKU-Gw-wBd"/>
                                             <constraint firstItem="2hp-xH-4Wz" firstAttribute="leading" secondItem="cel-tB-q4M" secondAttribute="leading" constant="16" id="GWx-Vu-k9V"/>
                                             <constraint firstAttribute="trailing" secondItem="aeh-qh-H4R" secondAttribute="trailing" id="HED-at-gY4"/>
                                             <constraint firstItem="C8y-KZ-PX7" firstAttribute="top" secondItem="Az7-EA-ynL" secondAttribute="bottom" constant="26" id="MYw-fS-Te1"/>
                                             <constraint firstAttribute="bottom" secondItem="tZj-id-JSw" secondAttribute="bottom" constant="30" id="N7Q-fx-jUa"/>
                                             <constraint firstAttribute="trailing" secondItem="FnC-5R-U9n" secondAttribute="trailing" constant="10" id="PQc-Pz-tZY"/>
                                             <constraint firstAttribute="trailing" secondItem="C8y-KZ-PX7" secondAttribute="trailing" id="S5U-LG-z8d"/>
-                                            <constraint firstItem="UAc-Bj-NhU" firstAttribute="top" secondItem="C8y-KZ-PX7" secondAttribute="bottom" constant="30" id="U0Y-r4-UOf"/>
                                             <constraint firstItem="tZj-id-JSw" firstAttribute="leading" secondItem="cel-tB-q4M" secondAttribute="leading" constant="16" id="YMb-3w-Dym"/>
                                             <constraint firstAttribute="trailing" secondItem="aeh-qh-H4R" secondAttribute="trailing" id="bTW-gN-uip"/>
                                             <constraint firstItem="FnC-5R-U9n" firstAttribute="leading" secondItem="ZY1-vm-oWa" secondAttribute="trailing" constant="10" id="cC2-r5-jsU"/>
                                             <constraint firstItem="C8y-KZ-PX7" firstAttribute="leading" secondItem="cel-tB-q4M" secondAttribute="leading" id="cph-lW-K2a"/>
                                             <constraint firstItem="hkj-0O-Lua" firstAttribute="top" secondItem="aeh-qh-H4R" secondAttribute="bottom" constant="8" symbolic="YES" id="dgb-bo-q58"/>
                                             <constraint firstItem="3CW-cy-Ghg" firstAttribute="top" secondItem="hkj-0O-Lua" secondAttribute="bottom" constant="10" id="eWY-ZX-6uD"/>
-                                            <constraint firstAttribute="bottom" secondItem="UAc-Bj-NhU" secondAttribute="bottom" constant="30" id="gJd-Zq-d2y"/>
                                             <constraint firstItem="3CW-cy-Ghg" firstAttribute="leading" secondItem="2hp-xH-4Wz" secondAttribute="trailing" constant="8" symbolic="YES" id="iWw-mU-we1"/>
                                             <constraint firstItem="hkj-0O-Lua" firstAttribute="leading" secondItem="cel-tB-q4M" secondAttribute="leading" constant="8" id="jWz-qr-akQ"/>
                                             <constraint firstItem="aeh-qh-H4R" firstAttribute="leading" secondItem="cel-tB-q4M" secondAttribute="leading" id="pz3-he-m5k"/>
