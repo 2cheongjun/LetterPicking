@@ -68,15 +68,9 @@ class HeartDetailViewController: UIViewController, UITextViewDelegate, UITextFie
     // 노티1.시작의 시작등록.글수정후에 메인피드를 새로고침하기위한 노티 (노티의 이름은 ModifyVCNotification)
     let ModifyVCNotification: Notification.Name = Notification.Name("ModifyVCNotification")
     
-    //취소버튼
-    @IBAction func barCancleBtn(_ sender: Any) {
-        self.dismiss(animated: true, completion: nil)
-    }
-    
-    // 완료버튼
+
+    // 닫기 버튼
     @IBAction func barOKBtn(_ sender: Any) {
-        // 수정API호출
-        upDatePostText()
         // 노티2.창이 닫힐때 노티를 메인피드로 신호를 보낸다. //(노티의 이름은 ModifyVCNotification)
         NotificationCenter.default.post(name: ModifyVCNotification, object: nil, userInfo: nil)
         self.dismiss(animated: true, completion: nil)
@@ -189,7 +183,6 @@ class HeartDetailViewController: UIViewController, UITextViewDelegate, UITextFie
         }
         alert.addAction(alertAction)
         
-        // 왜인지 취소글자가 더두꺼워보임???
         let cancel = UIAlertAction(title: "취소", style: .cancel)
         alert.addAction(cancel)
         // alert.view.tintColor =  UIColor(ciColor: .black)
@@ -202,8 +195,18 @@ class HeartDetailViewController: UIViewController, UITextViewDelegate, UITextFie
     @IBAction func modifyBtn(_ sender: Any) {
         //        let postText = UITextField()
         postText.becomeFirstResponder()// 키보드가 나타나고 입력상태가 된다.
-        //        postText.clearButtonMode = .always // 텍스트필드만 됨
+        // 글쓰고 나서
+        modifyBtn.setTitle("저장", for: .normal)
+        modifyBtn.addTarget(self, action: #selector(upDate), for: .touchUpInside)
     }
+
+    // 수정이 저장버튼으로 바뀌고나서의 버튼 액션
+    @objc func upDate() {
+         print("게시글 수정API호출!")
+        // 수정API호출
+         upDatePostText()
+         self.dismiss(animated: true, completion: nil)
+       }
     
     
     // 게시글수정API호출

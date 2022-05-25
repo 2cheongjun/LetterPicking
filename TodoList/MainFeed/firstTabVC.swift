@@ -156,6 +156,7 @@ class firstTabVC: UIViewController{
         
         // 상단 백버튼가림
         self.navigationController?.navigationBar.isHidden = true
+
     }
     
     
@@ -465,6 +466,8 @@ class firstTabVC: UIViewController{
         session.finishTasksAndInvalidate()
         
      }//함수 끝
+    
+
     
 }// 뷰컨끝
 

@@ -147,12 +147,7 @@
                                         <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
                                         <items>
                                             <navigationItem title="게시물" id="6as-db-BV2">
-                                                <barButtonItem key="leftBarButtonItem" title="닫기" id="mSC-tT-dmc">
-                                                    <connections>
-                                                        <action selector="barCancleBtn:" destination="Y6W-OH-hqX" id="ol3-5y-eHA"/>
-                                                    </connections>
-                                                </barButtonItem>
-                                                <barButtonItem key="rightBarButtonItem" title="완료" style="plain" id="eLR-p5-2Jv">
+                                                <barButtonItem key="rightBarButtonItem" title="닫기" style="plain" id="eLR-p5-2Jv">
                                                     <connections>
                                                         <action selector="barOKBtn:" destination="Y6W-OH-hqX" id="cgV-Et-a4c"/>
                                                     </connections>

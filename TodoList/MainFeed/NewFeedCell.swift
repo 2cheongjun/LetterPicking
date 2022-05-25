@@ -16,6 +16,7 @@ protocol firstTabVCCellDelegate: AnyObject{
 }
 
 
+
 class NewFeedCell: UITableViewCell {
     //델리게이트생성
     weak var delegate: firstTabVCCellDelegate?
@@ -24,7 +25,6 @@ class NewFeedCell: UITableViewCell {
     
     var feedIdx = 0
     static let identifier = "NewFeedCell"
-    
 
     static func nib() ->UINib {
         return UINib(nibName: "NewFeedCell", bundle: nil)
@@ -38,6 +38,7 @@ class NewFeedCell: UITableViewCell {
     
     required init?(coder aDecoder: NSCoder) {
        super.init(coder: aDecoder)
+        
     }
     
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -113,14 +114,14 @@ class NewFeedCell: UITableViewCell {
     // 글번호
     @IBOutlet weak var num: UILabel!
     
-    //댓글수
+    // 댓글수
     @IBOutlet var relpySum: UILabel!
     
     @IBOutlet weak var imageViewLabel: UIImageView!
-    // 이름
+    // 글내용
        @IBOutlet weak var titleLabel: UILabel!{
            didSet{
-               titleLabel.font = UIFont.systemFont(ofSize: 24,weight: .medium)
+               titleLabel.font = UIFont.systemFont(ofSize: 24,weight: .semibold)
            }
        }
        @IBOutlet weak var dataLabel: UILabel!{
@@ -128,10 +129,10 @@ class NewFeedCell: UITableViewCell {
                dataLabel.font = .systemFont(ofSize: 13, weight: .light)
            }
        }
-    //글설명
+    // 이름
        @IBOutlet weak var descriptionLabel: UILabel!{
            didSet{
-               descriptionLabel.font = .systemFont(ofSize: 13, weight: .light)
+               descriptionLabel.font = .systemFont(ofSize: 13, weight: .bold)
            }
        }
        @IBOutlet weak var priceLabel: UILabel!{
@@ -143,7 +144,15 @@ class NewFeedCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        setupLayout()
     }
-
+    
+    func setupLayout() {
+        layer.shadowColor = UIColor.black.cgColor
+        layer.shadowOpacity = 0.1
+        layer.shadowRadius = 5
+//        contentView.layer.cornerRadius = 10
+        contentView.layer.masksToBounds = true
+    }
 }
 

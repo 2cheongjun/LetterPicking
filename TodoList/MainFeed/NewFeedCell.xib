@@ -34,14 +34,14 @@
                             <action selector="didPressedHeart:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="LFi-Kl-gyh"/>
                         </connections>
                     </button>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" verticalCompressionResistancePriority="751" misplaced="YES" text="name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cmY-xK-Mbl">
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" verticalCompressionResistancePriority="751" misplaced="YES" text="postText" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cmY-xK-Mbl">
                         <rect key="frame" x="16" y="330" width="288" height="16"/>
                         <fontDescription key="fontDescription" type="system" pointSize="13"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="posttext" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="w59-J2-ECF">
-                        <rect key="frame" x="16" y="323" width="54" height="73"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="w59-J2-ECF">
+                        <rect key="frame" x="16" y="323" width="54" height="61"/>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
@@ -53,7 +53,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" verticalCompressionResistancePriority="751" text="postPlaceText" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QX6-tE-Ud8">
-                        <rect key="frame" x="16" y="379" width="288" height="17"/>
+                        <rect key="frame" x="16" y="373" width="288" height="17"/>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
@@ -68,7 +68,7 @@
                         </constraints>
                     </imageView>
                     <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="e2o-MJ-BvU">
-                        <rect key="frame" x="49" y="292" width="26" height="29"/>
+                        <rect key="frame" x="44" y="292" width="26" height="29"/>
                         <state key="normal" title="Button"/>
                         <buttonConfiguration key="configuration" style="plain" image="message" catalog="system">
                             <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage" configurationType="font">
@@ -80,7 +80,7 @@
                 <constraints>
                     <constraint firstItem="sB2-Lk-1Eh" firstAttribute="top" secondItem="e2o-MJ-BvU" secondAttribute="top" id="5Xs-mm-Oax"/>
                     <constraint firstAttribute="trailing" secondItem="d2h-ck-t2b" secondAttribute="trailing" id="8z6-Xo-LmC"/>
-                    <constraint firstAttribute="bottom" secondItem="QX6-tE-Ud8" secondAttribute="bottom" constant="20" id="9dI-rC-5Wi"/>
+                    <constraint firstAttribute="bottom" secondItem="QX6-tE-Ud8" secondAttribute="bottom" constant="26" id="9dI-rC-5Wi"/>
                     <constraint firstItem="aSR-Q0-wXm" firstAttribute="leading" secondItem="w59-J2-ECF" secondAttribute="trailing" constant="6" id="9ia-0y-69J"/>
                     <constraint firstItem="cmY-xK-Mbl" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="BD8-u6-8Rf"/>
                     <constraint firstItem="QX6-tE-Ud8" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="DKd-c2-vMm"/>
@@ -93,7 +93,7 @@
                     <constraint firstAttribute="trailing" secondItem="QX6-tE-Ud8" secondAttribute="trailing" constant="16" id="dx3-qG-ut8"/>
                     <constraint firstItem="aSR-Q0-wXm" firstAttribute="top" secondItem="w59-J2-ECF" secondAttribute="top" id="epj-lz-3rt"/>
                     <constraint firstItem="sB2-Lk-1Eh" firstAttribute="top" secondItem="d2h-ck-t2b" secondAttribute="bottom" constant="10" id="hPC-Df-Oee"/>
-                    <constraint firstItem="sB2-Lk-1Eh" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="ocV-hh-qnU"/>
+                    <constraint firstItem="sB2-Lk-1Eh" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="14" id="ocV-hh-qnU"/>
                     <constraint firstItem="d2h-ck-t2b" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="p22-8Z-TIW"/>
                     <constraint firstAttribute="trailing" secondItem="cmY-xK-Mbl" secondAttribute="trailing" constant="16" id="qs4-4b-aLz"/>
                     <constraint firstItem="cmY-xK-Mbl" firstAttribute="top" secondItem="sB2-Lk-1Eh" secondAttribute="bottom" constant="10" id="xec-Va-hLi"/>
