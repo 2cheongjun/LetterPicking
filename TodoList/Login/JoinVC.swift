@@ -26,17 +26,20 @@ class JoinVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UINa
     var BASEURL = UrlInfo.shared.url!
     
     override func viewDidLoad() {
+        
+        // 네비게이션바 항상보이게
+        self.navigationController?.navigationBar.isHidden = false
         // 테이블 뷰의 dataSource, delegate 속성 지정
         self.tableView.dataSource = self
         self.tableView.delegate = self
         
         // 프로필 이미지를 원형으로 설정
-        self.profile.layer.cornerRadius = self.profile.frame.width / 2
-        self.profile.layer.masksToBounds = true
-        
+//        self.profile.layer.cornerRadius = self.profile.frame.width / 2
+//        self.profile.layer.masksToBounds = true
+//        
         // 프로필 이미지에 탭 제스처 및 액션 이벤트 설정
-        let gesture = UITapGestureRecognizer(target: self, action: #selector(tappedProfile(_:)))
-        self.profile.addGestureRecognizer(gesture)
+//        let gesture = UITapGestureRecognizer(target: self, action: #selector(tappedProfile(_:)))
+//        self.profile.addGestureRecognizer(gesture)
         self.view.bringSubviewToFront(self.indicatorView) // 인디케이터 뷰를 화면 맨 앞으로
     }
     
@@ -53,21 +56,21 @@ class JoinVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UINa
         switch indexPath.row {
         case 0 :
             self.fieldAccount = UITextField(frame: tfFrame)
-            self.fieldAccount.placeholder = "계정(이메일)"
+            self.fieldAccount.placeholder = "email@gmail.com"
             self.fieldAccount.borderStyle = .none
             self.fieldAccount.autocapitalizationType = .none
             self.fieldAccount.font = UIFont.systemFont(ofSize: 14)
             cell.addSubview(self.fieldAccount)
         case 1 :
             self.fieldPassword = UITextField(frame: tfFrame)
-            self.fieldPassword.placeholder = "비밀번호"
+            self.fieldPassword.placeholder = "비밀번호는 영+숫자 8글자 이상"
             self.fieldPassword.borderStyle = .none
             self.fieldPassword.isSecureTextEntry = true
             self.fieldPassword.font = UIFont.systemFont(ofSize: 14)
             cell.addSubview(self.fieldPassword)
         case 2 :
             self.fieldName = UITextField(frame: tfFrame)
-            self.fieldName.placeholder = "이름"
+            self.fieldName.placeholder = "닉네임"
             self.fieldName.borderStyle = .none
             self.fieldName.font = UIFont.systemFont(ofSize: 14)
             cell.addSubview(self.fieldName)
@@ -80,6 +83,7 @@ class JoinVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UINa
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 40
     }
+    
     
     // 가입완료 버튼액션
     @IBAction func submit(_ sender: Any) {
@@ -180,35 +184,35 @@ class JoinVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UINa
     
     
     
-    @objc func tappedProfile(_ sender: Any) {
-        // 전반부) 원하는 소스 타입을 선택할 수 있는 액션 시트 구현
-        let msg = "프로필 이미지를 읽어올 곳을 선택하세요."
-        let sheet = UIAlertController(title: msg, message: nil, preferredStyle: .actionSheet)
-        
-        sheet.addAction(UIAlertAction(title: "취소", style: .cancel))
-        sheet.addAction(UIAlertAction(title: "저장된 앨범", style: .default) { (_) in
-            selectLibrary(src: .savedPhotosAlbum) // 저장된 앨범에서 이미지 선택하기
-        })
-        sheet.addAction(UIAlertAction(title: "포토 라이브러리", style: .default) { (_) in
-            selectLibrary(src: .photoLibrary) // 포토 라이브러리에서 이미지 선택하기
-        })
-        sheet.addAction(UIAlertAction(title: "카메라", style: .default) { (_) in
-            selectLibrary(src: .camera) // 카메라에서 이미지 촬영하기
-        })
-        self.present(sheet, animated: false)
-        
-        // 후반부) 전달된 소스 타입에 맞게 이미지 피커 창을 여는 내부 함수
-        func selectLibrary(src: UIImagePickerController.SourceType) {
-            if UIImagePickerController.isSourceTypeAvailable(src) {
-                let picker = UIImagePickerController()
-                picker.delegate = self
-                picker.allowsEditing = true
-                self.present(picker, animated: false)
-            } else {
-                self.alert("사용할 수 없는 타입입니다.")
-            }
-        }
-    }
+//    @objc func tappedProfile(_ sender: Any) {
+//        // 전반부) 원하는 소스 타입을 선택할 수 있는 액션 시트 구현
+//        let msg = "프로필 이미지를 읽어올 곳을 선택하세요."
+//        let sheet = UIAlertController(title: msg, message: nil, preferredStyle: .actionSheet)
+//
+//        sheet.addAction(UIAlertAction(title: "취소", style: .cancel))
+//        sheet.addAction(UIAlertAction(title: "저장된 앨범", style: .default) { (_) in
+//            selectLibrary(src: .savedPhotosAlbum) // 저장된 앨범에서 이미지 선택하기
+//        })
+//        sheet.addAction(UIAlertAction(title: "포토 라이브러리", style: .default) { (_) in
+//            selectLibrary(src: .photoLibrary) // 포토 라이브러리에서 이미지 선택하기
+//        })
+//        sheet.addAction(UIAlertAction(title: "카메라", style: .default) { (_) in
+//            selectLibrary(src: .camera) // 카메라에서 이미지 촬영하기
+//        })
+//        self.present(sheet, animated: false)
+//
+//        // 후반부) 전달된 소스 타입에 맞게 이미지 피커 창을 여는 내부 함수
+//        func selectLibrary(src: UIImagePickerController.SourceType) {
+//            if UIImagePickerController.isSourceTypeAvailable(src) {
+//                let picker = UIImagePickerController()
+//                picker.delegate = self
+//                picker.allowsEditing = true
+//                self.present(picker, animated: false)
+//            } else {
+//                self.alert("사용할 수 없는 타입입니다.")
+//            }
+//        }
+//    }
     
     
     public func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {

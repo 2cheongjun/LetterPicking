@@ -653,8 +653,8 @@ extension firstTabVC: UITableViewDelegate, UITableViewDataSource{
                 let success = jsonObject["success"] as? Int ?? 0
                 
                 if success == 1 {
-                    //                    self.alert("좋아요업로드 성공 JSON= \(try! res.result.get())!)")
-                    //                    self.dismiss(animated: true, completion: nil)
+                    // self.alert("좋아요업로드 성공 JSON= \(try! res.result.get())!)")
+                    // self.dismiss(animated: true, completion: nil)
                     
                     // 이거땜에 좋아요가 두번눌리고 오류냠
                     //  DispatchQueue.main.async {
@@ -708,12 +708,11 @@ extension firstTabVC: UITableViewDelegate, UITableViewDataSource{
                 let success = jsonObject["success"] as? Int ?? 0
                 
                 if success == 1 {
-                    //                    self.alert("좋아요취소성공 JSON= \(try! res.result.get())!)")
-                    //                    self.dismiss(animated: true, completion: nil)
-                    //                    }
+                // self.alert("좋아요취소성공 JSON= \(try! res.result.get())!)")
+                // self.dismiss(animated: true, completion: nil)
+                // }
                 }else{
                     //sucess가 0이면
-                    //                    self.isCalling = false
                     self.alert("0")
                 }
             }else{

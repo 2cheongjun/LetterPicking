@@ -101,7 +101,7 @@ class thirdTabVC: UIViewController, UITableViewDelegate, UITableViewDataSource, 
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 3
+        return 4
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -127,18 +127,29 @@ class thirdTabVC: UIViewController, UITableViewDelegate, UITableViewDataSource, 
            
             
         case 1:
-            cell.textLabel?.text = "e-mail"
+            cell.textLabel?.text = "닉네임"
             cell.detailTextLabel?.text = plist.string(forKey: "email") ?? "Login please"
             
         case 2:
-            cell.textLabel?.text = " 1.0 버전"
+            cell.textLabel?.text = "1.0 버전"
 //            cell.detailTextLabel?.text = plist.string(forKey: "email") ?? "Login please"
-            
-
+        case 3:
+            cell.textLabel?.text = "탈퇴하기"
+//            cell.detailTextLabel?.text = plist.string(forKey: "email") ?? "Login please"
+        
         default:
             ()
         }
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        // 여기에 셀구현 내용
+        let cell = UITableViewCell(style: .value1, reuseIdentifier: "cell")
+        // 선택한것 눌렸다가 자연스럽게 흰색으로 전환
+        tableView.deselectRow(at: indexPath, animated: true)
+        
+        print("마이페이지 셀클릭 : \(indexPath.row)")
     }
     
 
@@ -341,4 +352,7 @@ class thirdTabVC: UIViewController, UITableViewDelegate, UITableViewDataSource, 
         // 이미지 피커 컨트롤러 창 닫기!! 안해주면 안닫힘
         picker.dismiss(animated: true)
     }
+    
+    
+    
 }

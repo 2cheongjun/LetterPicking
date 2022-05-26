@@ -174,9 +174,9 @@ class WriteVC : UIViewController, UIImagePickerControllerDelegate, UINavigationC
         
         let ok = UIAlertAction(title: "OK", style: .default) { (ok) in
             //code // 내위치정보 받아다가 넣기
-//            self.myPlaceText.text = alert.textFields?[0].text
-            self.myPlaceText.text = "금천구 독산동"
-            //                   print("WriteVC/직접입력받은 주소: \(self.myPlaceText.text)")
+            self.myPlaceText.text = alert.textFields?[0].text
+//            self.myPlaceText.text = "금천구 독산동"
+            print("WriteVC/직접입력받은 주소: \(self.myPlaceText.text ?? "주소없음")")
             
             if let add = self.myPlaceText.text{
                 print("작정한주소 :\(add) ")
