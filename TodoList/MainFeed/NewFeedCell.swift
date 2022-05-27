@@ -12,9 +12,9 @@ protocol firstTabVCCellDelegate: AnyObject{
 //    func didTapButton()
     // 좋아요버튼이 눌릴때, index값과, Bool값을 받아서, 뷰컨에서 실행해줘 // 버튼 클릭메소드를 실행해줘
     func didPressHeart(for index: Int, like: Bool, indexNum: Int)
-//    func onClickCell(index2: Int)
+    // 더보기 버튼
+    func report(for index: Int,indexNum: Int)
 }
-
 
 
 class NewFeedCell: UITableViewCell {
@@ -34,8 +34,11 @@ class NewFeedCell: UITableViewCell {
           super.init(style: style, reuseIdentifier: reuseIdentifier)
           // 여기서 버튼에 액션 추가
           self.likeBtn.addTarget(self, action: #selector(didPressedHeart(_:)), for: .touchUpInside)
+          // ...버튼
       }
     
+    
+  
     required init?(coder aDecoder: NSCoder) {
        super.init(coder: aDecoder)
         
@@ -45,6 +48,17 @@ class NewFeedCell: UITableViewCell {
        super.setSelected(selected, animated: animated)
     }
 
+    // 더보기버튼(신고하기)
+    @IBAction func report(_ sender: Any) {
+        guard let idx = index else {
+            return
+        }
+        // 더보기버튼 누를때 게시글인덱스 값 얻기
+        delegate?.report(for: idx,indexNum:(indexNum?.row)!)
+        print("신고알림창 \(idx) 번째게시글")
+        
+    }
+    
     //좋아요 버튼정의
     @IBOutlet var likeBtn: UIButton!
 
@@ -109,6 +123,7 @@ class NewFeedCell: UITableViewCell {
        }
     
     
+
     
 
     // 글번호
@@ -117,24 +132,35 @@ class NewFeedCell: UITableViewCell {
     // 댓글수
     @IBOutlet var relpySum: UILabel!
     
+    // 상단이름
+       @IBOutlet weak var descriptionLabel: UILabel!{
+           didSet{
+               descriptionLabel.font = .systemFont(ofSize:  12, weight: .bold)
+           }
+       }
+    // 이미지
     @IBOutlet weak var imageViewLabel: UIImageView!
+   // 날짜
+   @IBOutlet weak var dataLabel: UILabel!{
+       didSet{
+           dataLabel.font = .systemFont(ofSize: 13, weight: .light)
+       }
+   }
+   
+    // 이름
+    @IBOutlet var name: UILabel!{
+        didSet{
+            name.font = .systemFont(ofSize: 14, weight: .bold)
+        }
+    }
     // 글내용
        @IBOutlet weak var titleLabel: UILabel!{
            didSet{
-               titleLabel.font = UIFont.systemFont(ofSize: 24,weight: .semibold)
+               titleLabel.font = UIFont.systemFont(ofSize: 14,weight: .light)
            }
        }
-       @IBOutlet weak var dataLabel: UILabel!{
-           didSet{
-               dataLabel.font = .systemFont(ofSize: 13, weight: .light)
-           }
-       }
-    // 이름
-       @IBOutlet weak var descriptionLabel: UILabel!{
-           didSet{
-               descriptionLabel.font = .systemFont(ofSize: 13, weight: .bold)
-           }
-       }
+    
+    // 장소
        @IBOutlet weak var priceLabel: UILabel!{
            didSet{
                priceLabel.font = .systemFont(ofSize: 13, weight: .light)
@@ -151,7 +177,7 @@ class NewFeedCell: UITableViewCell {
     func setupLayout() {
         layer.shadowColor = UIColor.black.cgColor
         layer.shadowOpacity = 0.1
-        layer.shadowRadius = 5
+        layer.shadowRadius = 2
 //        contentView.layer.cornerRadius = 10
         contentView.layer.masksToBounds = true
     }

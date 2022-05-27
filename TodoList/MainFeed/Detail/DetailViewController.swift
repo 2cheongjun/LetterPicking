@@ -29,7 +29,7 @@ class DetailViewController: UIViewController, UITextViewDelegate, UITableViewDat
     // 작성자ID
     @IBOutlet var userID: UILabel!{
         didSet{
-            userID.font = UIFont.systemFont(ofSize: 16, weight: .bold)
+            userID.font = UIFont.systemFont(ofSize: 14, weight: .bold)
         }
     }
     // 작성날짜
@@ -46,6 +46,7 @@ class DetailViewController: UIViewController, UITextViewDelegate, UITableViewDat
     // 댓글모델 가져오기
     var detailModel: DetailModel?
     
+
     
     // 글 삭제,수정버튼
     @IBOutlet var delBtn: UIButton!
@@ -75,11 +76,11 @@ class DetailViewController: UIViewController, UITextViewDelegate, UITableViewDat
     // 셀갯수테스트
     //    var numberOfCell: Int = 10
     //    let examList = ["안녕","호호","하하","낄낄","호호"]
-    
+   
     // 글내용
     @IBOutlet var postText: UITextView!{
         didSet{
-            postText.font = UIFont.systemFont(ofSize: 18, weight: .semibold)
+            postText.font = UIFont.systemFont(ofSize: 14, weight: .light)
         }
     }
     
@@ -114,7 +115,7 @@ class DetailViewController: UIViewController, UITextViewDelegate, UITableViewDat
         tableView.delegate = self
         tableView.dataSource = self
         
-        self.navigationItem.rightBarButtonItem = nil
+//        self.navigationItem.rightBarButtonItem = nil
 
         
         //게시글 작성자
@@ -137,6 +138,7 @@ class DetailViewController: UIViewController, UITextViewDelegate, UITableViewDat
         // num.text = feedResult?.feedIdx?.description
         // 장소
         placeText.text = feedResult?.myPlaceText
+        self.title = feedResult?.myPlaceText
         
         // 게시글번호(수정시필요)
         feedIdx = feedResult?.feedIdx ?? 0

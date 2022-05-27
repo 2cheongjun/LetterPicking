@@ -1,17 +1,16 @@
 {
   "images" : [
     {
-      "filename" : "profile-bg-2.jpg",
+      "filename" : "baseline_more_horiz_black_24dp-1.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "profile-bg-1.jpg",
+      "filename" : "baseline_more_horiz_black_24dp.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "profile-bg.jpg",
       "idiom" : "universal",
       "scale" : "3x"
     }

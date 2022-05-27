@@ -121,17 +121,17 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="aul-Ii-F7e">
-                                <rect key="frame" x="20" y="44" width="182" height="21"/>
+                                <rect key="frame" x="20" y="44" width="156" height="21"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="acf-t2-Anh">
-                                        <rect key="frame" x="0.0" y="0.0" width="41.333333333333336" height="21"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="39.666666666666664" height="21"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="😎함께 글자를 줍줍" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NCU-uI-uvA">
-                                        <rect key="frame" x="47.333333333333329" y="0.0" width="134.66666666666669" height="21"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="😎님과 글자줍기" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NCU-uI-uvA">
+                                        <rect key="frame" x="45.666666666666679" y="0.0" width="110.33333333333331" height="21"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
@@ -204,7 +204,11 @@
                             <constraint firstAttribute="trailing" secondItem="yHi-VC-bUU" secondAttribute="trailing" constant="16" id="2fc-co-thA"/>
                             <constraint firstItem="aul-Ii-F7e" firstAttribute="top" secondItem="cl6-87-8Cp" secondAttribute="top" id="3RI-JK-pSZ"/>
                             <constraint firstItem="yHi-VC-bUU" firstAttribute="top" secondItem="aul-Ii-F7e" secondAttribute="bottom" constant="16" id="6qd-km-Bv0"/>
+                            <constraint firstItem="YwF-e6-yIn" firstAttribute="top" secondItem="yHi-VC-bUU" secondAttribute="bottom" id="GDm-wc-0m9"/>
+                            <constraint firstItem="YwF-e6-yIn" firstAttribute="leading" secondItem="cl6-87-8Cp" secondAttribute="leading" id="JkT-RF-0gt"/>
+                            <constraint firstItem="YwF-e6-yIn" firstAttribute="trailing" secondItem="cl6-87-8Cp" secondAttribute="trailing" id="Qfu-8b-QD2"/>
                             <constraint firstItem="YwF-e6-yIn" firstAttribute="top" secondItem="yHi-VC-bUU" secondAttribute="bottom" id="RO5-QT-JmX"/>
+                            <constraint firstItem="YwF-e6-yIn" firstAttribute="bottom" secondItem="cl6-87-8Cp" secondAttribute="bottom" id="RgO-K8-lKk"/>
                             <constraint firstItem="YwF-e6-yIn" firstAttribute="leading" secondItem="cl6-87-8Cp" secondAttribute="leading" id="Tac-Mv-IdK"/>
                             <constraint firstItem="cl6-87-8Cp" firstAttribute="bottom" secondItem="YwF-e6-yIn" secondAttribute="bottom" id="VP2-B2-Tp6"/>
                             <constraint firstItem="yHi-VC-bUU" firstAttribute="top" secondItem="1o9-gh-97Q" secondAttribute="bottom" constant="10" id="gpg-r2-lea"/>
@@ -612,7 +616,7 @@
         <image name="map" catalog="system" width="128" height="110"/>
         <image name="mappin.and.ellipse" catalog="system" width="118" height="128"/>
         <image name="person" catalog="system" width="128" height="117"/>
-        <image name="profile-bg" width="466.66665649414062" height="700"/>
+        <image name="profile-bg" width="466.66665649414062" height="516.66668701171875"/>
         <systemColor name="labelColor">
             <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

@@ -1,3 +1,4 @@
+
 //
 //  JoinVC.swift
 //  MyMemory
@@ -36,7 +37,7 @@ class JoinVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UINa
         // 프로필 이미지를 원형으로 설정
 //        self.profile.layer.cornerRadius = self.profile.frame.width / 2
 //        self.profile.layer.masksToBounds = true
-//        
+//
         // 프로필 이미지에 탭 제스처 및 액션 이벤트 설정
 //        let gesture = UITapGestureRecognizer(target: self, action: #selector(tappedProfile(_:)))
 //        self.profile.addGestureRecognizer(gesture)

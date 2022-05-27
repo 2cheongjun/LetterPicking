@@ -519,6 +519,7 @@ extension firstTabVC: UITableViewDelegate, UITableViewDataSource{
         
         cell.titleLabel.text = self.feedModel?.results[indexPath.row].postText
         cell.descriptionLabel.text = self.feedModel?.results[indexPath.row].userID
+        cell.name.text = self.feedModel?.results[indexPath.row].userID
         
         cell.priceLabel.text =  self.feedModel?.results[indexPath.row].myPlaceText
         //        cell.num.text =  self.feedModel?.results[indexPath.row].feedIdx?.description ?? ""
@@ -743,6 +744,29 @@ extension firstTabVC: UISearchBarDelegate {
 // MARK : - firstTabVCCellDelegate
 // 좋아요 프로토콜 구현부
 extension firstTabVC: firstTabVCCellDelegate{
+    
+    // 신고버튼 얼럿 추가
+    func report(for index: Int, indexNum: Int) {
+        let alert = UIAlertController(title: " 신고하기 ", message: "게시물을 신고하시겠습니까?", preferredStyle: .alert)
+                let alertAction = UIAlertAction(title: "신고 및 차단", style: .default) { [self] (_) in
+                   
+                    // 서버로 게시글 번호를 보내고, 그 번호에 맞는 게시글을 삭제한다.
+//                    numIdx = self.feedModel?.results[indexNum].feedIdx?.description ?? ""
+                    // 신고API호출
+//                    requestFeedDeleateAPI()
+                    // 창을 닫는다.
+                    self.dismiss(animated: true, completion: nil)
+                    
+                }
+                alert.addAction(alertAction)
+                
+                // 취소글자 상태값
+                let cancel = UIAlertAction(title: "취소", style: .cancel)
+                alert.addAction(cancel)
+                //                alert.view.tintColor =  UIColor(ciColor: .black)
+                self.present(alert, animated: true, completion: nil)
+    }
+    
     
     // 하트눌림( 몇번째 게시글인가 번호였음, 좋아요상태 ,게시글번호)를 셀에게 받아와서
     // 그값으로 업로드 실행

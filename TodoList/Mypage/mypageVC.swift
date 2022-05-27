@@ -69,9 +69,9 @@ class thirdTabVC: UIViewController, UITableViewDelegate, UITableViewDataSource, 
         bgImg.frame.size = CGSize(width: bgImg.frame.size.width, height: bgImg.frame.size.height)
         //        bgImg.frame.size = CGSize(width: bgImg.frame.size.width, height: bgImg.frame.size.height)
         bgImg.center = CGPoint(x: self.view.frame.width / 2, y: 200)
-        //                bgImg.layer.cornerRadius = bgImg.frame.size.width / 2
-        //                bgImg.layer.borderWidth = 0
-        //                bgImg.layer.masksToBounds = true
+        // bgImg.layer.cornerRadius = bgImg.frame.size.width / 2
+        // bgImg.layer.borderWidth = 0
+        // bgImg.layer.masksToBounds = true
         self.view.addSubview(bgImg)
         
         
@@ -131,11 +131,13 @@ class thirdTabVC: UIViewController, UITableViewDelegate, UITableViewDataSource, 
             cell.detailTextLabel?.text = plist.string(forKey: "email") ?? "Login please"
             
         case 2:
-            cell.textLabel?.text = "1.0 버전"
-//            cell.detailTextLabel?.text = plist.string(forKey: "email") ?? "Login please"
+            cell.textLabel?.text = "version"
+            cell.detailTextLabel?.text = "1.0 버전"
         case 3:
             cell.textLabel?.text = "탈퇴하기"
 //            cell.detailTextLabel?.text = plist.string(forKey: "email") ?? "Login please"
+//            cell.textLabel?.backgroundColor = . gray
+            cell.textLabel?.textColor = .systemGray2
         
         default:
             ()
@@ -148,9 +150,32 @@ class thirdTabVC: UIViewController, UITableViewDelegate, UITableViewDataSource, 
         let cell = UITableViewCell(style: .value1, reuseIdentifier: "cell")
         // 선택한것 눌렸다가 자연스럽게 흰색으로 전환
         tableView.deselectRow(at: indexPath, animated: true)
+     
+        // 탈퇴 셀을 클릭하면 탈퇴확인 팝업을 띄운다.
+        if indexPath.row == 3{
+            print("마이페이지 셀클릭 : \(indexPath.row)")
+            
+            // 게시글 삭제 얼럿
+                let alert = UIAlertController(title: "게시물 삭제", message: "정말로 탈퇴하시겠습니까? 해당아이디의 작성한 모든글이 삭제됩니다.", preferredStyle: .alert)
+                let alertAction = UIAlertAction(title: "삭제", style: .default) { [self] (_) in
+                    //  여기에 실행할 코드
+                    // 갤러리에서 받아온 UIImage값 받아서 newProfile함수 호출
+                    // 서버로 게시글 번호를 보내고, 그 번호에 맞는 게시글을 삭제한다.
+//                    requestFeedDeleateAPI()
+                    // 창을 닫는다.
+                    self.dismiss(animated: true, completion: nil)
+                    
+                }
+                alert.addAction(alertAction)
+                
+                // 취소글자 상태값
+                let cancel = UIAlertAction(title: "취소", style: .cancel)
+                alert.addAction(cancel)
+                //                alert.view.tintColor =  UIColor(ciColor: .black)
+                self.present(alert, animated: true, completion: nil)
+            }
+        }
         
-        print("마이페이지 셀클릭 : \(indexPath.row)")
-    }
     
 
     // 프레젠트메소드방식으로 처리될예정이므로, 닫을때에도 dismiss 메소드를 사용한다.
