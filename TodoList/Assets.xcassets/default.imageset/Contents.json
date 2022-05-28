@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "account@2x.jpg",
+      "filename" : "defalut.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "account@2x-1.jpg",
+      "filename" : "defalut@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "account@2x-2.jpg",
+      "filename" : "defalut@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

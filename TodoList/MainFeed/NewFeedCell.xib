@@ -139,6 +139,7 @@
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
+                <outlet property="Img" destination="Ad2-8J-g7O" id="8mO-Yn-qFd"/>
                 <outlet property="dataLabel" destination="aSR-Q0-wXm" id="1x5-eI-1Uk"/>
                 <outlet property="descriptionLabel" destination="wCb-58-2Cx" id="QPc-rX-Bu4"/>
                 <outlet property="imageViewLabel" destination="d2h-ck-t2b" id="CZY-I5-EYw"/>
@@ -152,7 +153,7 @@
     </objects>
     <resources>
         <image name="baseline_more_horiz_black_24dp" width="24" height="24"/>
-        <image name="default" width="60" height="60"/>
+        <image name="default" width="30" height="30"/>
         <image name="heart" catalog="system" width="128" height="109"/>
         <image name="heart.fill" catalog="system" width="128" height="109"/>
         <image name="mappin.and.ellipse" catalog="system" width="118" height="128"/>

@@ -56,8 +56,11 @@ class NewFeedCell: UITableViewCell {
         // 더보기버튼 누를때 게시글인덱스 값 얻기
         delegate?.report(for: idx,indexNum:(indexNum?.row)!)
         print("신고알림창 \(idx) 번째게시글")
-        
     }
+    
+    
+ 
+    
     
     //좋아요 버튼정의
     @IBOutlet var likeBtn: UIButton!
@@ -123,7 +126,7 @@ class NewFeedCell: UITableViewCell {
        }
     
     
-
+    @IBOutlet var Img: UIImageView!
     
 
     // 글번호

@@ -228,7 +228,7 @@ class thirdTabVC: UIViewController, UITableViewDelegate, UITableViewDataSource, 
         v.addSubview(btn)
         }
     
-    //로그인/로그아웃 버튼
+    //로그인버튼
     func LoginBtn() {
         //버튼을 감쌀 뷰를 정의한다.
         let v = UIView()
@@ -261,7 +261,7 @@ class thirdTabVC: UIViewController, UITableViewDelegate, UITableViewDataSource, 
         v.addSubview(btn)
         }
     
-    
+    // 로그아웃 버튼
     //로그아웃버튼 클릭시 로그인화면으로 이동
     @objc func doLogout(_ sender: Any){
         let msg = "로그아웃하시겠습니까?"
