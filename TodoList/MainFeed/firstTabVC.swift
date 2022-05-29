@@ -23,9 +23,12 @@ class firstTabVC: UIViewController{
     
     // 게시글번호 담을 변수
     var numIdx = ""
+    // 차단ID
+    var cutID = ""
     var Num = 0
     let str = ""
     let text = ""
+   
     
     // 스크롤을 위한 것
     var fetchingMore = false
@@ -40,7 +43,7 @@ class firstTabVC: UIViewController{
     var page = 1
     // BASEURL
     var BASEURL = UrlInfo.shared.url!
-//    var BASEURL = url
+    //    var BASEURL = url
     
     // 인디케이터추가
     @IBOutlet var indicator: UIActivityIndicatorView!
@@ -61,10 +64,10 @@ class firstTabVC: UIViewController{
     @IBAction func TopBtn(_ sender: Any) {
         tableView.setContentOffset(CGPoint(x: 0, y: 0), animated: true)
     }
-
+    
     override func viewDidLoad() {
-      
-//        print(url)
+        
+        //        print(url)
         
         // 인터넷 연결여부 확인(연결시에만 데이터 호출) Util폴더안에 Networkmoiter
         if NetworkMonitor.shared.isConnected {
@@ -128,7 +131,7 @@ class firstTabVC: UIViewController{
                 print("데이터없음")
             }
             
-        // 네트워크연결 안될을 경우
+            // 네트워크연결 안될을 경우
         }else{
             print("네트워크 연결안됨...")
         }
@@ -156,7 +159,7 @@ class firstTabVC: UIViewController{
         
         // 상단 백버튼가림
         self.navigationController?.navigationBar.isHidden = true
-
+        
     }
     
     
@@ -233,7 +236,7 @@ class firstTabVC: UIViewController{
                 // 데이터가 있을때만 파싱한다.
                 if let hasData = data {
                     // 모델만든것 가져다가 디코더해준다.
-                
+                    
                     do{
                         // 만들어놓은 피드모델에 담음, 데이터를 디코딩해서, 디코딩은 try catch문 써줘야함
                         // 여기서 실행을 하고 오류가 나면 catch로 던져서 프린트해주겠다.
@@ -294,7 +297,7 @@ class firstTabVC: UIViewController{
         print("메인 피드 API호출")
         
         self.page += 1
-
+        
         //지정된 값을 꺼내어 각 컨트롤에 설정한다.
         let getName = plist.string(forKey: "name")
         
@@ -352,7 +355,7 @@ class firstTabVC: UIViewController{
         
     }// 호출메소드끝
     
-
+    
     // 이미지 URL로드하기
     func loadImage(urlString: String, completion: @escaping (UIImage?)-> Void){
         // url로 가져와 UIImage로 리턴한다.
@@ -465,9 +468,9 @@ class firstTabVC: UIViewController{
         // 세션끝내기
         session.finishTasksAndInvalidate()
         
-     }//함수 끝
+    }//함수 끝
     
-
+    
     
 }// 뷰컨끝
 
@@ -520,7 +523,6 @@ extension firstTabVC: UITableViewDelegate, UITableViewDataSource{
         cell.titleLabel.text = self.feedModel?.results[indexPath.row].postText
         cell.descriptionLabel.text = self.feedModel?.results[indexPath.row].userID
         cell.name.text = self.feedModel?.results[indexPath.row].userID
-        
         cell.priceLabel.text =  self.feedModel?.results[indexPath.row].myPlaceText
         //        cell.num.text =  self.feedModel?.results[indexPath.row].feedIdx?.description ?? ""
         
@@ -709,9 +711,9 @@ extension firstTabVC: UITableViewDelegate, UITableViewDataSource{
                 let success = jsonObject["success"] as? Int ?? 0
                 
                 if success == 1 {
-                // self.alert("좋아요취소성공 JSON= \(try! res.result.get())!)")
-                // self.dismiss(animated: true, completion: nil)
-                // }
+                    // self.alert("좋아요취소성공 JSON= \(try! res.result.get())!)")
+                    // self.dismiss(animated: true, completion: nil)
+                    // }
                 }else{
                     //sucess가 0이면
                     self.alert("0")
@@ -723,7 +725,58 @@ extension firstTabVC: UITableViewDelegate, UITableViewDataSource{
         }
         
     }//하트삭제함수 끝
-}
+    
+    
+    // 신고ID API호출
+    func requstCutID(postIdx: String?,cutIdx: String?, success: (()->Void)? = nil, fail: ((String)->Void)? = nil) {
+        // userID, postText,이미지묶음을 파라미터에 담아보냄
+        let userID = plist.string(forKey: "name")
+
+        // 내아이디, 신고아이디, 글번호전송
+        let param: Parameters = [
+            "postIdx" : numIdx,
+            "cutID" : cutID,
+            "userID" : userID ?? ""]
+
+        print("신고 업로드 \(param)")
+
+        // API 호출 URL
+        let url = self.BASEURL+"post/feedPostReport.php"
+
+        // AF에 담아보내기
+        let call = AF.request(url, method: .post, parameters: param,
+                              encoding: JSONEncoding.default)
+        //                call.responseJSON { res in
+        call.responseJSON { [self] res in
+
+            guard (try! res.result.get() as? NSDictionary) != nil else {
+                self.isCalling = false
+                self.alert("서버호출 과정에서 오류가 발생했습니다.")
+                print("올바른 응답값이 아닙니다.")
+                return
+            }
+
+            if let jsonObject = try! res.result.get() as? [String :Any]{
+                let success = jsonObject["success"] as? Int ?? 0
+
+                if success == 1 {
+                     self.alert("\(cutID)님을 차단하였습니다.")
+                    // self.dismiss(animated: true, completion: nil)
+                    print("신고성공 JSON= \(try! res.result.get())!)")
+                    // }
+                }else{
+                    //sucess가 0이면
+                    self.alert("0")
+                }
+            }else{
+                self.isCalling = false
+                self.alert("신고업로드 응답실패")
+            }
+        }
+
+    }// 신고업로드함수 끝
+}// VC끝
+
 
 
 // 서치바, 검색창
@@ -748,23 +801,26 @@ extension firstTabVC: firstTabVCCellDelegate{
     // 신고버튼 얼럿 추가
     func report(for index: Int, indexNum: Int) {
         let alert = UIAlertController(title: " 신고하기 ", message: "게시물을 신고하시겠습니까?", preferredStyle: .alert)
-                let alertAction = UIAlertAction(title: "신고 및 차단", style: .default) { [self] (_) in
-                   
-                    // 서버로 게시글 번호를 보내고, 그 번호에 맞는 게시글을 삭제한다.
-//                    numIdx = self.feedModel?.results[indexNum].feedIdx?.description ?? ""
-                    // 신고API호출
-//                    requestFeedDeleateAPI()
-                    // 창을 닫는다.
-                    self.dismiss(animated: true, completion: nil)
-                    
-                }
-                alert.addAction(alertAction)
-                
-                // 취소글자 상태값
-                let cancel = UIAlertAction(title: "취소", style: .cancel)
-                alert.addAction(cancel)
-                //                alert.view.tintColor =  UIColor(ciColor: .black)
-                self.present(alert, animated: true, completion: nil)
+        let alertAction = UIAlertAction(title: "신고 및 차단", style: .default) { [self] (_) in
+            
+            // 서버로 게시글 번호를 보내고, 그 번호에 맞는 게시글을 삭제한다.
+            numIdx = self.feedModel?.results[indexNum].feedIdx?.description ?? ""
+            cutID = self.feedModel?.results[indexNum].userID ?? ""
+            
+            print("신고버튼: \(numIdx)\(cutID)")
+            // 신고API호출
+            requstCutID(postIdx: numIdx,cutIdx: cutID)
+            // 창을 닫는다.
+            self.dismiss(animated: true, completion: nil)
+            
+        }
+        alert.addAction(alertAction)
+        
+        // 취소글자 상태값
+        let cancel = UIAlertAction(title: "취소", style: .cancel)
+        alert.addAction(cancel)
+        //                alert.view.tintColor =  UIColor(ciColor: .black)
+        self.present(alert, animated: true, completion: nil)
     }
     
     
