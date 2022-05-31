@@ -44,6 +44,9 @@
 		D0B4490E282BF7CE0046437C /* HeartModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B4490D282BF7CE0046437C /* HeartModel.swift */; };
 		D0C8D819284618F9007F6570 /* goOutVC.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D0C8D818284618F9007F6570 /* goOutVC.storyboard */; };
 		D0C8D81B28461919007F6570 /* goOutVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0C8D81A28461919007F6570 /* goOutVC.swift */; };
+		D0C8D81D2846500D007F6570 /* myImgVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0C8D81C2846500D007F6570 /* myImgVC.swift */; };
+		D0C8D81F2846501E007F6570 /* myImgVC.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D0C8D81E2846501E007F6570 /* myImgVC.storyboard */; };
+		D0C8D827284657F4007F6570 /* TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0C8D826284657F4007F6570 /* TableViewCell.swift */; };
 		D0C98B7027F5EC3900445A00 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0C98B6F27F5EC3900445A00 /* DetailViewController.swift */; };
 		D0C98B7227F5EDCB00445A00 /* DetailViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D0C98B7127F5EDCB00445A00 /* DetailViewController.storyboard */; };
 		D0C98B7427F736DF00445A00 /* nMapVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0C98B7327F736DF00445A00 /* nMapVC.swift */; };
@@ -99,6 +102,9 @@
 		D0B4490D282BF7CE0046437C /* HeartModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeartModel.swift; sourceTree = "<group>"; };
 		D0C8D818284618F9007F6570 /* goOutVC.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = goOutVC.storyboard; sourceTree = "<group>"; };
 		D0C8D81A28461919007F6570 /* goOutVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = goOutVC.swift; sourceTree = "<group>"; };
+		D0C8D81C2846500D007F6570 /* myImgVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = myImgVC.swift; sourceTree = "<group>"; };
+		D0C8D81E2846501E007F6570 /* myImgVC.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = myImgVC.storyboard; sourceTree = "<group>"; };
+		D0C8D826284657F4007F6570 /* TableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewCell.swift; sourceTree = "<group>"; };
 		D0C98B6F27F5EC3900445A00 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		D0C98B7127F5EDCB00445A00 /* DetailViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = DetailViewController.storyboard; sourceTree = "<group>"; };
 		D0C98B7327F736DF00445A00 /* nMapVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = nMapVC.swift; sourceTree = "<group>"; };
@@ -255,6 +261,9 @@
 				D08B027E27E5C25D00012766 /* mypageVC.swift */,
 				D0C8D818284618F9007F6570 /* goOutVC.storyboard */,
 				D0C8D81A28461919007F6570 /* goOutVC.swift */,
+				D0C8D81C2846500D007F6570 /* myImgVC.swift */,
+				D0C8D826284657F4007F6570 /* TableViewCell.swift */,
+				D0C8D81E2846501E007F6570 /* myImgVC.storyboard */,
 			);
 			path = Mypage;
 			sourceTree = "<group>";
@@ -366,6 +375,7 @@
 				D0E3BFAE28084BCC00958C30 /* NewFeedCell.xib in Resources */,
 				D01505E528326FDC00743409 /* star0.png in Resources */,
 				D08B028627E61BCE00012766 /* profile-bg.png in Resources */,
+				D0C8D81F2846501E007F6570 /* myImgVC.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -427,6 +437,7 @@
 				D0C8D81B28461919007F6570 /* goOutVC.swift in Sources */,
 				D0E16BCB27DF4E2B008F970E /* LoginVC.swift in Sources */,
 				D0E16BC527D6F38C008F970E /* Utils.swift in Sources */,
+				D0C8D827284657F4007F6570 /* TableViewCell.swift in Sources */,
 				D0E3BFAD28084BCC00958C30 /* NewFeedCell.swift in Sources */,
 				D015EE1A280DC1F700FCDAC3 /* HeartCollectionViewCell.swift in Sources */,
 				D0C98B7427F736DF00445A00 /* nMapVC.swift in Sources */,
@@ -434,6 +445,7 @@
 				D051F35F27CDE2AF00ABBB4E /* TodoList.xcdatamodeld in Sources */,
 				D082E99628218D6F00DDF586 /* DetailModel.swift in Sources */,
 				D00A962B282FF61A00A02B36 /* HeartDetailViewController.swift in Sources */,
+				D0C8D81D2846500D007F6570 /* myImgVC.swift in Sources */,
 				D0B4490E282BF7CE0046437C /* HeartModel.swift in Sources */,
 				D08B699B281AF6590095E54A /* DetailViewCell.swift in Sources */,
 				D01505D42830246B00743409 /* HeartReplyCell.swift in Sources */,

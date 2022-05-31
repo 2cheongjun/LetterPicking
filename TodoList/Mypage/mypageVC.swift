@@ -81,7 +81,7 @@ class thirdTabVC: UIViewController, UITableViewDelegate, UITableViewDataSource, 
         self.tv.delegate = self
         
         self.view.addSubview(self.tv)
-
+        
         
         // 프로필이미지 객체에 탭 제스처를 등록하고, 이를 프로필메소드와 연결한다.*********************************************
         let tap = UITapGestureRecognizer(target: self, action: #selector(profile(_:)))
@@ -130,20 +130,21 @@ class thirdTabVC: UIViewController, UITableViewDelegate, UITableViewDataSource, 
             cell.detailTextLabel?.text = plist.string(forKey: "email") ?? "Login please"
             
         case 2:
-            cell.textLabel?.text = "version"
-            cell.detailTextLabel?.text = "1.0 버전"
+            cell.textLabel?.text = "내가 작성한 글"
+            cell.accessoryType = .disclosureIndicator
             
         case 3:
             cell.textLabel?.text = "글자줍기 소개"
+            cell.detailTextLabel?.text = "1.0 version"
         case 4:
             cell.textLabel?.text = "개인정보처리방침,이용약관"
+            cell.accessoryType = .disclosureIndicator
             
         case 5:
             cell.textLabel?.text = "탈퇴하기"
-//            cell.detailTextLabel?.text = plist.string(forKey: "email") ?? "Login please"
-//            cell.textLabel?.backgroundColor = . gray
             cell.textLabel?.textColor = .systemGray2
-        
+            cell.accessoryType = .disclosureIndicator
+            
         default:
             ()
         }
@@ -156,19 +157,31 @@ class thirdTabVC: UIViewController, UITableViewDelegate, UITableViewDataSource, 
         // 선택한것 눌렸다가 자연스럽게 흰색으로 전환
         tableView.deselectRow(at: indexPath, animated: true)
         
+        // 내글모아보기
+        if indexPath.row == 2{
+            //            print("마이페이지 셀클릭 : \(indexPath.row)")
+            let myImgVC = UIStoryboard(name:"myImgVC" , bundle: nil).instantiateViewController(withIdentifier: "myImgVC") as! myImgVC
+            
+            //        goOutVC.modalPresentationStyle = .fullScreen // 풀스크린하면네비바달아줘야함
+            // 화면이 띄워진후에 값을 넣어야 널크러쉬가 안남
+            self.present(myImgVC, animated: true){ }
+        }
+        
+        
+        // 탈퇴하기
         if indexPath.row == 5{
-       //            print("마이페이지 셀클릭 : \(indexPath.row)")
-        let goOutVC = UIStoryboard(name:"goOutVC" , bundle: nil).instantiateViewController(withIdentifier: "goOutVC") as! goOutVC
-        
-//        goOutVC.modalPresentationStyle = .fullScreen // 풀스크린하면네비바달아줘야함
-        // 화면이 띄워진후에 값을 넣어야 널크러쉬가 안남
-        self.present(goOutVC, animated: true){ }
-        }
-
+            //            print("마이페이지 셀클릭 : \(indexPath.row)")
+            let goOutVC = UIStoryboard(name:"goOutVC" , bundle: nil).instantiateViewController(withIdentifier: "goOutVC") as! goOutVC
+            
+            //        goOutVC.modalPresentationStyle = .fullScreen // 풀스크린하면네비바달아줘야함
+            // 화면이 띄워진후에 값을 넣어야 널크러쉬가 안남
+            self.present(goOutVC, animated: true){ }
         }
         
+    }
     
-
+    
+    
     // 프레젠트메소드방식으로 처리될예정이므로, 닫을때에도 dismiss 메소드를 사용한다.
     @objc func close(_ sender: Any){
         self.presentingViewController?.dismiss(animated: true)
@@ -204,20 +217,20 @@ class thirdTabVC: UIViewController, UITableViewDelegate, UITableViewDataSource, 
         btn.setTitle("로그아웃", for: .normal)
         btn.addTarget(self, action: #selector(doLogout(_:)), for: .touchUpInside)
         
-
+        
         // 로그인아이디 가져옴
         let getName = plist.string(forKey: "name")
         // 로그아웃 되있으면, 로그인버튼 On
         if getName != nil {
             btn.isHidden = false
-    
+            
         }else{
             btn.isHidden = true
             v.backgroundColor = UIColor.white
         }
-   
+        
         v.addSubview(btn)
-        }
+    }
     
     //로그인버튼
     func LoginBtn() {
@@ -239,7 +252,7 @@ class thirdTabVC: UIViewController, UITableViewDelegate, UITableViewDataSource, 
         btn.setTitle("로그인", for: .normal)
         btn.addTarget(self, action: #selector(doLogin(_:)), for: .touchUpInside)
         
-
+        
         // 로그인아이디 가져옴
         let getName = plist.string(forKey: "name")
         // 로그인되있으면, 로그인버튼 Off
@@ -250,7 +263,7 @@ class thirdTabVC: UIViewController, UITableViewDelegate, UITableViewDataSource, 
             btn.isHidden = false
         }
         v.addSubview(btn)
-        }
+    }
     
     // 로그아웃 버튼
     //로그아웃버튼 클릭시 로그인화면으로 이동
@@ -271,7 +284,7 @@ class thirdTabVC: UIViewController, UITableViewDelegate, UITableViewDataSource, 
                 return
             }
             self.navigationController?.pushViewController(uvc, animated: true)
-        
+            
         })
         self.present(alert, animated: false)
     }
