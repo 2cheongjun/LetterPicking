@@ -101,7 +101,7 @@ class thirdTabVC: UIViewController, UITableViewDelegate, UITableViewDataSource, 
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 4
+        return 6
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -124,7 +124,6 @@ class thirdTabVC: UIViewController, UITableViewDelegate, UITableViewDataSource, 
             if name != ""{
                 isname = true
             }
-           
             
         case 1:
             cell.textLabel?.text = "닉네임"
@@ -133,7 +132,13 @@ class thirdTabVC: UIViewController, UITableViewDelegate, UITableViewDataSource, 
         case 2:
             cell.textLabel?.text = "version"
             cell.detailTextLabel?.text = "1.0 버전"
+            
         case 3:
+            cell.textLabel?.text = "글자줍기 소개"
+        case 4:
+            cell.textLabel?.text = "개인정보처리방침,이용약관"
+            
+        case 5:
             cell.textLabel?.text = "탈퇴하기"
 //            cell.detailTextLabel?.text = plist.string(forKey: "email") ?? "Login please"
 //            cell.textLabel?.backgroundColor = . gray
@@ -150,30 +155,16 @@ class thirdTabVC: UIViewController, UITableViewDelegate, UITableViewDataSource, 
         let cell = UITableViewCell(style: .value1, reuseIdentifier: "cell")
         // 선택한것 눌렸다가 자연스럽게 흰색으로 전환
         tableView.deselectRow(at: indexPath, animated: true)
-     
-        // 탈퇴 셀을 클릭하면 탈퇴확인 팝업을 띄운다.
-        if indexPath.row == 3{
-            print("마이페이지 셀클릭 : \(indexPath.row)")
-            
-            // 게시글 삭제 얼럿
-                let alert = UIAlertController(title: "게시물 삭제", message: "정말로 탈퇴하시겠습니까? 해당아이디의 작성한 모든글이 삭제됩니다.", preferredStyle: .alert)
-                let alertAction = UIAlertAction(title: "삭제", style: .default) { [self] (_) in
-                    //  여기에 실행할 코드
-                    // 갤러리에서 받아온 UIImage값 받아서 newProfile함수 호출
-                    // 서버로 게시글 번호를 보내고, 그 번호에 맞는 게시글을 삭제한다.
-//                    requestFeedDeleateAPI()
-                    // 창을 닫는다.
-                    self.dismiss(animated: true, completion: nil)
-                    
-                }
-                alert.addAction(alertAction)
-                
-                // 취소글자 상태값
-                let cancel = UIAlertAction(title: "취소", style: .cancel)
-                alert.addAction(cancel)
-                //                alert.view.tintColor =  UIColor(ciColor: .black)
-                self.present(alert, animated: true, completion: nil)
-            }
+        
+        if indexPath.row == 5{
+       //            print("마이페이지 셀클릭 : \(indexPath.row)")
+        let goOutVC = UIStoryboard(name:"goOutVC" , bundle: nil).instantiateViewController(withIdentifier: "goOutVC") as! goOutVC
+        
+//        goOutVC.modalPresentationStyle = .fullScreen // 풀스크린하면네비바달아줘야함
+        // 화면이 띄워진후에 값을 넣어야 널크러쉬가 안남
+        self.present(goOutVC, animated: true){ }
+        }
+
         }
         
     
