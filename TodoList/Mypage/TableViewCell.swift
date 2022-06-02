@@ -20,14 +20,14 @@ class TableViewCell: UITableViewCell {
     }
     
     // imageView 생성
-    private let img: UIImageView = {
+    let img: UIImageView = {
         let imgView = UIImageView()
         imgView.image = UIImage(named: "default")
         return imgView
     }()
 
     // label 생성
-    private let label: UILabel = {
+    let label: UILabel = {
         let label = UILabel()
         label.text = "게시글내용"
         label.textColor = UIColor.gray
@@ -35,7 +35,7 @@ class TableViewCell: UITableViewCell {
     }()
     
     // datalabel 생성
-    private let datelabel: UILabel = {
+    let datelabel: UILabel = {
         let label = UILabel()
         label.text = "날짜"
         label.textColor = UIColor.gray
@@ -50,19 +50,25 @@ class TableViewCell: UITableViewCell {
         
         img.translatesAutoresizingMaskIntoConstraints = false
         label.translatesAutoresizingMaskIntoConstraints = false
+        label.numberOfLines = 1
+        label.lineBreakMode = .byWordWrapping
         datelabel.translatesAutoresizingMaskIntoConstraints = false
-        
+      
         NSLayoutConstraint.activate([
+            // 썸네일
             img.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
             img.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 10),
             img.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -10),
             img.widthAnchor.constraint(equalToConstant: 64),
             img.heightAnchor.constraint(equalToConstant: 64),
+            // 작성내용
             label.centerYAnchor.constraint(equalTo: img.centerYAnchor),
             label.leadingAnchor.constraint(equalTo: img.trailingAnchor, constant: 15),
             label.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: 16),
+           
+            // 날짜
             datelabel.centerYAnchor.constraint(equalTo: img.centerYAnchor),
-            datelabel.leadingAnchor.constraint(equalTo: img.trailingAnchor, constant: 250),
+            datelabel.leadingAnchor.constraint(equalTo: img.trailingAnchor, constant: 200),
             datelabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: 16),
             datelabel.centerYAnchor.constraint(equalTo: img.centerYAnchor)
         ])

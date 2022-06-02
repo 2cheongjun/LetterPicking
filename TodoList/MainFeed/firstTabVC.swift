@@ -43,8 +43,7 @@ class firstTabVC: UIViewController{
     var page = 1
     // BASEURL
     var BASEURL = UrlInfo.shared.url!
-    //    var BASEURL = url
-    
+
     // 인디케이터추가
     @IBOutlet var indicator: UIActivityIndicatorView!
     
