@@ -63,9 +63,10 @@ class TableViewCell: UITableViewCell {
             img.heightAnchor.constraint(equalToConstant: 64),
             // 작성내용
             label.centerYAnchor.constraint(equalTo: img.centerYAnchor),
+            // 그림의 우측간격
             label.leadingAnchor.constraint(equalTo: img.trailingAnchor, constant: 15),
-            label.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: 16),
-           
+            label.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant:300),
+
             // 날짜
             datelabel.centerYAnchor.constraint(equalTo: img.centerYAnchor),
             datelabel.leadingAnchor.constraint(equalTo: img.trailingAnchor, constant: 200),

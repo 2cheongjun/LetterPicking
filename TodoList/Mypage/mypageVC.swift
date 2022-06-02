@@ -101,7 +101,7 @@ class thirdTabVC: UIViewController, UITableViewDelegate, UITableViewDataSource, 
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 6
+        return 7
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -116,7 +116,7 @@ class thirdTabVC: UIViewController, UITableViewDelegate, UITableViewDataSource, 
         
         switch indexPath.row {
         case 0:
-            cell.textLabel?.text = "아이디"
+            cell.textLabel?.text = "로그인 아이디"
             //            cell.detailTextLabel?.text = "해리포터씨"
             cell.detailTextLabel?.text = plist.string(forKey: "name") ?? "Login please"
             // 가져오는 이름값이 없으면 ""을 넣어라.
@@ -134,13 +134,19 @@ class thirdTabVC: UIViewController, UITableViewDelegate, UITableViewDataSource, 
             cell.accessoryType = .disclosureIndicator
             
         case 3:
-            cell.textLabel?.text = "글자줍기 소개"
-            cell.detailTextLabel?.text = "1.0 version"
+            cell.textLabel?.text = ""
+//            cell.detailTextLabel?.text = "1.0 version"
+         
+            
         case 4:
             cell.textLabel?.text = "개인정보처리방침,이용약관"
             cell.accessoryType = .disclosureIndicator
-            
+         
         case 5:
+            cell.textLabel?.text = "차단한 계정관리"
+            cell.accessoryType = .disclosureIndicator
+            
+        case 6:
             cell.textLabel?.text = "탈퇴하기"
             cell.textLabel?.textColor = .systemGray2
             cell.accessoryType = .disclosureIndicator
@@ -169,7 +175,7 @@ class thirdTabVC: UIViewController, UITableViewDelegate, UITableViewDataSource, 
         
         
         // 탈퇴하기
-        if indexPath.row == 5{
+        if indexPath.row == 6{
             //            print("마이페이지 셀클릭 : \(indexPath.row)")
             let goOutVC = UIStoryboard(name:"goOutVC" , bundle: nil).instantiateViewController(withIdentifier: "goOutVC") as! goOutVC
             

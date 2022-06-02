@@ -759,9 +759,15 @@ extension firstTabVC: UITableViewDelegate, UITableViewDataSource{
                 let success = jsonObject["success"] as? Int ?? 0
 
                 if success == 1 {
-                     self.alert("\(cutID)님을 차단하였습니다.")
-                    // self.dismiss(animated: true, completion: nil)
-                    print("신고성공 JSON= \(try! res.result.get())!)")
+                      // 테이블뷰 재호출(1초뒤 실행)
+                    DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1) {
+                      // 1초 후 실행될 부분
+                        self.alert("\(cutID)님을 차단하였습니다.")
+                       // self.dismiss(animated: true, completion: nil)
+                       print("신고성공 JSON= \(try! res.result.get())!)")
+                        requestFeedAPI()
+                    }
+                       
                     // }
                 }else{
                     //sucess가 0이면
