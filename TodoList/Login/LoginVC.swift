@@ -33,7 +33,7 @@ class LoginVC :UIViewController, UITableViewDelegate, UITableViewDataSource{
     let plist = UserDefaults.standard
     
     override func viewDidLoad() {
-
+        
         // 네비게이션바 숨김처리
         self.navigationController?.navigationBar.isHidden = false
         
@@ -112,31 +112,29 @@ class LoginVC :UIViewController, UITableViewDelegate, UITableViewDataSource{
                         let userID = jsonObject["userID"] as? String ?? ""
                         let userPassword = jsonObject["userPassword"] as? String ?? ""
                         let userEmail = jsonObject["userEmail"] as? String ?? ""
+                        let delID = jsonObject["delID"] as? String ?? ""
                         
-                       
+                        
                         //로그인성공시 아이디값을 공통저장소에 저장한다.UserDefaults에 아이디저장
                         // userDefault 기본저장소객체가져오기
-                           let plist = UserDefaults.standard
-                           plist.setValue(userID, forKey: "name")//이름이라는 키로 저장
-                           plist.synchronize()//동기화처리
+                        let plist = UserDefaults.standard
+                        plist.setValue(userID, forKey: "name")//이름이라는 키로 저장
+                        plist.synchronize()//동기화처리
                         
                         // userDefault 기본저장소객체가져오기
-                           plist.setValue(userEmail, forKey: "email")//이메일이라는 키로 저장
-                           plist.synchronize()//동기화처리
+                        plist.setValue(userEmail, forKey: "email")//이메일이라는 키로 저장
+                        plist.synchronize()//동기화처리
                         
-                        
-                        // 뷰에 적용
-//                        self.textView.text = userID
-//                        self.textView.text = userPassword
-//                        // append해야 하나에 같이 써짐
-//                        self.textView.text.append("\n\(userID )")
-//                        self.textView.text.append("\n\(userEmail)")
                         
                         //성공시 얼럿띄우기
                         if userID  == "" {
                             self.alert("등록되지 않은 아이디입니다.")
+                        }
+                        else if delID == "Y"{
+                            self.alert("탈퇴한 아이디입니다.")
+                        
                         }else{
-                            self.alert("로그인 성공")
+//                            self.alert("로그인 성공")
                             // 성공했을때에만 로그인info로 값보내기
                             self.spend(userID: userID, userPassword: userPassword)
                             
@@ -147,7 +145,7 @@ class LoginVC :UIViewController, UITableViewDelegate, UITableViewDataSource{
                             self.navigationController?.pushViewController(uvc, animated: true)
                         }
                     }
-
+                    
                 case .failure(let error):
                     print("에러메시지//: \(error)")
                     //                    self.indicatorView.stopAnimating()
@@ -159,7 +157,7 @@ class LoginVC :UIViewController, UITableViewDelegate, UITableViewDataSource{
     }
     
     func spend(userID: String, userPassword:String) {
-           getID = userID
+        getID = userID
     }
     
     
@@ -183,17 +181,17 @@ class LoginVC :UIViewController, UITableViewDelegate, UITableViewDataSource{
             let passwd = loginAlert.textFields?[1].text ?? "" //두번쨰 필드: 비밀번호
             
             // 아이디, 비번 입력받은값 서버로 전송
-//            let account = "test"
-//            let passwd = "1111"
+            //            let account = "test"
+            //            let passwd = "1111"
             
             self.sendRequest(id: account, pw: passwd)
-
+            
         })
         self.present(loginAlert, animated: false)
     }
     
     
-   // 코드로 작성한 정적테이블
+    // 코드로 작성한 정적테이블
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 2
     }
@@ -210,7 +208,7 @@ class LoginVC :UIViewController, UITableViewDelegate, UITableViewDataSource{
         switch indexPath.row {
         case 0:
             cell.textLabel?.text = "ID"
-
+            
             cell.detailTextLabel?.text = self.userID ?? "아이디를 입력해주세요"
         case 1:
             cell.textLabel?.text = "Password"
@@ -223,9 +221,9 @@ class LoginVC :UIViewController, UITableViewDelegate, UITableViewDataSource{
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-            self.doLogin(self.tv)
+        self.doLogin(self.tv)
     }
-
+    
     
 }
 

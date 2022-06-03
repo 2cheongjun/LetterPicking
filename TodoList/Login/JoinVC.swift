@@ -21,6 +21,7 @@ class JoinVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UINa
     var fieldAccount: UITextField! // 계정 필드
     var fieldPassword: UITextField! // 비밀번호 필드
     var fieldName: UITextField! // 이름 필드
+    var btn: UIButton! // 중복확인버튼
     // 상황에 따라 다른 alert를 줄 때 바꿔줄 문장을 tmpMessage로 설정
     var tmpMessage: String = ""
     // BASEURL
@@ -35,17 +36,17 @@ class JoinVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UINa
         self.tableView.delegate = self
         
         // 프로필 이미지를 원형으로 설정
-//        self.profile.layer.cornerRadius = self.profile.frame.width / 2
-//        self.profile.layer.masksToBounds = true
-//
+        //        self.profile.layer.cornerRadius = self.profile.frame.width / 2
+        //        self.profile.layer.masksToBounds = true
+        //
         // 프로필 이미지에 탭 제스처 및 액션 이벤트 설정
-//        let gesture = UITapGestureRecognizer(target: self, action: #selector(tappedProfile(_:)))
-//        self.profile.addGestureRecognizer(gesture)
+        //        let gesture = UITapGestureRecognizer(target: self, action: #selector(tappedProfile(_:)))
+        //        self.profile.addGestureRecognizer(gesture)
         self.view.bringSubviewToFront(self.indicatorView) // 인디케이터 뷰를 화면 맨 앞으로
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 3
+        return 4
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -61,15 +62,26 @@ class JoinVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UINa
             self.fieldAccount.borderStyle = .none
             self.fieldAccount.autocapitalizationType = .none
             self.fieldAccount.font = UIFont.systemFont(ofSize: 14)
+            self.btn = UIButton(frame: tfFrame)
+            //            self.btn.setTitle("로그아웃", for: .normal)
+            //            self.btn.addTarget(self, action: #selector(doLogout(_:)), for: .touchUpInside)
+            //버튼을 정의한다.
             cell.addSubview(self.fieldAccount)
+            
         case 1 :
+            cell.textLabel?.text = "아이디 중복확인"
+            cell.textLabel?.textColor = .white
+            cell.textLabel?.textAlignment = .center
+            cell.textLabel?.backgroundColor = .link
+            
+        case 2 :
             self.fieldPassword = UITextField(frame: tfFrame)
             self.fieldPassword.placeholder = "비밀번호는 영+숫자 8글자 이상"
             self.fieldPassword.borderStyle = .none
             self.fieldPassword.isSecureTextEntry = true
             self.fieldPassword.font = UIFont.systemFont(ofSize: 14)
             cell.addSubview(self.fieldPassword)
-        case 2 :
+        case 3 :
             self.fieldName = UITextField(frame: tfFrame)
             self.fieldName.placeholder = "닉네임"
             self.fieldName.borderStyle = .none
@@ -84,6 +96,21 @@ class JoinVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UINa
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 40
     }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cell")!
+        
+        // 선택한것 눌렸다가 자연스럽게 흰색으로 전환
+        tableView.deselectRow(at: indexPath, animated: true)
+        
+        // 아이디중복확인 버튼
+        if indexPath.row == 1 {
+            print(indexPath.row)
+            // 아이디중복 API호출 하기
+            checkID()
+        }
+    }
+    
     
     
     // 가입완료 버튼액션
@@ -106,7 +133,7 @@ class JoinVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UINa
             if fieldAccount != ""  && fieldPassword != "" && fieldName != ""{
                 //서버요청
                 post()
-
+                
             } else { // 형식은 지켰으나 정의해둔 id(email), password가 아닌 경우
                 // 아이디/ 비밀번호가 올바르지 않습니다.
                 failedAlert()
@@ -151,7 +178,7 @@ class JoinVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UINa
             "userID" : self.fieldAccount.text!,
             "userPassword" : self.fieldPassword.text!,
             "userName" : self.fieldName.text!
-//             ,"profile_image" : profile!
+            //             ,"profile_image" : profile!
         ]
         
         // 2. API 호출
@@ -169,7 +196,7 @@ class JoinVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UINa
                 print("Success")
                 self.isCalling = true
                 self.alert("가입이 완료되었습니다.")
-               
+                
                 print("JSON2 = \(try! response.result.get())")
                 //                }
             case .failure(let e):
@@ -181,39 +208,69 @@ class JoinVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UINa
             
         }
         self.navigationController?.popViewController(animated: true)
-    }
+    }// 회원가입함수끝
     
     
+    // 아이디 중복체크API 호출
+    func checkID(){
+        if self.isCalling == true {
+            self.alert("진행 중입니다. 잠시만 기다려주세요.")
+            return
+        } else {
+            self.isCalling = true
+        }
+        
+        // 인디케이터 뷰 애니메이션 시작
+        self.indicatorView.startAnimating()
+        
+        // 1. 전달할 값 준비
+        // 1-2. 전달값을 Parameters 타입의 객체로 정의
+        let param: Parameters = [
+            "userID" : self.fieldAccount.text!
+        ]
+        
+        // 2. API 호출
+        let url = BASEURL+"login/userIDValidate.php"
+        let call = AF.request(url, method: HTTPMethod.post, parameters: param, encoding: JSONEncoding.default)
+        
+        // 3. 서버 응답값 처리
+        call.responseString { res in
+            // 인디케이터 뷰 애니메이션 종료
+            self.indicatorView.stopAnimating()
+            
+            guard (try! res.result.get() as? NSDictionary) != nil else {
+                self.isCalling = false
+                print("서버호출 과정에서 오류가 발생했습니다.")
+                return
+            }
+            
+            if let jsonObject = try! res.result.get() as? [String :Any]{
+                let success = jsonObject["success"] as? Int ?? 0
+                
+                    // 응답성공
+                    if success == 0 {
+                        // 테이블뷰 재호출(1초뒤 실행)
+                        print("중복검사 = \(try! res.result.get())!)")
+                        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1) {
+                            // 1초 후 실행될 부분
+                            self.alert("사용가능한 아이디입니다.")
+                           }
+                        }else if(success == 0){
+                            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1) {
+                                // 1초 후 실행될 부분
+                                self.alert("중복된 아이디입니다.")
+                            }
+                        }
+                    
+                }else{
+                    self.isCalling = false
+                    self.alert("아이디중복확인 응답실패")
+                }
+            }
+        self.navigationController?.popViewController(animated: true)
+        
+    }// 중복체크함수끝
     
-//    @objc func tappedProfile(_ sender: Any) {
-//        // 전반부) 원하는 소스 타입을 선택할 수 있는 액션 시트 구현
-//        let msg = "프로필 이미지를 읽어올 곳을 선택하세요."
-//        let sheet = UIAlertController(title: msg, message: nil, preferredStyle: .actionSheet)
-//
-//        sheet.addAction(UIAlertAction(title: "취소", style: .cancel))
-//        sheet.addAction(UIAlertAction(title: "저장된 앨범", style: .default) { (_) in
-//            selectLibrary(src: .savedPhotosAlbum) // 저장된 앨범에서 이미지 선택하기
-//        })
-//        sheet.addAction(UIAlertAction(title: "포토 라이브러리", style: .default) { (_) in
-//            selectLibrary(src: .photoLibrary) // 포토 라이브러리에서 이미지 선택하기
-//        })
-//        sheet.addAction(UIAlertAction(title: "카메라", style: .default) { (_) in
-//            selectLibrary(src: .camera) // 카메라에서 이미지 촬영하기
-//        })
-//        self.present(sheet, animated: false)
-//
-//        // 후반부) 전달된 소스 타입에 맞게 이미지 피커 창을 여는 내부 함수
-//        func selectLibrary(src: UIImagePickerController.SourceType) {
-//            if UIImagePickerController.isSourceTypeAvailable(src) {
-//                let picker = UIImagePickerController()
-//                picker.delegate = self
-//                picker.allowsEditing = true
-//                self.present(picker, animated: false)
-//            } else {
-//                self.alert("사용할 수 없는 타입입니다.")
-//            }
-//        }
-//    }
     
     
     public func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {

@@ -21,7 +21,11 @@
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                 <items>
                                     <navigationItem title="탈퇴하기" id="oHh-zF-wdo">
-                                        <barButtonItem key="rightBarButtonItem" title="닫기" id="bSY-op-F0u"/>
+                                        <barButtonItem key="rightBarButtonItem" title="닫기" id="bSY-op-F0u">
+                                            <connections>
+                                                <action selector="closeBtn:" destination="Y6W-OH-hqX" id="E8y-q1-cgW"/>
+                                            </connections>
+                                        </barButtonItem>
                                     </navigationItem>
                                 </items>
                             </navigationBar>

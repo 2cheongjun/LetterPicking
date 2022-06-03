@@ -20,7 +20,13 @@ class goOutVC: UIViewController {
     var page = 1
     // BASEURL
     var BASEURL = UrlInfo.shared.url!
-
+    
+    // 닫기버튼
+    @IBAction func closeBtn(_ sender: Any) {
+     self.dismiss(animated: true, completion: nil)
+        // 로그인 화면으로 이동시키기????
+    }
+    
     // 인디케이터추가
     @IBOutlet var indicator: UIActivityIndicatorView!
     
@@ -41,7 +47,11 @@ class goOutVC: UIViewController {
         self.label()
         // 탈퇴버튼
         self.goOutBtn()
+    }
     
+    override func viewDidDisappear(_ animated: Bool) {
+        //로그인 아이디
+        plist.synchronize()//동기화처리
     }
     
     // 탈퇴안내글
@@ -136,31 +146,35 @@ class goOutVC: UIViewController {
             if let jsonObject = try! res.result.get() as? [String :Any]{
                 let success = jsonObject["success"] as? Int ?? 0
 
+                //응답성공
                 if success == 1 {
                       // 테이블뷰 재호출(1초뒤 실행)
                     
                     print("탈퇴tag Update JSON= \(try! res.result.get())!)")
 
                     DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1) {
+                        
+                        // 로그인 데이터 삭제 ***** name과 이메일에 데이터가 있으면 삭제 *****
+                        UserDefaults.standard.removeObject(forKey: "name")
+                        UserDefaults.standard.removeObject(forKey: "email")
+                        
+                        let userID = plist.string(forKey: "name")
+                        print("아이디값 :\(userID)")
+                       
                         // 1초 후 실행될 부분
                         self.alert("탈퇴가 완료되었습니다.")
                     }
-//                    self.dismiss(animated: true, completion: nil)
-                    // }
-                }else{
-                    //sucess가 0이면
-                    self.alert("0")
-                }
+                    
             }else{
                 self.isCalling = false
                 self.alert("탈퇴업로드 응답실패")
             }
         }
-
+       
     }// 신고업로드함수 끝
     
 }
 
 
-
+}
 
