@@ -66,7 +66,7 @@ class firstTabVC: UIViewController{
     
     override func viewDidLoad() {
         
-        //        print(url)
+        // print(url)
         
         // 인터넷 연결여부 확인(연결시에만 데이터 호출) Util폴더안에 Networkmoiter
         if NetworkMonitor.shared.isConnected {
@@ -159,6 +159,8 @@ class firstTabVC: UIViewController{
         // 상단 백버튼가림
         self.navigationController?.navigationBar.isHidden = true
         
+        // 로그인아이디
+        self.plist.synchronize()//동기화처리
     }
     
     
@@ -178,6 +180,9 @@ class firstTabVC: UIViewController{
         let ModifyVCNotification = Notification.Name("ModifyVCNotification")
         // 노티4.옵저버를 등록하고,DissmissWrite가 오면 writeVCNotification함수를 실행한다.
         NotificationCenter.default.addObserver(self, selector: #selector(self.ModifyVCNotification(_:)), name: ModifyVCNotification, object: nil)
+        
+        // 로그인아이디
+        self.plist.synchronize()//동기화처리
     }
     
     
@@ -412,18 +417,25 @@ class firstTabVC: UIViewController{
         // 스토리보드 세그로 연결함
     }
     
+    func makeStringKoreanEncoded(_ string: String) -> String {
+    return string.addingPercentEncoding(withAllowedCharacters: .urlFragmentAllowed) ?? string
+    }
+    
     // 검색요청 API
     func searchWord(success: (()->Void)? = nil, fail: ((String)->Void)? = nil) {
         // 검색창에 작성한 단어
         print("firstTabVC/ 단어입력내용 :\(self.word)")
+        // 한글판별???
+        // 입력한 단어가 한글이면 인코딩작업 해주기
+        let encodeWord = makeStringKoreanEncoded(word)
         
         let sessionConfig = URLSessionConfiguration.default
         let session = URLSession(configuration: sessionConfig)
-        var components = URLComponents(string: self.BASEURL+"post/0iOS_feedSearch.php?word=\(word)")
-        
-        //        let term = URLQueryItem(name: "term", value: "marvel")
-        let page = URLQueryItem(name: "word", value: word )
-        components?.queryItems = [page]
+        var components = URLComponents(string: self.BASEURL+"post/0iOS_feedSearch.php?word=\(encodeWord)")
+     
+        //let term = URLQueryItem(name: "term", value: "marvel")
+        let word = URLQueryItem(name: "word", value: encodeWord)
+        components?.queryItems = [word]
         
         // url이 없으면 리턴한다. 여기서 끝
         guard let url = components?.url else { return }
@@ -445,7 +457,7 @@ class firstTabVC: UIViewController{
                     // 만들어놓은 피드모델에 담음, 데이터를 디코딩해서, 디코딩은 try catch문 써줘야함
                     // 여기서 실행을 하고 오류가 나면 catch로 던져서 프린트해주겠다.
                     self.feedModel = try JSONDecoder().decode(FeedModel.self, from: hasData)
-                    //                    print(self.feedModel ?? "no data")
+                                        print(self.feedModel ?? "no data")
                     
                     // 모든UI 작업은 메인쓰레드에서 이루어져야한다.
                     DispatchQueue.main.async {

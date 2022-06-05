@@ -6,6 +6,7 @@
 
 import UIKit
 import Alamofire
+import SwiftyJSON
 
 // 회원가입화면
 class JoinVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate {
@@ -26,6 +27,8 @@ class JoinVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UINa
     var tmpMessage: String = ""
     // BASEURL
     var BASEURL = UrlInfo.shared.url!
+    
+    var userID = ""
     
     override func viewDidLoad() {
         
@@ -107,7 +110,12 @@ class JoinVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UINa
         if indexPath.row == 1 {
             print(indexPath.row)
             // 아이디중복 API호출 하기
-            checkID()
+            if(self.fieldAccount.text! != nil){
+                checkID()
+            }else{
+                self.alert("아이디를 작성하고 중복확인을 해주세요")
+            }
+            
         }
     }
     
@@ -213,20 +221,13 @@ class JoinVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UINa
     
     // 아이디 중복체크API 호출
     func checkID(){
-        if self.isCalling == true {
-            self.alert("진행 중입니다. 잠시만 기다려주세요.")
-            return
-        } else {
-            self.isCalling = true
-        }
-        
-        // 인디케이터 뷰 애니메이션 시작
-        self.indicatorView.startAnimating()
-        
+        // 작성한 아이디
+        userID = self.fieldAccount.text!
+
         // 1. 전달할 값 준비
         // 1-2. 전달값을 Parameters 타입의 객체로 정의
         let param: Parameters = [
-            "userID" : self.fieldAccount.text!
+            "userID" :  userID
         ]
         
         // 2. API 호출
@@ -234,42 +235,33 @@ class JoinVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UINa
         let call = AF.request(url, method: HTTPMethod.post, parameters: param, encoding: JSONEncoding.default)
         
         // 3. 서버 응답값 처리
-        call.responseString { res in
-            // 인디케이터 뷰 애니메이션 종료
-            self.indicatorView.stopAnimating()
+        call.responseJSON { [self] res in
             
             guard (try! res.result.get() as? NSDictionary) != nil else {
-                self.isCalling = false
                 print("서버호출 과정에서 오류가 발생했습니다.")
                 return
             }
             
-            if let jsonObject = try! res.result.get() as? [String :Any]{
-                let success = jsonObject["success"] as? Int ?? 0
-                
-                    // 응답성공
-                    if success == 0 {
-                        // 테이블뷰 재호출(1초뒤 실행)
-                        print("중복검사 = \(try! res.result.get())!)")
-                        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1) {
-                            // 1초 후 실행될 부분
-                            self.alert("사용가능한 아이디입니다.")
-                           }
-                        }else if(success == 0){
-                            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1) {
-                                // 1초 후 실행될 부분
-                                self.alert("중복된 아이디입니다.")
-                            }
-                        }
+            print("JSON= \(try! res.result.get())!)")
+            
+                if let jsonObject = try! res.result.get() as? [String :Any]{
+                    let success = jsonObject["success"] as? Int ?? 0
+                    let message = jsonObject["message"] as? String ?? ""
+                    let num = jsonObject["num"] as? Int ?? 0
                     
-                }else{
-                    self.isCalling = false
-                    self.alert("아이디중복확인 응답실패")
+                    if (num > 0) {
+                         self.alert("중복아이디")
+                        // self.dismiss(animated: true, completion: nil)
+                        
+                    }else if (num == 0) {
+                        self.alert("사용가능 아이디")
+                        
+                    }
                 }
+                
             }
-        self.navigationController?.popViewController(animated: true)
-        
-    }// 중복체크함수끝
+            
+        }// 하트업로드함수 끝
     
     
     

@@ -290,6 +290,7 @@ class thirdTabVC: UIViewController, UITableViewDelegate, UITableViewDataSource, 
             // 로그인 데이터 삭제 ***** name과 이메일에 데이터가 있으면 삭제 *****
             UserDefaults.standard.removeObject(forKey: "name")
             UserDefaults.standard.removeObject(forKey: "email")
+            self.plist.synchronize()//동기화처리
             
             // 로그인 화면으로 이동시키기
             guard let uvc = self.storyboard?.instantiateViewController(withIdentifier: "LoginVC") else {

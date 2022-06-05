@@ -25,6 +25,12 @@ class goOutVC: UIViewController {
     @IBAction func closeBtn(_ sender: Any) {
      self.dismiss(animated: true, completion: nil)
         // 로그인 화면으로 이동시키기????
+        
+//        let vcName = self.storyboard?.instantiateViewController(withIdentifier: "firstTabVC")
+//                vcName?.modalPresentationStyle = .fullScreen //전체화면으로 보이게 설정
+//                vcName?.modalTransitionStyle = .crossDissolve //전환 애니메이션 설정
+//                self.present(vcName!, animated: true, completion: nil)
+        
     }
     
     // 인디케이터추가
@@ -98,14 +104,8 @@ class goOutVC: UIViewController {
             // 서버로 게시글 번호를 보내고, 그 번호에 맞는 게시글을 삭제한다.
             // 아이디 삭제API호출하기
             goOutdeleteID()
-
-            // 로그인 화면으로 이동시키기(적용안됨)
-//            guard let uvc = self.storyboard?.instantiateViewController(withIdentifier: "LoginVC") else {
-//                return
-//            }
-//            self.navigationController?.pushViewController(uvc, animated: true)
-            
         }
+        
         alert.addAction(alertAction)
         
         // 취소글자 상태값
@@ -115,6 +115,8 @@ class goOutVC: UIViewController {
         self.present(alert, animated: true, completion: nil)
     }
     
+    
+
     // 아이디 삭제요청호출
     func goOutdeleteID(){
         // userID, postText,이미지묶음을 파라미터에 담아보냄

@@ -333,7 +333,7 @@
         <!--신규계정등록-->
         <scene sceneID="9fI-5s-IK6">
             <objects>
-                <viewController id="V26-62-rBc" customClass="JoinVC" customModule="TodoList" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="JoinVC" id="V26-62-rBc" customClass="JoinVC" customModule="TodoList" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="p4v-8N-mow">
                         <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
