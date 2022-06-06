@@ -120,10 +120,20 @@ class LoginVC :UIViewController, UITableViewDelegate, UITableViewDataSource{
                         let plist = UserDefaults.standard
                         plist.setValue(userID, forKey: "name")//이름이라는 키로 저장
                         plist.synchronize()//동기화처리
-                        
-                        // userDefault 기본저장소객체가져오기
+
                         plist.setValue(userEmail, forKey: "email")//이메일이라는 키로 저장
                         plist.synchronize()//동기화처리
+                        
+                        plist.setValue(userPassword, forKey: "password")//비번이라는 키로 저장
+                        plist.synchronize()//동기화처리
+                        
+                        plist.setValue(userID, forKey: "Rname")//이름이라는 키로 저장
+                        plist.synchronize()//동기화처리
+                        
+                        plist.setValue(userPassword, forKey: "Rpassword")//비번이라는 키로 저장
+                        plist.synchronize()//동기화처리
+                        
+                        
                         
                         
                         //성공시 얼럿띄우기
@@ -165,18 +175,32 @@ class LoginVC :UIViewController, UITableViewDelegate, UITableViewDataSource{
     @objc func doLogin(_ sender: Any){
         let loginAlert = UIAlertController(title: "LOGIN", message: nil, preferredStyle: .alert)
         
-        //알림창에 들어갈 입력폼 추가
+        // 자동로그인을 위한 아이디값 가져오기
+        let getName = plist.string(forKey: "Rname")
+        // 비번 가져오기
+        let getPassword = plist.string(forKey: "Rpassword")
+        
+        // 알림창에 들어갈 입력폼 추가
         loginAlert.addTextField { (tf) in
-            tf.placeholder = "Your Account"
+            tf.placeholder =  "Your Account"
+            
+            if (getName != nil) {
+                loginAlert.textFields?[0].text = getName
+            }
         }
         loginAlert.addTextField { (tf) in
-            tf.placeholder = "Password"
+            tf.placeholder =   "Password"
             tf.isSecureTextEntry = true
+            if (getPassword != nil) {
+                loginAlert.textFields?[1].text =  getPassword
+            }
         }
+        
         //알림창 버튼 추가
         loginAlert.addAction(UIAlertAction(title: "Cancel", style: .cancel))
         // 로그인버튼 눌렀을때
         loginAlert.addAction(UIAlertAction(title: "Login", style: .destructive){ (_) in
+            
             let account = loginAlert.textFields?[0].text ?? "" //첫번째 필드: 계정
             let passwd = loginAlert.textFields?[1].text ?? "" //두번쨰 필드: 비밀번호
             
