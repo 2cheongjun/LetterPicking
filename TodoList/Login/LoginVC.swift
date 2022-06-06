@@ -32,6 +32,9 @@ class LoginVC :UIViewController, UITableViewDelegate, UITableViewDataSource{
     // 로그인값 가져오기
     let plist = UserDefaults.standard
     
+    //로딩인디케이터
+    @IBOutlet var indicator: UIActivityIndicatorView!
+    
     override func viewDidLoad() {
         
         // 네비게이션바 숨김처리
@@ -72,6 +75,9 @@ class LoginVC :UIViewController, UITableViewDelegate, UITableViewDataSource{
     
     // 로그인요청 post(아이디와, 비번값을 받아서 넣고 서버로 전송)/ 아이디비번 리턴하기(돌아오다)
     func sendRequest(id :String , pw:String){
+        
+        // 인디케이터 호출
+         self.indicator.startAnimating()
         
         // 전달해야할 값을 키-값 형식으로 param에 담아서 전송
         let param : Parameters = [
@@ -134,8 +140,6 @@ class LoginVC :UIViewController, UITableViewDelegate, UITableViewDataSource{
                         plist.synchronize()//동기화처리
                         
                         
-                        
-                        
                         //성공시 얼럿띄우기
                         if userID  == "" {
                             self.alert("등록되지 않은 아이디입니다.")
@@ -147,6 +151,9 @@ class LoginVC :UIViewController, UITableViewDelegate, UITableViewDataSource{
 //                            self.alert("로그인 성공")
                             // 성공했을때에만 로그인info로 값보내기
                             self.spend(userID: userID, userPassword: userPassword)
+                            
+                            // 인디케이터 에니메이션 종료
+                            self.indicator.stopAnimating()
                             
                             // 글자피드 탭화면으로 이동
                             guard let uvc = self.storyboard?.instantiateViewController(withIdentifier: "tabVC") else {

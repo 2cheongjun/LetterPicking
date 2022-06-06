@@ -4,7 +4,7 @@
 //
 //  Created by 이청준 on 2022/05/31.
 //
-// 내글 모아보기
+// 내글 모아보기(code로 작성)
 import Foundation
 import UIKit
 import Kingfisher
@@ -23,7 +23,11 @@ class myImgVC: UIViewController {
     // BASEURL
     var BASEURL = UrlInfo.shared.url!
     
-    
+    @IBOutlet var closeBtn: UIBarButtonItem!
+    // 닫기
+    @IBAction func closeBtn(_ sender: Any) {
+        self.dismiss(animated: true, completion: nil)
+    }
     private let tableView: UITableView = {
         let tableview = UITableView()
         return tableview
@@ -45,12 +49,12 @@ class myImgVC: UIViewController {
         requestFeedAPI()
     }
     
-    
+    // 테이블뷰의 위치설정
     private func setConstraint() {
         self.view.addSubview(tableView)
         tableView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-           tableView.topAnchor.constraint(equalTo: self.view.topAnchor),
+           tableView.topAnchor.constraint(equalTo:self.view.topAnchor, constant: 50),
            tableView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor),
            tableView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
            tableView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor)
@@ -136,25 +140,30 @@ extension myImgVC : UITableViewDelegate, UITableViewDataSource {
     // 눌렀을때 이벤트 호출
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         // 이동하고자하는 뷰턴 객체생성해 호출하기 / 스토리보드 기반으로 가져오기. 스토리보드ID
-//        let detailVC = UIStoryboard(name:"DetailViewController" , bundle: nil).instantiateViewController(withIdentifier: "DetailViewController") as! DetailViewController
+        let detailVC = UIStoryboard(name:"myImgDetailViewVC" , bundle: nil).instantiateViewController(withIdentifier: "myImgDetailViewVC") as! myImgDetailViewVC
         
         // 선택한것 눌렸다가 자연스럽게 흰색으로 전환
         tableView.deselectRow(at: indexPath, animated: true)
         
         //선택한 행의 내용을 feedResult에 담는다.
-//        detailVC.feedResult = self.feedModel?.results[indexPath.row]
+        detailVC.feedResult = self.feedModel?.results[indexPath.row]
         // 전체화면보기하면 닫기버튼이 없음 만들어줘야함.
         // detailVC.modalPresentationStyle = .fullScreen
         
         // 화면이 띄워진후에 값을 넣어야 널크러쉬가 안남
-//        self.present(detailVC, animated: true){ }
+        self.present(detailVC, animated: true){ }
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "TableViewCell", for: indexPath) as? TableViewCell else { return UITableViewCell() }
-
+        
+        
         // 작성내용
-        cell.label.text =  self.feedModel?.results[indexPath.row].postText
+        let Str = self.feedModel?.results[indexPath.row].postText
+        // 앞에서부터 10글자
+        var prefix = Str?.description.prefix(10)
+        // 작성내용
+        cell.label.text = prefix?.description
         
         // 날짜가져옴
         let str = self.feedModel?.results[indexPath.row].date

@@ -6,7 +6,7 @@
 //
 
 import UIKit
-
+// myImgVC 내가작성한글 테이블뷰의 셀
 class TableViewCell: UITableViewCell {
     
     override func awakeFromNib() {
@@ -31,6 +31,7 @@ class TableViewCell: UITableViewCell {
         let label = UILabel()
         label.text = "게시글내용"
         label.textColor = UIColor.gray
+   
         return label
     }()
     
@@ -53,6 +54,7 @@ class TableViewCell: UITableViewCell {
         label.numberOfLines = 1
         label.lineBreakMode = .byWordWrapping
         datelabel.translatesAutoresizingMaskIntoConstraints = false
+
       
         NSLayoutConstraint.activate([
             // 썸네일

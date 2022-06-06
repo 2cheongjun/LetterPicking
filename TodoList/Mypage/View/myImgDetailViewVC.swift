@@ -9,8 +9,8 @@ import UIKit
 import Alamofire
 //import SwiftyJSON
 
-// 글자피드에서 게시글 눌렀을때 상세화면뷰
-class DetailViewController: UIViewController, UITextViewDelegate, UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate{
+// 마이페이지 내가작성한글 게시글 눌렀을때 상세화면뷰(디테일뷰와 같은레이아웃)
+class myImgDetailViewVC: UIViewController, UITextViewDelegate, UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate{
     
     //피드 모델에 값이 있으면 가져온다.
     var feedResult: FeedResult?
@@ -635,7 +635,7 @@ class DetailViewController: UIViewController, UITextViewDelegate, UITableViewDat
 }
 
 // 댓글삭제 버튼 프로토콜 셀
-extension DetailViewController: detailViewCellDelegate {
+extension myImgDetailViewVC: detailViewCellDelegate {
     
     func onClickCell(index: Int) {
         print("\(self.detailModel?.results[index].replyIdx?.description ?? "")글번호댓글눌림")
@@ -647,5 +647,6 @@ extension DetailViewController: detailViewCellDelegate {
         loadReply()
     }
 }
+
 
 

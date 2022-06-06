@@ -47,6 +47,8 @@
 		D0C8D81D2846500D007F6570 /* myImgVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0C8D81C2846500D007F6570 /* myImgVC.swift */; };
 		D0C8D81F2846501E007F6570 /* myImgVC.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D0C8D81E2846501E007F6570 /* myImgVC.storyboard */; };
 		D0C8D827284657F4007F6570 /* TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0C8D826284657F4007F6570 /* TableViewCell.swift */; };
+		D0C8D829284E7250007F6570 /* myImgDetailViewVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0C8D828284E7250007F6570 /* myImgDetailViewVC.swift */; };
+		D0C8D82C284E728D007F6570 /* myImgDetailViewVC.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D0C8D82B284E728D007F6570 /* myImgDetailViewVC.storyboard */; };
 		D0C98B7027F5EC3900445A00 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0C98B6F27F5EC3900445A00 /* DetailViewController.swift */; };
 		D0C98B7227F5EDCB00445A00 /* DetailViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D0C98B7127F5EDCB00445A00 /* DetailViewController.storyboard */; };
 		D0C98B7427F736DF00445A00 /* nMapVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0C98B7327F736DF00445A00 /* nMapVC.swift */; };
@@ -105,6 +107,8 @@
 		D0C8D81C2846500D007F6570 /* myImgVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = myImgVC.swift; sourceTree = "<group>"; };
 		D0C8D81E2846501E007F6570 /* myImgVC.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = myImgVC.storyboard; sourceTree = "<group>"; };
 		D0C8D826284657F4007F6570 /* TableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewCell.swift; sourceTree = "<group>"; };
+		D0C8D828284E7250007F6570 /* myImgDetailViewVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = myImgDetailViewVC.swift; sourceTree = "<group>"; };
+		D0C8D82B284E728D007F6570 /* myImgDetailViewVC.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = myImgDetailViewVC.storyboard; sourceTree = "<group>"; };
 		D0C98B6F27F5EC3900445A00 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		D0C98B7127F5EDCB00445A00 /* DetailViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = DetailViewController.storyboard; sourceTree = "<group>"; };
 		D0C98B7327F736DF00445A00 /* nMapVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = nMapVC.swift; sourceTree = "<group>"; };
@@ -258,6 +262,7 @@
 		D08B02BF27EB604300012766 /* Mypage */ = {
 			isa = PBXGroup;
 			children = (
+				D0C8D82A284E7258007F6570 /* View */,
 				D08B027E27E5C25D00012766 /* mypageVC.swift */,
 				D0C8D818284618F9007F6570 /* goOutVC.storyboard */,
 				D0C8D81A28461919007F6570 /* goOutVC.swift */,
@@ -300,6 +305,15 @@
 				D0B4490D282BF7CE0046437C /* HeartModel.swift */,
 			);
 			path = Heart;
+			sourceTree = "<group>";
+		};
+		D0C8D82A284E7258007F6570 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				D0C8D828284E7250007F6570 /* myImgDetailViewVC.swift */,
+				D0C8D82B284E728D007F6570 /* myImgDetailViewVC.storyboard */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -372,6 +386,7 @@
 				D08B699C281AF6590095E54A /* DetailViewCell.xib in Resources */,
 				D051F36127CDE2B100ABBB4E /* Assets.xcassets in Resources */,
 				D051F35C27CDE2AF00ABBB4E /* Main.storyboard in Resources */,
+				D0C8D82C284E728D007F6570 /* myImgDetailViewVC.storyboard in Resources */,
 				D0E3BFAE28084BCC00958C30 /* NewFeedCell.xib in Resources */,
 				D01505E528326FDC00743409 /* star0.png in Resources */,
 				D08B028627E61BCE00012766 /* profile-bg.png in Resources */,
@@ -438,6 +453,7 @@
 				D0E16BCB27DF4E2B008F970E /* LoginVC.swift in Sources */,
 				D0E16BC527D6F38C008F970E /* Utils.swift in Sources */,
 				D0C8D827284657F4007F6570 /* TableViewCell.swift in Sources */,
+				D0C8D829284E7250007F6570 /* myImgDetailViewVC.swift in Sources */,
 				D0E3BFAD28084BCC00958C30 /* NewFeedCell.swift in Sources */,
 				D015EE1A280DC1F700FCDAC3 /* HeartCollectionViewCell.swift in Sources */,
 				D0C98B7427F736DF00445A00 /* nMapVC.swift in Sources */,

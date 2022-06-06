@@ -30,9 +30,9 @@
                                                 <color key="highlightedColor" systemColor="linkColor"/>
                                             </label>
                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="6fT-Ps-UPm">
-                                                <rect key="frame" x="0.0" y="44" width="414" height="275"/>
+                                                <rect key="frame" x="0.0" y="-7" width="414" height="326"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="height" constant="275" id="ZOG-MM-cfe"/>
+                                                    <constraint firstAttribute="height" constant="326" id="ZOG-MM-cfe"/>
                                                 </constraints>
                                             </imageView>
                                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="80" estimatedRowHeight="-1" sectionHeaderHeight="28" estimatedSectionHeaderHeight="-1" sectionFooterHeight="28" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="F2k-fq-O0B">
@@ -128,23 +128,10 @@
                                                     <action selector="heartBtn:" destination="H29-VF-eQJ" eventType="touchUpInside" id="BSb-5V-29a"/>
                                                 </connections>
                                             </button>
-                                            <navigationBar contentMode="scaleToFill" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3F0-GE-qe3">
-                                                <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
-                                                <items>
-                                                    <navigationItem title="게시물" id="jxR-Qb-Spx">
-                                                        <barButtonItem key="rightBarButtonItem" title="닫기" style="plain" id="HZs-E9-bL3">
-                                                            <connections>
-                                                                <action selector="barOKBtn:" destination="H29-VF-eQJ" id="gjG-Ch-Var"/>
-                                                            </connections>
-                                                        </barButtonItem>
-                                                    </navigationItem>
-                                                </items>
-                                            </navigationBar>
                                         </subviews>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                         <constraints>
                                             <constraint firstAttribute="trailing" secondItem="2h1-Mu-i7I" secondAttribute="trailing" constant="12" id="0n5-Og-1jB"/>
-                                            <constraint firstItem="3F0-GE-qe3" firstAttribute="leading" secondItem="GyE-Rl-lsG" secondAttribute="leading" id="2kt-Hn-5d6"/>
                                             <constraint firstItem="F2k-fq-O0B" firstAttribute="top" secondItem="2h1-Mu-i7I" secondAttribute="bottom" constant="14" id="40d-zI-BFG"/>
                                             <constraint firstItem="2Li-uh-vvs" firstAttribute="top" secondItem="Y7H-HJ-SUk" secondAttribute="bottom" constant="8" symbolic="YES" id="4Uc-EO-CaZ"/>
                                             <constraint firstAttribute="trailing" secondItem="F2k-fq-O0B" secondAttribute="trailing" id="7vH-mk-52h"/>
@@ -162,10 +149,8 @@
                                             <constraint firstItem="Tex-GJ-KrY" firstAttribute="leading" secondItem="JpU-Hw-0ST" secondAttribute="trailing" constant="14" id="Pbz-l1-T8S"/>
                                             <constraint firstItem="6fT-Ps-UPm" firstAttribute="leading" secondItem="GyE-Rl-lsG" secondAttribute="leading" id="Q5Y-uC-U5B"/>
                                             <constraint firstAttribute="trailing" secondItem="6fT-Ps-UPm" secondAttribute="trailing" id="RLa-ik-v12"/>
-                                            <constraint firstAttribute="trailing" secondItem="3F0-GE-qe3" secondAttribute="trailing" id="TQA-Z8-9MN"/>
-                                            <constraint firstItem="3F0-GE-qe3" firstAttribute="top" secondItem="GyE-Rl-lsG" secondAttribute="top" id="TRm-Rx-XdD"/>
                                             <constraint firstItem="F2k-fq-O0B" firstAttribute="leading" secondItem="GyE-Rl-lsG" secondAttribute="leading" id="UjJ-ZT-Y36"/>
-                                            <constraint firstItem="6fT-Ps-UPm" firstAttribute="top" secondItem="GyE-Rl-lsG" secondAttribute="top" constant="44" id="Vo5-yi-8oi"/>
+                                            <constraint firstItem="6fT-Ps-UPm" firstAttribute="top" secondItem="GyE-Rl-lsG" secondAttribute="top" constant="-7" id="Vo5-yi-8oi"/>
                                             <constraint firstItem="XKv-l4-CHc" firstAttribute="top" secondItem="6fT-Ps-UPm" secondAttribute="bottom" constant="8" symbolic="YES" id="WgB-1n-BOa"/>
                                             <constraint firstItem="XKv-l4-CHc" firstAttribute="centerY" secondItem="Y7H-HJ-SUk" secondAttribute="centerY" id="bFh-LT-kXN"/>
                                             <constraint firstItem="Y7H-HJ-SUk" firstAttribute="top" secondItem="6fT-Ps-UPm" secondAttribute="bottom" constant="15" id="cqf-wL-f08"/>
@@ -182,7 +167,6 @@
                                             <constraint firstAttribute="trailing" secondItem="Nls-HJ-Xjr" secondAttribute="trailing" constant="14" id="wFy-EZ-lHx"/>
                                             <constraint firstItem="v1y-fQ-gLK" firstAttribute="leading" secondItem="Y7H-HJ-SUk" secondAttribute="trailing" constant="8" symbolic="YES" id="wrg-az-shV"/>
                                             <constraint firstAttribute="height" constant="800" id="xDi-wT-BuH"/>
-                                            <constraint firstItem="6fT-Ps-UPm" firstAttribute="top" secondItem="3F0-GE-qe3" secondAttribute="bottom" id="yCU-Nl-7hU"/>
                                             <constraint firstItem="2h1-Mu-i7I" firstAttribute="top" secondItem="2Li-uh-vvs" secondAttribute="bottom" constant="8" symbolic="YES" id="ycf-5k-SYN"/>
                                             <constraint firstItem="6fT-Ps-UPm" firstAttribute="leading" secondItem="GyE-Rl-lsG" secondAttribute="leading" id="z03-sA-0el"/>
                                         </constraints>
@@ -195,14 +179,33 @@
                                     <constraint firstAttribute="trailing" secondItem="GyE-Rl-lsG" secondAttribute="trailing" id="cRU-ag-RZb"/>
                                 </constraints>
                             </scrollView>
+                            <navigationBar contentMode="scaleToFill" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3F0-GE-qe3">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="96"/>
+                                <items>
+                                    <navigationItem title="게시물" id="jxR-Qb-Spx">
+                                        <barButtonItem key="rightBarButtonItem" title="닫기" style="plain" id="HZs-E9-bL3">
+                                            <connections>
+                                                <action selector="barOKBtn:" destination="H29-VF-eQJ" id="gjG-Ch-Var"/>
+                                            </connections>
+                                        </barButtonItem>
+                                    </navigationItem>
+                                </items>
+                            </navigationBar>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="abz-dG-6m3"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
+                            <constraint firstItem="3F0-GE-qe3" firstAttribute="top" secondItem="ohr-HK-c8u" secondAttribute="top" id="2JE-Nx-fQ0"/>
+                            <constraint firstItem="6fT-Ps-UPm" firstAttribute="top" secondItem="3F0-GE-qe3" secondAttribute="bottom" constant="-51" id="83Z-6j-xXy"/>
                             <constraint firstItem="abz-dG-6m3" firstAttribute="trailing" secondItem="Dg6-JS-8WX" secondAttribute="trailing" id="Hra-Qz-oFv"/>
+                            <constraint firstAttribute="trailing" secondItem="3F0-GE-qe3" secondAttribute="trailing" id="JRA-CL-e52"/>
                             <constraint firstItem="Dg6-JS-8WX" firstAttribute="leading" secondItem="abz-dG-6m3" secondAttribute="leading" id="Jpd-c6-EP9"/>
                             <constraint firstItem="Dg6-JS-8WX" firstAttribute="top" secondItem="abz-dG-6m3" secondAttribute="top" id="KsH-oH-CaI"/>
+                            <constraint firstItem="3F0-GE-qe3" firstAttribute="leading" secondItem="ohr-HK-c8u" secondAttribute="leading" id="P72-pJ-mgr"/>
+                            <constraint firstItem="3F0-GE-qe3" firstAttribute="trailing" secondItem="abz-dG-6m3" secondAttribute="trailing" id="U1s-5c-Bic"/>
                             <constraint firstItem="abz-dG-6m3" firstAttribute="bottom" secondItem="Dg6-JS-8WX" secondAttribute="bottom" constant="18" id="aYf-jd-56Q"/>
+                            <constraint firstItem="3F0-GE-qe3" firstAttribute="top" secondItem="ohr-HK-c8u" secondAttribute="top" id="jBU-Bz-qbL"/>
+                            <constraint firstItem="3F0-GE-qe3" firstAttribute="leading" secondItem="abz-dG-6m3" secondAttribute="leading" id="yUl-6A-7YO"/>
                         </constraints>
                     </view>
                     <connections>
@@ -222,7 +225,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Tfz-Xa-1Wm" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1857.9710144927537" y="-44.196428571428569"/>
+            <point key="canvasLocation" x="-1878" y="-111"/>
         </scene>
     </scenes>
     <resources>
