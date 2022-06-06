@@ -17,4 +17,5 @@ struct HeartResult: Codable{
     let myPlaceText: String?
     let date: String?
     let userID: String?
+    let cbheart: Int?
 }

@@ -671,10 +671,13 @@ extension firstTabVC: UITableViewDelegate, UITableViewDataSource{
                     // self.dismiss(animated: true, completion: nil)
                     
                     // 이거땜에 좋아요가 두번눌리고 오류냠
-                    //  DispatchQueue.main.async {
-                    //   테이블뷰 갱신 (자동으로 갱신안됨)
-                    //   self.tableView.reloadData()
-                    // }
+//                      DispatchQueue.main.async {
+//                       //테이블뷰 갱신 (자동으로 갱신안됨)
+//                       self.tableView.reloadData()
+//                     }
+                    
+                    // 피드재호출
+                    requestFeedAPI()
                     
                 }else{
                     // sucess가 0이면
@@ -725,6 +728,10 @@ extension firstTabVC: UITableViewDelegate, UITableViewDataSource{
                     // self.alert("좋아요취소성공 JSON= \(try! res.result.get())!)")
                     // self.dismiss(animated: true, completion: nil)
                     // }
+                    
+                    // 피드재호출
+                    requestFeedAPI()
+                
                 }else{
                     //sucess가 0이면
                     self.alert("0")

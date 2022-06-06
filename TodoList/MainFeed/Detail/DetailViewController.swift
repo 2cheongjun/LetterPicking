@@ -18,6 +18,7 @@ class DetailViewController: UIViewController, UITextViewDelegate, UITableViewDat
     var feedIdx = 0
     var replyNum = 0
     var myID = ""
+    var heartNum = 0
     
     // 로그인값 가져오기
     let plist = UserDefaults.standard
@@ -42,10 +43,12 @@ class DetailViewController: UIViewController, UITextViewDelegate, UITableViewDat
     @IBOutlet var myPlaceText: UILabel!
     // 게시글번호
     @IBOutlet var num: UILabel!
+    // 하트 상태
+    @IBOutlet var heartBtn: UIButton!
+    
     
     // 댓글모델 가져오기
     var detailModel: DetailModel?
-    
 
     
     // 글 삭제,수정버튼
@@ -98,8 +101,58 @@ class DetailViewController: UIViewController, UITextViewDelegate, UITableViewDat
         self.dismiss(animated: true, completion: nil)
     }
     
-    override func viewWillAppear(_ animated: Bool) {
+ 
+    // 하트버튼
+    @IBAction func heartBtn(_ sender: UIButton) {
+        // 버튼을 누를때 (눌려져 있을때와, 안눌려져 있을때 버튼클릭 이벤트)
+        sender.isSelected = !sender.isSelected
         
+        if sender.isSelected {
+            // 메인에서didPressHeart 함수를 실행
+            
+                // ♥ 이미 눌러져있던 하트 클릭시 //서버에서온 하트 값이 있을때(즉,서버에서 가져온값이 0이상이면, isTouched = true)
+                if isTouched == true{ //
+                    sender.isSelected = !sender.isSelected
+                    // 빈하트로 변경
+                    isTouched = false
+                    
+                    print(isTouched)
+                  
+                }else{
+                    // ♡ 하트버튼을 처음누르는 상태
+                    isTouched = true
+                    print(isTouched)
+                }
+            
+        }else {
+            // 빈하트로 변경
+            isTouched = false
+            print(isTouched)
+           
+        }
+    }
+    
+    var isTouched: Bool? {
+        
+           didSet {
+               if isTouched == true {
+                   heartBtn.setImage(UIImage(systemName: "heart.fill", withConfiguration: UIImage.SymbolConfiguration(scale: .medium)), for: .normal)
+               }else{
+                   heartBtn.setImage(UIImage(systemName: "heart", withConfiguration: UIImage.SymbolConfiguration(scale: .medium)), for: .normal)
+               }
+           }
+       }
+    
+//     네비바 안보임??
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+              self.navigationController?.isNavigationBarHidden = false
+
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+              self.navigationController?.isNavigationBarHidden = false
     }
     
     
@@ -153,6 +206,15 @@ class DetailViewController: UIViewController, UITextViewDelegate, UITableViewDat
             }
         }
         
+        //하트상태 1이면 On상태 0이면 Off상태
+        heartNum = feedResult?.cbheart ?? 0
+        
+        print("디테일뷰 / 하트 상태 :\(heartNum)")
+        
+        if (heartNum > 0){
+            isTouched = true
+        }
+        
         // 댓글목록 가져오기 API호출
         loadReply()
         
@@ -177,9 +239,10 @@ class DetailViewController: UIViewController, UITextViewDelegate, UITableViewDat
             delBtn.layer.isHidden = true
             modifyBtn.layer.isHidden = true
         }
-        
+        self.navigationController?.isNavigationBarHidden = false
+        self.navigationController?.navigationBar.isHidden = false
 
-        }// 뷰디드로드끝
+   }// 뷰디드로드끝
         
 
         
@@ -584,4 +647,5 @@ extension DetailViewController: detailViewCellDelegate {
         loadReply()
     }
 }
+
 

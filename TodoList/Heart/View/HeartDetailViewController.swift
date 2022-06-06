@@ -16,6 +16,7 @@ class HeartDetailViewController: UIViewController, UITextViewDelegate, UITextFie
     
     var feedIdx = 0
     var replyNum = 0
+    var heartNum = 0
     
     // BASEURL
     var BASEURL = UrlInfo.shared.url!
@@ -34,11 +35,12 @@ class HeartDetailViewController: UIViewController, UITextViewDelegate, UITextFie
     }
     @IBOutlet var myPlaceText: UILabel!
     @IBOutlet var num: UILabel!
+    @IBOutlet var heartBtn: UIButton!
     
     // 댓글모델가져오기
     var detailModel: DetailModel?
 
-   
+
     // 댓글 테이블뷰
     @IBOutlet var tableView: UITableView!
     // 댓글 작성영역
@@ -66,6 +68,47 @@ class HeartDetailViewController: UIViewController, UITextViewDelegate, UITextFie
     }
     // 장소추가
     @IBOutlet var placeText: UILabel!
+    
+    // 하트버튼
+    @IBAction func heartBtn(_ sender: UIButton) {
+        // 버튼을 누를때 (눌려져 있을때와, 안눌려져 있을때 버튼클릭 이벤트)
+        sender.isSelected = !sender.isSelected
+        
+        if sender.isSelected {
+            // 메인에서didPressHeart 함수를 실행
+            
+                // ♥ 이미 눌러져있던 하트 클릭시 //서버에서온 하트 값이 있을때(즉,서버에서 가져온값이 0이상이면, isTouched = true)
+                if isTouched == true{ //
+                    sender.isSelected = !sender.isSelected
+                    // 빈하트로 변경
+                    isTouched = false
+                    print(isTouched)
+                  
+                }else{
+                    // ♡ 하트버튼을 처음누르는 상태
+                    isTouched = true
+                    print(isTouched)
+                }
+            
+        }else {
+            // 빈하트로 변경
+            isTouched = false
+            print(isTouched)
+           
+        }
+    }
+    
+    var isTouched: Bool? {
+        
+           didSet {
+               if isTouched == true {
+                   heartBtn.setImage(UIImage(systemName: "heart.fill", withConfiguration: UIImage.SymbolConfiguration(scale: .medium)), for: .normal)
+               }else{
+                   heartBtn.setImage(UIImage(systemName: "heart", withConfiguration: UIImage.SymbolConfiguration(scale: .medium)), for: .normal)
+               }
+           }
+       }
+    
     
     // 노티1.시작의 시작등록.글수정후에 메인피드를 새로고침하기위한 노티 (노티의 이름은 ModifyVCNotification)
     let ModifyVCNotification: Notification.Name = Notification.Name("ModifyVCNotification")
@@ -119,6 +162,15 @@ class HeartDetailViewController: UIViewController, UITextViewDelegate, UITextFie
         //글번호
 //        num.text = heartResult?.postIdx?.description
         
+        //하트상태 1이면 On상태 0이면 Off상태
+        heartNum = heartResult?.cbheart ?? 0
+        
+        print("디테일뷰 / 하트 상태 :\(heartNum)")
+        
+        if (heartNum > 0){
+            isTouched = true
+        }
+        
          //게시글번호(수정시필요)
         feedIdx = heartResult?.postIdx ?? 0
         
@@ -153,6 +205,9 @@ class HeartDetailViewController: UIViewController, UITextViewDelegate, UITextFie
             delBtn.layer.isHidden = true
             modifyBtn.layer.isHidden = true
         }
+        
+        // 상단 백버튼가림
+        self.navigationController?.navigationBar.isHidden = false
     
     }// 뷰디드로드끝
     

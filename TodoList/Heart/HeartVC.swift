@@ -33,6 +33,8 @@ class HeartVC: UIViewController, UICollectionViewDataSource, UICollectionViewDel
     @IBOutlet weak var collectionView: UICollectionView!
     
     
+
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         //델리게이트연결안하면 뷰에 보이지도 않음
@@ -107,7 +109,7 @@ class HeartVC: UIViewController, UICollectionViewDataSource, UICollectionViewDel
         // 컬렉션뷰에 좋아요모음 가져오기
         HeartDetailVC.heartResult = self.heartModel?.results[indexPath.row]
         // 전체화면보기하면 닫기버튼이 없음 만들어줘야함.
-        HeartDetailVC.modalPresentationStyle = .fullScreen
+//        HeartDetailVC.modalPresentationStyle = .fullScreen
         
         // 화면이 띄워진후에 값을 넣어야 널크러쉬가 안남
         self.present(HeartDetailVC, animated: true){ }
