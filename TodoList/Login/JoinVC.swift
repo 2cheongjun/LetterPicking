@@ -76,7 +76,6 @@ class JoinVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UINa
             cell.textLabel?.textColor = .white
             cell.textLabel?.textAlignment = .center
             cell.textLabel?.backgroundColor = .link
-            
         case 2 :
             self.fieldPassword = UITextField(frame: tfFrame)
             self.fieldPassword.placeholder = "비밀번호는 영+숫자 8글자 이상"
@@ -110,10 +109,11 @@ class JoinVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UINa
         if indexPath.row == 1 {
             print(indexPath.row)
             // 아이디중복 API호출 하기
-            if(self.fieldAccount.text! != nil){
-                checkID()
-            }else{
+            if(self.fieldAccount.text! == ""){
                 self.alert("아이디를 작성하고 중복확인을 해주세요")
+               
+            }else{
+                checkID()
             }
             
         }
@@ -222,7 +222,7 @@ class JoinVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UINa
     // 아이디 중복체크API 호출
     func checkID(){
         // 작성한 아이디
-        userID = self.fieldAccount.text!
+            userID = self.fieldAccount.text!
 
         // 1. 전달할 값 준비
         // 1-2. 전달값을 Parameters 타입의 객체로 정의
@@ -247,15 +247,13 @@ class JoinVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UINa
                 if let jsonObject = try! res.result.get() as? [String :Any]{
                     let success = jsonObject["success"] as? Int ?? 0
                     let message = jsonObject["message"] as? String ?? ""
-                    let num = jsonObject["num"] as? Int ?? 0
-                    
-                    if (num > 0) {
-                         self.alert("중복아이디")
+                    //  sueccess값이 true이면 1, false이면 0 반환
+                    if (success == 1) {
+                        // 받아온메시지를 뿌린다.
+                         self.alert(message)
                         // self.dismiss(animated: true, completion: nil)
-                        
-                    }else if (num == 0) {
-                        self.alert("사용가능 아이디")
-                        
+                    }else{
+                        self.alert(message)
                     }
                 }
                 
