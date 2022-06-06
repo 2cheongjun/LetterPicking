@@ -122,6 +122,8 @@ class HeartDetailViewController: UIViewController, UITextViewDelegate, UITextFie
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        // 하트기본상태On
+        isTouched = true
         
     }
     
@@ -163,13 +165,10 @@ class HeartDetailViewController: UIViewController, UITextViewDelegate, UITextFie
 //        num.text = heartResult?.postIdx?.description
         
         //하트상태 1이면 On상태 0이면 Off상태
-        heartNum = heartResult?.cbheart ?? 0
-        
-        print("디테일뷰 / 하트 상태 :\(heartNum)")
-        
-        if (heartNum > 0){
-            isTouched = true
-        }
+//        heartNum = heartResult?.cbheart ?? 0
+        print("하트디테일뷰 / 하트 상태 :\(heartNum)")
+        // 하트기본상태On
+        isTouched = true
         
          //게시글번호(수정시필요)
         feedIdx = heartResult?.postIdx ?? 0

@@ -20,18 +20,6 @@
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Dg6-JS-8WX">
                                 <rect key="frame" x="0.0" y="44" width="414" height="800"/>
                                 <subviews>
-                                    <navigationBar contentMode="scaleToFill" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3F0-GE-qe3">
-                                        <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
-                                        <items>
-                                            <navigationItem title="게시물" id="jxR-Qb-Spx">
-                                                <barButtonItem key="rightBarButtonItem" title="닫기" style="plain" id="HZs-E9-bL3">
-                                                    <connections>
-                                                        <action selector="barOKBtn:" destination="H29-VF-eQJ" id="gjG-Ch-Var"/>
-                                                    </connections>
-                                                </barButtonItem>
-                                            </navigationItem>
-                                        </items>
-                                    </navigationBar>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GyE-Rl-lsG">
                                         <rect key="frame" x="0.0" y="8" width="414" height="800"/>
                                         <subviews>
@@ -140,10 +128,23 @@
                                                     <action selector="heartBtn:" destination="H29-VF-eQJ" eventType="touchUpInside" id="BSb-5V-29a"/>
                                                 </connections>
                                             </button>
+                                            <navigationBar contentMode="scaleToFill" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3F0-GE-qe3">
+                                                <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
+                                                <items>
+                                                    <navigationItem title="게시물" id="jxR-Qb-Spx">
+                                                        <barButtonItem key="rightBarButtonItem" title="닫기" style="plain" id="HZs-E9-bL3">
+                                                            <connections>
+                                                                <action selector="barOKBtn:" destination="H29-VF-eQJ" id="gjG-Ch-Var"/>
+                                                            </connections>
+                                                        </barButtonItem>
+                                                    </navigationItem>
+                                                </items>
+                                            </navigationBar>
                                         </subviews>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                         <constraints>
                                             <constraint firstAttribute="trailing" secondItem="2h1-Mu-i7I" secondAttribute="trailing" constant="12" id="0n5-Og-1jB"/>
+                                            <constraint firstItem="3F0-GE-qe3" firstAttribute="leading" secondItem="GyE-Rl-lsG" secondAttribute="leading" id="2kt-Hn-5d6"/>
                                             <constraint firstItem="F2k-fq-O0B" firstAttribute="top" secondItem="2h1-Mu-i7I" secondAttribute="bottom" constant="14" id="40d-zI-BFG"/>
                                             <constraint firstItem="2Li-uh-vvs" firstAttribute="top" secondItem="Y7H-HJ-SUk" secondAttribute="bottom" constant="8" symbolic="YES" id="4Uc-EO-CaZ"/>
                                             <constraint firstAttribute="trailing" secondItem="F2k-fq-O0B" secondAttribute="trailing" id="7vH-mk-52h"/>
@@ -161,6 +162,8 @@
                                             <constraint firstItem="Tex-GJ-KrY" firstAttribute="leading" secondItem="JpU-Hw-0ST" secondAttribute="trailing" constant="14" id="Pbz-l1-T8S"/>
                                             <constraint firstItem="6fT-Ps-UPm" firstAttribute="leading" secondItem="GyE-Rl-lsG" secondAttribute="leading" id="Q5Y-uC-U5B"/>
                                             <constraint firstAttribute="trailing" secondItem="6fT-Ps-UPm" secondAttribute="trailing" id="RLa-ik-v12"/>
+                                            <constraint firstAttribute="trailing" secondItem="3F0-GE-qe3" secondAttribute="trailing" id="TQA-Z8-9MN"/>
+                                            <constraint firstItem="3F0-GE-qe3" firstAttribute="top" secondItem="GyE-Rl-lsG" secondAttribute="top" id="TRm-Rx-XdD"/>
                                             <constraint firstItem="F2k-fq-O0B" firstAttribute="leading" secondItem="GyE-Rl-lsG" secondAttribute="leading" id="UjJ-ZT-Y36"/>
                                             <constraint firstItem="6fT-Ps-UPm" firstAttribute="top" secondItem="GyE-Rl-lsG" secondAttribute="top" constant="44" id="Vo5-yi-8oi"/>
                                             <constraint firstItem="XKv-l4-CHc" firstAttribute="top" secondItem="6fT-Ps-UPm" secondAttribute="bottom" constant="8" symbolic="YES" id="WgB-1n-BOa"/>
@@ -179,20 +182,17 @@
                                             <constraint firstAttribute="trailing" secondItem="Nls-HJ-Xjr" secondAttribute="trailing" constant="14" id="wFy-EZ-lHx"/>
                                             <constraint firstItem="v1y-fQ-gLK" firstAttribute="leading" secondItem="Y7H-HJ-SUk" secondAttribute="trailing" constant="8" symbolic="YES" id="wrg-az-shV"/>
                                             <constraint firstAttribute="height" constant="800" id="xDi-wT-BuH"/>
+                                            <constraint firstItem="6fT-Ps-UPm" firstAttribute="top" secondItem="3F0-GE-qe3" secondAttribute="bottom" id="yCU-Nl-7hU"/>
                                             <constraint firstItem="2h1-Mu-i7I" firstAttribute="top" secondItem="2Li-uh-vvs" secondAttribute="bottom" constant="8" symbolic="YES" id="ycf-5k-SYN"/>
                                             <constraint firstItem="6fT-Ps-UPm" firstAttribute="leading" secondItem="GyE-Rl-lsG" secondAttribute="leading" id="z03-sA-0el"/>
                                         </constraints>
                                     </view>
                                 </subviews>
                                 <constraints>
-                                    <constraint firstAttribute="trailing" secondItem="3F0-GE-qe3" secondAttribute="trailing" id="8qz-W4-3Cl"/>
-                                    <constraint firstItem="GyE-Rl-lsG" firstAttribute="top" secondItem="3F0-GE-qe3" secondAttribute="top" constant="8" id="9lf-zJ-Bp3"/>
-                                    <constraint firstItem="3F0-GE-qe3" firstAttribute="top" secondItem="Dg6-JS-8WX" secondAttribute="top" id="O3h-Nn-PbW"/>
+                                    <constraint firstItem="GyE-Rl-lsG" firstAttribute="top" secondItem="Dg6-JS-8WX" secondAttribute="topMargin" id="2WI-9j-tAy"/>
                                     <constraint firstAttribute="bottom" secondItem="GyE-Rl-lsG" secondAttribute="bottom" priority="900" constant="-8" id="P4t-M0-VqX"/>
-                                    <constraint firstItem="GyE-Rl-lsG" firstAttribute="leading" secondItem="3F0-GE-qe3" secondAttribute="leading" id="RR7-7K-xqY"/>
                                     <constraint firstItem="GyE-Rl-lsG" firstAttribute="centerX" secondItem="Dg6-JS-8WX" secondAttribute="centerX" id="XZ6-5J-lwk"/>
-                                    <constraint firstItem="3F0-GE-qe3" firstAttribute="leading" secondItem="Dg6-JS-8WX" secondAttribute="leading" id="b5h-TV-lVG"/>
-                                    <constraint firstItem="GyE-Rl-lsG" firstAttribute="trailing" secondItem="3F0-GE-qe3" secondAttribute="trailing" id="nJX-YV-ma7"/>
+                                    <constraint firstAttribute="trailing" secondItem="GyE-Rl-lsG" secondAttribute="trailing" id="cRU-ag-RZb"/>
                                 </constraints>
                             </scrollView>
                         </subviews>
