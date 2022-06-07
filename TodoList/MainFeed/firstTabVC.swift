@@ -438,7 +438,6 @@ class firstTabVC: UIViewController{
         var components = URLComponents(string: result!)
         
         print(components)
-        // 결과(http://3.39.79.206/post/0iOS_feedSearch.php?word=%25ED%2595%2598)
      
         let word = URLQueryItem(name: "word", value: word)
         components?.queryItems = [word]

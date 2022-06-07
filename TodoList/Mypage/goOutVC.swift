@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 import Alamofire
 
-class goOutVC: UIViewController {
+class goOutVC: UIViewController{
     
     // 저장한 이름 가져오기
     let plist = UserDefaults.standard
@@ -20,6 +20,9 @@ class goOutVC: UIViewController {
     var page = 1
     // BASEURL
     var BASEURL = UrlInfo.shared.url!
+    
+    // 체크박스클래스에서 객체 생성하기
+    let checkbox1 = Checkbox(frame: CGRect(x :16, y:280, width:40, height: 40))
     
     // 닫기버튼
     @IBAction func closeBtn(_ sender: Any) {
@@ -40,14 +43,8 @@ class goOutVC: UIViewController {
     var isCalling = false
     var checkOn = false
     
-    
     override func viewWillAppear(_ animated: Bool) {
-        //탈퇴글
-        self.label()
-        // 탈퇴버튼
-        self.goOutBtn()
-        // 체크박스
-        self.button()
+
     }
     
     override func viewDidLoad() {
@@ -55,8 +52,13 @@ class goOutVC: UIViewController {
         self.label()
         // 탈퇴버튼
         self.goOutBtn()
-        // 체크박스
-        self.button()
+        // 새로만든체크박스
+        self.checkbox()
+        
+        let checklabel = UILabel(frame: CGRect(x: 70 , y: 265, width: 200, height: 70))
+        checklabel.text = "위의 내용에 동의합니다."
+        view.addSubview(checklabel)
+        
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -76,36 +78,17 @@ class goOutVC: UIViewController {
     }
     
 
-    func button(){
-          let button = UIButton(
-              frame: CGRect(
-                  x: 10, // 가로 마진
-                  y: 300, // 세로 마진
-                  width: 50, // 가로 크기
-                  height: 50 // 세로 크기
-              )
-          ) // 마진 및 사이즈 지정
-          button.backgroundColor = .white // 배경 색상 지정
-//          button.setTitle("체크박스", for: .normal) // 타이틀 지정
-//          button.setImage(UIImage(named: "checkOff")! as UIImage, for: .normal) // 버튼 이미지
-//          button.setImage(UIImage(named: "checkOn")! as UIImage, for: .selected)
-        
-           let normalImage = UIImage(named: "checkOff")
-           let selectedImage = UIImage(named: "checkOn")
-           button.setImage(normalImage, for: .normal)
-           button.setImage(selectedImage, for: .selected)
-//            button.setImage(UIImage(named: "checkOff")! as UIImage, for: .normal)
-//             button.setImage(UIImage(named: "checkOn")! as UIImage, for: .selected)
-             
-          button.addTarget(self, action: #selector(buttonAction), for: .touchUpInside) // 클릭 이벤트 지정
-          self.view.addSubview(button) // 뷰에 추가 실시
+    // 공용체크박스
+    func checkbox(){
+        view.addSubview(checkbox1)
+        let gesture = UITapGestureRecognizer(target: self, action: #selector(didTapCheckbox))
+        checkbox1.addGestureRecognizer(gesture)
     }
-
-
-         // MARK: - [버튼 클릭 이벤트]
-         @objc func buttonAction(sender: UIButton!) {
-             print("[A_Nice >> buttonAction() :: 버튼 클릭 수행 실시]")
-         }
+    
+    @objc func didTapCheckbox(){
+        checkbox1.toggle()
+    }
+    
 
     // 탈퇴버튼
     func  goOutBtn() {
@@ -212,7 +195,5 @@ class goOutVC: UIViewController {
     }// 신고업로드함수 끝
     
 }
-
-
 }
 

@@ -49,6 +49,8 @@
 		D0C8D827284657F4007F6570 /* TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0C8D826284657F4007F6570 /* TableViewCell.swift */; };
 		D0C8D829284E7250007F6570 /* myImgDetailViewVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0C8D828284E7250007F6570 /* myImgDetailViewVC.swift */; };
 		D0C8D82C284E728D007F6570 /* myImgDetailViewVC.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D0C8D82B284E728D007F6570 /* myImgDetailViewVC.storyboard */; };
+		D0C8D82E284F9364007F6570 /* Checkbox.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0C8D82D284F9363007F6570 /* Checkbox.swift */; };
+		D0C8D830284FCD6E007F6570 /* goOutVC2.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0C8D82F284FCD6E007F6570 /* goOutVC2.swift */; };
 		D0C98B7027F5EC3900445A00 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0C98B6F27F5EC3900445A00 /* DetailViewController.swift */; };
 		D0C98B7227F5EDCB00445A00 /* DetailViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D0C98B7127F5EDCB00445A00 /* DetailViewController.storyboard */; };
 		D0C98B7427F736DF00445A00 /* nMapVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0C98B7327F736DF00445A00 /* nMapVC.swift */; };
@@ -109,6 +111,8 @@
 		D0C8D826284657F4007F6570 /* TableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewCell.swift; sourceTree = "<group>"; };
 		D0C8D828284E7250007F6570 /* myImgDetailViewVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = myImgDetailViewVC.swift; sourceTree = "<group>"; };
 		D0C8D82B284E728D007F6570 /* myImgDetailViewVC.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = myImgDetailViewVC.storyboard; sourceTree = "<group>"; };
+		D0C8D82D284F9363007F6570 /* Checkbox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Checkbox.swift; sourceTree = "<group>"; };
+		D0C8D82F284FCD6E007F6570 /* goOutVC2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = goOutVC2.swift; sourceTree = "<group>"; };
 		D0C98B6F27F5EC3900445A00 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		D0C98B7127F5EDCB00445A00 /* DetailViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = DetailViewController.storyboard; sourceTree = "<group>"; };
 		D0C98B7327F736DF00445A00 /* nMapVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = nMapVC.swift; sourceTree = "<group>"; };
@@ -182,6 +186,7 @@
 				D0E16BC427D6F38C008F970E /* Utils.swift */,
 				D01505F2283D02DB00743409 /* NetworkMoniter.swift */,
 				D01505F4283D11D300743409 /* URL.swift */,
+				D0C8D82D284F9363007F6570 /* Checkbox.swift */,
 			);
 			path = Util;
 			sourceTree = "<group>";
@@ -266,6 +271,7 @@
 				D08B027E27E5C25D00012766 /* mypageVC.swift */,
 				D0C8D818284618F9007F6570 /* goOutVC.storyboard */,
 				D0C8D81A28461919007F6570 /* goOutVC.swift */,
+				D0C8D82F284FCD6E007F6570 /* goOutVC2.swift */,
 				D0C8D81C2846500D007F6570 /* myImgVC.swift */,
 				D0C8D826284657F4007F6570 /* TableViewCell.swift */,
 				D0C8D81E2846501E007F6570 /* myImgVC.storyboard */,
@@ -445,12 +451,14 @@
 			files = (
 				D09E65FF27F1034800077BD5 /* HeartVC.swift in Sources */,
 				D0E16BC727D6FBCB008F970E /* JoinVC.swift in Sources */,
+				D0C8D830284FCD6E007F6570 /* goOutVC2.swift in Sources */,
 				D0E16BCD27DF6406008F970E /* UserInfoManager.swift in Sources */,
 				D051F35527CDE2AF00ABBB4E /* AppDelegate.swift in Sources */,
 				D051F35727CDE2AF00ABBB4E /* SceneDelegate.swift in Sources */,
 				D0C98B7027F5EC3900445A00 /* DetailViewController.swift in Sources */,
 				D0C8D81B28461919007F6570 /* goOutVC.swift in Sources */,
 				D0E16BCB27DF4E2B008F970E /* LoginVC.swift in Sources */,
+				D0C8D82E284F9364007F6570 /* Checkbox.swift in Sources */,
 				D0E16BC527D6F38C008F970E /* Utils.swift in Sources */,
 				D0C8D827284657F4007F6570 /* TableViewCell.swift in Sources */,
 				D0C8D829284E7250007F6570 /* myImgDetailViewVC.swift in Sources */,
