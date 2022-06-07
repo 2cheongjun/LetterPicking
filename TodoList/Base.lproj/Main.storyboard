@@ -74,37 +74,6 @@
             </objects>
             <point key="canvasLocation" x="-692.30769230769226" y="826.77725118483409"/>
         </scene>
-        <!--지도로보기-->
-        <scene sceneID="Ro0-nH-3p6">
-            <objects>
-                <viewController id="xae-ay-8n1" customClass="nMapVC" customModule="TodoList" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="dEF-c6-i7n">
-                        <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MrY-0F-6M0" customClass="NMFMapView">
-                                <rect key="frame" x="0.0" y="44" width="390" height="766"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                            </view>
-                        </subviews>
-                        <viewLayoutGuide key="safeArea" id="S45-Ec-F91"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                        <constraints>
-                            <constraint firstItem="S45-Ec-F91" firstAttribute="bottom" secondItem="MrY-0F-6M0" secondAttribute="bottom" id="Mfg-Ow-0La"/>
-                            <constraint firstItem="S45-Ec-F91" firstAttribute="trailing" secondItem="MrY-0F-6M0" secondAttribute="trailing" id="WV2-gd-hdU"/>
-                            <constraint firstItem="MrY-0F-6M0" firstAttribute="top" secondItem="S45-Ec-F91" secondAttribute="top" id="YkH-ju-19p"/>
-                            <constraint firstItem="MrY-0F-6M0" firstAttribute="leading" secondItem="S45-Ec-F91" secondAttribute="leading" id="oMI-GC-Opm"/>
-                        </constraints>
-                    </view>
-                    <tabBarItem key="tabBarItem" title="지도로보기" image="map" catalog="system" id="h17-9b-BE0"/>
-                    <connections>
-                        <outlet property="mapView" destination="MrY-0F-6M0" id="RHA-an-m9V"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Rwt-jd-GbI" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-858" y="2250"/>
-        </scene>
         <!--글자피드-->
         <scene sceneID="wa2-wn-qsS">
             <objects>
@@ -607,7 +576,6 @@
         <image name="default" width="30" height="30"/>
         <image name="doc.text.image" catalog="system" width="115" height="128"/>
         <image name="heart" catalog="system" width="128" height="109"/>
-        <image name="map" catalog="system" width="128" height="110"/>
         <image name="mappin.and.ellipse" catalog="system" width="118" height="128"/>
         <image name="person" catalog="system" width="128" height="117"/>
         <image name="profile-bg" width="466.66665649414062" height="516.66668701171875"/>

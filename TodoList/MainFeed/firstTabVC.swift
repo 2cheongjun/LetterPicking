@@ -417,24 +417,30 @@ class firstTabVC: UIViewController{
         // 스토리보드 세그로 연결함
     }
     
-    func makeStringKoreanEncoded(_ string: String) -> String {
-    return string.addingPercentEncoding(withAllowedCharacters: .urlFragmentAllowed) ?? string
-    }
-    
+
     // 검색요청 API
     func searchWord(success: (()->Void)? = nil, fail: ((String)->Void)? = nil) {
-        // 검색창에 작성한 단어
-        print("firstTabVC/ 단어입력내용 :\(self.word)")
-        // 한글판별???
-        // 입력한 단어가 한글이면 인코딩작업 해주기
-        let encodeWord = makeStringKoreanEncoded(word)
+   
         
+        // URL세선 시작
         let sessionConfig = URLSessionConfiguration.default
         let session = URLSession(configuration: sessionConfig)
-        var components = URLComponents(string: self.BASEURL+"post/0iOS_feedSearch.php?word=\(encodeWord)")
+        
      
-        //let term = URLQueryItem(name: "term", value: "marvel")
-        let word = URLQueryItem(name: "word", value: encodeWord)
+     
+        // word에 담긴 단어를 가져옴
+        print("firstTabVC/ 단어입력내용 :\(self.word)")
+        // 한글이 있는 URL
+        let someURLString = self.BASEURL+"post/0iOS_feedSearch.php?word=\(word)"
+        // 한글이 있는 URL String을 addingPercentEncoding으로 string으로 변경한다.(urlQueryAllowed를 사용)
+        let result = someURLString.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
+        // 컴포넌트에 남아서 보내기
+        var components = URLComponents(string: result!)
+        
+        print(components)
+        // 결과(http://3.39.79.206/post/0iOS_feedSearch.php?word=%25ED%2595%2598)
+     
+        let word = URLQueryItem(name: "word", value: word)
         components?.queryItems = [word]
         
         // url이 없으면 리턴한다. 여기서 끝
@@ -461,7 +467,7 @@ class firstTabVC: UIViewController{
                     
                     // 모든UI 작업은 메인쓰레드에서 이루어져야한다.
                     DispatchQueue.main.async {
-                        // 테이블뷰 갱신 (자동으로 갱신안됨)
+                        // 테이블뷰 갱신
                         self.tableView.reloadData()
                     }
                     
@@ -530,6 +536,11 @@ extension firstTabVC: UITableViewDelegate, UITableViewDataSource{
         // 좋아요를위한 인덱스 담기
         cell.index = indexPath.row
         cell.indexNum = indexPath
+        
+        let text =  self.feedModel?.results[indexPath.row].postText
+//        text?.removingPercentEncoding
+//
+//        print(text?.removingPercentEncoding)
         
         cell.titleLabel.text = self.feedModel?.results[indexPath.row].postText
         cell.descriptionLabel.text = self.feedModel?.results[indexPath.row].userID

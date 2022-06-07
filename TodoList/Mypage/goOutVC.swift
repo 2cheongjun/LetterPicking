@@ -46,6 +46,8 @@ class goOutVC: UIViewController {
         self.label()
         // 탈퇴버튼
         self.goOutBtn()
+        // 체크박스
+        self.button()
     }
     
     override func viewDidLoad() {
@@ -53,6 +55,8 @@ class goOutVC: UIViewController {
         self.label()
         // 탈퇴버튼
         self.goOutBtn()
+        // 체크박스
+        self.button()
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -71,7 +75,39 @@ class goOutVC: UIViewController {
         self.view.addSubview(label)
     }
     
-    //로그인/로그아웃 버튼
+
+    func button(){
+          let button = UIButton(
+              frame: CGRect(
+                  x: 10, // 가로 마진
+                  y: 300, // 세로 마진
+                  width: 50, // 가로 크기
+                  height: 50 // 세로 크기
+              )
+          ) // 마진 및 사이즈 지정
+          button.backgroundColor = .white // 배경 색상 지정
+//          button.setTitle("체크박스", for: .normal) // 타이틀 지정
+//          button.setImage(UIImage(named: "checkOff")! as UIImage, for: .normal) // 버튼 이미지
+//          button.setImage(UIImage(named: "checkOn")! as UIImage, for: .selected)
+        
+           let normalImage = UIImage(named: "checkOff")
+           let selectedImage = UIImage(named: "checkOn")
+           button.setImage(normalImage, for: .normal)
+           button.setImage(selectedImage, for: .selected)
+//            button.setImage(UIImage(named: "checkOff")! as UIImage, for: .normal)
+//             button.setImage(UIImage(named: "checkOn")! as UIImage, for: .selected)
+             
+          button.addTarget(self, action: #selector(buttonAction), for: .touchUpInside) // 클릭 이벤트 지정
+          self.view.addSubview(button) // 뷰에 추가 실시
+    }
+
+
+         // MARK: - [버튼 클릭 이벤트]
+         @objc func buttonAction(sender: UIButton!) {
+             print("[A_Nice >> buttonAction() :: 버튼 클릭 수행 실시]")
+         }
+
+    // 탈퇴버튼
     func  goOutBtn() {
         //버튼을 감쌀 뷰를 정의한다. 배경
         let v = UIView()
