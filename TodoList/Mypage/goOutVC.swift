@@ -53,11 +53,16 @@ class goOutVC: UIViewController{
         // 탈퇴버튼
         self.goOutBtn()
         // 새로만든체크박스
-        self.checkbox()
-        
+        self.checkBtn()
+        // 체크박스 옆의 글
         let checklabel = UILabel(frame: CGRect(x: 70 , y: 265, width: 200, height: 70))
         checklabel.text = "위의 내용에 동의합니다."
         view.addSubview(checklabel)
+        
+        // 체크박스의 isChecked가 true일때
+        if checkbox1.isChecked {
+            print("체크눌림")
+        }
         
     }
     
@@ -78,8 +83,8 @@ class goOutVC: UIViewController{
     }
     
 
-    // 공용체크박스
-    func checkbox(){
+    // 체크박스
+    func checkBtn(){
         view.addSubview(checkbox1)
         let gesture = UITapGestureRecognizer(target: self, action: #selector(didTapCheckbox))
         checkbox1.addGestureRecognizer(gesture)
