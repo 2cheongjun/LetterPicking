@@ -14,7 +14,8 @@ class goOutVC: UIViewController{
     
     // 저장한 이름 가져오기
     let plist = UserDefaults.standard
-    
+    // 체크박스 체크여부 가져옴
+  
     // 현재까지 읽어 온 데이터의 페이지 정보
     // 최초에 화면을 실행할때 이미 1페이지에 해당하는 데이터를 읽어 왔으므로,page의 초기값으로 1을 할당하는것이 맞다.
     var page = 1
@@ -44,7 +45,19 @@ class goOutVC: UIViewController{
     var checkOn = false
     
     override func viewWillAppear(_ animated: Bool) {
-
+        //탈퇴글
+        self.label()
+        // 탈퇴버튼
+        self.goOutBtn()
+        // 새로만든체크박스
+        self.checkBtn()
+        // 체크박스 옆의 글
+        let checklabel = UILabel(frame: CGRect(x: 70 , y: 265, width: 200, height: 70))
+        checklabel.text = "위의 내용에 동의합니다."
+        view.addSubview(checklabel)
+        //로그인 아이디
+        plist.synchronize()//동기화처리
+        
     }
     
     override func viewDidLoad() {
@@ -59,16 +72,15 @@ class goOutVC: UIViewController{
         checklabel.text = "위의 내용에 동의합니다."
         view.addSubview(checklabel)
         
-        // 체크박스의 isChecked가 true일때
-        if checkbox1.isChecked {
-            print("체크눌림")
-        }
+        let checkState = UserDefaults.standard.set( nil,  forKey: "goOut")
+        //로그인 아이디
+        plist.synchronize()//동기화처리
         
     }
     
     override func viewDidDisappear(_ animated: Bool) {
-        //로그인 아이디
-        plist.synchronize()//동기화처리
+       
+      
     }
     
     // 탈퇴안내글
@@ -92,11 +104,13 @@ class goOutVC: UIViewController{
     
     @objc func didTapCheckbox(){
         checkbox1.toggle()
+        // 화면업데이트
+        viewWillAppear(true)
     }
     
 
     // 탈퇴버튼
-    func  goOutBtn() {
+    func goOutBtn() {
         //버튼을 감쌀 뷰를 정의한다. 배경
         let v = UIView()
         v.frame.size.width = self.view.frame.width
@@ -113,8 +127,20 @@ class goOutVC: UIViewController{
         btn.center.x = v.frame.size.width / 2 //중앙정렬
         btn.center.y = v.frame.size.height / 2 //중앙정렬
         btn.setTitle("탈퇴하기", for: .normal)
+        btn.setTitleColor(.white, for: .normal)
         btn.addTarget(self, action: #selector(doGoout(_:)), for: .touchUpInside)
         
+        // 채크박스가 off인상태에서는 탈퇴하기버튼 가리기
+        let checkOnState =  UserDefaults.standard.string(forKey: "goOut")
+        if checkOnState != nil {
+            // 체크를 눌렀을때
+             btn.isHidden = false
+            v.backgroundColor = UIColor.link
+        }else{
+            btn.isHidden = true
+        }
+        plist.synchronize()//동기화처리
+      
         v.addSubview(btn)
     }
     
@@ -128,6 +154,9 @@ class goOutVC: UIViewController{
             // 서버로 게시글 번호를 보내고, 그 번호에 맞는 게시글을 삭제한다.
             // 아이디 삭제API호출하기
             goOutdeleteID()
+            // 체크박스상태삭제
+            UserDefaults.standard.removeObject(forKey: "goOut")
+            
         }
         
         alert.addAction(alertAction)
