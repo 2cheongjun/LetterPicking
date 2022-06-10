@@ -27,13 +27,10 @@ class HeartVC: UIViewController, UICollectionViewDataSource, UICollectionViewDel
     // BASEURL
     var BASEURL = UrlInfo.shared.url!
     //userDefaults에 저장된이름값 가져오기
-    let plist = UserDefaults.standard
+    let plist = UserDefaults.standard    
     
     // 콜렉션뷰 연결
     @IBOutlet weak var collectionView: UICollectionView!
-    
-    
-
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -42,12 +39,15 @@ class HeartVC: UIViewController, UICollectionViewDataSource, UICollectionViewDel
         collectionView.dataSource = self
         // 북마크모음호출 API
         upLoadHeart()
-  
+        // 뷰업데이트
+        collectionView.reloadData()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         // 북마크모음게시글 요청
         upLoadHeart()
+        // 뷰업데이트
+        collectionView.reloadData()
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

@@ -5,7 +5,7 @@ import SwiftyJSON
 
 // 좋아요북마크 -> 디테일뷰
 class HeartDetailViewController: UIViewController, UITextViewDelegate, UITextFieldDelegate,UITableViewDataSource, UITableViewDelegate {
-
+    
     // 좋아요 모델가져오기
     var heartModel: HeartModel?
     // 피드 모델에 값이 있으면 가져온다.
@@ -20,6 +20,8 @@ class HeartDetailViewController: UIViewController, UITextViewDelegate, UITextFie
     
     // BASEURL
     var BASEURL = UrlInfo.shared.url!
+    // 공통하트 API
+    var heartAPI = HeartAPI.shared
     
     @IBOutlet var movieCotainer: UIImageView!
     
@@ -39,8 +41,8 @@ class HeartDetailViewController: UIViewController, UITextViewDelegate, UITextFie
     
     // 댓글모델가져오기
     var detailModel: DetailModel?
-
-
+    
+    
     // 댓글 테이블뷰
     @IBOutlet var tableView: UITableView!
     // 댓글 작성영역
@@ -77,43 +79,42 @@ class HeartDetailViewController: UIViewController, UITextViewDelegate, UITextFie
         if sender.isSelected {
             // 메인에서didPressHeart 함수를 실행
             
-                // ♥ 이미 눌러져있던 하트 클릭시 //서버에서온 하트 값이 있을때(즉,서버에서 가져온값이 0이상이면, isTouched = true)
-                if isTouched == true{ //
-                    sender.isSelected = !sender.isSelected
-                    // 빈하트로 변경
-                    isTouched = false
-                    print(isTouched)
-                  
-                }else{
-                    // ♡ 하트버튼을 처음누르는 상태
-                    isTouched = true
-                    print(isTouched)
-                }
+            // ♥ 이미 눌러져있던 하트 클릭시 //서버에서온 하트 값이 있을때(즉,서버에서 가져온값이 0이상이면, isTouched = true)
+            if isTouched == true{ //
+                sender.isSelected = !sender.isSelected
+                // 빈하트로 변경
+                isTouched = false
+                heartAPI.DeleteHeart(postIdx: feedIdx.description)
+                
+            }else{
+                // ♡ 하트버튼을 처음누르는 상태
+                isTouched = true
+                heartAPI.uploadHeart(postIdx: feedIdx.description)
+            }
             
         }else {
             // 빈하트로 변경
             isTouched = false
-            print(isTouched)
-           
+            heartAPI.DeleteHeart(postIdx: feedIdx.description)
         }
     }
     
     var isTouched: Bool? {
         
-           didSet {
-               if isTouched == true {
-                   heartBtn.setImage(UIImage(systemName: "heart.fill", withConfiguration: UIImage.SymbolConfiguration(scale: .medium)), for: .normal)
-               }else{
-                   heartBtn.setImage(UIImage(systemName: "heart", withConfiguration: UIImage.SymbolConfiguration(scale: .medium)), for: .normal)
-               }
-           }
-       }
+        didSet {
+            if isTouched == true {
+                heartBtn.setImage(UIImage(systemName: "heart.fill", withConfiguration: UIImage.SymbolConfiguration(scale: .medium)), for: .normal)
+            }else{
+                heartBtn.setImage(UIImage(systemName: "heart", withConfiguration: UIImage.SymbolConfiguration(scale: .medium)), for: .normal)
+            }
+        }
+    }
     
     
     // 노티1.시작의 시작등록.글수정후에 메인피드를 새로고침하기위한 노티 (노티의 이름은 ModifyVCNotification)
     let ModifyVCNotification: Notification.Name = Notification.Name("ModifyVCNotification")
     
-
+    
     // 닫기 버튼
     @IBAction func barOKBtn(_ sender: Any) {
         // 노티2.창이 닫힐때 노티를 메인피드로 신호를 보낸다. //(노티의 이름은 ModifyVCNotification)
@@ -124,8 +125,13 @@ class HeartDetailViewController: UIViewController, UITextViewDelegate, UITextFie
     override func viewWillAppear(_ animated: Bool) {
         // 하트기본상태On
         isTouched = true
-        
     }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        // 북마크모음재호출
+//        heartAPI.getHeartBookmark()
+    }
+    
     
     // 글 수정삭제버튼
     @IBOutlet var delBtn: UIButton!
@@ -159,18 +165,18 @@ class HeartDetailViewController: UIViewController, UITextViewDelegate, UITextFie
         date.text = v?.description
         
         postText.text = heartResult?.postText
-    
+        
         placeText.text =  heartResult?.myPlaceText ?? ""
         //글번호
-//        num.text = heartResult?.postIdx?.description
+        //        num.text = heartResult?.postIdx?.description
         
         //하트상태 1이면 On상태 0이면 Off상태
-//        heartNum = heartResult?.cbheart ?? 0
+        //        heartNum = heartResult?.cbheart ?? 0
         print("하트디테일뷰 / 하트 상태 :\(heartNum)")
         // 하트기본상태On
         isTouched = true
         
-         //게시글번호(수정시필요)
+        //게시글번호(수정시필요)
         feedIdx = heartResult?.postIdx ?? 0
         
         // 이미지처리방법
@@ -207,7 +213,7 @@ class HeartDetailViewController: UIViewController, UITextViewDelegate, UITextFie
         
         // 상단 백버튼가림
         self.navigationController?.navigationBar.isHidden = false
-    
+        
     }// 뷰디드로드끝
     
     
@@ -266,14 +272,14 @@ class HeartDetailViewController: UIViewController, UITextViewDelegate, UITextFie
         modifyBtn.setTitle("저장", for: .normal)
         modifyBtn.addTarget(self, action: #selector(upDate), for: .touchUpInside)
     }
-
+    
     // 수정이 저장버튼으로 바뀌고나서의 버튼 액션
     @objc func upDate() {
-         print("게시글 수정API호출!")
+        print("게시글 수정API호출!")
         // 수정API호출
-         upDatePostText()
-         self.dismiss(animated: true, completion: nil)
-       }
+        upDatePostText()
+        self.dismiss(animated: true, completion: nil)
+    }
     
     
     // 게시글수정API호출
@@ -384,9 +390,9 @@ class HeartDetailViewController: UIViewController, UITextViewDelegate, UITextFie
     }
     
     // 셀 높이 컨텐츠에 맞게 자동으로 설정// 컨텐츠의 내용높이 만큼이다.
-        func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
-            return UITableView.automaticDimension
-        }
+    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
+        return UITableView.automaticDimension
+    }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: HeartReplyCell.identifier, for: indexPath) as! HeartReplyCell
@@ -423,7 +429,7 @@ class HeartDetailViewController: UIViewController, UITextViewDelegate, UITextFie
         // userID, postText,이미지묶음을 파라미터에 담아보냄
         // 로그인한 아이디값
         let getName = plist.string(forKey: "name")
-    
+        
         let param: Parameters = [
             "feedIdx": feedIdx,
             "title" : replyField.text ?? "",
@@ -445,7 +451,7 @@ class HeartDetailViewController: UIViewController, UITextViewDelegate, UITextFie
             // 성공실패케이스문 작성하기
             print("서버로 보냄!!!!!")
             //            print("JSON= \(try? res.result.get())!)")
-
+            
             guard (try! res.result.get() as? NSDictionary) != nil else {
                 print("올바른 응답값이 아닙니다.")
                 return
@@ -457,7 +463,7 @@ class HeartDetailViewController: UIViewController, UITextViewDelegate, UITextFie
                 let message = jsonObject["message"] as? String ?? ""
                 
                 if success == 1 {
-//                    self.alert("응답값 JSON= \(try! res.result.get())!)")
+                    //                    self.alert("응답값 JSON= \(try! res.result.get())!)")
                     //                    self.dismiss(animated: true, completion: nil)
                     print("응답내용\(message)")
                     
@@ -531,37 +537,37 @@ class HeartDetailViewController: UIViewController, UITextViewDelegate, UITextFie
     func DeleteReply(replyIndex: Int?, success: (()->Void)? = nil, fail: ((String)->Void)? = nil) {
         // userID, postText,이미지묶음을 파라미터에 담아보냄
         let userID = heartResult?.userID
-
+        
         // 선택한 셀의 댓글번호보내기
         let param: Parameters = [
-                               "feedIdx" : feedIdx,
-                               "replyIdx" : replyNum ,
-                               "userID" : userID ?? ""]
-
+            "feedIdx" : feedIdx,
+            "replyIdx" : replyNum ,
+            "userID" : userID ?? ""]
+        
         print("댓글삭제\(param)")
-
-//        print(" API 게시글번호 2 :\(postIdx)")
+        
+        //        print(" API 게시글번호 2 :\(postIdx)")
         // API 호출 URL
         let url = self.BASEURL+"reply/replyDelete.php"
-
+        
         //이미지 전송
         let call = AF.request(url, method: .post, parameters: param,
                               encoding: JSONEncoding.default)
         //                call.responseJSON { res in
         call.responseJSON { [self] res in
-
+            
             guard (try! res.result.get() as? NSDictionary) != nil else {
                 print("올바른 응답값이 아닙니다.")
                 return
             }
-
+            
             if let jsonObject = try! res.result.get() as? [String :Any]{
                 let success = jsonObject["success"] as? Int ?? 0
-
+                
                 if success == 1 {
-//                    self.alert("댓글삭제성공 JSON= \(try! res.result.get())!)")
-//                    self.dismiss(animated: true, completion: nil)
-//                    }
+                    //                    self.alert("댓글삭제성공 JSON= \(try! res.result.get())!)")
+                    //                    self.dismiss(animated: true, completion: nil)
+                    //                    }
                     // 이거땜에 좋아요가 두번눌리고 오류냠
                     DispatchQueue.main.async {
                         // 테이블뷰 갱신 (자동으로 갱신안됨)
@@ -574,11 +580,11 @@ class HeartDetailViewController: UIViewController, UITextViewDelegate, UITextFie
                 }
             }
         }
-
+        
     }//함수 끝
     
-    
 }
+
 
 
 // 댓글삭제 버튼 프로토콜 셀

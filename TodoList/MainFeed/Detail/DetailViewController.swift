@@ -12,7 +12,7 @@ import Alamofire
 // 글자피드에서 게시글 눌렀을때 상세화면뷰
 class DetailViewController: UIViewController, UITextViewDelegate, UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate{
     
-    //피드 모델에 값이 있으면 가져온다.
+    // 게시글 피드 모델에 값이 있으면 가져온다.
     var feedResult: FeedResult?
     
     var feedIdx = 0
@@ -20,10 +20,16 @@ class DetailViewController: UIViewController, UITextViewDelegate, UITableViewDat
     var myID = ""
     var heartNum = 0
     
+    //API 호출상태값을 관리할 변수
+    var isCalling = false
+    var checkOn = false
+    
     // 로그인값 가져오기
     let plist = UserDefaults.standard
     // BASEURL
     var BASEURL = UrlInfo.shared.url!
+    // 공통하트 API
+    var heartAPI = HeartAPI.shared
     
     // 이미지
     @IBOutlet var movieCotainer: UIImageView!
@@ -101,60 +107,6 @@ class DetailViewController: UIViewController, UITextViewDelegate, UITableViewDat
         self.dismiss(animated: true, completion: nil)
     }
     
- 
-    // 하트버튼
-    @IBAction func heartBtn(_ sender: UIButton) {
-        // 버튼을 누를때 (눌려져 있을때와, 안눌려져 있을때 버튼클릭 이벤트)
-        sender.isSelected = !sender.isSelected
-        
-        if sender.isSelected {
-            // 메인에서didPressHeart 함수를 실행
-            
-                // ♥ 이미 눌러져있던 하트 클릭시 //서버에서온 하트 값이 있을때(즉,서버에서 가져온값이 0이상이면, isTouched = true)
-                if isTouched == true{ //
-                    sender.isSelected = !sender.isSelected
-                    // 빈하트로 변경
-                    isTouched = false
-                    
-                    print(isTouched)
-                  
-                }else{
-                    // ♡ 하트버튼을 처음누르는 상태
-                    isTouched = true
-                    print(isTouched)
-                }
-            
-        }else {
-            // 빈하트로 변경
-            isTouched = false
-            print(isTouched)
-           
-        }
-    }
-    
-    var isTouched: Bool? {
-        
-           didSet {
-               if isTouched == true {
-                   heartBtn.setImage(UIImage(systemName: "heart.fill", withConfiguration: UIImage.SymbolConfiguration(scale: .medium)), for: .normal)
-               }else{
-                   heartBtn.setImage(UIImage(systemName: "heart", withConfiguration: UIImage.SymbolConfiguration(scale: .medium)), for: .normal)
-               }
-           }
-       }
-    
-//     네비바 안보임??
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-              self.navigationController?.isNavigationBarHidden = false
-
-    }
-    
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-              self.navigationController?.isNavigationBarHidden = false
-    }
-    
     
     // 화면이 그려지기전에 세팅한다.
     override func viewDidLoad() {
@@ -164,12 +116,9 @@ class DetailViewController: UIViewController, UITextViewDelegate, UITableViewDat
         replyField.delegate  = self
         // 셀따로 작성시 등록을 해주어야함
         tableView.register(DetailViewCell.nib(), forCellReuseIdentifier: DetailViewCell.identifier)
-        
+        // 댓글테이블뷰
         tableView.delegate = self
         tableView.dataSource = self
-        
-//        self.navigationItem.rightBarButtonItem = nil
-
         
         //게시글 작성자
         userID.text = feedResult?.userID
@@ -187,8 +136,6 @@ class DetailViewController: UIViewController, UITextViewDelegate, UITableViewDat
         date.text = v?.description
         postText.text = feedResult?.postText
         
-        //글번호
-        // num.text = feedResult?.feedIdx?.description
         // 장소
         placeText.text = feedResult?.myPlaceText
         self.title = feedResult?.myPlaceText
@@ -243,7 +190,69 @@ class DetailViewController: UIViewController, UITextViewDelegate, UITableViewDat
         self.navigationController?.navigationBar.isHidden = false
 
    }// 뷰디드로드끝
+    
+ 
+    // 하트버튼
+    @IBAction func heartBtn(_ sender: UIButton) {
+        // 버튼을 누를때 (눌려져 있을때와, 안눌려져 있을때 버튼클릭 이벤트)
+        sender.isSelected = !sender.isSelected
         
+        if sender.isSelected {
+            // 메인에서didPressHeart 함수를 실행
+            
+                // ♥ 이미 눌러져있던 하트 클릭시 //서버에서온 하트 값이 있을때(즉,서버에서 가져온값이 0이상이면, isTouched = true)
+                if isTouched == true{ //
+                    sender.isSelected = !sender.isSelected
+                    // 빈하트로 변경
+                    isTouched = false
+                    print(isTouched)
+                    
+                    //하트삭제
+                    heartAPI.DeleteHeart(postIdx: feedIdx.description)
+        
+                }else{
+                    // ♡ 하트버튼을 처음누르는 상태
+                    isTouched = true
+                    print(isTouched!)
+                    //하트업로드
+                    heartAPI.uploadHeart(postIdx: feedIdx.description)
+                }
+            
+        }else {
+            // 빈하트로 변경
+            isTouched = false
+            print(isTouched)
+            //하트삭제
+            heartAPI.DeleteHeart(postIdx:feedIdx.description)
+        }
+    }
+    
+    var isTouched: Bool? {
+        
+           didSet {
+               if isTouched == true {
+                   heartBtn.setImage(UIImage(systemName: "heart.fill", withConfiguration: UIImage.SymbolConfiguration(scale: .medium)), for: .normal)
+               }else{
+                   heartBtn.setImage(UIImage(systemName: "heart", withConfiguration: UIImage.SymbolConfiguration(scale: .medium)), for: .normal)
+               }
+           }
+       }
+    
+//     네비바 안보임??
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.navigationController?.isNavigationBarHidden = false
+        
+        // 댓글리스트 업데이트
+        self.tableView.reloadData()
+
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.navigationController?.isNavigationBarHidden = false
+    }
+    
 
         
         // 이미지 Get요청
@@ -467,14 +476,45 @@ class DetailViewController: UIViewController, UITextViewDelegate, UITableViewDat
         }
         
         return cell
-
-        
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         //        self.numberOfCell += 1
         tableView.reloadData()
     }
+    
+    // 셀 우측 스와이프
+//        func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+//
+////            let important = importantAction(at: indexPath)
+//            let delete = deleteAction(at: indexPath)
+////            return UISwipeActionsConfiguration(actions: [delete, important])
+//            return UISwipeActionsConfiguration(actions: [delete])
+//        }
+//
+//
+//    // 스와이프 삭제
+//      func deleteAction(at indexPath: IndexPath) -> UIContextualAction {
+//          let action = UIContextualAction(style: .destructive, title: "삭제") { (action, view, success) in
+//
+////
+////              self.DeleteReply(replyIndex: self.replyNum)
+//
+//              self.tableView.deleteRows(at: [indexPath], with: .automatic)
+//
+////              self.loadReply()
+//
+////
+//              success(true)
+//          }
+////          action.image = UIImage(named: "icons8-trash-can-50")
+//          action.backgroundColor = .red
+//          return action
+//      }
+      
+
+
+
     
     // 댓글작성 업로드 API호출
     func replyUpload(success: (()->Void)? = nil, fail: ((String)->Void)? = nil) {
@@ -619,7 +659,7 @@ class DetailViewController: UIViewController, UITextViewDelegate, UITableViewDat
                     //                    }
                     // 이거땜에 좋아요가 두번눌리고 오류냠
                     DispatchQueue.main.async {
-                        // 테이블뷰 갱신 (자동으로 갱신안됨)
+                         // 테이블뷰 갱신 (자동으로 갱신안됨)
                         self.tableView.reloadData()
                         print("댓글 테이블갱신")
                     }
@@ -631,6 +671,58 @@ class DetailViewController: UIViewController, UITextViewDelegate, UITableViewDat
         }
         
     }// 댓삭함수 끝
+    
+//    //하트 업로드API
+//    func uploadHeart(postIdx: String?, success: (()->Void)? = nil, fail: ((String)->Void)? = nil) {
+//
+//        // userID, postText,이미지묶음을 파라미터에 담아보냄
+//        let userID = plist.string(forKey: "name")
+//
+//        // 선택한 셀의 게시글 번호를 가져오는 법 생각하기
+//        let param: Parameters = [  "cbHeart" : true,
+//                                   "postIdx" : feedIdx ?? 0 ,
+//                                   "userID" : userID ?? ""]
+//
+//        print(" API좋아요:\(param)")
+//        // API 호출 URL
+//        let url = self.BASEURL+"post/0iOS_feedLike.php"
+//
+//        //이미지 전송
+//        let call = AF.request(url, method: .post, parameters: param,
+//                              encoding: JSONEncoding.default)
+//        //                call.responseJSON { res in
+//        call.responseJSON { [self] res in
+//
+//            // 성공실패케이스문 작성하기
+//            //            print("서버로 보냄!!!!!")
+//            //            print("JSON= \(try! res.result.get())!)")
+//
+//            guard (try! res.result.get() as? NSDictionary) != nil else {
+//                self.isCalling = false
+//                self.alert("서버호출 과정에서 오류가 발생했습니다.")
+//                print("올바른 응답값이 아닙니다.")
+//                return
+//            }
+//
+//            if let jsonObject = try! res.result.get() as? [String :Any]{
+//                let success = jsonObject["success"] as? Int ?? 0
+//
+//                if success == 1 {
+//                    // self.alert("좋아요업로드 성공 JSON= \(try! res.result.get())!)")
+//
+//                    print("좋아요업로드 성공 JSON= \(try! res.result.get())!)")
+//                    // 피드재호출
+////                    requestFeedAPI()
+//
+//                }else{
+//                    // sucess가 0이면
+//                    self.isCalling = false
+//                    self.alert("좋아요업로드 응답실패")
+//                }
+//            }
+//        }
+//
+//    }// 하트업로드함수 끝
     
 }
 

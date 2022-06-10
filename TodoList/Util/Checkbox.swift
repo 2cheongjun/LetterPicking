@@ -12,7 +12,6 @@ final class Checkbox: UIButton {
     var isChecked = false
     var isState = false
     
-   
     // 체크박스 Images
     let checkedImage = UIImage(named: "checkOn")! as UIImage
     let uncheckedImage = UIImage(named: "checkOff")! as UIImage
@@ -34,11 +33,9 @@ final class Checkbox: UIButton {
     func toggle(){
         self.isChecked = !isChecked
         if self.isChecked{
-           
             self.setImage(checkedImage, for: .normal)
             isState = true
         }else{
-            
             self.setImage(uncheckedImage, for: .normal)
             isState = false
         }
@@ -58,15 +55,11 @@ final class Checkbox: UIButton {
             // 체크박스OFF,저장값삭제
             let checkState = UserDefaults.standard.removeObject(forKey: "goOut")
           
-          
             // 저장값가져오기
             let test =  UserDefaults.standard.string(forKey: "goOut")
             print ("isState del:\(test ?? "nil")")
 
         }
-        
-      
-    
     }
     
 }

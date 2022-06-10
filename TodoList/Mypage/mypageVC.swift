@@ -149,14 +149,15 @@ class thirdTabVC: UIViewController, UITableViewDelegate, UITableViewDataSource, 
             cell.accessoryType = .disclosureIndicator
          
         case 5:
-            cell.textLabel?.text = "차단한 계정관리"
-            cell.accessoryType = .disclosureIndicator
-            
-        case 6:
             cell.textLabel?.text = "탈퇴하기"
             cell.textLabel?.textColor = .systemGray2
             cell.accessoryType = .disclosureIndicator
             
+//        case 6:
+//            cell.textLabel?.text = "탈퇴하기"
+//            cell.textLabel?.textColor = .systemGray2
+//            cell.accessoryType = .disclosureIndicator
+//
         default:
             ()
         }
@@ -181,7 +182,7 @@ class thirdTabVC: UIViewController, UITableViewDelegate, UITableViewDataSource, 
         
         
         // 탈퇴하기
-        if indexPath.row == 6{
+        if indexPath.row == 5{
             //            print("마이페이지 셀클릭 : \(indexPath.row)")
             let goOutVC = UIStoryboard(name:"goOutVC" , bundle: nil).instantiateViewController(withIdentifier: "goOutVC") as! goOutVC
             

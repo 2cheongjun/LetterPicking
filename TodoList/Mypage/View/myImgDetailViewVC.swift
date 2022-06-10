@@ -24,6 +24,8 @@ class myImgDetailViewVC: UIViewController, UITextViewDelegate, UITableViewDataSo
     let plist = UserDefaults.standard
     // BASEURL
     var BASEURL = UrlInfo.shared.url!
+    // 공용하트API
+    var heartAPI = HeartAPI.shared
     
     // 이미지
     @IBOutlet var movieCotainer: UIImageView!
@@ -115,19 +117,19 @@ class myImgDetailViewVC: UIViewController, UITextViewDelegate, UITableViewDataSo
                     sender.isSelected = !sender.isSelected
                     // 빈하트로 변경
                     isTouched = false
-                    
-                    print(isTouched)
+                    heartAPI.DeleteHeart(postIdx: feedIdx.description)
                   
                 }else{
                     // ♡ 하트버튼을 처음누르는 상태
                     isTouched = true
                     print(isTouched)
+                    heartAPI.uploadHeart(postIdx: feedIdx.description)
                 }
             
         }else {
             // 빈하트로 변경
             isTouched = false
-            print(isTouched)
+            heartAPI.DeleteHeart(postIdx: feedIdx.description)
            
         }
     }

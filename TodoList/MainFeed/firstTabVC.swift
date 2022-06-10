@@ -20,9 +20,9 @@ class firstTabVC: UIViewController{
     
     // 아이디값 가져오기
     let plist = UserDefaults.standard
-    
     // 게시글번호 담을 변수
     var numIdx = ""
+    
     // 차단ID
     var cutID = ""
     var Num = 0
@@ -296,34 +296,30 @@ class firstTabVC: UIViewController{
     }
     
     
-    // 글자메인피드호출API(전체정보한번에 가져옴, 좋아요포함)*****
+    // 글자메인피드호출API(전체정보한번에 가져옴, 좋아요포함)***************************************************************************
     func requestFeedAPI(){
         print("메인 피드 API호출")
-        
-        self.page += 1
         
         //지정된 값을 꺼내어 각 컨트롤에 설정한다.
         let getName = plist.string(forKey: "name")
         
+        self.page += 1
+        
         let sessionConfig = URLSessionConfiguration.default
         let session = URLSession(configuration: sessionConfig)
         var components = URLComponents(string:self.BASEURL+"post/0iOS_feedSelect.php?page=\(self.page)")
-        //        var components = URLComponents(string: self.BASEURL+"post/0iOS_feedSelect.php?page=\(1)")
-        // let term = URLQueryItem(name: "term", value: "marvel")
-        
         let userID = URLQueryItem(name: "userID", value: getName)
-        
         let page = URLQueryItem(name: "page", value: "\(self.page)")
         components?.queryItems = [page,userID]
         
         // url이 없으면 리턴한다. 여기서 끝
         guard let url = components?.url else { return }
         
-        print("기본피드 : \(url)")
-        
         // 값이 있다면 받아와서 넣음.
         var request = URLRequest(url: url)
-        request.httpMethod = "GET" //GET방식이다. 컨텐츠타입이 없고, 담아서 보내는 내용이 없음, URL호출만!
+        request.httpMethod = "GET"
+        
+        print("기본피드 : \(url)")
         
         let task = session.dataTask(with: request) { data, response, error in
             
@@ -420,13 +416,10 @@ class firstTabVC: UIViewController{
 
     // 검색요청 API
     func searchWord(success: (()->Void)? = nil, fail: ((String)->Void)? = nil) {
-   
         
         // URL세선 시작
         let sessionConfig = URLSessionConfiguration.default
         let session = URLSession(configuration: sessionConfig)
-        
-     
      
         // word에 담긴 단어를 가져옴
         print("firstTabVC/ 단어입력내용 :\(self.word)")
