@@ -38,16 +38,44 @@ class HeartVC: UIViewController, UICollectionViewDataSource, UICollectionViewDel
         collectionView.delegate = self
         collectionView.dataSource = self
         // 북마크모음호출 API
-        upLoadHeart()
-        // 뷰업데이트
-        collectionView.reloadData()
+        let userID = plist.string(forKey: "name")
+        
+        // 로그인상태에서만 호출
+        if userID != nil {
+            upLoadHeart()
+            // 뷰업데이트
+            collectionView.reloadData()
+        }
+        
+    // 노티3.WriteVC에서 보낸 값을 받기위해 DissmissWrite의 노티피케이션을 정의해 받을 준비한다.
+    let HeartDetailVCNOTI = Notification.Name("HeartDetailVCNOTI")
+    
+    // 노티4.옵저버를 등록하고,DissmissWrite가 오면 writeVCNotification함수를 실행한다.
+          NotificationCenter.default.addObserver(self, selector: #selector(self.reloadaction(_:)), name: HeartDetailVCNOTI, object: nil)
     }
     
+    // 노티5.옵저버가 DissmissWrite를 받았을때 실행할 내용: 데이터 리로드
+       @objc func reloadaction(_ noti: Notification) {
+             
+           // API호출
+            upLoadHeart()
+             // 이 부분을 해주어야 다시 comment들을 api로 가져올 수 있었다.
+             // 즉, reload할 데이터를 불러와야 바뀌는 게 있다는 의미다.
+             // 안 해서 고생함...
+               OperationQueue.main.addOperation { // DispatchQueue도 가능.
+                   self.collectionView.reloadData()
+               }
+           }
+    
     override func viewWillAppear(_ animated: Bool) {
-        // 북마크모음게시글 요청
-        upLoadHeart()
-        // 뷰업데이트
-        collectionView.reloadData()
+        // 북마크모음호출 API
+        let userID = plist.string(forKey: "name")
+        // 로그인상태에서만 호출
+        if userID != nil {
+            upLoadHeart()
+            // 뷰업데이트
+            collectionView.reloadData()
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

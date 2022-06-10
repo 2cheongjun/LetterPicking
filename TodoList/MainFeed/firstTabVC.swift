@@ -154,6 +154,7 @@ class firstTabVC: UIViewController{
             
         }else{
             self.userName.text = getName ?? "" + "로그인이 필요합니다."
+            self.writeBtn.isHidden = true
         }
         
         // 상단 백버튼가림
@@ -409,6 +410,7 @@ class firstTabVC: UIViewController{
     }
     
     // 글 작성버튼
+
     @IBAction func writeBtn(_ sender: Any) {
         // 스토리보드 세그로 연결함
     }

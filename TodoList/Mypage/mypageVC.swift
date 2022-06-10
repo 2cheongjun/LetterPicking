@@ -26,8 +26,7 @@ class thirdTabVC: UIViewController, UITableViewDelegate, UITableViewDataSource, 
     // 이거를 해야뷰가 보임
     override func viewWillAppear(_ animated: Bool) {
         // 프사설정된 것이 없으면, 기본이미지 01
-        let image = self.uinfo.profile ?? UIImage(named: "01.jpg")
-        //        let image = UIImage(named: "01.jpg")
+        let image = UIImage(named: "default")
         // 2.프로필 이미지 처리
         self.profileImage.image = image
         self.profileImage.frame.size = CGSize(width: 100, height: 100)
@@ -51,9 +50,8 @@ class thirdTabVC: UIViewController, UITableViewDelegate, UITableViewDataSource, 
     override func viewDidLoad() {
         
         //1.프로필 사진에 들어갈 기본이미지 (Asset안에 있음) // 기본이미지가 안들어가는 문제..?
-        //        let image = UIImage(named: "01.jpg")
-        //        let image = UIImage(named: "Account.jpg")
-        let image = self.uinfo.profile ?? UIImage(named: "01.jpg")
+        
+        let image = UIImage(named: "default")
         // 2.프로필 이미지 처리
         self.profileImage.image = image
         self.profileImage.frame.size = CGSize(width: 100, height: 100)
@@ -86,15 +84,8 @@ class thirdTabVC: UIViewController, UITableViewDelegate, UITableViewDataSource, 
         self.view.addSubview(self.tv)
         
         
-        // 프로필이미지 객체에 탭 제스처를 등록하고, 이를 프로필메소드와 연결한다.*********************************************
-        let tap = UITapGestureRecognizer(target: self, action: #selector(profile(_:)))
-        self.profileImage.addGestureRecognizer(tap)
-        self.profileImage.isUserInteractionEnabled = true //상호반응허락
-        self.profileImage.image = self.uinfo.profile// 이미지갱신
-        
-        //프로필 이미지와 테이블뷰 객체를 뷰 계층의 맨앞으로 가져오는 구문
+        // 테이블뷰 객체를 뷰 계층의 맨앞으로 가져오는 구문
         self.view.bringSubviewToFront(self.tv)
-        self.view.bringSubviewToFront(self.profileImage)
         
         //로그인상태에 따라 로그인/로그아웃버튼 출력
         //최초화면 로딩 시 로그인 상태에 따라 적절히 로그인/로그아웃 버튼을 출력한다.
@@ -103,7 +94,7 @@ class thirdTabVC: UIViewController, UITableViewDelegate, UITableViewDataSource, 
         //로그인 아이디
         plist.synchronize()//동기화처리
         self.tv.reloadData()
-
+        
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -141,23 +132,23 @@ class thirdTabVC: UIViewController, UITableViewDelegate, UITableViewDataSource, 
             
         case 3:
             cell.textLabel?.text = ""
-//            cell.detailTextLabel?.text = "1.0 version"
-         
+            //            cell.detailTextLabel?.text = "1.0 version"
+            
             
         case 4:
             cell.textLabel?.text = "개인정보처리방침,이용약관"
             cell.accessoryType = .disclosureIndicator
-         
+            
         case 5:
             cell.textLabel?.text = "탈퇴하기"
             cell.textLabel?.textColor = .systemGray2
             cell.accessoryType = .disclosureIndicator
             
-//        case 6:
-//            cell.textLabel?.text = "탈퇴하기"
-//            cell.textLabel?.textColor = .systemGray2
-//            cell.accessoryType = .disclosureIndicator
-//
+            //        case 6:
+            //            cell.textLabel?.text = "탈퇴하기"
+            //            cell.textLabel?.textColor = .systemGray2
+            //            cell.accessoryType = .disclosureIndicator
+            //
         default:
             ()
         }
@@ -169,30 +160,29 @@ class thirdTabVC: UIViewController, UITableViewDelegate, UITableViewDataSource, 
         let cell = UITableViewCell(style: .value1, reuseIdentifier: "cell")
         // 선택한것 눌렸다가 자연스럽게 흰색으로 전환
         tableView.deselectRow(at: indexPath, animated: true)
-        
+        // 로그인 아이디
+        let getName = plist.string(forKey: "name")
         // 내글모아보기
         if indexPath.row == 2{
-            //            print("마이페이지 셀클릭 : \(indexPath.row)")
-            let myImgVC = UIStoryboard(name:"myImgVC" , bundle: nil).instantiateViewController(withIdentifier: "myImgVC") as! myImgVC
             
-            //        goOutVC.modalPresentationStyle = .fullScreen // 풀스크린하면네비바달아줘야함
-            // 화면이 띄워진후에 값을 넣어야 널크러쉬가 안남
-            self.present(myImgVC, animated: true){ }
+            // 로그인상태에서만 호출
+            if getName != nil {
+                let myImgVC = UIStoryboard(name:"myImgVC" , bundle: nil).instantiateViewController(withIdentifier: "myImgVC") as! myImgVC
+                self.present(myImgVC, animated: true){ }
+            }
         }
         
         
         // 탈퇴하기
         if indexPath.row == 5{
-            //            print("마이페이지 셀클릭 : \(indexPath.row)")
-            let goOutVC = UIStoryboard(name:"goOutVC" , bundle: nil).instantiateViewController(withIdentifier: "goOutVC") as! goOutVC
             
-            //        goOutVC.modalPresentationStyle = .fullScreen // 풀스크린하면네비바달아줘야함
-            // 화면이 띄워진후에 값을 넣어야 널크러쉬가 안남
-            self.present(goOutVC, animated: true){ }
+            // 로그인상태에서만 호출
+            if getName != nil {
+                let goOutVC = UIStoryboard(name:"goOutVC" , bundle: nil).instantiateViewController(withIdentifier: "goOutVC") as! goOutVC
+                self.present(goOutVC, animated: true){ }
+            }
         }
-        
     }
-    
     
     
     // 프레젠트메소드방식으로 처리될예정이므로, 닫을때에도 dismiss 메소드를 사용한다.
@@ -288,9 +278,10 @@ class thirdTabVC: UIViewController, UITableViewDelegate, UITableViewDataSource, 
         // 로그아웃버튼을 눌렀을때
         alert.addAction(UIAlertAction(title: "확인", style: .destructive) { (_) in
             
-            // 로그인 데이터 삭제 ***** name과 이메일에 데이터가 있으면 삭제 *****
+            // 로그인 데이터 삭제 ***** name과 이메일, 프사 데이터가 있으면 삭제 *****
             UserDefaults.standard.removeObject(forKey: "name")
             UserDefaults.standard.removeObject(forKey: "email")
+//            UserDefaults.standard.removeObject(forKey: "image")
             self.plist.synchronize()//동기화처리
             
             // 로그인 화면으로 이동시키기
@@ -315,87 +306,5 @@ class thirdTabVC: UIViewController, UITableViewDelegate, UITableViewDataSource, 
             tabBar?.alpha = (tabBar?.alpha == 0 ? 1 : 0)
         })
     }
-    
-    // 이미지 피커
-    func imgPicker(_ source : UIImagePickerController.SourceType){
-        let picker = UIImagePickerController()
-        picker.sourceType = source
-        picker.delegate = self
-        picker.allowsEditing = true
-        self.present(picker, animated: true)
-    }
-    
-    // 프로필사진의 소스 타입을 선택하는 액션 메소드
-    @objc func profile(_ sender : UIButton){
-        // 로그인되어 있지 않을 경우에는 프로필 이미지 등록을 막고 대신 로그인 창을 띄워준다.
-        // 계정이 널이 아닌게 아니면? / 로그인창을 띄워준다.
-        //            guard self.uinfo.account != nil else {
-        //                self.doLogin(self)
-        //                return
-        //            }
-        //
-        let alert = UIAlertController(title: nil, message: "사진을 가져올 곳을 선택해주세요",
-                                      preferredStyle: .actionSheet)
-        
-        // 카메라를 사용할 수 있으면
-        if UIImagePickerController.isSourceTypeAvailable(.camera){
-            alert.addAction(UIAlertAction(title: "카메라", style: .default) { (_) in
-                self.imgPicker(.camera)
-            })
-        }
-        
-        // 저장된 앨범을 사용할 수 있으면
-        if UIImagePickerController.isSourceTypeAvailable(.savedPhotosAlbum){
-            alert.addAction(UIAlertAction(title: "저장된앨범", style: .default) { (_) in
-                self.imgPicker(.savedPhotosAlbum)
-            })
-        }
-        // 포토라이브러리를 사용할 수 있으면
-        if UIImagePickerController.isSourceTypeAvailable(.photoLibrary){
-            alert.addAction(UIAlertAction(title: "포토라이브러리", style: .default) { (_) in
-                self.imgPicker(.photoLibrary)
-            })
-        }
-        // 취소버튼 추가
-        alert.addAction(UIAlertAction(title: "취소", style: .cancel, handler: nil))
-        
-        //액션시트 창 실행
-        self.present(alert, animated: true)
-    }
-    
-    // 선택한 이미지를 전달받아 프로필 사진으로 등록할 메소드
-    // 이미지를 선택하면 이 메소드가 자동으로 호출된다.
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        if let img = info[UIImagePickerController.InfoKey.editedImage] as? UIImage {
-            self.uinfo.profile = img // 프로필이미지를 uinfo에 저장
-            self.profileImage.image = img //이미지를 이미지뷰에 설정
-            
-            let image = self.profileImage.image
-            
-            if let data = image?.pngData() {
-                // Create URL
-                let documents = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
-                let url = documents.appendingPathComponent("image_name.png")
-                
-                do {
-                    // Write to Disk
-                    try data.write(to: url)
-                    
-                    // Store URL in User Defaults
-                    UserDefaults.standard.set(url, forKey: "image")
-                    
-                } catch {
-                    print("Unable to Write Data to Disk (\(error))")
-                }
-            }
-            
-            // userDefault에 저장하기
-            
-        }
-        // 이미지 피커 컨트롤러 창 닫기!! 안해주면 안닫힘
-        picker.dismiss(animated: true)
-    }
-    
-    
     
 }

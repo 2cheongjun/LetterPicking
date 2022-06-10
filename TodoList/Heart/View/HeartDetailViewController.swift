@@ -23,26 +23,28 @@ class HeartDetailViewController: UIViewController, UITextViewDelegate, UITextFie
     // 공통하트 API
     var heartAPI = HeartAPI.shared
     
+    // 이미지뷰
     @IBOutlet var movieCotainer: UIImageView!
-    
+    // 작성자
     @IBOutlet var userID: UILabel!{
         didSet{
             userID.font = UIFont.systemFont(ofSize: 16, weight: .bold)
         }
     }
+    // 날짜
     @IBOutlet var date: UILabel!{
         didSet{
             date.font = UIFont.systemFont(ofSize: 14, weight: .light)
         }
     }
+    // 장소
     @IBOutlet var myPlaceText: UILabel!
     @IBOutlet var num: UILabel!
+    // 하트버튼
     @IBOutlet var heartBtn: UIButton!
     
     // 댓글모델가져오기
     var detailModel: DetailModel?
-    
-    
     // 댓글 테이블뷰
     @IBOutlet var tableView: UITableView!
     // 댓글 작성영역
@@ -111,14 +113,13 @@ class HeartDetailViewController: UIViewController, UITextViewDelegate, UITextFie
     }
     
     
-    // 노티1.시작의 시작등록.글수정후에 메인피드를 새로고침하기위한 노티 (노티의 이름은 ModifyVCNotification)
-    let ModifyVCNotification: Notification.Name = Notification.Name("ModifyVCNotification")
-    
+    // 노티1.시작의 시작등록.글수정후에 메인피드를 새로고침하기위한 노티
+    let HeartDetailVCNOTI: Notification.Name = Notification.Name("HeartDetailVCNOTI")
     
     // 닫기 버튼
     @IBAction func barOKBtn(_ sender: Any) {
         // 노티2.창이 닫힐때 노티를 메인피드로 신호를 보낸다. //(노티의 이름은 ModifyVCNotification)
-        NotificationCenter.default.post(name: ModifyVCNotification, object: nil, userInfo: nil)
+        NotificationCenter.default.post(name: HeartDetailVCNOTI, object: nil, userInfo: nil)
         self.dismiss(animated: true, completion: nil)
     }
     

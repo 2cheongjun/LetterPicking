@@ -4,7 +4,7 @@
 //
 //  Created by 이청준 on 2022/05/31.
 //
-// 내글 모아보기(code로 작성)
+// 내가작성한글 모아보기(code로 작성)
 import Foundation
 import UIKit
 import Kingfisher
@@ -22,6 +22,7 @@ class myImgVC: UIViewController {
     var page = 1
     // BASEURL
     var BASEURL = UrlInfo.shared.url!
+
     
     @IBOutlet var closeBtn: UIBarButtonItem!
     // 닫기
@@ -34,7 +35,6 @@ class myImgVC: UIViewController {
     }()
     
     override func viewDidLoad() {
-
         super.viewDidLoad()
         tableView.delegate = self
         tableView.dataSource = self
@@ -45,8 +45,14 @@ class myImgVC: UIViewController {
         tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = UITableView.automaticDimension
         
-        // API호출
-        requestFeedAPI()
+        // 북마크모음호출 API
+        let userID = plist.string(forKey: "name")
+        
+        // 로그인상태에서만 호출
+        if userID != nil {
+            // API호출
+            requestFeedAPI()
+        }
     }
     
     // 테이블뷰의 위치설정

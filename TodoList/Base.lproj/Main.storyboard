@@ -190,7 +190,7 @@
                         <outlet property="tableView" destination="YwF-e6-yIn" id="6Qk-r7-aIm"/>
                         <outlet property="topBtn" destination="wF7-SX-sFc" id="bnc-a7-B98"/>
                         <outlet property="userName" destination="acf-t2-Anh" id="WiJ-3b-DR8"/>
-                        <outlet property="writeBtn" destination="1o9-gh-97Q" id="bCk-Id-Bon"/>
+                        <outlet property="writeBtn" destination="1o9-gh-97Q" id="gWN-Gs-xEm"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="sun-sp-ASU" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

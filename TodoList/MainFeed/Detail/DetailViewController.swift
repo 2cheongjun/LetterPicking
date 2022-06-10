@@ -72,12 +72,27 @@ class DetailViewController: UIViewController, UITextViewDelegate, UITableViewDat
     @IBAction func replyBtn(_ sender: Any) {
         let replyText = replyField.text ?? "댓글작성없음"
         print("댓글작성내용:\(replyText)")
-        // 서버로 댓글 내용업로드 API
-        replyUpload()
-        // 작성한내용삭제
-        replyField.text = ""
-        //댓글 가져오기
-        self.loadReply()
+        
+        let userID = plist.string(forKey: "name")
+        // 로그인시에만 댓글작성가능
+        if userID != nil {
+            // 서버로 댓글 내용업로드 API
+            replyUpload()
+            // 작성한내용삭제
+            replyField.text = ""
+            //댓글 가져오기
+            self.loadReply()
+        } else {
+          // 로그인상태가 아닐때
+            let alert = UIAlertController(title: "댓글달기", message: "로그인 해주세요.", preferredStyle: .alert)
+                let alertAction = UIAlertAction(title: "확인", style: .default) { [self] (_) in
+      
+                }
+                alert.addAction(alertAction)
+        
+                // alert.view.tintColor =  UIColor(ciColor: .black)
+                self.present(alert, animated: true, completion: nil)
+        }
     }
     
     // 장소표기
@@ -120,7 +135,7 @@ class DetailViewController: UIViewController, UITextViewDelegate, UITableViewDat
         tableView.delegate = self
         tableView.dataSource = self
         
-        //게시글 작성자
+        // 게시글 작성자
         userID.text = feedResult?.userID
         myID = feedResult!.userID ?? "아이디없음"
        
@@ -307,7 +322,7 @@ class DetailViewController: UIViewController, UITextViewDelegate, UITableViewDat
     
     
     
-    //글 수정버튼
+    // 글 수정버튼
     @IBAction func modifyBtn(_ sender: Any) {
         //        let postText = UITextField()
         postText.becomeFirstResponder()// 키보드가 나타나고 입력상태가 된다.
@@ -669,61 +684,7 @@ class DetailViewController: UIViewController, UITextViewDelegate, UITableViewDat
                 }
             }
         }
-        
     }// 댓삭함수 끝
-    
-//    //하트 업로드API
-//    func uploadHeart(postIdx: String?, success: (()->Void)? = nil, fail: ((String)->Void)? = nil) {
-//
-//        // userID, postText,이미지묶음을 파라미터에 담아보냄
-//        let userID = plist.string(forKey: "name")
-//
-//        // 선택한 셀의 게시글 번호를 가져오는 법 생각하기
-//        let param: Parameters = [  "cbHeart" : true,
-//                                   "postIdx" : feedIdx ?? 0 ,
-//                                   "userID" : userID ?? ""]
-//
-//        print(" API좋아요:\(param)")
-//        // API 호출 URL
-//        let url = self.BASEURL+"post/0iOS_feedLike.php"
-//
-//        //이미지 전송
-//        let call = AF.request(url, method: .post, parameters: param,
-//                              encoding: JSONEncoding.default)
-//        //                call.responseJSON { res in
-//        call.responseJSON { [self] res in
-//
-//            // 성공실패케이스문 작성하기
-//            //            print("서버로 보냄!!!!!")
-//            //            print("JSON= \(try! res.result.get())!)")
-//
-//            guard (try! res.result.get() as? NSDictionary) != nil else {
-//                self.isCalling = false
-//                self.alert("서버호출 과정에서 오류가 발생했습니다.")
-//                print("올바른 응답값이 아닙니다.")
-//                return
-//            }
-//
-//            if let jsonObject = try! res.result.get() as? [String :Any]{
-//                let success = jsonObject["success"] as? Int ?? 0
-//
-//                if success == 1 {
-//                    // self.alert("좋아요업로드 성공 JSON= \(try! res.result.get())!)")
-//
-//                    print("좋아요업로드 성공 JSON= \(try! res.result.get())!)")
-//                    // 피드재호출
-////                    requestFeedAPI()
-//
-//                }else{
-//                    // sucess가 0이면
-//                    self.isCalling = false
-//                    self.alert("좋아요업로드 응답실패")
-//                }
-//            }
-//        }
-//
-//    }// 하트업로드함수 끝
-    
 }
 
 // 댓글삭제 버튼 프로토콜 셀
