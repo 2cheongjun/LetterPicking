@@ -100,9 +100,6 @@ class myImgDetailViewVC: UIViewController, UITextViewDelegate, UITableViewDataSo
     @IBOutlet var barOK: UIBarButtonItem!
     // 닫기버튼
     @IBAction func barOKBtn(_ sender: Any) {
-        
-        // 노티2.창이 닫힐때 노티를 메인피드로 신호를 보낸다. //(노티의 이름은 ModifyVCNotification)
-        NotificationCenter.default.post(name: ModifyVCNotification, object: nil, userInfo: nil)
         self.dismiss(animated: true, completion: nil)
     }
     
@@ -174,10 +171,13 @@ class myImgDetailViewVC: UIViewController, UITextViewDelegate, UITableViewDataSo
         tableView.dataSource = self
         
 //        self.navigationItem.rightBarButtonItem = nil
-
+        // 게시글 작성자
+        let Str = feedResult?.userID
+        // 앞에서부터 10글자
+        var prefix = Str?.description.prefix(4)
+        userID.text = (prefix?.description ?? "") + ".."
         
-        //게시글 작성자
-        userID.text = feedResult?.userID
+        
         myID = feedResult!.userID ?? "아이디없음"
        
         // 날짜가져옴
@@ -287,6 +287,8 @@ class myImgDetailViewVC: UIViewController, UITextViewDelegate, UITableViewDataSo
             // 갤러리에서 받아온 UIImage값 받아서 newProfile함수 호출
             // 서버로 게시글 번호를 보내고, 그 번호에 맞는 게시글을 삭제한다.
             requestFeedDeleateAPI()
+            // 노티2.창이 닫힐때 노티를 메인피드로 신호를 보낸다. //(노티의 이름은 ModifyVCNotification)
+            NotificationCenter.default.post(name: ModifyVCNotification, object: nil, userInfo: nil)
             // 창을 닫는다.
             self.dismiss(animated: true, completion: nil)
             
@@ -310,6 +312,8 @@ class myImgDetailViewVC: UIViewController, UITextViewDelegate, UITableViewDataSo
         // 글쓰고 나서
         modifyBtn.setTitle("저장", for: .normal)
         modifyBtn.addTarget(self, action: #selector(upDate), for: .touchUpInside)
+        // 노티2.창이 닫힐때 노티를 메인피드로 신호를 보낸다. //(노티의 이름은 ModifyVCNotification)
+        NotificationCenter.default.post(name: ModifyVCNotification, object: nil, userInfo: nil)
     }
     
     // 수정이 저장버튼으로 바뀌고나서의 버튼 액션
@@ -454,7 +458,11 @@ class myImgDetailViewVC: UIViewController, UITextViewDelegate, UITableViewDataSo
         cell.delegate = self
         cell.replyText.text = self.detailModel?.results[indexPath.row].title
         cell.replyDate.text = self.detailModel?.results[indexPath.row].replyDate
-        cell.replyId.text = self.detailModel?.results[indexPath.row].userID
+        
+        let Str = self.detailModel?.results[indexPath.row].userID
+        // 앞에서부터 10글자
+        let prefix = Str?.description.prefix(4)
+        cell.replyId.text =  (prefix?.description ?? "") + ".."
         cell.index = indexPath
         
         // 댓글작성자에게만 삭제버튼 활성화
@@ -655,9 +663,6 @@ extension myImgDetailViewVC: detailViewCellDelegate {
             DeleteReply(replyIndex: replyNum)
             // 댓글다시로드하기
             loadReply()
-            
-            
-    
         }
         alert.addAction(alertAction)
         

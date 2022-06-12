@@ -131,10 +131,10 @@ class WriteVC : UIViewController, UIImagePickerControllerDelegate, UINavigationC
                     (result, info) in
                     thumbnail = result!
                 }
-                let data = thumbnail.jpegData(compressionQuality: 0.7)
+                let data = thumbnail.jpegData(compressionQuality: 0.1)
                 let newImage = UIImage(data: data!)
                 // 이미지 리사이즈
-                let resizedImg = newImage?.imgResized(toWidth: 300.0)
+                let resizedImg = newImage?.imgResized(toWidth: 500.0)
                 print("이미지리사이징\(resizedImg)")
                 self.photoArray.append(resizedImg! as UIImage)
             }
@@ -274,7 +274,7 @@ extension WriteVC: UICollectionViewDelegate, UICollectionViewDataSource {
                                   "userID" : userID as Any,
 //                                  "userID" : "jun",
                                   //                                  "myPlaceText": add
-                                  "myPlaceText": myPlaceText.text ?? ""
+                                  "myPlaceText": myPlaceText.text ?? add
         ]
         
         print("WriteVC/ 기본입력내용 :\(self.myPlaceText.text ?? "")")

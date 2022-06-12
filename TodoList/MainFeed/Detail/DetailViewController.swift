@@ -119,8 +119,7 @@ class DetailViewController: UIViewController, UITextViewDelegate, UITableViewDat
     // 닫기버튼
     @IBAction func barOKBtn(_ sender: Any) {
         
-        // 노티2.창이 닫힐때 노티를 메인피드로 신호를 보낸다. //(노티의 이름은 ModifyVCNotification)
-        NotificationCenter.default.post(name: ModifyVCNotification, object: nil, userInfo: nil)
+       
         self.dismiss(animated: true, completion: nil)
     }
     
@@ -138,7 +137,11 @@ class DetailViewController: UIViewController, UITextViewDelegate, UITableViewDat
         tableView.dataSource = self
         
         // 게시글 작성자
-        userID.text = feedResult?.userID
+        let Str = feedResult?.userID
+        // 앞에서부터 10글자
+        var prefix = Str?.description.prefix(4)
+        userID.text = (prefix?.description ?? "") + ".."
+        
         myID = feedResult!.userID ?? "아이디없음"
         
         // 날짜가져옴
@@ -191,7 +194,7 @@ class DetailViewController: UIViewController, UITextViewDelegate, UITableViewDat
             delBtn.layer.isHidden = false
             modifyBtn.layer.isHidden = false
             self.navigationItem.rightBarButtonItem = self.barOK
-            
+           
         }else{
             delBtn.layer.isHidden = true
             modifyBtn.layer.isHidden = true
@@ -309,6 +312,9 @@ class DetailViewController: UIViewController, UITextViewDelegate, UITableViewDat
             // 갤러리에서 받아온 UIImage값 받아서 newProfile함수 호출
             // 서버로 게시글 번호를 보내고, 그 번호에 맞는 게시글을 삭제한다.
             requestFeedDeleateAPI()
+            
+            // 노티2.창이 닫힐때 노티를 메인피드로 신호를 보낸다. //(노티의 이름은 ModifyVCNotification)
+            NotificationCenter.default.post(name: ModifyVCNotification, object: nil, userInfo: nil)
             // 창을 닫는다.
             self.dismiss(animated: true, completion: nil)
             
@@ -332,6 +338,8 @@ class DetailViewController: UIViewController, UITextViewDelegate, UITableViewDat
         // 글쓰고 나서
         modifyBtn.setTitle("저장", for: .normal)
         modifyBtn.addTarget(self, action: #selector(upDate), for: .touchUpInside)
+        // 노티2.창이 닫힐때 노티를 메인피드로 신호를 보낸다. //(노티의 이름은 ModifyVCNotification)
+        NotificationCenter.default.post(name: ModifyVCNotification, object: nil, userInfo: nil)
     }
     
     // 수정이 저장버튼으로 바뀌고나서의 버튼 액션
@@ -476,23 +484,29 @@ class DetailViewController: UIViewController, UITextViewDelegate, UITableViewDat
         cell.delegate = self
         cell.replyText.text = self.detailModel?.results[indexPath.row].title
         cell.replyDate.text = self.detailModel?.results[indexPath.row].replyDate
-        cell.replyId.text = self.detailModel?.results[indexPath.row].userID
-        cell.index = indexPath
+        
         // 댓글단사람
+        let Str = self.detailModel?.results[indexPath.row].userID
+        // 앞에서부터 10글자
+        var prefix = Str?.description.prefix(4)
+        cell.replyId.text = (prefix?.description ?? "") + ".."
+        
+        cell.index = indexPath
+        // 댓글단사람(호출용)
         replyUserID = self.detailModel?.results[indexPath.row].userID ?? ""
         
         // 댓글작성자에게만 삭제버튼 활성화
         let getReplyName = self.detailModel?.results[indexPath.row].userID
         
-        //userDefaults에 저장된이름값 가져오기
-        let plist = UserDefaults.standard
         //로그인한 아이디값
         let getName = plist.string(forKey: "name")
         
         if getReplyName == getName {
             cell.trash.layer.isHidden = false
+//            cell.report.layer.isHidden = true
         }else{
             cell.trash.layer.isHidden = true
+//            cell.report.layer.isHidden = false
         }
         
         return cell
@@ -694,29 +708,29 @@ extension DetailViewController: detailViewCellDelegate {
     
     // 글신고하시겠습니까?
     func onClickReportCell(index: Int) {
-        
-        // 얼럿창띄우기
-        let alert = UIAlertController(title: "신고하기", message: "해당 댓글을 신고하시겠습니까?, 신고시 해당 댓글이 더이상 보이지 않습니다.", preferredStyle: .alert)
-        let alertAction = UIAlertAction(title: "신고하기", style: .default) { [self] (_) in
-            
-            print("\(self.detailModel?.results[index].replyIdx?.description ?? "")신고글번호댓글눌림")
-            // 게시글번호 + 댓글번호 + userID + cutID를 댓글신고테이블에 업로드한다.
-            replyNum = self.detailModel?.results[index].replyIdx ?? 0
-            // 댓글신고API호출
-            reportAPI.requstCutID(postIdx: feedIdx.description, replyIdx:replyNum.description, cutIdx: replyUserID)
-            // 재조회
-            self.loadReply()
-      
-        }
-        alert.addAction(alertAction)
-        
-        // 취소글자 상태값
-        let cancel = UIAlertAction(title: "취소", style: .cancel)
-        alert.addAction(cancel)
-        //                alert.view.tintColor =  UIColor(ciColor: .black)
-        self.present(alert, animated: true, completion: nil)
-    }
     
+            // 얼럿창띄우기
+            let alert = UIAlertController(title: "신고하기", message: "해당 댓글을 신고하시겠습니까?, 신고시 해당 댓글이 더이상 보이지 않습니다.", preferredStyle: .alert)
+            let alertAction = UIAlertAction(title: "신고하기", style: .default) { [self] (_) in
+                
+                print("\(self.detailModel?.results[index].replyIdx?.description ?? "")신고글번호댓글눌림")
+                // 게시글번호 + 댓글번호 + userID + cutID를 댓글신고테이블에 업로드한다.
+                replyNum = self.detailModel?.results[index].replyIdx ?? 0
+                // 댓글신고API호출
+                reportAPI.requstCutID(postIdx: feedIdx.description, replyIdx:replyNum.description, cutIdx: replyUserID)
+                // 재조회
+                self.loadReply()
+          
+            }
+            alert.addAction(alertAction)
+            
+            // 취소글자 상태값
+            let cancel = UIAlertAction(title: "취소", style: .cancel)
+            alert.addAction(cancel)
+            //                alert.view.tintColor =  UIColor(ciColor: .black)
+            self.present(alert, animated: true, completion: nil)
+        }
+
 }
 
 

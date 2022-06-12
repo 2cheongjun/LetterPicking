@@ -18,7 +18,7 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="81"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="replyId" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nKH-Lh-MVg">
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="replyId" textAlignment="natural" lineBreakMode="clip" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nKH-Lh-MVg">
                         <rect key="frame" x="16" y="16" width="60" height="17"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="60" id="hvd-D1-3K7"/>
@@ -34,7 +34,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="replyText" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vQu-dt-r72">
-                        <rect key="frame" x="75" y="16" width="229" height="17"/>
+                        <rect key="frame" x="90" y="16" width="214" height="17"/>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
@@ -71,7 +71,7 @@
                     <constraint firstItem="nKH-Lh-MVg" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="8JP-NN-1IQ"/>
                     <constraint firstItem="Q98-6l-Bq3" firstAttribute="leading" secondItem="YIb-uL-l2W" secondAttribute="trailing" constant="8" symbolic="YES" id="BMS-yO-BOh"/>
                     <constraint firstItem="boc-sS-gBW" firstAttribute="top" secondItem="nKH-Lh-MVg" secondAttribute="bottom" constant="10" id="GTR-f2-51h"/>
-                    <constraint firstItem="vQu-dt-r72" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="75" id="LpH-YG-YDC"/>
+                    <constraint firstItem="vQu-dt-r72" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="90" id="LpH-YG-YDC"/>
                     <constraint firstItem="vQu-dt-r72" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="16" id="RZN-Va-ZL9"/>
                     <constraint firstAttribute="trailing" secondItem="Q98-6l-Bq3" secondAttribute="trailing" constant="6" id="ebV-iT-BQ1"/>
                     <constraint firstItem="nKH-Lh-MVg" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="16" id="f2f-4c-iHu"/>

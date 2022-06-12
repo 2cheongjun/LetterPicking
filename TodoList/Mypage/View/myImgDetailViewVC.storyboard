@@ -28,7 +28,7 @@
                                                 <color key="textColor" systemColor="linkColor"/>
                                                 <color key="highlightedColor" systemColor="linkColor"/>
                                             </label>
-                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="9Ou-Zt-Yjg">
+                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="9Ou-Zt-Yjg">
                                                 <rect key="frame" x="0.0" y="-7" width="414" height="326"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="326" id="byd-Ln-uO5"/>

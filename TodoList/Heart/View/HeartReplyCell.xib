@@ -18,7 +18,7 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="81"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="replyId" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jYt-dF-eTb">
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="replyId" textAlignment="natural" lineBreakMode="clip" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jYt-dF-eTb">
                         <rect key="frame" x="16" y="16" width="60" height="17"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="60" id="KCC-RM-x80"/>
@@ -34,7 +34,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="replyText" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3eE-zj-txI">
-                        <rect key="frame" x="75" y="16" width="229" height="17"/>
+                        <rect key="frame" x="90" y="16" width="214" height="17"/>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
@@ -77,7 +77,7 @@
                     <constraint firstItem="I5S-F6-5Pp" firstAttribute="top" secondItem="3eE-zj-txI" secondAttribute="bottom" constant="6" id="cl0-aM-J6x"/>
                     <constraint firstAttribute="trailing" secondItem="I5S-F6-5Pp" secondAttribute="trailing" constant="6" id="fAW-mx-oEM"/>
                     <constraint firstAttribute="trailing" secondItem="ZZD-bt-jAo" secondAttribute="trailing" constant="42" id="kwv-hd-nEL"/>
-                    <constraint firstItem="3eE-zj-txI" firstAttribute="leading" secondItem="gvw-uf-eef" secondAttribute="leading" constant="75" id="rt0-0m-Ec4"/>
+                    <constraint firstItem="3eE-zj-txI" firstAttribute="leading" secondItem="gvw-uf-eef" secondAttribute="leading" constant="90" id="rt0-0m-Ec4"/>
                     <constraint firstItem="ZZD-bt-jAo" firstAttribute="centerY" secondItem="I5S-F6-5Pp" secondAttribute="centerY" id="v66-4s-6n6"/>
                 </constraints>
             </tableViewCellContentView>

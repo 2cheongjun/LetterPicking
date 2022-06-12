@@ -68,13 +68,15 @@ class HeartVC: UIViewController, UICollectionViewDataSource, UICollectionViewDel
            }
     
     override func viewWillAppear(_ animated: Bool) {
-        // 북마크모음호출 API
+//        // 북마크모음호출 API
         let userID = plist.string(forKey: "name")
-        // 로그인상태에서만 호출
+//        // 로그인상태에서만 호출
         if userID != nil {
             upLoadHeart()
             // 뷰업데이트
-            collectionView.reloadData()
+            OperationQueue.main.addOperation { // DispatchQueue도 가능.
+                self.collectionView.reloadData()
+            }
         }
     }
     

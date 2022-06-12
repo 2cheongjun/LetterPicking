@@ -537,8 +537,12 @@ extension firstTabVC: UITableViewDelegate, UITableViewDataSource{
 //        print(text?.removingPercentEncoding)
         
         cell.titleLabel.text = self.feedModel?.results[indexPath.row].postText
-        cell.descriptionLabel.text = self.feedModel?.results[indexPath.row].userID
-        cell.name.text = self.feedModel?.results[indexPath.row].userID
+        let Str = self.feedModel?.results[indexPath.row].userID
+        // 앞에서부터 7글자
+        let prefix = Str?.description.prefix(4)
+        cell.descriptionLabel.text = (prefix?.description ?? "") + ".."
+        cell.name.text = (prefix?.description ?? "") + ".."
+        
         cell.priceLabel.text =  self.feedModel?.results[indexPath.row].myPlaceText
         //        cell.num.text =  self.feedModel?.results[indexPath.row].feedIdx?.description ?? ""
         

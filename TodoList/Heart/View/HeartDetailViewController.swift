@@ -105,7 +105,6 @@ class HeartDetailViewController: UIViewController, UITextViewDelegate, UITextFie
     }
     
     var isTouched: Bool? {
-        
         didSet {
             if isTouched == true {
                 heartBtn.setImage(UIImage(systemName: "heart.fill", withConfiguration: UIImage.SymbolConfiguration(scale: .medium)), for: .normal)
@@ -121,19 +120,13 @@ class HeartDetailViewController: UIViewController, UITextViewDelegate, UITextFie
     
     // 닫기 버튼
     @IBAction func barOKBtn(_ sender: Any) {
-        // 노티2.창이 닫힐때 노티를 메인피드로 신호를 보낸다. //(노티의 이름은 ModifyVCNotification)
-        NotificationCenter.default.post(name: HeartDetailVCNOTI, object: nil, userInfo: nil)
+     
         self.dismiss(animated: true, completion: nil)
     }
     
     override func viewWillAppear(_ animated: Bool) {
         // 하트기본상태On
         isTouched = true
-    }
-    
-    override func viewDidDisappear(_ animated: Bool) {
-        // 북마크모음재호출
-//        heartAPI.getHeartBookmark()
     }
     
     
@@ -153,9 +146,13 @@ class HeartDetailViewController: UIViewController, UITextViewDelegate, UITextFie
         tableView.delegate = self
         tableView.dataSource = self
         
-        // 댓글 단사람아이디
-        userID.text = heartResult?.userID
         let myID = heartResult?.userID
+        
+        // 게시글 작성자
+        let Str = heartResult?.userID
+        // 앞에서부터 10글자
+        var prefix = Str?.description.prefix(4)
+        userID.text = (prefix?.description ?? "") + ".."
         
         // 날짜가져옴
         let str = heartResult?.date
@@ -254,6 +251,9 @@ class HeartDetailViewController: UIViewController, UITextViewDelegate, UITextFie
             // 갤러리에서 받아온 UIImage값 받아서 newProfile함수 호출
             // 서버로 게시글 번호를 보내고, 그 번호에 맞는 게시글을 삭제한다.
             requestFeedDeleateAPI()
+            
+            // 노티2.창이 닫힐때 노티를 메인피드로 신호를 보낸다. //(노티의 이름은 ModifyVCNotification)
+            NotificationCenter.default.post(name: HeartDetailVCNOTI, object: nil, userInfo: nil)
             // 창을 닫는다.
             self.dismiss(animated: true, completion: nil)
             
@@ -275,6 +275,8 @@ class HeartDetailViewController: UIViewController, UITextViewDelegate, UITextFie
         // 글쓰고 나서
         modifyBtn.setTitle("저장", for: .normal)
         modifyBtn.addTarget(self, action: #selector(upDate), for: .touchUpInside)
+        // 노티2.창이 닫힐때 노티를 메인피드로 신호를 보낸다. //(노티의 이름은 ModifyVCNotification)
+        NotificationCenter.default.post(name: HeartDetailVCNOTI, object: nil, userInfo: nil)
     }
     
     // 수정이 저장버튼으로 바뀌고나서의 버튼 액션
@@ -403,8 +405,14 @@ class HeartDetailViewController: UIViewController, UITextViewDelegate, UITextFie
         // 델리게이트위임
         cell.delegate = self
         cell.replyText.text = self.detailModel?.results[indexPath.row].title
+        
+        let Str = self.detailModel?.results[indexPath.row].userID
+        // 앞에서부터 10글자
+        var prefix = Str?.description.prefix(4)
+        cell.replyId.text = (prefix?.description ?? "") + ".."
+        
         cell.replyDate.text = self.detailModel?.results[indexPath.row].replyDate
-        cell.replyId.text = self.detailModel?.results[indexPath.row].userID
+        
         let getReplyName =  self.detailModel?.results[indexPath.row].userID
         cell.index = indexPath
         

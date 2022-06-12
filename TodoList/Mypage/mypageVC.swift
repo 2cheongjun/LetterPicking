@@ -87,6 +87,7 @@ class thirdTabVC: UIViewController, UITableViewDelegate, UITableViewDataSource, 
         // 테이블뷰 객체를 뷰 계층의 맨앞으로 가져오는 구문
         self.view.bringSubviewToFront(self.tv)
         
+
         //로그인상태에 따라 로그인/로그아웃버튼 출력
         //최초화면 로딩 시 로그인 상태에 따라 적절히 로그인/로그아웃 버튼을 출력한다.
         self.LoginBtn()
@@ -158,6 +159,7 @@ class thirdTabVC: UIViewController, UITableViewDelegate, UITableViewDataSource, 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         // 여기에 셀구현 내용
         let cell = UITableViewCell(style: .value1, reuseIdentifier: "cell")
+        
         // 선택한것 눌렸다가 자연스럽게 흰색으로 전환
         tableView.deselectRow(at: indexPath, animated: true)
         // 로그인 아이디
@@ -306,5 +308,6 @@ class thirdTabVC: UIViewController, UITableViewDelegate, UITableViewDataSource, 
             tabBar?.alpha = (tabBar?.alpha == 0 ? 1 : 0)
         })
     }
+    
     
 }
