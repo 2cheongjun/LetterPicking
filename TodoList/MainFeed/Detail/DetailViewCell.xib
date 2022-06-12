@@ -3,6 +3,7 @@
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
+        <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -38,8 +39,8 @@
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Q98-6l-Bq3">
-                        <rect key="frame" x="286" y="39" width="24" height="29"/>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Q98-6l-Bq3">
+                        <rect key="frame" x="286" y="39" width="28" height="29"/>
                         <state key="normal" title="Button"/>
                         <buttonConfiguration key="configuration" style="plain" image="trash" catalog="system">
                             <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage" configurationType="font">
@@ -50,18 +51,34 @@
                             <action selector="trashBtn:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="LG4-1F-Gh8"/>
                         </connections>
                     </button>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YIb-uL-l2W">
+                        <rect key="frame" x="249" y="38" width="29" height="31"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="29" id="qM9-qh-hl3"/>
+                        </constraints>
+                        <state key="normal" title="Button"/>
+                        <buttonConfiguration key="configuration" style="plain">
+                            <imageReference key="image" image="exclamationmark.bubble" catalog="system" symbolScale="medium"/>
+                        </buttonConfiguration>
+                        <connections>
+                            <action selector="reportBtn:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="6Rn-PK-EMi"/>
+                        </connections>
+                    </button>
                 </subviews>
                 <constraints>
+                    <constraint firstItem="YIb-uL-l2W" firstAttribute="centerY" secondItem="Q98-6l-Bq3" secondAttribute="centerY" id="2uM-8p-nfZ"/>
                     <constraint firstItem="Q98-6l-Bq3" firstAttribute="top" secondItem="vQu-dt-r72" secondAttribute="bottom" constant="6" id="8Bs-WK-UKA"/>
                     <constraint firstItem="nKH-Lh-MVg" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="8JP-NN-1IQ"/>
+                    <constraint firstItem="Q98-6l-Bq3" firstAttribute="leading" secondItem="YIb-uL-l2W" secondAttribute="trailing" constant="8" symbolic="YES" id="BMS-yO-BOh"/>
                     <constraint firstItem="boc-sS-gBW" firstAttribute="top" secondItem="nKH-Lh-MVg" secondAttribute="bottom" constant="10" id="GTR-f2-51h"/>
                     <constraint firstItem="vQu-dt-r72" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="75" id="LpH-YG-YDC"/>
                     <constraint firstItem="vQu-dt-r72" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="16" id="RZN-Va-ZL9"/>
-                    <constraint firstAttribute="trailing" secondItem="Q98-6l-Bq3" secondAttribute="trailing" constant="10" id="ebV-iT-BQ1"/>
+                    <constraint firstAttribute="trailing" secondItem="Q98-6l-Bq3" secondAttribute="trailing" constant="6" id="ebV-iT-BQ1"/>
                     <constraint firstItem="nKH-Lh-MVg" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="16" id="f2f-4c-iHu"/>
                     <constraint firstItem="nKH-Lh-MVg" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="j4A-Iy-1MR"/>
                     <constraint firstAttribute="trailing" secondItem="vQu-dt-r72" secondAttribute="trailing" constant="16" id="jLA-Ie-fw1"/>
                     <constraint firstItem="boc-sS-gBW" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="msh-ol-If1"/>
+                    <constraint firstAttribute="trailing" secondItem="YIb-uL-l2W" secondAttribute="trailing" constant="42" id="nKk-CO-qia"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
@@ -70,12 +87,14 @@
                 <outlet property="replyDate" destination="boc-sS-gBW" id="8pH-9F-ODZ"/>
                 <outlet property="replyId" destination="nKH-Lh-MVg" id="s4M-10-GHh"/>
                 <outlet property="replyText" destination="vQu-dt-r72" id="ede-Hd-4CM"/>
+                <outlet property="report" destination="YIb-uL-l2W" id="I0N-SV-Nno"/>
                 <outlet property="trash" destination="Q98-6l-Bq3" id="qdi-oS-AxW"/>
             </connections>
-            <point key="canvasLocation" x="137.68115942028987" y="165.06696428571428"/>
+            <point key="canvasLocation" x="132" y="168"/>
         </tableViewCell>
     </objects>
     <resources>
+        <image name="exclamationmark.bubble" catalog="system" width="128" height="110"/>
         <image name="trash" catalog="system" width="121" height="128"/>
         <systemColor name="systemGray6Color">
             <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

@@ -9,6 +9,7 @@ import UIKit
 // 좋아요북마크 -> 디테일뷰창의 댓글 셀
 protocol HeartReplyCellDelegate: AnyObject{
     func onClickCell(index: Int)
+    func onClickReportCell(index: Int)
 }
 
 class HeartReplyCell: UITableViewCell {
@@ -49,6 +50,14 @@ class HeartReplyCell: UITableViewCell {
        @IBAction func trashBtn(_ sender: UIButton) {
            delegate?.onClickCell(index: (index?.row)!)
        }
+    
+    // 신고버튼
+    @IBOutlet var report: UIButton!
+    
+    @IBAction func reportBtn(_ sender: Any) {
+        delegate?.onClickReportCell(index: (index?.row)!)
+    }
+    
        
        
        override func awakeFromNib() {

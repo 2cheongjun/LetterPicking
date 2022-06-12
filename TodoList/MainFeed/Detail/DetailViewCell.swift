@@ -9,6 +9,7 @@ import UIKit
 // 댓글 삭제프로토콜 셀(휴지통아이콘 눌렀을때 액션)
 protocol detailViewCellDelegate: AnyObject{
     func onClickCell(index: Int)
+    func onClickReportCell(index: Int)
 }
 
 class DetailViewCell: UITableViewCell {
@@ -47,6 +48,13 @@ class DetailViewCell: UITableViewCell {
     // 삭제버튼액션
     @IBAction func trashBtn(_ sender: UIButton) {
         delegate?.onClickCell(index: (index?.row)!)
+    }
+    
+    // 신고버튼
+    @IBOutlet var report: UIButton!
+    
+    @IBAction func reportBtn(_ sender: Any) {
+        delegate?.onClickReportCell(index: (index?.row)!)
     }
     
     

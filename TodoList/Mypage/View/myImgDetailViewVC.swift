@@ -19,6 +19,9 @@ class myImgDetailViewVC: UIViewController, UITextViewDelegate, UITableViewDataSo
     var replyNum = 0
     var myID = ""
     var heartNum = 0
+    var replyUserID = ""
+    // 공통댓글신고API
+    var reportAPI = ReportAPI.shared
     
     // 로그인값 가져오기
     let plist = UserDefaults.standard
@@ -148,13 +151,13 @@ class myImgDetailViewVC: UIViewController, UITextViewDelegate, UITableViewDataSo
 //     네비바 안보임??
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-              self.navigationController?.isNavigationBarHidden = false
+            self.navigationController?.isNavigationBarHidden = false
 
     }
     
     override func viewDidDisappear(_ animated: Bool) {
         super.viewWillAppear(animated)
-              self.navigationController?.isNavigationBarHidden = false
+            self.navigationController?.isNavigationBarHidden = false
     }
     
     
@@ -540,7 +543,7 @@ class myImgDetailViewVC: UIViewController, UITextViewDelegate, UITableViewDataSo
             
             let sessionConfig = URLSessionConfiguration.default
             let session = URLSession(configuration: sessionConfig)
-            var components = URLComponents(string: self.BASEURL+"reply/replySelect.php")
+            var components = URLComponents(string: self.BASEURL+"reply/replySelectReport.php")
             let presentPage = URLQueryItem(name: "presentPage", value: self.feedIdx.description)
             components?.queryItems = [presentPage]
             
@@ -555,7 +558,7 @@ class myImgDetailViewVC: UIViewController, UITextViewDelegate, UITableViewDataSo
             request.httpMethod = "GET" //GET방식이다. 컨텐츠타입이 없고, 담아서 보내는 내용이 없음, URL호출만!
             
             let task = session.dataTask(with: request) { data, response, error in
-                //                print( (response as! HTTPURLResponse).statusCode )
+                // print( (response as! HTTPURLResponse).statusCode )
                 
                 // 데이터가 있을때만 파싱한다.
                 if let hasData = data {
@@ -639,15 +642,58 @@ class myImgDetailViewVC: UIViewController, UITextViewDelegate, UITableViewDataSo
 // 댓글삭제 버튼 프로토콜 셀
 extension myImgDetailViewVC: detailViewCellDelegate {
     
+    // 글삭제하시겠습니까?
     func onClickCell(index: Int) {
-        print("\(self.detailModel?.results[index].replyIdx?.description ?? "")글번호댓글눌림")
-        // 댓글번호
-        replyNum = self.detailModel?.results[index].replyIdx ?? 0
-        // 댓글 삭제API 호출
-        DeleteReply(replyIndex: replyNum)
-        // 댓글다시로드하기
-        loadReply()
+        // 얼럿창띄우기
+        let alert = UIAlertController(title: "댓글 삭제", message: "댓글을 삭제하시겠습니까?", preferredStyle: .alert)
+        let alertAction = UIAlertAction(title: "삭제", style: .default) { [self] (_) in
+            
+            print("\(self.detailModel?.results[index].replyIdx?.description ?? "")글번호댓글눌림")
+            // 댓글번호
+            replyNum = self.detailModel?.results[index].replyIdx ?? 0
+            // 댓글 삭제API 호출
+            DeleteReply(replyIndex: replyNum)
+            // 댓글다시로드하기
+            loadReply()
+            
+            
+    
+        }
+        alert.addAction(alertAction)
+        
+        // 취소글자 상태값
+        let cancel = UIAlertAction(title: "취소", style: .cancel)
+        alert.addAction(cancel)
+        //                alert.view.tintColor =  UIColor(ciColor: .black)
+        self.present(alert, animated: true, completion: nil)
     }
+    
+    
+    // 글신고하시겠습니까?
+    func onClickReportCell(index: Int) {
+        
+        // 얼럿창띄우기
+        let alert = UIAlertController(title: "신고하기", message: "해당 댓글을 신고하시겠습니까?, 신고시 해당 댓글이 더이상 보이지 않습니다.", preferredStyle: .alert)
+        let alertAction = UIAlertAction(title: "신고하기", style: .default) { [self] (_) in
+            
+            print("\(self.detailModel?.results[index].replyIdx?.description ?? "")신고글번호댓글눌림")
+            // 게시글번호 + 댓글번호 + userID + cutID를 댓글신고테이블에 업로드한다.
+            replyNum = self.detailModel?.results[index].replyIdx ?? 0
+            // 댓글신고API호출
+            reportAPI.requstCutID(postIdx: feedIdx.description, replyIdx:replyNum.description, cutIdx: replyUserID)
+            // 재조회
+            self.loadReply()
+      
+        }
+        alert.addAction(alertAction)
+        
+        // 취소글자 상태값
+        let cancel = UIAlertAction(title: "취소", style: .cancel)
+        alert.addAction(cancel)
+        //                alert.view.tintColor =  UIColor(ciColor: .black)
+        self.present(alert, animated: true, completion: nil)
+    }
+    
 }
 
 

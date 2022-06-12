@@ -78,7 +78,7 @@ class myImgVC: UIViewController {
         
         let sessionConfig = URLSessionConfiguration.default
         let session = URLSession(configuration: sessionConfig)
-        var components = URLComponents(string:self.BASEURL+"post/0iOS_feedSelect.php?page=\(self.page)")
+        var components = URLComponents(string:self.BASEURL+"post/0iOS_feedSelectmyPost.php?page=\(self.page)")
         //        var components = URLComponents(string: self.BASEURL+"post/0iOS_feedSelect.php?page=\(1)")
         // let term = URLQueryItem(name: "term", value: "marvel")
         

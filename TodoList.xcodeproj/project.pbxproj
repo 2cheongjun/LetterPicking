@@ -51,6 +51,7 @@
 		D0C8D82C284E728D007F6570 /* myImgDetailViewVC.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D0C8D82B284E728D007F6570 /* myImgDetailViewVC.storyboard */; };
 		D0C8D82E284F9364007F6570 /* Checkbox.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0C8D82D284F9363007F6570 /* Checkbox.swift */; };
 		D0C8D8322852E156007F6570 /* HeartAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0C8D8312852E156007F6570 /* HeartAPI.swift */; };
+		D0C8D8342855E3FF007F6570 /* ReportAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0C8D8332855E3FF007F6570 /* ReportAPI.swift */; };
 		D0C98B7027F5EC3900445A00 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0C98B6F27F5EC3900445A00 /* DetailViewController.swift */; };
 		D0C98B7227F5EDCB00445A00 /* DetailViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D0C98B7127F5EDCB00445A00 /* DetailViewController.storyboard */; };
 		D0C98B7427F736DF00445A00 /* nMapVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0C98B7327F736DF00445A00 /* nMapVC.swift */; };
@@ -113,6 +114,7 @@
 		D0C8D82B284E728D007F6570 /* myImgDetailViewVC.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = myImgDetailViewVC.storyboard; sourceTree = "<group>"; };
 		D0C8D82D284F9363007F6570 /* Checkbox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Checkbox.swift; sourceTree = "<group>"; };
 		D0C8D8312852E156007F6570 /* HeartAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeartAPI.swift; sourceTree = "<group>"; };
+		D0C8D8332855E3FF007F6570 /* ReportAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportAPI.swift; sourceTree = "<group>"; };
 		D0C98B6F27F5EC3900445A00 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		D0C98B7127F5EDCB00445A00 /* DetailViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = DetailViewController.storyboard; sourceTree = "<group>"; };
 		D0C98B7327F736DF00445A00 /* nMapVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = nMapVC.swift; sourceTree = "<group>"; };
@@ -188,6 +190,7 @@
 				D01505F4283D11D300743409 /* URL.swift */,
 				D0C8D82D284F9363007F6570 /* Checkbox.swift */,
 				D0C8D8312852E156007F6570 /* HeartAPI.swift */,
+				D0C8D8332855E3FF007F6570 /* ReportAPI.swift */,
 			);
 			path = Util;
 			sourceTree = "<group>";
@@ -477,6 +480,7 @@
 				D0C98B7627FAF47D00445A00 /* MapModel.swift in Sources */,
 				D0E16BF227E0DAC4008F970E /* APIResponse.swift in Sources */,
 				D08B027B27E5C21700012766 /* firstTabVC.swift in Sources */,
+				D0C8D8342855E3FF007F6570 /* ReportAPI.swift in Sources */,
 				D08B028C27E8577700012766 /* FeedModel.swift in Sources */,
 				D08B029727E9C86B00012766 /* CVcell.swift in Sources */,
 				D01505F3283D02DB00743409 /* NetworkMoniter.swift in Sources */,

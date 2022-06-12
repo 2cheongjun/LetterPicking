@@ -802,8 +802,8 @@ extension firstTabVC: UITableViewDelegate, UITableViewDataSource{
                 self.alert("신고업로드 응답실패")
             }
         }
-
     }// 신고업로드함수 끝
+    
 }// VC끝
 
 

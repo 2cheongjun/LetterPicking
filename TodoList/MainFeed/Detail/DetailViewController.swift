@@ -19,6 +19,7 @@ class DetailViewController: UIViewController, UITextViewDelegate, UITableViewDat
     var replyNum = 0
     var myID = ""
     var heartNum = 0
+    var replyUserID = ""
     
     //API 호출상태값을 관리할 변수
     var isCalling = false
@@ -30,6 +31,9 @@ class DetailViewController: UIViewController, UITextViewDelegate, UITableViewDat
     var BASEURL = UrlInfo.shared.url!
     // 공통하트 API
     var heartAPI = HeartAPI.shared
+    // 공통댓글신고API
+    var reportAPI = ReportAPI.shared
+    
     
     // 이미지
     @IBOutlet var movieCotainer: UIImageView!
@@ -52,10 +56,8 @@ class DetailViewController: UIViewController, UITextViewDelegate, UITableViewDat
     // 하트 상태
     @IBOutlet var heartBtn: UIButton!
     
-    
     // 댓글모델 가져오기
     var detailModel: DetailModel?
-
     
     // 글 삭제,수정버튼
     @IBOutlet var delBtn: UIButton!
@@ -83,15 +85,15 @@ class DetailViewController: UIViewController, UITextViewDelegate, UITableViewDat
             //댓글 가져오기
             self.loadReply()
         } else {
-          // 로그인상태가 아닐때
+            // 로그인상태가 아닐때
             let alert = UIAlertController(title: "댓글달기", message: "로그인 해주세요.", preferredStyle: .alert)
-                let alertAction = UIAlertAction(title: "확인", style: .default) { [self] (_) in
-      
-                }
-                alert.addAction(alertAction)
-        
-                // alert.view.tintColor =  UIColor(ciColor: .black)
-                self.present(alert, animated: true, completion: nil)
+            let alertAction = UIAlertAction(title: "확인", style: .default) { [self] (_) in
+                
+            }
+            alert.addAction(alertAction)
+            
+            // alert.view.tintColor =  UIColor(ciColor: .black)
+            self.present(alert, animated: true, completion: nil)
         }
     }
     
@@ -100,7 +102,7 @@ class DetailViewController: UIViewController, UITextViewDelegate, UITableViewDat
     // 셀갯수테스트
     //    var numberOfCell: Int = 10
     //    let examList = ["안녕","호호","하하","낄낄","호호"]
-   
+    
     // 글내용
     @IBOutlet var postText: UITextView!{
         didSet{
@@ -138,7 +140,7 @@ class DetailViewController: UIViewController, UITextViewDelegate, UITableViewDat
         // 게시글 작성자
         userID.text = feedResult?.userID
         myID = feedResult!.userID ?? "아이디없음"
-       
+        
         // 날짜가져옴
         let str = feedResult?.date
         // 글자치환
@@ -189,11 +191,11 @@ class DetailViewController: UIViewController, UITextViewDelegate, UITableViewDat
             delBtn.layer.isHidden = false
             modifyBtn.layer.isHidden = false
             self.navigationItem.rightBarButtonItem = self.barOK
-         
+            
         }else{
             delBtn.layer.isHidden = true
             modifyBtn.layer.isHidden = true
-          
+            
         }
         
         // 로그인되어있지 않으면 버튼안보임
@@ -203,10 +205,10 @@ class DetailViewController: UIViewController, UITextViewDelegate, UITableViewDat
         }
         self.navigationController?.isNavigationBarHidden = false
         self.navigationController?.navigationBar.isHidden = false
-
-   }// 뷰디드로드끝
+        
+    }// 뷰디드로드끝
     
- 
+    
     // 하트버튼
     @IBAction func heartBtn(_ sender: UIButton) {
         // 버튼을 누를때 (눌려져 있을때와, 안눌려져 있을때 버튼클릭 이벤트)
@@ -215,23 +217,23 @@ class DetailViewController: UIViewController, UITextViewDelegate, UITableViewDat
         if sender.isSelected {
             // 메인에서didPressHeart 함수를 실행
             
-                // ♥ 이미 눌러져있던 하트 클릭시 //서버에서온 하트 값이 있을때(즉,서버에서 가져온값이 0이상이면, isTouched = true)
-                if isTouched == true{ //
-                    sender.isSelected = !sender.isSelected
-                    // 빈하트로 변경
-                    isTouched = false
-                    print(isTouched)
-                    
-                    //하트삭제
-                    heartAPI.DeleteHeart(postIdx: feedIdx.description)
-        
-                }else{
-                    // ♡ 하트버튼을 처음누르는 상태
-                    isTouched = true
-                    print(isTouched!)
-                    //하트업로드
-                    heartAPI.uploadHeart(postIdx: feedIdx.description)
-                }
+            // ♥ 이미 눌러져있던 하트 클릭시 //서버에서온 하트 값이 있을때(즉,서버에서 가져온값이 0이상이면, isTouched = true)
+            if isTouched == true{ //
+                sender.isSelected = !sender.isSelected
+                // 빈하트로 변경
+                isTouched = false
+                print(isTouched)
+                
+                //하트삭제
+                heartAPI.DeleteHeart(postIdx: feedIdx.description)
+                
+            }else{
+                // ♡ 하트버튼을 처음누르는 상태
+                isTouched = true
+                print(isTouched!)
+                //하트업로드
+                heartAPI.uploadHeart(postIdx: feedIdx.description)
+            }
             
         }else {
             // 빈하트로 변경
@@ -244,23 +246,24 @@ class DetailViewController: UIViewController, UITextViewDelegate, UITableViewDat
     
     var isTouched: Bool? {
         
-           didSet {
-               if isTouched == true {
-                   heartBtn.setImage(UIImage(systemName: "heart.fill", withConfiguration: UIImage.SymbolConfiguration(scale: .medium)), for: .normal)
-               }else{
-                   heartBtn.setImage(UIImage(systemName: "heart", withConfiguration: UIImage.SymbolConfiguration(scale: .medium)), for: .normal)
-               }
-           }
-       }
+        didSet {
+            if isTouched == true {
+                heartBtn.setImage(UIImage(systemName: "heart.fill", withConfiguration: UIImage.SymbolConfiguration(scale: .medium)), for: .normal)
+            }else{
+                heartBtn.setImage(UIImage(systemName: "heart", withConfiguration: UIImage.SymbolConfiguration(scale: .medium)), for: .normal)
+            }
+        }
+    }
     
-//     네비바 안보임??
+    //     네비바 안보임??
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationController?.isNavigationBarHidden = false
         
         // 댓글리스트 업데이트
         self.tableView.reloadData()
-
+        // 댓글다시재조회
+        self.loadReply()
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -268,33 +271,33 @@ class DetailViewController: UIViewController, UITextViewDelegate, UITableViewDat
         self.navigationController?.isNavigationBarHidden = false
     }
     
-
+    
+    
+    // 이미지 Get요청
+    func loadImage(urlString: String, completion: @escaping (UIImage?)-> Void){
+        let sessionConfig = URLSessionConfiguration.default
+        let session = URLSession(configuration: sessionConfig)
         
-        // 이미지 Get요청
-        func loadImage(urlString: String, completion: @escaping (UIImage?)-> Void){
-            let sessionConfig = URLSessionConfiguration.default
-            let session = URLSession(configuration: sessionConfig)
+        // urlString 이미지이름을(ex:http://3.37.202.166/img/2-jun.jpg) 가져와서 URL타입으로 바꿔준다.
+        if let hasURL = URL(string: urlString){
+            var request = URLRequest(url: hasURL)
+            request.httpMethod = "GET"
+            //               request.httpMethod = "POST"
             
-            // urlString 이미지이름을(ex:http://3.37.202.166/img/2-jun.jpg) 가져와서 URL타입으로 바꿔준다.
-            if let hasURL = URL(string: urlString){
-                var request = URLRequest(url: hasURL)
-                request.httpMethod = "GET"
-                //               request.httpMethod = "POST"
+            session.dataTask(with: request) { data, response, error in
+                //                   print( (response as! HTTPURLResponse).statusCode)
                 
-                session.dataTask(with: request) { data, response, error in
-                    //                   print( (response as! HTTPURLResponse).statusCode)
-                    
-                    if let hasData = data {
-                        completion(UIImage(data: hasData))
-                        return
-                    }
-                }.resume() //실행한다.
-                session.finishTasksAndInvalidate()
-            }
-            // 실패시 nil리턴한다.
-            completion(nil)
+                if let hasData = data {
+                    completion(UIImage(data: hasData))
+                    return
+                }
+            }.resume() //실행한다.
+            session.finishTasksAndInvalidate()
         }
-
+        // 실패시 nil리턴한다.
+        completion(nil)
+    }
+    
     
     
     // 게시글 삭제버튼액션
@@ -333,17 +336,17 @@ class DetailViewController: UIViewController, UITextViewDelegate, UITableViewDat
     
     // 수정이 저장버튼으로 바뀌고나서의 버튼 액션
     @objc func upDate() {
-         print("게시글 수정API호출!")
+        print("게시글 수정API호출!")
         // 수정API호출
-         upDatePostText()
-         self.dismiss(animated: true, completion: nil)
-       }
+        upDatePostText()
+        self.dismiss(animated: true, completion: nil)
+    }
     
     
     // 수정API호출
     func upDatePostText(success: (()->Void)? = nil, fail: ((String)->Void)? = nil) {
         // userID, postText,이미지묶음을 파라미터에 담아보냄
-    
+        
         let userID = feedResult?.userID
         
         let param: Parameters = [
@@ -475,6 +478,8 @@ class DetailViewController: UIViewController, UITextViewDelegate, UITableViewDat
         cell.replyDate.text = self.detailModel?.results[indexPath.row].replyDate
         cell.replyId.text = self.detailModel?.results[indexPath.row].userID
         cell.index = indexPath
+        // 댓글단사람
+        replyUserID = self.detailModel?.results[indexPath.row].userID ?? ""
         
         // 댓글작성자에게만 삭제버튼 활성화
         let getReplyName = self.detailModel?.results[indexPath.row].userID
@@ -498,45 +503,14 @@ class DetailViewController: UIViewController, UITextViewDelegate, UITableViewDat
         tableView.reloadData()
     }
     
-    // 셀 우측 스와이프
-//        func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-//
-////            let important = importantAction(at: indexPath)
-//            let delete = deleteAction(at: indexPath)
-////            return UISwipeActionsConfiguration(actions: [delete, important])
-//            return UISwipeActionsConfiguration(actions: [delete])
-//        }
-//
-//
-//    // 스와이프 삭제
-//      func deleteAction(at indexPath: IndexPath) -> UIContextualAction {
-//          let action = UIContextualAction(style: .destructive, title: "삭제") { (action, view, success) in
-//
-////
-////              self.DeleteReply(replyIndex: self.replyNum)
-//
-//              self.tableView.deleteRows(at: [indexPath], with: .automatic)
-//
-////              self.loadReply()
-//
-////
-//              success(true)
-//          }
-////          action.image = UIImage(named: "icons8-trash-can-50")
-//          action.backgroundColor = .red
-//          return action
-//      }
-      
-
-
-
+    
     
     // 댓글작성 업로드 API호출
     func replyUpload(success: (()->Void)? = nil, fail: ((String)->Void)? = nil) {
         // userID, postText,이미지묶음을 파라미터에 담아보냄
         //로그인한 아이디값
         let getName = plist.string(forKey: "name")
-
+        
         // 로그인한 아이디값 담아서 댓글작성
         let param: Parameters = [
             "feedIdx": feedIdx,
@@ -593,7 +567,7 @@ class DetailViewController: UIViewController, UITextViewDelegate, UITableViewDat
             
             let sessionConfig = URLSessionConfiguration.default
             let session = URLSession(configuration: sessionConfig)
-            var components = URLComponents(string: self.BASEURL+"reply/replySelect.php")
+            var components = URLComponents(string: self.BASEURL+"reply/replySelectReport.php")
             let presentPage = URLQueryItem(name: "presentPage", value: self.feedIdx.description)
             components?.queryItems = [presentPage]
             
@@ -617,8 +591,8 @@ class DetailViewController: UIViewController, UITextViewDelegate, UITableViewDat
                         // 만들어놓은 피드모델에 담음, 데이터를 디코딩해서, 디코딩은 try catch문 써줘야함
                         // 여기서 실행을 하고 오류가 나면 catch로 던져서 프린트해주겠다.
                         self.detailModel = try JSONDecoder().decode(DetailModel.self, from: hasData)
-//                        print(self.detailModel ?? "no data")
-    
+                        //                        print(self.detailModel ?? "no data")
+                        
                         //모든UI 작업은 메인쓰레드에서 이루어져야한다.
                         DispatchQueue.main.async {
                             // 테이블뷰 갱신 (자동으로 갱신안됨)
@@ -674,7 +648,7 @@ class DetailViewController: UIViewController, UITextViewDelegate, UITableViewDat
                     //                    }
                     // 이거땜에 좋아요가 두번눌리고 오류냠
                     DispatchQueue.main.async {
-                         // 테이블뷰 갱신 (자동으로 갱신안됨)
+                        // 테이블뷰 갱신 (자동으로 갱신안됨)
                         self.tableView.reloadData()
                         print("댓글 테이블갱신")
                     }
@@ -690,15 +664,59 @@ class DetailViewController: UIViewController, UITextViewDelegate, UITableViewDat
 // 댓글삭제 버튼 프로토콜 셀
 extension DetailViewController: detailViewCellDelegate {
     
+    
+    // 글삭제하시겠습니까?
     func onClickCell(index: Int) {
-        print("\(self.detailModel?.results[index].replyIdx?.description ?? "")글번호댓글눌림")
-        // 댓글번호
-        replyNum = self.detailModel?.results[index].replyIdx ?? 0
-        // 댓글 삭제API 호출
-        DeleteReply(replyIndex: replyNum)
-        // 댓글다시로드하기
-        loadReply()
+        // 얼럿창띄우기
+        let alert = UIAlertController(title: "댓글 삭제", message: "댓글을 삭제하시겠습니까?", preferredStyle: .alert)
+        let alertAction = UIAlertAction(title: "삭제", style: .default) { [self] (_) in
+            
+            print("\(self.detailModel?.results[index].replyIdx?.description ?? "")글번호댓글눌림")
+            // 댓글번호
+            replyNum = self.detailModel?.results[index].replyIdx ?? 0
+            // 댓글 삭제API 호출
+            DeleteReply(replyIndex: replyNum)
+            // 댓글다시로드하기
+            loadReply()
+            
+            
+    
+        }
+        alert.addAction(alertAction)
+        
+        // 취소글자 상태값
+        let cancel = UIAlertAction(title: "취소", style: .cancel)
+        alert.addAction(cancel)
+        //                alert.view.tintColor =  UIColor(ciColor: .black)
+        self.present(alert, animated: true, completion: nil)
     }
+    
+    
+    // 글신고하시겠습니까?
+    func onClickReportCell(index: Int) {
+        
+        // 얼럿창띄우기
+        let alert = UIAlertController(title: "신고하기", message: "해당 댓글을 신고하시겠습니까?, 신고시 해당 댓글이 더이상 보이지 않습니다.", preferredStyle: .alert)
+        let alertAction = UIAlertAction(title: "신고하기", style: .default) { [self] (_) in
+            
+            print("\(self.detailModel?.results[index].replyIdx?.description ?? "")신고글번호댓글눌림")
+            // 게시글번호 + 댓글번호 + userID + cutID를 댓글신고테이블에 업로드한다.
+            replyNum = self.detailModel?.results[index].replyIdx ?? 0
+            // 댓글신고API호출
+            reportAPI.requstCutID(postIdx: feedIdx.description, replyIdx:replyNum.description, cutIdx: replyUserID)
+            // 재조회
+            self.loadReply()
+      
+        }
+        alert.addAction(alertAction)
+        
+        // 취소글자 상태값
+        let cancel = UIAlertAction(title: "취소", style: .cancel)
+        alert.addAction(cancel)
+        //                alert.view.tintColor =  UIColor(ciColor: .black)
+        self.present(alert, animated: true, completion: nil)
+    }
+    
 }
 
 
