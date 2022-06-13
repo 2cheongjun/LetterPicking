@@ -115,7 +115,9 @@ class LoginVC :UIViewController, UITableViewDelegate, UITableViewDataSource{
                         let userID = jsonObject["userID"] as? String ?? ""
                         let userPassword = jsonObject["userPassword"] as? String ?? ""
                         let userEmail = jsonObject["userEmail"] as? String ?? ""
+                        let joinStart = jsonObject["joinStart"] as? String ?? ""
                         let delID = jsonObject["delID"] as? String ?? ""
+                        let success =  jsonObject["success"] as? String ?? ""
                         
                         //로그인성공시 아이디값을 공통저장소에 저장한다.UserDefaults에 아이디저장
                         // userDefault 기본저장소객체가져오기
@@ -136,10 +138,13 @@ class LoginVC :UIViewController, UITableViewDelegate, UITableViewDataSource{
                         plist.synchronize()//동기화처리
                         
                         // 서버에서 가져온값이 없을경우
-                        if userID == ""{
-                            self.alert("네트워크 연결상태를 확인하고, 다시시도해주세요.")
+                        if userID == "" && joinStart == "" && userEmail == "" {
+                            self.alert("없는 아이디 입니다.")
                         }
-                        
+                        // 가입날짜가 없는경우는 없는 아이디
+                        if success == "false" && success == "0" {
+                            self.alert("응답을 받아오지 못했습니다. 서버에 연결에 문제가 있습니다.")
+                        }
                         // delID값이 Y인경우 탈퇴한아이디
                         if delID == "Y"{
                             self.alert("탈퇴한 아이디입니다.")

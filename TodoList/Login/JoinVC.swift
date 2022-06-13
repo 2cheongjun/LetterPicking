@@ -270,7 +270,6 @@ class JoinVC: UIViewController, UITableViewDataSource, UITableViewDelegate, UINa
             "userID" : self.fieldAccount.text!,
             "userPassword" : self.fieldPassword.text!,
             "userName" : self.fieldName.text!
-            //             ,"profile_image" : profile!
         ]
         
         // 2. API 호출
