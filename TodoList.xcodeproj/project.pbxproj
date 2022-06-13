@@ -52,6 +52,8 @@
 		D0C8D82E284F9364007F6570 /* Checkbox.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0C8D82D284F9363007F6570 /* Checkbox.swift */; };
 		D0C8D8322852E156007F6570 /* HeartAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0C8D8312852E156007F6570 /* HeartAPI.swift */; };
 		D0C8D8342855E3FF007F6570 /* ReportAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0C8D8332855E3FF007F6570 /* ReportAPI.swift */; };
+		D0C8D836285726FA007F6570 /* PersonInfoVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0C8D835285726FA007F6570 /* PersonInfoVC.swift */; };
+		D0C8D838285727F0007F6570 /* PersonInfoVC.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D0C8D837285727F0007F6570 /* PersonInfoVC.storyboard */; };
 		D0C98B7027F5EC3900445A00 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0C98B6F27F5EC3900445A00 /* DetailViewController.swift */; };
 		D0C98B7227F5EDCB00445A00 /* DetailViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D0C98B7127F5EDCB00445A00 /* DetailViewController.storyboard */; };
 		D0C98B7427F736DF00445A00 /* nMapVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0C98B7327F736DF00445A00 /* nMapVC.swift */; };
@@ -115,6 +117,8 @@
 		D0C8D82D284F9363007F6570 /* Checkbox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Checkbox.swift; sourceTree = "<group>"; };
 		D0C8D8312852E156007F6570 /* HeartAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeartAPI.swift; sourceTree = "<group>"; };
 		D0C8D8332855E3FF007F6570 /* ReportAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportAPI.swift; sourceTree = "<group>"; };
+		D0C8D835285726FA007F6570 /* PersonInfoVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonInfoVC.swift; sourceTree = "<group>"; };
+		D0C8D837285727F0007F6570 /* PersonInfoVC.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = PersonInfoVC.storyboard; sourceTree = "<group>"; };
 		D0C98B6F27F5EC3900445A00 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		D0C98B7127F5EDCB00445A00 /* DetailViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = DetailViewController.storyboard; sourceTree = "<group>"; };
 		D0C98B7327F736DF00445A00 /* nMapVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = nMapVC.swift; sourceTree = "<group>"; };
@@ -273,6 +277,8 @@
 			children = (
 				D0C8D82A284E7258007F6570 /* View */,
 				D08B027E27E5C25D00012766 /* mypageVC.swift */,
+				D0C8D835285726FA007F6570 /* PersonInfoVC.swift */,
+				D0C8D837285727F0007F6570 /* PersonInfoVC.storyboard */,
 				D0C8D818284618F9007F6570 /* goOutVC.storyboard */,
 				D0C8D81A28461919007F6570 /* goOutVC.swift */,
 				D0C8D81C2846500D007F6570 /* myImgVC.swift */,
@@ -395,6 +401,7 @@
 				D08B699C281AF6590095E54A /* DetailViewCell.xib in Resources */,
 				D051F36127CDE2B100ABBB4E /* Assets.xcassets in Resources */,
 				D051F35C27CDE2AF00ABBB4E /* Main.storyboard in Resources */,
+				D0C8D838285727F0007F6570 /* PersonInfoVC.storyboard in Resources */,
 				D0C8D82C284E728D007F6570 /* myImgDetailViewVC.storyboard in Resources */,
 				D0E3BFAE28084BCC00958C30 /* NewFeedCell.xib in Resources */,
 				D01505E528326FDC00743409 /* star0.png in Resources */,
@@ -473,6 +480,7 @@
 				D00A962B282FF61A00A02B36 /* HeartDetailViewController.swift in Sources */,
 				D0C8D81D2846500D007F6570 /* myImgVC.swift in Sources */,
 				D0B4490E282BF7CE0046437C /* HeartModel.swift in Sources */,
+				D0C8D836285726FA007F6570 /* PersonInfoVC.swift in Sources */,
 				D08B699B281AF6590095E54A /* DetailViewCell.swift in Sources */,
 				D01505D42830246B00743409 /* HeartReplyCell.swift in Sources */,
 				D0C8D8322852E156007F6570 /* HeartAPI.swift in Sources */,
@@ -657,7 +665,7 @@
 				SWIFT_INSTALL_OBJC_HEADER = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -692,7 +700,7 @@
 				SWIFT_INSTALL_OBJC_HEADER = YES;
 				SWIFT_OBJC_BRIDGING_HEADER = "";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

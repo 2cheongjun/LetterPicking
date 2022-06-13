@@ -138,6 +138,7 @@ class goOutVC: UIViewController{
             v.backgroundColor = UIColor.link
         }else{
             btn.isHidden = true
+            v.backgroundColor = UIColor.white
         }
         plist.synchronize()//동기화처리
       

@@ -174,6 +174,16 @@ class thirdTabVC: UIViewController, UITableViewDelegate, UITableViewDataSource, 
             }
         }
         
+        // 개인정보처리방침
+        if indexPath.row == 4{
+            
+            // 로그인상태에서만 호출
+            if getName != nil {
+                let PersonInfoVC = UIStoryboard(name:"PersonInfoVC" , bundle: nil).instantiateViewController(withIdentifier: "PersonInfoVC") as! PersonInfoVC
+                self.present(PersonInfoVC, animated: true){ }
+            }
+        }
+        
         
         // 탈퇴하기
         if indexPath.row == 5{

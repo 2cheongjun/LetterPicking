@@ -106,10 +106,7 @@ class LoginVC :UIViewController, UITableViewDelegate, UITableViewDataSource{
                     print("JSON= \(try! response.result.get())!)")
                     // [String :Any]타입의 딕셔너리 객체로 캐스팅하면 개별 값을 추출할수 있다.
                     if let jsonObject = try! response.result.get() as? [String :Any]{
-                        //                        guard let jsonObject = try! response.result.get() as? [String :Any] else{
-                        //                        self.alert("서버호출과정에서 오류발생")
-                        //                        return
-                        //                        }
+         
                         // 아이디 값이 있으면 a출력하고 없으면 ?? -를 출력한다.(coalesce)
                         print("userID= \(jsonObject["userID"] ?? "" )")
                         print("userPassword =\(jsonObject["userPassword"] ?? "")")
@@ -119,7 +116,6 @@ class LoginVC :UIViewController, UITableViewDelegate, UITableViewDataSource{
                         let userPassword = jsonObject["userPassword"] as? String ?? ""
                         let userEmail = jsonObject["userEmail"] as? String ?? ""
                         let delID = jsonObject["delID"] as? String ?? ""
-                        
                         
                         //로그인성공시 아이디값을 공통저장소에 저장한다.UserDefaults에 아이디저장
                         // userDefault 기본저장소객체가져오기
@@ -139,27 +135,30 @@ class LoginVC :UIViewController, UITableViewDelegate, UITableViewDataSource{
                         plist.setValue(userPassword, forKey: "Rpassword")//비번이라는 키로 저장
                         plist.synchronize()//동기화처리
                         
-                        
-                        //성공시 얼럿띄우기
-                        if userID  == "" {
-                            self.alert("등록되지 않은 아이디입니다.")
+                        // 서버에서 가져온값이 없을경우
+                        if userID == ""{
+                            self.alert("네트워크 연결상태를 확인하고, 다시시도해주세요.")
                         }
-                        else if delID == "Y"{
-                            self.alert("탈퇴한 아이디입니다.")
                         
-                        }else{
+                        // delID값이 Y인경우 탈퇴한아이디
+                        if delID == "Y"{
+                            self.alert("탈퇴한 아이디입니다.")
+                            
+                        } else{
 //                            self.alert("로그인 성공")
                             // 성공했을때에만 로그인info로 값보내기
                             self.spend(userID: userID, userPassword: userPassword)
                             
                             // 인디케이터 에니메이션 종료
                             self.indicator.stopAnimating()
+                            DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.2) {
                             
-                            // 글자피드 탭화면으로 이동
-                            guard let uvc = self.storyboard?.instantiateViewController(withIdentifier: "tabVC") else {
-                                return
+                                // 글자피드 탭화면으로 이동
+                                guard let uvc = self.storyboard?.instantiateViewController(withIdentifier: "tabVC") else {
+                                    return
+                                }
+                                self.navigationController?.pushViewController(uvc, animated: true)
                             }
-                            self.navigationController?.pushViewController(uvc, animated: true)
                         }
                     }
                     
