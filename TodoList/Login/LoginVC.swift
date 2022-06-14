@@ -117,7 +117,6 @@ class LoginVC :UIViewController, UITableViewDelegate, UITableViewDataSource{
                         let userEmail = jsonObject["userEmail"] as? String ?? ""
                         let joinStart = jsonObject["joinStart"] as? String ?? ""
                         let delID = jsonObject["delID"] as? String ?? ""
-                        let success =  jsonObject["success"] as? String ?? ""
                         
                         //로그인성공시 아이디값을 공통저장소에 저장한다.UserDefaults에 아이디저장
                         // userDefault 기본저장소객체가져오기
@@ -141,22 +140,20 @@ class LoginVC :UIViewController, UITableViewDelegate, UITableViewDataSource{
                         if userID == "" && joinStart == "" && userEmail == "" {
                             self.alert("없는 아이디 입니다.")
                         }
-                        // 가입날짜가 없는경우는 없는 아이디
-                        if success == "false" && success == "0" {
-                            self.alert("응답을 받아오지 못했습니다. 서버에 연결에 문제가 있습니다.")
-                        }
+
                         // delID값이 Y인경우 탈퇴한아이디
                         if delID == "Y"{
                             self.alert("탈퇴한 아이디입니다.")
                             
                         } else{
-//                            self.alert("로그인 성공")
                             // 성공했을때에만 로그인info로 값보내기
                             self.spend(userID: userID, userPassword: userPassword)
                             
                             // 인디케이터 에니메이션 종료
                             self.indicator.stopAnimating()
                             DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.2) {
+                                
+                                self.alert("로그인 되었습니다.")
                             
                                 // 글자피드 탭화면으로 이동
                                 guard let uvc = self.storyboard?.instantiateViewController(withIdentifier: "tabVC") else {

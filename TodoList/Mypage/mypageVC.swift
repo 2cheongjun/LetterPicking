@@ -22,29 +22,43 @@ class thirdTabVC: UIViewController, UITableViewDelegate, UITableViewDataSource, 
     var email = ""
     
     var isname = false
+    // 노티3.WriteVC에서 보낸 값을 받기위해 DissmissWrite의 노티피케이션을 정의해 받을 준비한다.
+    let introduceVC = Notification.Name("introduceVC")
     
     // 이거를 해야뷰가 보임
     override func viewWillAppear(_ animated: Bool) {
         // 프사설정된 것이 없으면, 기본이미지 01
-        let image = UIImage(named: "default")
-        // 2.프로필 이미지 처리
-        self.profileImage.image = image
-        self.profileImage.frame.size = CGSize(width: 100, height: 100)
-        // 이미지 중앙정렬
-        self.profileImage.center = CGPoint(x:self.view.frame.width / 2, y: 240)
-        // 3.이미지둥글게
-        self.profileImage.layer.cornerRadius = self.profileImage.frame.width / 2
-        self.profileImage.layer.borderWidth = 0
-        self.profileImage.layer.masksToBounds = true
+//        let image = UIImage(named: "default")
+//        // 2.프로필 이미지 처리
+//        self.profileImage.image = image
+//        self.profileImage.frame.size = CGSize(width: 100, height: 100)
+//        // 이미지 중앙정렬
+//        self.profileImage.center = CGPoint(x:self.view.frame.width / 2, y: 240)
+//        // 3.이미지둥글게
+//        self.profileImage.layer.cornerRadius = self.profileImage.frame.width / 2
+//        self.profileImage.layer.borderWidth = 0
+//        self.profileImage.layer.masksToBounds = true
         // 4.루트뷰에 추가
-        self.view.addSubview(self.profileImage)
+//        self.view.addSubview(self.profileImage)
         // 로그인,로그아웃 버튼
         self.LoginBtn()
         self.LogOutBtn()
         //로그인 아이디
         plist.synchronize()//동기화처리
         self.tv.reloadData()
+        
     }
+    
+    
+    // 노티5.옵저버가 DissmissWrite를 받았을때 실행할 내용: 데이터 리로드
+       @objc func GOLogin(_ noti: Notification) {
+             
+           // 로그인 화면으로 이동시키기
+           guard let uvc = self.storyboard?.instantiateViewController(withIdentifier: "introduceVC") else {
+               return
+           }
+           self.navigationController?.pushViewController(uvc, animated: true)
+       }
     
     
     override func viewDidLoad() {
@@ -65,9 +79,9 @@ class thirdTabVC: UIViewController, UITableViewDelegate, UITableViewDataSource, 
         self.view.addSubview(self.profileImage)
         
         //배경이미지 설정
-        let bg = UIImage(named: "profile-bg.png")
+        let bg = UIImage(named: "mypage.png")
         let bgImg = UIImageView(image: bg)
-        bgImg.frame.size = CGSize(width: bgImg.frame.size.width, height: bgImg.frame.size.height)
+        bgImg.frame.size = CGSize(width: 350, height: 350)
         //        bgImg.frame.size = CGSize(width: bgImg.frame.size.width, height: bgImg.frame.size.height)
         bgImg.center = CGPoint(x: self.view.frame.width / 2, y: 200)
         // bgImg.layer.cornerRadius = bgImg.frame.size.width / 2
@@ -87,7 +101,6 @@ class thirdTabVC: UIViewController, UITableViewDelegate, UITableViewDataSource, 
         // 테이블뷰 객체를 뷰 계층의 맨앞으로 가져오는 구문
         self.view.bringSubviewToFront(self.tv)
         
-
         //로그인상태에 따라 로그인/로그아웃버튼 출력
         //최초화면 로딩 시 로그인 상태에 따라 적절히 로그인/로그아웃 버튼을 출력한다.
         self.LoginBtn()
@@ -96,6 +109,8 @@ class thirdTabVC: UIViewController, UITableViewDelegate, UITableViewDataSource, 
         plist.synchronize()//동기화처리
         self.tv.reloadData()
         
+        // 노티4.옵저버를 등록하고,DissmissWrite가 오면 writeVCNotification함수를 실행한다.
+         NotificationCenter.default.addObserver(self, selector: #selector(self.GOLogin(_:)), name: introduceVC, object: nil)
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

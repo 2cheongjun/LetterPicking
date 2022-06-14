@@ -42,7 +42,6 @@
 		D09E65FF27F1034800077BD5 /* HeartVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D09E65FE27F1034800077BD5 /* HeartVC.swift */; };
 		D09E660327F1079600077BD5 /* 01.jpg in Resources */ = {isa = PBXBuildFile; fileRef = D09E660227F1079600077BD5 /* 01.jpg */; };
 		D0B4490E282BF7CE0046437C /* HeartModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0B4490D282BF7CE0046437C /* HeartModel.swift */; };
-		D0C8D819284618F9007F6570 /* goOutVC.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D0C8D818284618F9007F6570 /* goOutVC.storyboard */; };
 		D0C8D81B28461919007F6570 /* goOutVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0C8D81A28461919007F6570 /* goOutVC.swift */; };
 		D0C8D81D2846500D007F6570 /* myImgVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0C8D81C2846500D007F6570 /* myImgVC.swift */; };
 		D0C8D81F2846501E007F6570 /* myImgVC.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D0C8D81E2846501E007F6570 /* myImgVC.storyboard */; };
@@ -54,6 +53,9 @@
 		D0C8D8342855E3FF007F6570 /* ReportAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0C8D8332855E3FF007F6570 /* ReportAPI.swift */; };
 		D0C8D836285726FA007F6570 /* PersonInfoVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0C8D835285726FA007F6570 /* PersonInfoVC.swift */; };
 		D0C8D838285727F0007F6570 /* PersonInfoVC.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D0C8D837285727F0007F6570 /* PersonInfoVC.storyboard */; };
+		D0C8D83A2858562F007F6570 /* introimg3.png in Resources */ = {isa = PBXBuildFile; fileRef = D0C8D8392858562F007F6570 /* introimg3.png */; };
+		D0C8D83C285875F7007F6570 /* goOutVC.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D0C8D83B285875F7007F6570 /* goOutVC.storyboard */; };
+		D0C8D83E28588186007F6570 /* IntroduceVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0C8D83D28588186007F6570 /* IntroduceVC.swift */; };
 		D0C98B7027F5EC3900445A00 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0C98B6F27F5EC3900445A00 /* DetailViewController.swift */; };
 		D0C98B7227F5EDCB00445A00 /* DetailViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D0C98B7127F5EDCB00445A00 /* DetailViewController.storyboard */; };
 		D0C98B7427F736DF00445A00 /* nMapVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0C98B7327F736DF00445A00 /* nMapVC.swift */; };
@@ -107,7 +109,6 @@
 		D09E65FE27F1034800077BD5 /* HeartVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeartVC.swift; sourceTree = "<group>"; };
 		D09E660227F1079600077BD5 /* 01.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 01.jpg; sourceTree = "<group>"; };
 		D0B4490D282BF7CE0046437C /* HeartModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeartModel.swift; sourceTree = "<group>"; };
-		D0C8D818284618F9007F6570 /* goOutVC.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = goOutVC.storyboard; sourceTree = "<group>"; };
 		D0C8D81A28461919007F6570 /* goOutVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = goOutVC.swift; sourceTree = "<group>"; };
 		D0C8D81C2846500D007F6570 /* myImgVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = myImgVC.swift; sourceTree = "<group>"; };
 		D0C8D81E2846501E007F6570 /* myImgVC.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = myImgVC.storyboard; sourceTree = "<group>"; };
@@ -119,6 +120,9 @@
 		D0C8D8332855E3FF007F6570 /* ReportAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportAPI.swift; sourceTree = "<group>"; };
 		D0C8D835285726FA007F6570 /* PersonInfoVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonInfoVC.swift; sourceTree = "<group>"; };
 		D0C8D837285727F0007F6570 /* PersonInfoVC.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = PersonInfoVC.storyboard; sourceTree = "<group>"; };
+		D0C8D8392858562F007F6570 /* introimg3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = introimg3.png; sourceTree = "<group>"; };
+		D0C8D83B285875F7007F6570 /* goOutVC.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = goOutVC.storyboard; sourceTree = "<group>"; };
+		D0C8D83D28588186007F6570 /* IntroduceVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntroduceVC.swift; sourceTree = "<group>"; };
 		D0C98B6F27F5EC3900445A00 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		D0C98B7127F5EDCB00445A00 /* DetailViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = DetailViewController.storyboard; sourceTree = "<group>"; };
 		D0C98B7327F736DF00445A00 /* nMapVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = nMapVC.swift; sourceTree = "<group>"; };
@@ -224,6 +228,7 @@
 				D08B02C027EB605A00012766 /* MapView */,
 				D08B02BF27EB604300012766 /* Mypage */,
 				D08B028A27E83DE600012766 /* Login */,
+				D0C8D83F2858819A007F6570 /* IntroVC */,
 				D08B028927E838E000012766 /* MainFeed */,
 				D01505F1283D026D00743409 /* Util */,
 				D08B028227E5C74700012766 /* Resources */,
@@ -264,6 +269,7 @@
 		D08B028A27E83DE600012766 /* Login */ = {
 			isa = PBXGroup;
 			children = (
+				D0C8D8392858562F007F6570 /* introimg3.png */,
 				D0E16BC627D6FBCB008F970E /* JoinVC.swift */,
 				D0E16BCA27DF4E2B008F970E /* LoginVC.swift */,
 				D0E16BCC27DF6406008F970E /* UserInfoManager.swift */,
@@ -279,8 +285,8 @@
 				D08B027E27E5C25D00012766 /* mypageVC.swift */,
 				D0C8D835285726FA007F6570 /* PersonInfoVC.swift */,
 				D0C8D837285727F0007F6570 /* PersonInfoVC.storyboard */,
-				D0C8D818284618F9007F6570 /* goOutVC.storyboard */,
 				D0C8D81A28461919007F6570 /* goOutVC.swift */,
+				D0C8D83B285875F7007F6570 /* goOutVC.storyboard */,
 				D0C8D81C2846500D007F6570 /* myImgVC.swift */,
 				D0C8D826284657F4007F6570 /* TableViewCell.swift */,
 				D0C8D81E2846501E007F6570 /* myImgVC.storyboard */,
@@ -329,6 +335,14 @@
 				D0C8D82B284E728D007F6570 /* myImgDetailViewVC.storyboard */,
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		D0C8D83F2858819A007F6570 /* IntroVC */ = {
+			isa = PBXGroup;
+			children = (
+				D0C8D83D28588186007F6570 /* IntroduceVC.swift */,
+			);
+			path = IntroVC;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -396,7 +410,6 @@
 				D01505E628326FDC00743409 /* star1.png in Resources */,
 				D00A962D282FF62200A02B36 /* HeartDetailViewController.storyboard in Resources */,
 				D09E660327F1079600077BD5 /* 01.jpg in Resources */,
-				D0C8D819284618F9007F6570 /* goOutVC.storyboard in Resources */,
 				D0C98B7227F5EDCB00445A00 /* DetailViewController.storyboard in Resources */,
 				D08B699C281AF6590095E54A /* DetailViewCell.xib in Resources */,
 				D051F36127CDE2B100ABBB4E /* Assets.xcassets in Resources */,
@@ -406,7 +419,9 @@
 				D0E3BFAE28084BCC00958C30 /* NewFeedCell.xib in Resources */,
 				D01505E528326FDC00743409 /* star0.png in Resources */,
 				D08B028627E61BCE00012766 /* profile-bg.png in Resources */,
+				D0C8D83A2858562F007F6570 /* introimg3.png in Resources */,
 				D0C8D81F2846501E007F6570 /* myImgVC.storyboard in Resources */,
+				D0C8D83C285875F7007F6570 /* goOutVC.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -464,6 +479,7 @@
 				D0E16BCD27DF6406008F970E /* UserInfoManager.swift in Sources */,
 				D051F35527CDE2AF00ABBB4E /* AppDelegate.swift in Sources */,
 				D051F35727CDE2AF00ABBB4E /* SceneDelegate.swift in Sources */,
+				D0C8D83E28588186007F6570 /* IntroduceVC.swift in Sources */,
 				D0C98B7027F5EC3900445A00 /* DetailViewController.swift in Sources */,
 				D0C8D81B28461919007F6570 /* goOutVC.swift in Sources */,
 				D0E16BCB27DF4E2B008F970E /* LoginVC.swift in Sources */,
@@ -648,12 +664,16 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = TodoList/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "글자줍기";
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "위치 사용권한을 허용하시겠습니까?";
+				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "위치 사용권한을 허용하시겠습니까?";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "위치를 사용권한을 허용하시겠습니까?";
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "\"123\"";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -683,12 +703,16 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = TodoList/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "글자줍기";
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "위치 사용권한을 허용하시겠습니까?";
+				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "위치 사용권한을 허용하시겠습니까?";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "위치를 사용권한을 허용하시겠습니까?";
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "\"123\"";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

@@ -14,23 +14,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
-      
-  
-//        let  mainstoryboard = UIStoryboard(name: "Main", bundle: nil) // Main.storyboard 가져오기
-//                
-//                if isLogged == false {
-//                    // 로그인 안된 상태
-//                    guard let LoginVC =  mainstoryboard.instantiateViewController(withIdentifier: "LoginVC") as? LoginVC else { return }
-//                    window?.rootViewController = LoginVC
-//                } else {
-//                    // 로그인 된 상태
-//                    guard let firstTabVC = mainstoryboard.instantiateViewController(withIdentifier: "firstTabVC") as? firstTabVC else { return }
-//                    window?.rootViewController = firstTabVC
-//                    self.window?.makeKeyAndVisible()
-//                    self.window?(firstTabVC, animated: true, completion: nil)
-//                }
         
-               
+  
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {

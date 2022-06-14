@@ -23,18 +23,17 @@ class goOutVC: UIViewController{
     var BASEURL = UrlInfo.shared.url!
     
     // 체크박스클래스에서 객체 생성하기
-    let checkbox1 = Checkbox(frame: CGRect(x :16, y:280, width:40, height: 40))
+    let checkbox1 = Checkbox(frame: CGRect(x :16, y:240, width:40, height: 40))
+    
+    // 노티1.시작의 시작등록.글수정후에 메인피드를 새로고침하기위한 노티 (노티의 이름은 ModifyVCNotification)
+    let introduceVC: Notification.Name = Notification.Name("introduceVC")
     
     // 닫기버튼
     @IBAction func closeBtn(_ sender: Any) {
      self.dismiss(animated: true, completion: nil)
-        // 로그인 화면으로 이동시키기????
         
-//        let vcName = self.storyboard?.instantiateViewController(withIdentifier: "firstTabVC")
-//                vcName?.modalPresentationStyle = .fullScreen //전체화면으로 보이게 설정
-//                vcName?.modalTransitionStyle = .crossDissolve //전환 애니메이션 설정
-//                self.present(vcName!, animated: true, completion: nil)
-        
+        // 노티2.창이 닫힐때 노티를 메인피드로 신호를 보낸다. //(노티의 이름은 DissmissWriteVC)
+        NotificationCenter.default.post(name: introduceVC, object: nil, userInfo: nil)
     }
     
     // 인디케이터추가
@@ -52,7 +51,7 @@ class goOutVC: UIViewController{
         // 새로만든체크박스
         self.checkBtn()
         // 체크박스 옆의 글
-        let checklabel = UILabel(frame: CGRect(x: 70 , y: 265, width: 200, height: 70))
+        let checklabel = UILabel(frame: CGRect(x: 70 , y: 225, width: 200, height: 70))
         checklabel.text = "위의 내용에 동의합니다."
         view.addSubview(checklabel)
         //로그인 아이디
@@ -68,7 +67,7 @@ class goOutVC: UIViewController{
         // 새로만든체크박스
         self.checkBtn()
         // 체크박스 옆의 글
-        let checklabel = UILabel(frame: CGRect(x: 70 , y: 265, width: 200, height: 70))
+        let checklabel = UILabel(frame: CGRect(x: 70 , y: 225, width: 200, height: 70))
         checklabel.text = "위의 내용에 동의합니다."
         view.addSubview(checklabel)
         
@@ -86,10 +85,11 @@ class goOutVC: UIViewController{
     // 탈퇴안내글
     func label(){
         let label = UILabel(frame: CGRect(x: 10, y: 0, width: self.view.frame.width-10, height:300))
-        label.frame.origin.x = 10
-        label.frame.origin.y = 40
+        label.frame.origin.x = 20
+        label.frame.origin.y = -20
         label.textAlignment = .left
         label.numberOfLines = 5
+        
         label.text = "사용하고 계신 아이디를 탈퇴하시면 복구가 불가하오니 신중하게 선택하시기 바랍니다. 작성한 게시글과 댓글은 자동삭제되지 않고 남아있습니다.삭제를 원하는 게시글이 있다면 탈퇴전 삭제하시기 바랍니다. 위 내용을 모두확인하였으며, 이에 동의합니다."
         self.view.addSubview(label)
     }
@@ -116,7 +116,7 @@ class goOutVC: UIViewController{
         v.frame.size.width = self.view.frame.width
         v.frame.size.height = 40
         v.frame.origin.x = 0
-        v.frame.origin.y = 700
+        v.frame.origin.y = 300
         v.backgroundColor = UIColor(red: 0.98, green: 0.98, blue: 0.98, alpha: 1.0)
         self.view.addSubview(v)
         
@@ -135,10 +135,11 @@ class goOutVC: UIViewController{
         if checkOnState != nil {
             // 체크를 눌렀을때
              btn.isHidden = false
-            v.backgroundColor = UIColor.link
+             v.backgroundColor = UIColor.link
         }else{
             btn.isHidden = true
             v.backgroundColor = UIColor.white
+            
         }
         plist.synchronize()//동기화처리
       

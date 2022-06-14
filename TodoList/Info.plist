@@ -2,25 +2,21 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>UIUserInterfaceStyle</key>
-	<string>Light</string>
+	<key>UIMainStoryboardFile</key>
+	<string>Main</string>
+	<key>UILaunchStoryboardName</key>
+	<string>splash</string>
 	<key>NMFClientId</key>
 	<string>uvryr3s84w</string>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>위치를 사용하것어?</string>
-	<key>NSLocationAlwaysUsageDescription</key>
-	<string>위치 사용권한을 허용하시겠습니까?</string>
-	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>위치 사용권한을 허용하시겠습니까?</string>
 	<key>NSAppTransportSecurity</key>
 	<dict>
 		<key>NSExceptionDomains</key>
 		<dict>
 			<key>3.39.79.206</key>
 			<dict/>
-			<key>NSIncludesSubdomains</key>
-			<true/>
 			<key>NSExceptionAllowsInsecureHTTPLoads</key>
+			<true/>
+			<key>NSIncludesSubdomains</key>
 			<true/>
 			<key>rubypaper.co.kr</key>
 			<dict>

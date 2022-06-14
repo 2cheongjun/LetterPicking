@@ -77,12 +77,12 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="name" textAlignment="natural" lineBreakMode="clip" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wCb-58-2Cx">
-                        <rect key="frame" x="57" y="18" width="36" height="17"/>
+                        <rect key="frame" x="55" y="18" width="36" height="17"/>
                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="default" translatesAutoresizingMaskIntoConstraints="NO" id="Ad2-8J-g7O">
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="thumb3" translatesAutoresizingMaskIntoConstraints="NO" id="Ad2-8J-g7O">
                         <rect key="frame" x="13" y="11" width="30" height="30"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="30" id="0p0-FO-xkC"/>
@@ -131,7 +131,7 @@
                     <constraint firstItem="sB2-Lk-1Eh" firstAttribute="top" secondItem="d2h-ck-t2b" secondAttribute="bottom" constant="14" id="lLm-I0-aYz"/>
                     <constraint firstItem="Ad2-8J-g7O" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="13" id="o8b-TJ-Llb"/>
                     <constraint firstItem="IlP-aV-pEw" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="14" id="sMS-72-I70"/>
-                    <constraint firstItem="wCb-58-2Cx" firstAttribute="leading" secondItem="Ad2-8J-g7O" secondAttribute="trailing" constant="14" id="sOo-ac-eyj"/>
+                    <constraint firstItem="wCb-58-2Cx" firstAttribute="leading" secondItem="Ad2-8J-g7O" secondAttribute="trailing" constant="12" id="sOo-ac-eyj"/>
                     <constraint firstItem="e2o-MJ-BvU" firstAttribute="top" secondItem="d2h-ck-t2b" secondAttribute="bottom" constant="11" id="vrM-oz-9SO"/>
                     <constraint firstItem="d2h-ck-t2b" firstAttribute="top" secondItem="wCb-58-2Cx" secondAttribute="bottom" constant="19" id="wSO-Ru-yfE"/>
                     <constraint firstItem="d2h-ck-t2b" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="xW0-bq-pOe"/>
@@ -153,10 +153,10 @@
     </objects>
     <resources>
         <image name="baseline_more_horiz_black_24dp" width="24" height="24"/>
-        <image name="default" width="30" height="30"/>
         <image name="heart" catalog="system" width="128" height="109"/>
         <image name="heart.fill" catalog="system" width="128" height="109"/>
         <image name="mappin.and.ellipse" catalog="system" width="118" height="128"/>
         <image name="message" catalog="system" width="128" height="113"/>
+        <image name="thumb3" width="45" height="45"/>
     </resources>
 </document>

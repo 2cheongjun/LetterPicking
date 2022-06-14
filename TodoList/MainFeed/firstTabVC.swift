@@ -480,9 +480,6 @@ class firstTabVC: UIViewController{
         session.finishTasksAndInvalidate()
         
     }//함수 끝
-    
-    
-    
 }// 뷰컨끝
 
 
@@ -531,7 +528,7 @@ extension firstTabVC: UITableViewDelegate, UITableViewDataSource{
         cell.index = indexPath.row
         cell.indexNum = indexPath
         
-        let text =  self.feedModel?.results[indexPath.row].postText
+//        let text =  self.feedModel?.results[indexPath.row].postText ?? ""
 //        text?.removingPercentEncoding
 //
 //        print(text?.removingPercentEncoding)

@@ -14,6 +14,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        
+        // [스레드 시간을 발생시켜 로딩화면 지연 실시 - 3초]
+        Thread.sleep(forTimeInterval: 1.0)
+        
         //라이브러리 사용기본설정
         IQKeyboardManager.shared.enable = true
         //툴바에 돈버튼 넣기
