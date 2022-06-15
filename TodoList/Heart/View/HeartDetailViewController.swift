@@ -24,7 +24,9 @@ class HeartDetailViewController: UIViewController, UITextViewDelegate, UITextFie
     var BASEURL = UrlInfo.shared.url!
     // 공통하트 API
     var heartAPI = HeartAPI.shared
-
+    
+    // 노티1.시작의 시작등록.글수정후에 메인피드를 새로고침하기위한 노티
+    let HeartDetailVCNOTI: Notification.Name = Notification.Name("HeartDetailVCNOTI")
     
     // 이미지뷰
     @IBOutlet var movieCotainer: UIImageView!
@@ -76,6 +78,11 @@ class HeartDetailViewController: UIViewController, UITextViewDelegate, UITextFie
     // 장소추가
     @IBOutlet var placeText: UILabel!
     
+    func setNotification(){
+        // 노티2.창이 닫힐때 노티를 메인피드로 신호를 보낸다. //(노티의 이름은 ModifyVCNotification)
+        NotificationCenter.default.post(name: HeartDetailVCNOTI, object: nil, userInfo: nil)
+    }
+    
     // 하트버튼
     @IBAction func heartBtn(_ sender: UIButton) {
         // 버튼을 누를때 (눌려져 있을때와, 안눌려져 있을때 버튼클릭 이벤트)
@@ -90,17 +97,23 @@ class HeartDetailViewController: UIViewController, UITextViewDelegate, UITextFie
                 // 빈하트로 변경
                 isTouched = false
                 heartAPI.DeleteHeart(postIdx: feedIdx.description)
+                // 북마크모음새로고침 노티발송
+                setNotification()
                 
             }else{
                 // ♡ 하트버튼을 처음누르는 상태
                 isTouched = true
                 heartAPI.uploadHeart(postIdx: feedIdx.description)
+                // 북마크모음새로고침 노티발송
+                setNotification()
             }
             
         }else {
             // 빈하트로 변경
             isTouched = false
             heartAPI.DeleteHeart(postIdx: feedIdx.description)
+            // 북마크모음새로고침 노티발송
+            setNotification()
         }
     }
     
@@ -115,12 +128,10 @@ class HeartDetailViewController: UIViewController, UITextViewDelegate, UITextFie
     }
     
     
-    // 노티1.시작의 시작등록.글수정후에 메인피드를 새로고침하기위한 노티
-    let HeartDetailVCNOTI: Notification.Name = Notification.Name("HeartDetailVCNOTI")
+   
     
     // 닫기 버튼
     @IBAction func barOKBtn(_ sender: Any) {
-     
         self.dismiss(animated: true, completion: nil)
     }
     
@@ -252,8 +263,8 @@ class HeartDetailViewController: UIViewController, UITextViewDelegate, UITextFie
             // 서버로 게시글 번호를 보내고, 그 번호에 맞는 게시글을 삭제한다.
             requestFeedDeleateAPI()
             
-            // 노티2.창이 닫힐때 노티를 메인피드로 신호를 보낸다. //(노티의 이름은 ModifyVCNotification)
-            NotificationCenter.default.post(name: HeartDetailVCNOTI, object: nil, userInfo: nil)
+            // 북마크모음새로고침 노티발송
+            setNotification()
             // 창을 닫는다.
             self.dismiss(animated: true, completion: nil)
             
@@ -275,8 +286,8 @@ class HeartDetailViewController: UIViewController, UITextViewDelegate, UITextFie
         // 글쓰고 나서
         modifyBtn.setTitle("저장", for: .normal)
         modifyBtn.addTarget(self, action: #selector(upDate), for: .touchUpInside)
-        // 노티2.창이 닫힐때 노티를 메인피드로 신호를 보낸다. //(노티의 이름은 ModifyVCNotification)
-        NotificationCenter.default.post(name: HeartDetailVCNOTI, object: nil, userInfo: nil)
+        // 북마크모음새로고침 노티발송
+        setNotification()
     }
     
     // 수정이 저장버튼으로 바뀌고나서의 버튼 액션
@@ -496,7 +507,7 @@ class HeartDetailViewController: UIViewController, UITextViewDelegate, UITextFie
         // 스크롤뷰가 바닥에 닿으면 데이터를 새로불러온다.
         //asyncAfter는 실행할 시간(deadline)를 정해두고 실행 코드를 실행합니다(execute)
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1, execute: {
-            //            self.page += 1
+            // self.page += 1
             
             let sessionConfig = URLSessionConfiguration.default
             let session = URLSession(configuration: sessionConfig)

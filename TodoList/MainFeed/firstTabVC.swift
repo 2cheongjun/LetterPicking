@@ -28,7 +28,7 @@ class firstTabVC: UIViewController{
     var Num = 0
     let str = ""
     let text = ""
-   
+    
     
     // 스크롤을 위한 것
     var fetchingMore = false
@@ -43,7 +43,7 @@ class firstTabVC: UIViewController{
     var page = 1
     // BASEURL
     var BASEURL = UrlInfo.shared.url!
-
+    
     // 인디케이터추가
     @IBOutlet var indicator: UIActivityIndicatorView!
     
@@ -59,6 +59,11 @@ class firstTabVC: UIViewController{
     @IBOutlet weak var tableView: UITableView! // 게시글테이블뷰
     @IBOutlet var topBtn: UIButton! // 상단으로 이동버튼(게시글마지막에 하단에표기)
     
+    // 글쓰기 업데이트노티피케이션 // 노티3.WriteVC에서 보낸 값을 받기위해 DissmissWrite의 노티피케이션을 정의해 받을 준비한다.
+    let DissmissWriteVC = Notification.Name("DissmissWriteVC")
+    // 수정업데이트노티피케이션
+    let ModifyVCNotification = Notification.Name("ModifyVCNotification")
+    
     // 탑버튼 맨위로 이동
     @IBAction func TopBtn(_ sender: Any) {
         tableView.setContentOffset(CGPoint(x: 0, y: 0), animated: true)
@@ -67,34 +72,12 @@ class firstTabVC: UIViewController{
     override func viewDidLoad() {
         
         // print(url)
-        
         // 인터넷 연결여부 확인(연결시에만 데이터 호출) Util폴더안에 Networkmoiter
         if NetworkMonitor.shared.isConnected {
             print("네트워크 연결됨...")
             
-            // 더보기 페이지 세팅
-            page = 1
-            // 델리게이트연결
-            tableView.register(NewFeedCell.nib(), forCellReuseIdentifier: NewFeedCell.identifier)
-            tableView.delegate = self
-            tableView.dataSource = self
-            searchBar.delegate = self
-            // 당겨서 새로고침설정
-            tableView.refreshControl = UIRefreshControl()
-            //        tableView.refreshControl?.attributedTitle = NSAttributedString(string:"당겨서 새로고침")
-            tableView.refreshControl?.addTarget(self, action: #selector(pullToRefresh(_:)), for: .valueChanged)
-            
-            // 글쓰기 업데이트노티피케이션
-            // 노티3.WriteVC에서 보낸 값을 받기위해 DissmissWrite의 노티피케이션을 정의해 받을 준비한다.
-            let DissmissWriteVC = Notification.Name("DissmissWriteVC")
-            // 노티4.옵저버를 등록하고,DissmissWrite가 오면 writeVCNotification함수를 실행한다.
-            NotificationCenter.default.addObserver(self, selector: #selector(self.writeVCNotification(_:)), name: DissmissWriteVC, object: nil)
-            
-            // 수정업데이트노티피케이션
-            // 노티3.WriteVC에서 보낸 값을 받기위해 DissmissWrite의 노티피케이션을 정의해 받을 준비한다.
-            let ModifyVCNotification = Notification.Name("ModifyVCNotification")
-            // 노티4.옵저버를 등록하고,DissmissWrite가 오면 writeVCNotification함수를 실행한다.
-            NotificationCenter.default.addObserver(self, selector: #selector(self.ModifyVCNotification(_:)), name: ModifyVCNotification, object: nil)
+            // 노티피케이션센터 등록(글수정,삭제)
+            SetNotification()
             
             // 아이디값 가져오기
             let getName = plist.string(forKey: "name")
@@ -113,7 +96,6 @@ class firstTabVC: UIViewController{
             searchBar.delegate = self
             // 당겨서 새로고침설정
             tableView.refreshControl = UIRefreshControl()
-            //        tableView.refreshControl?.attributedTitle = NSAttributedString(string:"당겨서 새로고침")
             tableView.refreshControl?.addTarget(self, action: #selector(pullToRefresh(_:)), for: .valueChanged)
             
             // API호출(데이터값이 있으면 호출)
@@ -121,10 +103,10 @@ class firstTabVC: UIViewController{
                 // 인디케이터 호출
                 self.indicator.startAnimating()
                 requestFeedAPI()
-                OperationQueue.main.addOperation { // DispatchQueue도 가능.
-                    self.tableView.reloadData()
-                }
-                
+                    OperationQueue.main.addOperation { // DispatchQueue도 가능.
+                        self.tableView.reloadData()
+                    }
+                // 데이터있을때 탑버튼 visible
                 self.topBtn.isHidden = false
             }else{
                 print("데이터없음")
@@ -135,17 +117,6 @@ class firstTabVC: UIViewController{
             print("네트워크 연결안됨...")
         }
         
-        // 글쓰기 업데이트노티피케이션
-        // 노티3.WriteVC에서 보낸 값을 받기위해 DissmissWrite의 노티피케이션을 정의해 받을 준비한다.
-        let DissmissWriteVC = Notification.Name("DissmissWriteVC")
-        // 노티4.옵저버를 등록하고,DissmissWrite가 오면 writeVCNotification함수를 실행한다.
-        NotificationCenter.default.addObserver(self, selector: #selector(self.writeVCNotification(_:)), name: DissmissWriteVC, object: nil)
-        
-        // 수정업데이트노티피케이션
-        // 노티3.WriteVC에서 보낸 값을 받기위해 DissmissWrite의 노티피케이션을 정의해 받을 준비한다.
-        let ModifyVCNotification = Notification.Name("ModifyVCNotification")
-        // 노티4.옵저버를 등록하고,DissmissWrite가 오면 writeVCNotification함수를 실행한다.
-        NotificationCenter.default.addObserver(self, selector: #selector(self.ModifyVCNotification(_:)), name: ModifyVCNotification, object: nil)
         
         // 아이디값가져옴
         let getName = plist.string(forKey: "name")
@@ -184,6 +155,12 @@ class firstTabVC: UIViewController{
         
         // 로그인아이디
         self.plist.synchronize()//동기화처리
+    }
+    
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        // 노티피케이션삭제 (글수정,삭제)
+        DeleteNotification()
     }
     
     
@@ -268,6 +245,21 @@ class firstTabVC: UIViewController{
         })
     }
     
+    // 노티피케이션등록
+    func SetNotification(){
+       
+        // 노티4.옵저버를 등록하고,DissmissWrite가 오면 writeVCNotification함수를 실행한다.
+        NotificationCenter.default.addObserver(self, selector: #selector(self.writeVCNotification(_:)), name: DissmissWriteVC, object: nil)
+        
+        // 노티4.옵저버를 등록하고,DissmissWrite가 오면 writeVCNotification함수를 실행한다.
+        NotificationCenter.default.addObserver(self, selector: #selector(self.ModifyVCNotification(_:)), name: ModifyVCNotification, object: nil)
+    }
+    
+    // 노티피케이션삭제
+    func DeleteNotification(){
+        NotificationCenter.default.removeObserver(self, name: DissmissWriteVC, object: nil)
+        NotificationCenter.default.removeObserver(self, name: ModifyVCNotification, object: nil)
+    }
     
     
     // 화면을 누르면 키보드 내려가게 하는 것
@@ -410,19 +402,19 @@ class firstTabVC: UIViewController{
     }
     
     // 글 작성버튼
-
+    
     @IBAction func writeBtn(_ sender: Any) {
         // 스토리보드 세그로 연결함
     }
     
-
+    
     // 검색요청 API
     func searchWord(success: (()->Void)? = nil, fail: ((String)->Void)? = nil) {
         
         // URL세선 시작
         let sessionConfig = URLSessionConfiguration.default
         let session = URLSession(configuration: sessionConfig)
-     
+        
         // word에 담긴 단어를 가져옴
         print("firstTabVC/ 단어입력내용 :\(self.word)")
         // 한글이 있는 URL
@@ -433,7 +425,7 @@ class firstTabVC: UIViewController{
         var components = URLComponents(string: result!)
         
         print(components)
-     
+        
         let word = URLQueryItem(name: "word", value: word)
         components?.queryItems = [word]
         
@@ -457,7 +449,7 @@ class firstTabVC: UIViewController{
                     // 만들어놓은 피드모델에 담음, 데이터를 디코딩해서, 디코딩은 try catch문 써줘야함
                     // 여기서 실행을 하고 오류가 나면 catch로 던져서 프린트해주겠다.
                     self.feedModel = try JSONDecoder().decode(FeedModel.self, from: hasData)
-                                        print(self.feedModel ?? "no data")
+                    print(self.feedModel ?? "no data")
                     
                     // 모든UI 작업은 메인쓰레드에서 이루어져야한다.
                     DispatchQueue.main.async {
@@ -528,12 +520,7 @@ extension firstTabVC: UITableViewDelegate, UITableViewDataSource{
         cell.index = indexPath.row
         cell.indexNum = indexPath
         
-//        let text =  self.feedModel?.results[indexPath.row].postText ?? ""
-//        text?.removingPercentEncoding
-//
-//        print(text?.removingPercentEncoding)
-        
-        cell.titleLabel.text = self.feedModel?.results[indexPath.row].postText
+        cell.titleLabel.text = self.feedModel?.results[indexPath.row].postText ?? ""
         let Str = self.feedModel?.results[indexPath.row].userID
         // 앞에서부터 7글자
         let prefix = Str?.description.prefix(4)
@@ -677,10 +664,10 @@ extension firstTabVC: UITableViewDelegate, UITableViewDataSource{
                     // self.dismiss(animated: true, completion: nil)
                     
                     // 이거땜에 좋아요가 두번눌리고 오류냠
-//                      DispatchQueue.main.async {
-//                       //테이블뷰 갱신 (자동으로 갱신안됨)
-//                       self.tableView.reloadData()
-//                     }
+                    //                      DispatchQueue.main.async {
+                    //                       //테이블뷰 갱신 (자동으로 갱신안됨)
+                    //                       self.tableView.reloadData()
+                    //                     }
                     
                     // 피드재호출
                     requestFeedAPI()
@@ -737,7 +724,7 @@ extension firstTabVC: UITableViewDelegate, UITableViewDataSource{
                     
                     // 피드재호출
                     requestFeedAPI()
-                
+                    
                 }else{
                     //sucess가 0이면
                     self.alert("0")
@@ -755,44 +742,44 @@ extension firstTabVC: UITableViewDelegate, UITableViewDataSource{
     func requstCutID(postIdx: String?,cutIdx: String?, success: (()->Void)? = nil, fail: ((String)->Void)? = nil) {
         // userID, postText,이미지묶음을 파라미터에 담아보냄
         let userID = plist.string(forKey: "name")
-
+        
         // 내아이디, 신고아이디, 글번호전송
         let param: Parameters = [
             "postIdx" : numIdx,
             "cutID" : cutID,
             "userID" : userID ?? ""]
-
+        
         print("신고 업로드 \(param)")
-
+        
         // API 호출 URL
         let url = self.BASEURL+"post/feedPostReport.php"
-
+        
         // AF에 담아보내기
         let call = AF.request(url, method: .post, parameters: param,
                               encoding: JSONEncoding.default)
         //                call.responseJSON { res in
         call.responseJSON { [self] res in
-
+            
             guard (try! res.result.get() as? NSDictionary) != nil else {
                 self.isCalling = false
                 self.alert("서버호출 과정에서 오류가 발생했습니다.")
                 print("올바른 응답값이 아닙니다.")
                 return
             }
-
+            
             if let jsonObject = try! res.result.get() as? [String :Any]{
                 let success = jsonObject["success"] as? Int ?? 0
-
+                
                 if success == 1 {
-                      // 테이블뷰 재호출(1초뒤 실행)
+                    // 테이블뷰 재호출(1초뒤 실행)
                     DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 1) {
-                      // 1초 후 실행될 부분
+                        // 1초 후 실행될 부분
                         self.alert("\(cutID)님을 차단하였습니다.")
-                       // self.dismiss(animated: true, completion: nil)
-                       print("신고성공 JSON= \(try! res.result.get())!)")
+                        // self.dismiss(animated: true, completion: nil)
+                        print("신고성공 JSON= \(try! res.result.get())!)")
                         requestFeedAPI()
                     }
-                       
+                    
                     // }
                 }else{
                     //sucess가 0이면

@@ -78,8 +78,9 @@ class goOutVC: UIViewController{
     }
     
     override func viewDidDisappear(_ animated: Bool) {
-       
-      
+        
+        // 뷰가 사라질때 삭제
+//        NotificationCenter.default.removeObserver(self, name:introduceVC , object: nil )
     }
     
     // 탈퇴안내글

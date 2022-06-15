@@ -52,12 +52,18 @@ class thirdTabVC: UIViewController, UITableViewDelegate, UITableViewDataSource, 
     
     // 노티5.옵저버가 DissmissWrite를 받았을때 실행할 내용: 데이터 리로드
        @objc func GOLogin(_ noti: Notification) {
-             
+           OperationQueue.main.addOperation { // DispatchQueue도 가능.
+
            // 로그인 화면으로 이동시키기
            guard let uvc = self.storyboard?.instantiateViewController(withIdentifier: "introduceVC") else {
                return
            }
            self.navigationController?.pushViewController(uvc, animated: true)
+           }
+           
+           // 탈퇴후이동노티 삭제
+           NotificationCenter.default.removeObserver(self, name: introduceVC , object: nil)
+           print ("\(introduceVC): 노티피케이션삭제")
        }
     
     
@@ -160,11 +166,6 @@ class thirdTabVC: UIViewController, UITableViewDelegate, UITableViewDataSource, 
             cell.textLabel?.textColor = .systemGray2
             cell.accessoryType = .disclosureIndicator
             
-            //        case 6:
-            //            cell.textLabel?.text = "탈퇴하기"
-            //            cell.textLabel?.textColor = .systemGray2
-            //            cell.accessoryType = .disclosureIndicator
-            //
         default:
             ()
         }

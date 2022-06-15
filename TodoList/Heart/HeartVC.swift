@@ -29,6 +29,9 @@ class HeartVC: UIViewController, UICollectionViewDataSource, UICollectionViewDel
     //userDefaults에 저장된이름값 가져오기
     let plist = UserDefaults.standard    
     
+    // 노티3.HeartDetailViewController에서 보낸 노티 받을준비
+    let HeartDetailVCNOTI = Notification.Name("HeartDetailVCNOTI")
+    
     // 콜렉션뷰 연결
     @IBOutlet weak var collectionView: UICollectionView!
     
@@ -37,47 +40,35 @@ class HeartVC: UIViewController, UICollectionViewDataSource, UICollectionViewDel
         //델리게이트연결안하면 뷰에 보이지도 않음
         collectionView.delegate = self
         collectionView.dataSource = self
-        // 북마크모음호출 API
-        let userID = plist.string(forKey: "name")
-        
-        // 로그인상태에서만 호출
-        if userID != nil {
-            upLoadHeart()
-            // 뷰업데이트
-            collectionView.reloadData()
-        }
-        
-    // 노티3.WriteVC에서 보낸 값을 받기위해 DissmissWrite의 노티피케이션을 정의해 받을 준비한다.
-    let HeartDetailVCNOTI = Notification.Name("HeartDetailVCNOTI")
-    
-    // 노티4.옵저버를 등록하고,DissmissWrite가 오면 writeVCNotification함수를 실행한다.
-          NotificationCenter.default.addObserver(self, selector: #selector(self.reloadaction(_:)), name: HeartDetailVCNOTI, object: nil)
+      
+        // 컬렉션API 호출
+        bookMarkStart()
+        //노티등록(북마크 새로고침, 북마크디테일뷰에서 받아옴)
+        setNotification()
     }
+
     
     // 노티5.옵저버가 DissmissWrite를 받았을때 실행할 내용: 데이터 리로드
        @objc func reloadaction(_ noti: Notification) {
-             
            // API호출
             upLoadHeart()
-             // 이 부분을 해주어야 다시 comment들을 api로 가져올 수 있었다.
-             // 즉, reload할 데이터를 불러와야 바뀌는 게 있다는 의미다.
-             // 안 해서 고생함...
                OperationQueue.main.addOperation { // DispatchQueue도 가능.
                    self.collectionView.reloadData()
                }
            }
+
     
     override func viewWillAppear(_ animated: Bool) {
-//        // 북마크모음호출 API
-        let userID = plist.string(forKey: "name")
-//        // 로그인상태에서만 호출
-        if userID != nil {
-            upLoadHeart()
-            // 뷰업데이트
-            OperationQueue.main.addOperation { // DispatchQueue도 가능.
-                self.collectionView.reloadData()
-            }
-        }
+        //노티등록(북마크 1고침, 북마크디테일뷰에서 받아옴)
+        setNotification()
+        // 컬렉션API 호출
+        bookMarkStart()
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        // HeartDetailVCNOTI 노티삭제
+        NotificationCenter.default.removeObserver(self, name: HeartDetailVCNOTI, object: nil)
+        print("HeartDetailVCNOTI 노티삭제")
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -130,7 +121,7 @@ class HeartVC: UIViewController, UICollectionViewDataSource, UICollectionViewDel
     //***************************************************************************************************************************
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath){
         // 컬랙션뷰의 데이터를 먼저 삭제 해주고, 데이터 배열의 값을 삭제해줍니다!! , '반대로할시에 데이터가 꼬이는 현상이 발생합니다.'
-        //        self.numberOfCell += 1
+        // self.numberOfCell += 1
         print(indexPath.row)
         // 클릭해서 각해당하는 상세뷰 띄우기
         // 이동하고자하는 뷰턴 객체생성해 호출하기 / 스토리보드 기반으로 가져오기. 스토리보드ID
@@ -138,7 +129,7 @@ class HeartVC: UIViewController, UICollectionViewDataSource, UICollectionViewDel
         
         // 컬렉션뷰에 좋아요모음 가져오기
         HeartDetailVC.heartResult = self.heartModel?.results[indexPath.row]
-        // 전체화면보기하면 닫기버튼이 없음 만들어줘야함.
+ 
 //        HeartDetailVC.modalPresentationStyle = .fullScreen
         
         // 화면이 띄워진후에 값을 넣어야 널크러쉬가 안남
@@ -148,8 +139,7 @@ class HeartVC: UIViewController, UICollectionViewDataSource, UICollectionViewDel
    
     // 좋아요북마크 모음 호출
     func upLoadHeart() {
-        //    func newProfile(_ profile: UIImage?, success: (()->Void)? = nil, fail: ((String)->Void)? = nil) {
-        // userID, postText,이미지묶음을 파라미터에 담아보냄
+        
         let userID = plist.string(forKey: "name")
         
         let param: Parameters = [ "userID" :userID ?? "" ]
@@ -189,6 +179,8 @@ class HeartVC: UIViewController, UICollectionViewDataSource, UICollectionViewDel
                         DispatchQueue.main.async {
                             // 테이블뷰 갱신 (자동으로 갱신안됨)
                             self.collectionView.reloadData()
+                            
+                            
                          }
                   
                     }// 디코딩 에러잡기
@@ -214,7 +206,26 @@ class HeartVC: UIViewController, UICollectionViewDataSource, UICollectionViewDel
                 }
             }
             }//함수 끝
-}
+    
+    func bookMarkStart(){
+        // 북마크모음호출 API
+        let userID = plist.string(forKey: "name")
+        // 로그인상태에서만 호출
+        if userID != nil {
+            upLoadHeart()
+            // 뷰업데이트 // 뷰업데이트
+            OperationQueue.main.addOperation { // DispatchQueue도 가능.
+                self.collectionView.reloadData()
+            }
+        }
+    }
+    
+    func setNotification(){
+        // 노티4.옵저버를 등록하고,DissmissWrite가 오면 writeVCNotification함수를 실행한다.
+              NotificationCenter.default.addObserver(self, selector: #selector(self.reloadaction(_:)), name: HeartDetailVCNOTI, object: nil)
+    }
+    
+}//VC끝
         
         // 컬렉션뷰 상태옵션
         // cell layout
