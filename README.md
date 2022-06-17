@@ -1,4 +1,5 @@
 # LetterPicking
+# LetterPicking
 
 <details>
  <summary>글자줍기 개인정보처리방침</summary>
