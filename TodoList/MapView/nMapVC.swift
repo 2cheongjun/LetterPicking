@@ -12,8 +12,8 @@ import NMapsMap
 
 class nMapVC : UIViewController {
     
-    let NAVER_CLIENT_ID = "uvryr3s84w"
-    let NAVER_CLIENT_SECRET = "rSXrAAZE5FUNue2BEbh68p6LAFiNDE2wUVdpI9JV"
+    let NAVER_CLIENT_ID = "@@@@@@@@"
+    let NAVER_CLIENT_SECRET = "@@@@@@@@"
     let NAVER_GEOCODE_URL = "https://naveropenapi.apigw.ntruss.com/map-geocode/v2/geocode?query="
     // BASEURL
     var BASEURL = UrlInfo.shared.url!
