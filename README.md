@@ -1,6 +1,11 @@
+![앱스토어실제이미지](https://user-images.githubusercontent.com/74134181/174486911-95cbbef7-97ca-4abc-b1a3-72a4d6faa2c0.png)
+ ▶ Appstore에서 받기 : https://apps.apple.com/kr/app/%EA%B8%80%EC%9E%90%EC%A4%8D%EA%B8%B0/id1629812057
+
 # ● LetterPicking 소식
 2022.6.19일 - 글자줍기를 런칭했습니다!
-
+<br>
+<br>
+<br>
 
 # ● 글자줍기 개인정보처리방침
 개인정보 처리방침
